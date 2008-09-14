@@ -10,7 +10,6 @@
 		8D5B49B0048680CD000E48DA /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 089C167DFE841241C02AAC07 /* InfoPlist.strings */; };
 		8D5B49B4048680CD000E48DA /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1058C7ADFEA557BF11CA2CBB /* Cocoa.framework */; };
 		E4C971840E7C031600B33973 /* BackRow.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E4C971830E7C031600B33973 /* BackRow.framework */; };
-		E4C971860E7C031E00B33973 /* iPhotoAccess.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E4C971850E7C031E00B33973 /* iPhotoAccess.framework */; };
 		E4C9718A0E7C036400B33973 /* XBMCAppliance.m in Sources */ = {isa = PBXBuildFile; fileRef = E4C971890E7C036400B33973 /* XBMCAppliance.m */; };
 		E4C9727A0E7C15D800B33973 /* AppKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E4C972790E7C15D800B33973 /* AppKit.framework */; };
 		E4C972B10E7C337B00B33973 /* XBMCController.m in Sources */ = {isa = PBXBuildFile; fileRef = E4C972B00E7C337B00B33973 /* XBMCController.m */; };
@@ -22,7 +21,7 @@
 			isa = PBXContainerItemProxy;
 			containerPortal = 089C1669FE841209C02AAC07 /* Project object */;
 			proxyType = 1;
-			remoteGlobalIDString = 8D5B49AC048680CD000E48DA /* xbmclauncher */;
+			remoteGlobalIDString = 8D5B49AC048680CD000E48DA;
 			remoteInfo = xbmclauncher;
 		};
 /* End PBXContainerItemProxy section */
@@ -37,10 +36,9 @@
 		8D5B49B7048680CD000E48DA /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		D2F7E65807B2D6F200F64583 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = /System/Library/Frameworks/CoreData.framework; sourceTree = "<absolute>"; };
 		E4C971830E7C031600B33973 /* BackRow.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = BackRow.framework; path = ../BackRow.framework; sourceTree = SOURCE_ROOT; };
-		E4C971850E7C031E00B33973 /* iPhotoAccess.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = iPhotoAccess.framework; path = ../iPhotoAccess.framework; sourceTree = SOURCE_ROOT; };
 		E4C971880E7C036400B33973 /* XBMCAppliance.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XBMCAppliance.h; sourceTree = "<group>"; };
 		E4C971890E7C036400B33973 /* XBMCAppliance.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XBMCAppliance.m; sourceTree = "<group>"; };
-		E4C971AE0E7C064F00B33973 /* copyStuff */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; name = copyStuff; path = build/Debug/copyStuff; sourceTree = "<group>"; };
+		E4C971AE0E7C064F00B33973 /* copyStuff */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = copyStuff; sourceTree = BUILT_PRODUCTS_DIR; };
 		E4C972790E7C15D800B33973 /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = ../MacOSX10.4u.sdk/System/Library/Frameworks/AppKit.framework; sourceTree = SDKROOT; };
 		E4C972AF0E7C337B00B33973 /* XBMCController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XBMCController.h; sourceTree = "<group>"; };
 		E4C972B00E7C337B00B33973 /* XBMCController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XBMCController.m; sourceTree = "<group>"; };
@@ -54,7 +52,6 @@
 			files = (
 				8D5B49B4048680CD000E48DA /* Cocoa.framework in Frameworks */,
 				E4C971840E7C031600B33973 /* BackRow.framework in Frameworks */,
-				E4C971860E7C031E00B33973 /* iPhotoAccess.framework in Frameworks */,
 				E4C9727A0E7C15D800B33973 /* AppKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -115,7 +112,6 @@
 		1058C7ACFEA557BF11CA2CBB /* Linked Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				E4C971850E7C031E00B33973 /* iPhotoAccess.framework */,
 				E4C971830E7C031600B33973 /* BackRow.framework */,
 				1058C7ADFEA557BF11CA2CBB /* Cocoa.framework */,
 			);
@@ -230,7 +226,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "scp -r build/Debug/xbmclauncher.frappliance/ frontrow@192.168.0.90:\nssh frontrow@192.168.0.90 restartFinder";
+			shellScript = "scp -r build/Debug/xbmclauncher.frappliance/ frontrow@192.168.0.90:\nssh frontrow@192.168.0.90 restartFinder\nexit 0";
 		};
 /* End PBXShellScriptBuildPhase section */
 
