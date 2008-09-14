@@ -20,7 +20,7 @@ if [[ -z $PID ]]; then
   exit 2
 fi
 
-kill -9 $PID
+kill $PID
 
 echo $XBMCHELPER "killed on PID" $PID "and exited" >> $LOGFILE
 
