@@ -226,7 +226,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "scp -r build/Debug/xbmclauncher.frappliance/ frontrow@192.168.0.90:\nssh frontrow@192.168.0.90 restartFinder\nexit 0";
+			shellScript = "scp -r $TARGET_BUILD_DIR/xbmclauncher.frappliance/ frontrow@192.168.0.90:\n#ssh frontrow@192.168.0.90 restartFinder\nexit 0";
 		};
 /* End PBXShellScriptBuildPhase section */
 
