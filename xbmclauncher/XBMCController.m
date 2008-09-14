@@ -3,8 +3,21 @@
 //  xbmclauncher
 //
 //  Created by Stephan Diederich on 13.09.08.
-//  Copyright 2008 __MyCompanyName__. All rights reserved.
-//
+//  Copyright 2008 Stephan Diederich. All rights reserved.
+/*
+This program is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with this program.  If not, see <http://www.gnu.org/licenses/>.
+*/
 
 #import "XBMCController.h"
 @class BRLayerController;
@@ -49,10 +62,11 @@
 																						 object:task];
 	
 																					 	
-	// Hide frontrow menu this seems not to be needed. XBMC is aggressive enough...
-//	[[NSNotificationCenter defaultCenter] postNotificationName:@"BRDisplayManagerStopRenderingNotification"
-	//																										object:[BRDisplayManager sharedInstance]];
-	//[[BRDisplayManager sharedInstance] releaseAllDisplays];
+	//Hide frontrow menu this seems not to be needed for 2.1. XBMC is aggressive enough...
+	//reenabled to test in 2.02
+	[[NSNotificationCenter defaultCenter] postNotificationName:@"BRDisplayManagerStopRenderingNotification"
+																											object:[BRDisplayManager sharedInstance]];
+	[[BRDisplayManager sharedInstance] releaseAllDisplays];
 	[super controlWasActivated];
 }
 
@@ -63,18 +77,18 @@
 	{
 		NSLog(@"task stopped!");
 	
-		// Return code for rungame.sh
+		// Return code for XBMC
 		int status = [[note object] terminationStatus];
 	
-		// release the old task, as a new one gets created
+		// release the old task, as a new one gets created (if
 		[task release];
+		task = nil;
 		
-		// Show frontrow menu we didn't hide it, so why show?
-		/*
+		// Show frontrow menu 
 		[[NSNotificationCenter defaultCenter] postNotificationName:@"BRDisplayManagerResumeRenderingNotification"
 																												object:[BRDisplayManager sharedInstance]];
 		[[BRDisplayManager sharedInstance] captureAllDisplays];
-		*/
+		
 		if (status != 0)
 		{
 			BRAlertController *alert = [BRAlertController alertOfType:0
