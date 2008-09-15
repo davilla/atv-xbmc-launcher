@@ -166,9 +166,9 @@
 			productReference = 8D5B49B6048680CD000E48DA /* xbmclauncher.frappliance */;
 			productType = "com.apple.product-type.bundle";
 		};
-		E4C971AD0E7C064F00B33973 /* copyStuff */ = {
+		E4C971AD0E7C064F00B33973 /* BuildAndCopyToATV */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = E4C971BB0E7C06A800B33973 /* Build configuration list for PBXNativeTarget "copyStuff" */;
+			buildConfigurationList = E4C971BB0E7C06A800B33973 /* Build configuration list for PBXNativeTarget "BuildAndCopyToATV" */;
 			buildPhases = (
 				E4C971AB0E7C064F00B33973 /* Sources */,
 				E4C971AC0E7C064F00B33973 /* Frameworks */,
@@ -179,7 +179,7 @@
 			dependencies = (
 				E4C971B30E7C065400B33973 /* PBXTargetDependency */,
 			);
-			name = copyStuff;
+			name = BuildAndCopyToATV;
 			productName = copyStuff;
 			productReference = E4C971AE0E7C064F00B33973 /* copyStuff */;
 			productType = "com.apple.product-type.tool";
@@ -197,7 +197,7 @@
 			projectRoot = "";
 			targets = (
 				8D5B49AC048680CD000E48DA /* xbmclauncher */,
-				E4C971AD0E7C064F00B33973 /* copyStuff */,
+				E4C971AD0E7C064F00B33973 /* BuildAndCopyToATV */,
 			);
 		};
 /* End PBXProject section */
@@ -226,7 +226,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "scp -r $TARGET_BUILD_DIR/xbmclauncher.frappliance/ frontrow@192.168.0.90:\n#ssh frontrow@192.168.0.90 restartFinder\nexit 0";
+			shellScript = "scp -r $TARGET_BUILD_DIR/xbmclauncher.frappliance/ frontrow@appletv.local:\nssh frontrow@appletv.local restartFinder\nexit 0";
 		};
 /* End PBXShellScriptBuildPhase section */
 
@@ -326,7 +326,7 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				PREBINDING = NO;
-				SDKROOT = macosx10.5;
+				SDKROOT = macosx10.4;
 			};
 			name = Debug;
 		};
@@ -338,7 +338,7 @@
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				PREBINDING = NO;
-				SDKROOT = macosx10.5;
+				SDKROOT = macosx10.4;
 			};
 			name = Release;
 		};
@@ -395,7 +395,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		E4C971BB0E7C06A800B33973 /* Build configuration list for PBXNativeTarget "copyStuff" */ = {
+		E4C971BB0E7C06A800B33973 /* Build configuration list for PBXNativeTarget "BuildAndCopyToATV" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				E4C971B00E7C065000B33973 /* Debug */,
