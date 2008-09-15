@@ -65,25 +65,19 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 		
 		if (status != 0)
 		{
-			BRAlertController *alert = [BRAlertController alertOfType:0
-																												 titled:@"Error"
-																										primaryText:[NSString stringWithFormat:@"XBMC exited With Status: %i",status]
-																									secondaryText:nil];
+			[self setTitle:@"Error"];
+			[self setPrimaryText:[NSString stringWithFormat:@"XBMC exited With Status: %i",status]];
+			[self setSecondaryText:nil];
 			//now we need to kill XBMCHelper!
 			//TODO for now we use a script as I don't know how to kill a Task with OSX API. any hints are pretty welcome!
 			NSString* path = [[NSBundle bundleForClass:[self class]] pathForResource:@"killxbmchelper" ofType:@"sh"];
-			NSTask* killer = [NSTask launchedTaskWithLaunchPath:@"/bin/bash" arguments: [NSArray arrayWithObjects:path,nil]];
+			NSTask* killer = [NSTask launchedTaskWithLaunchPath:@"/bin/bash" arguments: [NSArray arrayWithObject:path]];
 			[killer waitUntilExit];
-			[[self stack] swapController:alert];
 		} else {
-			BRAlertController *alert = [BRAlertController alertOfType:0
-																												 titled:@"XBMC exited gracefully"
-																										primaryText:@"To restart use the menu"
-																										secondaryText:nil];
-			//push the new message on the stack
-			[[self stack] swapController:alert];
-			//and then bring back the normal menu so that the alert above is only in the background
-			[[alert stack] popController];
+			[self setTitle:@"XBMC exited gracefully"];
+			[self setPrimaryText:@"Use the menu to restart it"];
+			[self setSecondaryText:nil];
+			[[self stack] popController];
 			//check memory management here, there seems to be a bug. I'd say that retainCount should be zero here, as we were swapped
 			//and are in the autorelease pool. What's wrong? All that swapping, pushing and popping?
 			//NSLog([NSString stringWithFormat:@"Current retain count: %i", [self retainCount]]);
@@ -91,11 +85,9 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 	} else {
 		//Task is still running. How come?!
 		NSLog(@"Task still running. This is definately a bug :/");
-		BRAlertController *alert = [BRAlertController alertOfType:0
-																											 titled:@"Error"
-																									primaryText:@"XBMC Task is still running. This is a bug, please report it."
-																								secondaryText:nil];
-		[[self stack] swapController:alert];
+		[self setTitle:@"Error"];
+		[self setPrimaryText:@"XBMC Task is still running. This is a bug, please report it."];
+		[self setSecondaryText:nil];
 	}
 } 
 
@@ -124,11 +116,9 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 		[task launch];
 	} 
 	@catch (NSException* e) {
-		BRAlertController *alert = [BRAlertController alertOfType:0
-																											 titled:@"Error"
-																									primaryText:@"Cannot launch XBMC"
-																								secondaryText:@"Please make sure you have XBMC.app installed in /Users/frontrow/Applications/"];
-		[[self stack] swapController:alert];
+		[self setTitle:@"Error"];
+		[self setPrimaryText:@"Cannot launch XBMC"];
+		[self setSecondaryText:@"Please make sure you have XBMC.app installed in /Users/frontrow/Applications/"];
 	}
 	//wait for task to start
 	NSDate *future = [NSDate dateWithTimeIntervalSinceNow: 0.1];
