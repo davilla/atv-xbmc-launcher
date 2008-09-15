@@ -40,33 +40,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 - (void)controlWasActivated
 {
-	NSLog(@"controlWasActivated");	
-	task = [[NSTask alloc] init];
-	[task setLaunchPath: @"/Users/frontrow/Applications/XBMC.app/Contents/MacOS/XBMC"];
-	@try {
-		[task launch];
-	} 
-	@catch (NSException* e) {
-		BRAlertController *alert = [BRAlertController alertOfType:0
-																											 titled:@"Error"
-																									primaryText:@"Cannot launch XBMC"
-																								secondaryText:@"Please make sure you have XBMC.app installed in /Users/frontrow/Applications/"];
-		[[self stack] swapController:alert];
-	}
-	
-	NSDate *future = [NSDate dateWithTimeIntervalSinceNow: 0.1];
-	[NSThread sleepUntilDate:future];
-	[[NSNotificationCenter defaultCenter] addObserver:self
-																					 selector:@selector(checkTaskStatus:)
-																							 name:NSTaskDidTerminateNotification
-																						 object:task];
-	
-																					 	
-	//Hide frontrow menu this seems not to be needed for 2.1. XBMC is aggressive enough...
-	//reenabled to test in 2.02
-	[[NSNotificationCenter defaultCenter] postNotificationName:@"BRDisplayManagerStopRenderingNotification"
-																											object:[BRDisplayManager sharedInstance]];
-	[[BRDisplayManager sharedInstance] releaseAllDisplays];
+	NSLog(@"controlWasActivated");
 	[super controlWasActivated];
 }
 
@@ -110,6 +84,9 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 			[[self stack] swapController:alert];
 			//and then bring back the normal menu so that the alert above is only in the background
 			[[alert stack] popController];
+			//check memory management here, there seems to be a bug. I'd say that retainCount should be zero here, as we were swapped
+			//and are in the autorelease pool. What's wrong? All that swapping, pushing and popping?
+			//NSLog([NSString stringWithFormat:@"Current retain count: %i", [self retainCount]]);
 		}
 	} else {
 		//Task is still running. How come?!
@@ -126,7 +103,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 {
 	// We're about to be placed on screen, but we're not yet there
 	// always call super
-		NSLog(@"willbePushed");
+	NSLog(@"willbePushed");
 	[super willBePushed];
 }
 
@@ -134,6 +111,62 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 {
 	NSLog(@"wasPushed");
 	// We've just been put on screen, the user can see this controller's content now	
+	//Hide frontrow menu this seems not to be needed for 2.1. XBMC is aggressive enough...
+	//reenabled to test in 2.02
+	[[NSNotificationCenter defaultCenter] postNotificationName:@"BRDisplayManagerStopRenderingNotification"
+																											object:[BRDisplayManager sharedInstance]];
+	[[BRDisplayManager sharedInstance] releaseAllDisplays];
+	//start xbmc
+	task = [[NSTask alloc] init];
+	[task setLaunchPath: @"/Users/frontrow/Applications/XBMC.app/Contents/MacOS/XBMC"];
+	//[task setArguments:[NSArray arrayWithObjects:@"-fs",nil]]; fullscreen seems to be ignored...
+	@try {
+		[task launch];
+	} 
+	@catch (NSException* e) {
+		BRAlertController *alert = [BRAlertController alertOfType:0
+																											 titled:@"Error"
+																									primaryText:@"Cannot launch XBMC"
+																								secondaryText:@"Please make sure you have XBMC.app installed in /Users/frontrow/Applications/"];
+		[[self stack] swapController:alert];
+	}
+	//wait for task to start
+	NSDate *future = [NSDate dateWithTimeIntervalSinceNow: 0.1];
+	[NSThread sleepUntilDate:future];
+	//attach our listener
+	[[NSNotificationCenter defaultCenter] addObserver:self
+																					 selector:@selector(checkTaskStatus:)
+																							 name:NSTaskDidTerminateNotification
+																						 object:task];
+	
+/*
+  // tell backrow to quit rendering
+  [[NSNotificationCenter defaultCenter] postNotificationName:@"BRDisplayManagerStopRenderingNotification" object:[BRDisplayManager sharedInstance]];
+  
+  // grab display
+  [[BRDisplayManager sharedInstance] releaseAllDisplays];
+  
+  // run app and wait for exit
+	task = [[NSTask alloc] init];
+	[task setLaunchPath: @"/Users/frontrow/Applications/XBMC.app/Contents/MacOS/XBMC"];
+	@try {
+		[task launch];
+	} 
+	@catch (NSException* e) {
+		BRAlertController *alert = [BRAlertController alertOfType:0
+																											 titled:@"Error"
+																									primaryText:@"Cannot launch XBMC"
+																								secondaryText:@"Please make sure you have XBMC.app installed in /Users/frontrow/Applications/"];
+		[[self stack] swapController:alert];
+	}
+	
+  [task waitUntilExit];
+  
+  // give backrow back the display
+  [[BRDisplayManager sharedInstance] captureAllDisplays];
+  // tell backrow to resume rendering
+  [[NSNotificationCenter defaultCenter] postNotificationName:@"BRDisplayManagerResumeRenderingNotification" object:[BRDisplayManager sharedInstance]];
+	*/
 	// always call super
 	[super wasPushed];
 }
@@ -149,7 +182,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 - (void) wasPopped
 {
 	// The user pressed Menu, removing us from the screen
-		NSLog(@"wasPopped");
+	NSLog(@"wasPopped");
 	// always call super
 	[super wasPopped];
 }
@@ -157,7 +190,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 - (void) willBeBuried
 {
 	// The user just chose an option, and we will be taken off the screen
-		NSLog(@"willbeBuried");
+	NSLog(@"willbeBuried");
 	// always call super
 	[super willBeBuried];
 }
@@ -165,7 +198,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 - (void) wasBuriedByPushingController: (BRLayerController *) controller
 {
 	// The user chose an option and this controller os no longer on screen
-		NSLog(@"wasburiedbypushing");
+	NSLog(@"wasburiedbypushing");
 	// always call super
 	[super wasBuriedByPushingController: controller];
 }
