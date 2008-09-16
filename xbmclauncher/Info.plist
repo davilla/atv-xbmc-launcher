@@ -40,6 +40,10 @@
 			<real>1</real>
 			<key>priority</key>
 			<real>6</real>
+			<key>entry-type</key>
+			<real>0</real>
+			<key>path</key>
+			<string>/Users/frontrow/Applications/XBMC.app/Contents/MacOS/XBMC</string>
 		</dict>
 		<dict>
 			<key>identifier</key>
@@ -56,6 +60,8 @@
 			<real>2</real>
 			<key>priority</key>
 			<real>7</real>
+			<key>entry-type</key>
+			<real>1</real>
 		</dict>		
 	</array>
 </dict>

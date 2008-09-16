@@ -24,9 +24,12 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 @implementation XBMCController
 
-- (id) init
+-(id) initWithPath:(NSString*) f_path
 {
+	path=f_path;
+	[path retain]; 
 	NSLog(@"init XBMCController");
+	
 	return [super initWithType:0 titled:@"Launching XBMC..." primaryText:@"Info"
 							 secondaryText:@"This screen will stay here until XBMC closes and should then go to the background. To restart XBMC use the menu"];
 
@@ -35,6 +38,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 - (void)dealloc
 {
 	NSLog(@"deallocating...");
+	[path release];
 	[super dealloc];
 }
 
@@ -70,8 +74,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 			[self setSecondaryText:nil];
 			//now we need to kill XBMCHelper!
 			//TODO for now we use a script as I don't know how to kill a Task with OSX API. any hints are pretty welcome!
-			NSString* path = [[NSBundle bundleForClass:[self class]] pathForResource:@"killxbmchelper" ofType:@"sh"];
-			NSTask* killer = [NSTask launchedTaskWithLaunchPath:@"/bin/bash" arguments: [NSArray arrayWithObject:path]];
+			NSString* killer_path = [[NSBundle bundleForClass:[self class]] pathForResource:@"killxbmchelper" ofType:@"sh"];
+			NSTask* killer = [NSTask launchedTaskWithLaunchPath:@"/bin/bash" arguments: [NSArray arrayWithObject:killer_path]];
 			[killer waitUntilExit];
 		} else {
 			[self setTitle:@"XBMC exited gracefully"];
@@ -110,17 +114,22 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 	[[BRDisplayManager sharedInstance] releaseAllDisplays];
 	//start xbmc
 	task = [[NSTask alloc] init];
-	[task setLaunchPath: @"/Users/frontrow/Applications/XBMC.app/Contents/MacOS/XBMC"];
-	//[task setArguments:[NSArray arrayWithObjects:@"-fs",nil]]; fullscreen seems to be ignored...
 	@try {
+		[task setLaunchPath: path];
+		//[task setArguments:[NSArray arrayWithObjects:@"-fs",nil]]; fullscreen seems to be ignored...
 		[task launch];
 	} 
 	@catch (NSException* e) {
+		// Show frontrow menu 
+		[[NSNotificationCenter defaultCenter] postNotificationName:@"BRDisplayManagerResumeRenderingNotification"
+																												object:[BRDisplayManager sharedInstance]];
+		[[BRDisplayManager sharedInstance] captureAllDisplays];
 		[self setTitle:@"Error"];
-		[self setPrimaryText:@"Cannot launch XBMC"];
-		[self setSecondaryText:@"Please make sure you have XBMC.app installed in /Users/frontrow/Applications/"];
+		[self setPrimaryText:@"Cannot launch XBMC. Path tried was:"];
+		[self setSecondaryText:path];
+		return [super wasPushed];
 	}
-	//wait for task to start
+	//wait a bit for task to start
 	NSDate *future = [NSDate dateWithTimeIntervalSinceNow: 0.1];
 	[NSThread sleepUntilDate:future];
 	//attach our listener

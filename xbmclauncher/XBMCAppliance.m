@@ -44,10 +44,23 @@
 }
 
 - (id)controllerForIdentifier:(id)identifier {
-	// normally check info.plist entries. But why for us?
-	if([identifier isEqualToString:@"XBMC"]){
-		return [[[XBMCController alloc] init] autorelease];
-	} else if ([identifier isEqualToString:@"XBMCUpdate"]){
+	// find the proper entry in categories list from Info.plist
+	NSEnumerator *enumerator = [[[self applianceInfo] applianceCategoryDescriptors] objectEnumerator];
+	id obj = nil;
+	while((obj = [enumerator nextObject]) != nil) {
+		if ([identifier isEqualToString:[obj valueForKey:@"identifier"]]){
+			break;
+		}
+	}
+	NSNumber*	entry_type = [obj valueForKey:@"entry-type"];
+	//entry type is the key if this is an XBMC.app entry or something else like updater, etc
+	if( [entry_type isEqualToNumber:[NSNumber numberWithInt:0]] ){
+		//there can be more than one xbmc entry in the list, e.g. to test developer version etc.
+		//so read the path of current and pass to controller
+		NSString* path = [obj valueForKey:@"path"];
+		NSLog([NSString stringWithFormat:@"path found: %@", path]);
+		return [[[XBMCController alloc] initWithPath:path] autorelease];
+	} else if ( [identifier isEqualToString:@"XBMCUpdate"] ){
 		// here we want to use something like BRTextWithSpinnerController to get the update running
 		return [BRAlertController alertOfType:0
 																	 titled:identifier

@@ -12,7 +12,9 @@
 @interface XBMCController : BRAlertController {
 	int padding[16];	// credit is due here to SapphireCompatibilityClasses!!
 	NSTask *task; //task for xbmc. is needed as a member, as we check status later
+	NSString * path; //which xbmc to launch
 }
 
+-(id) initWithPath:(NSString*) f_path;
 -(void)checkTaskStatus:(NSNotification *)note;
 @end
