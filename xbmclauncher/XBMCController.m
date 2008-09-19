@@ -111,7 +111,23 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 	NSLog(@"willbePushed");
 	[super willBePushed];
 }
+- (void) printDisplayInfo
+{
+	NSLog([NSString stringWithFormat:@"CGDisplayIsActive? %i", CGDisplayIsActive (CGMainDisplayID())]); 
+	NSLog([NSString stringWithFormat:@"CGDisplayIsAsleep? %i", CGDisplayIsAsleep (CGMainDisplayID())]); 
+	NSLog([NSString stringWithFormat:@"CGDisplayIsBuiltin? %i", CGDisplayIsBuiltin (CGMainDisplayID())]); 
+	NSLog([NSString stringWithFormat:@"CGDisplayIsInMirrorSet? %i", CGDisplayIsInMirrorSet (CGMainDisplayID())]); 
+	NSLog([NSString stringWithFormat:@"CGDisplayIsMain? %i", CGDisplayIsMain (CGMainDisplayID())]); 
+	NSLog([NSString stringWithFormat:@"CGDisplayIsOnline? %i", CGDisplayIsOnline (CGMainDisplayID())]); 
+	NSLog([NSString stringWithFormat:@"CGDisplayIsStereo? %i", CGDisplayIsStereo (CGMainDisplayID())]); 
+	NSLog([NSString stringWithFormat:@"CGDisplayMirrorsDisplay? %i", CGDisplayMirrorsDisplay (CGMainDisplayID())]); 
+	NSLog([NSString stringWithFormat:@"CGDisplayModelNumber? %i", CGDisplayModelNumber (CGMainDisplayID())]); 
+	NSLog([NSString stringWithFormat:@"CGShieldingWindowLevel? %i", CGShieldingWindowLevel ()]); 
+	NSLog([NSString stringWithFormat:@"CGShieldingWindowID? %i", CGShieldingWindowID (CGMainDisplayID())]); 
+	NSLog([NSString stringWithFormat:@"CGDisplayIsCaptured? %i", CGDisplayIsCaptured (CGMainDisplayID())]); 
+	NSLog(@"--------------------");
 
+} 
 - (void) wasPushed
 {
 	NSLog(@"wasPushed");
@@ -119,11 +135,18 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 	//We've just been put on screen, the user can see this controller's content now	
 	//Hide frontrow menu this seems not to be needed for 2.1. XBMC is aggressive enough...
 	//reenabled to test in 2.02
-	NSLog([NSString stringWithFormat:@"displayCaptured? %i", CGDisplayIsCaptured (CGMainDisplayID())]); 
+	[self printDisplayInfo];
+	unsigned int i;
+	for (i = 0; i < 5; ++i){
 	[[NSNotificationCenter defaultCenter] postNotificationName:@"BRDisplayManagerStopRenderingNotification"
 																											object:[BRDisplayManager sharedInstance]];
+	}
 	[[BRDisplayManager sharedInstance] releaseAllDisplays];
-	NSLog([NSString stringWithFormat:@"displayCaptured? %i", CGDisplayIsCaptured (CGMainDisplayID())]); 
+	for (i = 0; i < 5; ++i){
+		[[NSNotificationCenter defaultCenter] postNotificationName:@"BRDisplayManagerStopRenderingNotification"
+																												object:[BRDisplayManager sharedInstance]];
+	}
+	[self printDisplayInfo];
 	//start xbmc
 	task = [[NSTask alloc] init];
 	@try {
@@ -136,11 +159,16 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 		[[NSNotificationCenter defaultCenter] postNotificationName:@"BRDisplayManagerResumeRenderingNotification"
 																												object:[BRDisplayManager sharedInstance]];
 		[[BRDisplayManager sharedInstance] captureAllDisplays];
+		[[BRDisplayManager sharedInstance] 	fadeInDisplay];
 		BRAlertController* alert = [BRAlertController alertOfType:0 titled:nil
 																									primaryText:[NSString stringWithFormat:@"Error: Cannot launch XBMC. Path tried was:"]
 																									secondaryText:mp_app_path];
 		[[self stack] swapController:alert];
 		return [super wasPushed];
+	}
+	for (i = 0; i < 5; ++i){
+		[[NSNotificationCenter defaultCenter] postNotificationName:@"BRDisplayManagerStopRenderingNotification"
+																												object:[BRDisplayManager sharedInstance]];
 	}
 	//enable XBMC-Client
 	m_enable_xbmcclient = YES;
