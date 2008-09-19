@@ -20,25 +20,35 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
 #import "XBMCController.h"
+#import "xbmcclientwrapper.h"
 @class BRLayerController;
 
 @implementation XBMCController
+- (id) init
+{
+	[self dealloc];
+	@throw [NSException exceptionWithName:@"BNRBadInitCall" reason:@"Init XBMCController with initWithPath" userInfo:nil];
+	return nil;
+}
 
 -(id) initWithPath:(NSString*) f_path
 {
-	path=f_path;
-	[path retain]; 
 	NSLog(@"init XBMCController");
-	
-	return [super initWithType:0 titled:@"Launching XBMC..." primaryText:@"Info"
-							 secondaryText:@"This screen will stay here until XBMC closes and should then go to the background. To restart XBMC use the menu"];
-
+	if ( ![super init] )
+		return ( nil );
+	m_enable_xbmcclient = YES;
+	if(m_enable_xbmcclient)
+		mp_xbmclient = [[XBMCClientWrapper alloc] init];
+	mp_app_path=f_path;
+	[mp_app_path retain]; 
+	return self;
 }
 
 - (void)dealloc
 {
 	NSLog(@"deallocating...");
-	[path release];
+	[mp_xbmclient release];
+	[mp_app_path release];
 	[super dealloc];
 }
 
@@ -48,13 +58,20 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 	[super controlWasActivated];
 }
 
+- (void)controlWasDeactivated
+{
+	NSLog(@"controlWasDeactivated");
+	//gets called when powered down (long play)
+	//TODO: Shutdown xbmc?
+	[super controlWasDeactivated];
+}
 - (void)checkTaskStatus:(NSNotification *)note
 {
 	NSLog(@"checkTaskStatus");
 	if (! [task isRunning])
 	{
 		NSLog(@"task stopped!");
-	
+		NSLog([NSString stringWithFormat: @"shielded: %i", CGShieldingWindowID(CGMainDisplayID())]);
 		// Return code for XBMC
 		int status = [[note object] terminationStatus];
 	
@@ -66,32 +83,24 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 		[[NSNotificationCenter defaultCenter] postNotificationName:@"BRDisplayManagerResumeRenderingNotification"
 																												object:[BRDisplayManager sharedInstance]];
 		[[BRDisplayManager sharedInstance] captureAllDisplays];
-		
+		NSLog([NSString stringWithFormat: @"shielded: %i", CGShieldingWindowID(CGMainDisplayID())]);
 		if (status != 0)
 		{
-			[self setTitle:@"Error"];
-			[self setPrimaryText:[NSString stringWithFormat:@"XBMC exited With Status: %i",status]];
-			[self setSecondaryText:nil];
-			//now we need to kill XBMCHelper!
+			BRAlertController* alert = [BRAlertController alertOfType:0 titled:nil
+																										primaryText:[NSString stringWithFormat:@"Error: XBMC exited With Status: %i",status]
+																										secondaryText:nil];
+			[[self stack] swapController:alert];
+			//now we need to kill XBMCHelper! (if its even running)
 			//TODO for now we use a script as I don't know how to kill a Task with OSX API. any hints are pretty welcome!
 			NSString* killer_path = [[NSBundle bundleForClass:[self class]] pathForResource:@"killxbmchelper" ofType:@"sh"];
 			NSTask* killer = [NSTask launchedTaskWithLaunchPath:@"/bin/bash" arguments: [NSArray arrayWithObject:killer_path]];
 			[killer waitUntilExit];
 		} else {
-			[self setTitle:@"XBMC exited gracefully"];
-			[self setPrimaryText:@"Use the menu to restart it"];
-			[self setSecondaryText:nil];
 			[[self stack] popController];
-			//check memory management here, there seems to be a bug. I'd say that retainCount should be zero here, as we were swapped
-			//and are in the autorelease pool. What's wrong? All that swapping, pushing and popping?
-			//NSLog([NSString stringWithFormat:@"Current retain count: %i", [self retainCount]]);
 		}
 	} else {
 		//Task is still running. How come?!
 		NSLog(@"Task still running. This is definately a bug :/");
-		[self setTitle:@"Error"];
-		[self setPrimaryText:@"XBMC Task is still running. This is a bug, please report it."];
-		[self setSecondaryText:nil];
 	}
 } 
 
@@ -106,7 +115,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 - (void) wasPushed
 {
 	NSLog(@"wasPushed");
-	// We've just been put on screen, the user can see this controller's content now	
+	//We've just been put on screen, the user can see this controller's content now	
 	//Hide frontrow menu this seems not to be needed for 2.1. XBMC is aggressive enough...
 	//reenabled to test in 2.02
 	[[NSNotificationCenter defaultCenter] postNotificationName:@"BRDisplayManagerStopRenderingNotification"
@@ -115,7 +124,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 	//start xbmc
 	task = [[NSTask alloc] init];
 	@try {
-		[task setLaunchPath: path];
+		[task setLaunchPath: mp_app_path];
 		//[task setArguments:[NSArray arrayWithObjects:@"-fs",nil]]; fullscreen seems to be ignored...
 		[task launch];
 	} 
@@ -124,9 +133,10 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 		[[NSNotificationCenter defaultCenter] postNotificationName:@"BRDisplayManagerResumeRenderingNotification"
 																												object:[BRDisplayManager sharedInstance]];
 		[[BRDisplayManager sharedInstance] captureAllDisplays];
-		[self setTitle:@"Error"];
-		[self setPrimaryText:@"Cannot launch XBMC. Path tried was:"];
-		[self setSecondaryText:path];
+		BRAlertController* alert = [BRAlertController alertOfType:0 titled:nil
+																									primaryText:[NSString stringWithFormat:@"Error: Cannot launch XBMC. Path tried was:"]
+																									secondaryText:mp_app_path];
+		[[self stack] swapController:alert];
 		return [super wasPushed];
 	}
 	//wait a bit for task to start
@@ -137,35 +147,6 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 																					 selector:@selector(checkTaskStatus:)
 																							 name:NSTaskDidTerminateNotification
 																						 object:task];
-	
-/*
-  // tell backrow to quit rendering
-  [[NSNotificationCenter defaultCenter] postNotificationName:@"BRDisplayManagerStopRenderingNotification" object:[BRDisplayManager sharedInstance]];
-  
-  // grab display
-  [[BRDisplayManager sharedInstance] releaseAllDisplays];
-  
-  // run app and wait for exit
-	task = [[NSTask alloc] init];
-	[task setLaunchPath: @"/Users/frontrow/Applications/XBMC.app/Contents/MacOS/XBMC"];
-	@try {
-		[task launch];
-	} 
-	@catch (NSException* e) {
-		BRAlertController *alert = [BRAlertController alertOfType:0
-																											 titled:@"Error"
-																									primaryText:@"Cannot launch XBMC"
-																								secondaryText:@"Please make sure you have XBMC.app installed in /Users/frontrow/Applications/"];
-		[[self stack] swapController:alert];
-	}
-	
-  [task waitUntilExit];
-  
-  // give backrow back the display
-  [[BRDisplayManager sharedInstance] captureAllDisplays];
-  // tell backrow to resume rendering
-  [[NSNotificationCenter defaultCenter] postNotificationName:@"BRDisplayManagerResumeRenderingNotification" object:[BRDisplayManager sharedInstance]];
-	*/
 	// always call super
 	[super wasPushed];
 }
@@ -217,5 +198,63 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 	// always call super
 	[super wasExhumedByPoppingController: controller];
 }
+
+- (BOOL) recreateOnReselect
+{ 
+	return true;
+}
+
+- (BOOL)brEventAction:(BREvent *)event
+{
+	if(m_enable_xbmcclient){
+		if ([[self stack] peekController] != self){
+			NSLog(@"Not on top of the stack, exiting...");
+			return NO;
+		}
+		unsigned int hashVal = [event pageUsageHash];
+		switch (hashVal)
+		{
+			case 65676:  // tap up
+				if([event value] == 1)
+					[mp_xbmclient handleEvent:ATV_BUTTON_UP_PRESS];
+				else
+					[mp_xbmclient handleEvent:ATV_BUTTON_UP_RELEASE];
+				return YES;
+			case 65677:  // tap down
+				if([event value] == 1)
+					[mp_xbmclient handleEvent:ATV_BUTTON_DOWN_PRESS];
+				else
+					[mp_xbmclient handleEvent:ATV_BUTTON_DOWN_RELEASE];
+				return YES;
+			case 65675:  // tap left
+				[mp_xbmclient handleEvent:ATV_BUTTON_LEFT];
+				return YES;
+			case 65674:  // tap right
+				[mp_xbmclient handleEvent:ATV_BUTTON_RIGHT];
+				return YES;
+			case 65673:  // tap play
+				[mp_xbmclient handleEvent:ATV_BUTTON_PLAY];
+				return YES;
+			case 786611: //hold right
+				[mp_xbmclient handleEvent:ATV_BUTTON_RIGHT_H];
+				return YES;
+			case 786612: //hold left
+				[mp_xbmclient handleEvent:ATV_BUTTON_LEFT_H];
+				return YES;
+			case 65670: //menu
+				[mp_xbmclient handleEvent:ATV_BUTTON_MENU];
+				return YES;
+			case 786496: //hold menu
+				[mp_xbmclient handleEvent:ATV_BUTTON_MENU_H];
+				return YES;
+			default:
+				NSLog([NSString stringWithFormat:@"Unknown button press hashVal = %i",hashVal]);
+				return NO;
+		}
+	} else {
+		return [super brEventAction:event];
+	}
+}
+
 
 @end

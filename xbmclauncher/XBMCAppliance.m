@@ -22,9 +22,18 @@
 #import "XBMCAppliance.h"
 #import "XBMCController.h"
 @implementation XBMCAppliance
++ (void) initialize
+{
+	NSLog(@"XBMCAppliance initialize");
+	Class cls = NSClassFromString( @"BRFeatureManager" );
+	if ( cls == nil )
+		return;
+	[[cls sharedInstance] enableFeatureNamed: [[NSBundle bundleForClass: self] bundleIdentifier]];
+}
 
 // Override to allow FrontRow to load custom appliance plugins
 + (NSString *) className {
+	NSLog(@"XBMCAppliance className");
 	// this function creates an NSString from the contents of the
 	// struct objc_class, which means using this will not call this
 	// function recursively, and it'll also return the *real* class
