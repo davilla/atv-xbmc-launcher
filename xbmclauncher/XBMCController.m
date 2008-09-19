@@ -212,6 +212,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 			return NO;
 		}
 		unsigned int hashVal = [event pageUsageHash];
+		NSLog([NSString stringWithFormat:@"XBMCController: Button press hashVal = %i",hashVal]);
 		switch (hashVal)
 		{
 			case 65676:  // tap up
@@ -248,7 +249,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 				[mp_xbmclient handleEvent:ATV_BUTTON_MENU_H];
 				return YES;
 			default:
-				NSLog([NSString stringWithFormat:@"Unknown button press hashVal = %i",hashVal]);
+				NSLog([NSString stringWithFormat:@"XBMCController: Unknown button press hashVal = %i",hashVal]);
 				return NO;
 		}
 	} else {

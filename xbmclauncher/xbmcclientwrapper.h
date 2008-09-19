@@ -3,7 +3,7 @@
  *  xbmclauncher
  *
  *  Created by Stephan Diederich on 17.09.08.
- *  Copyright 2008 University Heidelberg. All rights reserved.
+ *  Copyright 2008 Stephan Diederich. All rights reserved.
  *
  */
 
