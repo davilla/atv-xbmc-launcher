@@ -15,7 +15,7 @@
 	NSTask* task; //task for xbmc. is needed as a member, as we check status later
 	NSString* mp_app_path; //which app to launch
 	XBMCClientWrapper* mp_xbmclient;
-	BOOL m_enable_xbmcclient;
+	BOOL m_enable_xbmcclient; //set to true so that menu events get sent to XBMC instead of this controller
 }
 
 - (id) initWithPath:(NSString*) f_path;

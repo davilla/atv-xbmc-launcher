@@ -36,9 +36,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 	NSLog(@"init XBMCController");
 	if ( ![super init] )
 		return ( nil );
-	m_enable_xbmcclient = YES;
-	if(m_enable_xbmcclient)
-		mp_xbmclient = [[XBMCClientWrapper alloc] init];
+	m_enable_xbmcclient = NO;
+	mp_xbmclient = [[XBMCClientWrapper alloc] init];
 	mp_app_path=f_path;
 	[mp_app_path retain]; 
 	return self;
@@ -70,11 +69,12 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 	NSLog(@"checkTaskStatus");
 	if (! [task isRunning])
 	{
-		NSLog(@"task stopped!");
+		NSLog(@"task stopped! give back remote commands to Controller");
+		m_enable_xbmcclient = NO;
 		NSLog([NSString stringWithFormat: @"shielded: %i", CGShieldingWindowID(CGMainDisplayID())]);
 		// Return code for XBMC
 		int status = [[note object] terminationStatus];
-	
+		
 		// release the old task, as a new one gets created (if
 		[task release];
 		task = nil;
@@ -139,6 +139,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 		[[self stack] swapController:alert];
 		return [super wasPushed];
 	}
+	//enable XBMC-Client
+	m_enable_xbmcclient = YES;
 	//wait a bit for task to start
 	NSDate *future = [NSDate dateWithTimeIntervalSinceNow: 0.1];
 	[NSThread sleepUntilDate:future];
@@ -155,6 +157,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 {
 	// The user pressed Menu, but we've not been removed from the screen yet
 	NSLog(@"willbepopped");
+	m_enable_xbmcclient = NO;
 	// always call super
 	[super willBePopped];
 }
@@ -253,6 +256,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 				return NO;
 		}
 	} else {
+		NSLog(@"bypassing controller, give event upstairs...");
 		return [super brEventAction:event];
 	}
 }
