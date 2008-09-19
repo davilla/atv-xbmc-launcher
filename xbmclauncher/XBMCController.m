@@ -120,7 +120,10 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 	//reenabled to test in 2.02
 	[[NSNotificationCenter defaultCenter] postNotificationName:@"BRDisplayManagerStopRenderingNotification"
 																											object:[BRDisplayManager sharedInstance]];
-	[[BRDisplayManager sharedInstance] releaseAllDisplays];
+	const unsigned int NO_OF_RELEASES = 5;
+	unsigned int i;
+	for(i = 0; i < NO_OF_RELEASES; ++i)
+		[[BRDisplayManager sharedInstance] releaseAllDisplays];
 	//start xbmc
 	task = [[NSTask alloc] init];
 	@try {
