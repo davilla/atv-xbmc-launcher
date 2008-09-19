@@ -67,7 +67,6 @@
 		//there can be more than one xbmc entry in the list, e.g. to test developer version etc.
 		//so read the path of current and pass to controller
 		NSString* path = [obj valueForKey:@"path"];
-		NSLog([NSString stringWithFormat:@"path found: %@", path]);
 		return [[[XBMCController alloc] initWithPath:path] autorelease];
 	} else if ( [identifier isEqualToString:@"XBMCUpdate"] ){
 		// here we want to use something like BRTextWithSpinnerController to get the update running
