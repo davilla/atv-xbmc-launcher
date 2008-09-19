@@ -115,15 +115,15 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 - (void) wasPushed
 {
 	NSLog(@"wasPushed");
+	[[BRDisplayManager sharedInstance] 	fadeOutDisplay];
 	//We've just been put on screen, the user can see this controller's content now	
 	//Hide frontrow menu this seems not to be needed for 2.1. XBMC is aggressive enough...
 	//reenabled to test in 2.02
+	NSLog([NSString stringWithFormat:@"displayCaptured? %i", CGDisplayIsCaptured (CGMainDisplayID())]); 
 	[[NSNotificationCenter defaultCenter] postNotificationName:@"BRDisplayManagerStopRenderingNotification"
 																											object:[BRDisplayManager sharedInstance]];
-	const unsigned int NO_OF_RELEASES = 5;
-	unsigned int i;
-	for(i = 0; i < NO_OF_RELEASES; ++i)
-		[[BRDisplayManager sharedInstance] releaseAllDisplays];
+	[[BRDisplayManager sharedInstance] releaseAllDisplays];
+	NSLog([NSString stringWithFormat:@"displayCaptured? %i", CGDisplayIsCaptured (CGMainDisplayID())]); 
 	//start xbmc
 	task = [[NSTask alloc] init];
 	@try {
