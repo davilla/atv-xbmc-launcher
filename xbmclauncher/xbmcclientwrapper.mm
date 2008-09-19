@@ -61,7 +61,7 @@ typedef std::map<eATVClientEvent, CPacketBUTTON*> tEventMap;
 -(void) handleEvent:(eATVClientEvent) f_event{	
 	tEventMap::iterator it = mp_event_map->find(f_event);
 	if(it == mp_event_map->end()){
-		NSLog(@"XBMCClientWrapperImpl::handleEvent: Unknown event!");	
+		NSLog([NSString stringWithFormat:@"XBMCClientWrapperImpl::handleEvent: No mapping defined for event %i", f_event]);	
 		return;
 	}
 	CPacketBUTTON& packet = *(it->second);
