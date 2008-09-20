@@ -327,7 +327,7 @@
 				INSTALL_PATH = "/System/Library/CoreServices/Front Row.app/Contents/PlugIns/";
 				LIBRARY_SEARCH_PATHS = "$(SRCROOT)/..";
 				PRODUCT_NAME = XBMCLauncher;
-				SDKROOT = macosx10.4;
+				SDKROOT = "$(DEVELOPER_SDK_DIR)/MacOSX10.4u.sdk\n";
 				WRAPPER_EXTENSION = frappliance;
 			};
 			name = Debug;
@@ -350,7 +350,7 @@
 				INSTALL_PATH = "/System/Library/CoreServices/Front Row.app/Contents/PlugIns/";
 				LIBRARY_SEARCH_PATHS = "$(SRCROOT)/..";
 				PRODUCT_NAME = XBMCLauncher;
-				SDKROOT = macosx10.4;
+				SDKROOT = "$(DEVELOPER_SDK_DIR)/MacOSX10.4u.sdk\n";
 				WRAPPER_EXTENSION = frappliance;
 			};
 			name = Release;
