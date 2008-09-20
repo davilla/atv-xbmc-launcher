@@ -16,9 +16,10 @@
 	NSString* mp_app_path; //which app to launch
 	XBMCClientWrapper* mp_xbmclient;
 	BOOL m_enable_xbmcclient; //set to true so that menu events get sent to XBMC instead of this controller
+	NSTimer* timer;
 }
 
 - (id) initWithPath:(NSString*) f_path;
 - (void) checkTaskStatus:(NSNotification *)note;
-
+- (void) appTerminated:(NSNotification *) note;
 @end

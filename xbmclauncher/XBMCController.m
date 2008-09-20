@@ -23,6 +23,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #import "xbmcclientwrapper.h"
 @class BRLayerController;
 
+
 @implementation XBMCController
 - (id) init
 {
@@ -124,7 +125,12 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 	 options:NSWorkspaceLaunchAndHideOthers
 	 additionalEventParamDescriptor:NULL
 	 launchIdentifier:nil];
-	 
+	[[NSNotificationCenter defaultCenter] addObserver:self 
+						 selector:@selector(appTerminated:) 
+								 name:NSWorkspaceDidTerminateApplicationNotification 
+							 object:nil
+	 ];
+	
 	[[NSNotificationCenter defaultCenter] postNotificationName:@"BRDisplayManagerStopRenderingNotification"
 																											object:[BRDisplayManager sharedInstance]];
 	[[BRDisplayManager sharedInstance] releaseAllDisplays];
@@ -162,10 +168,18 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 																					 selector:@selector(checkTaskStatus:)
 																							 name:NSTaskDidTerminateNotification
 																						 object:task];
-	// always call super
-	[super wasPushed];
+	// NEVER! call super this brings Frontrow back on screen
+	//[super wasPushed];
 }
-
+- (void) appTerminated:(NSNotification *) note
+{
+    NSLog(@"terminated %@\n", [[note userInfo] objectForKey:@"NSApplicationName"]);
+	// Show frontrow menu 
+	[[NSNotificationCenter defaultCenter] postNotificationName:@"BRDisplayManagerResumeRenderingNotification"
+																											object:[BRDisplayManager sharedInstance]];
+	[[BRDisplayManager sharedInstance] captureAllDisplays];
+	[[self stack] popController];
+}
 - (void) willBePopped
 {
 	// The user pressed Menu, but we've not been removed from the screen yet
