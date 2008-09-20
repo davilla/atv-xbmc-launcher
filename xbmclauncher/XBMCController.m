@@ -136,13 +136,12 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 	NSLog([NSString stringWithFormat: @"BRRenderScene windowList size: %i", [[[BRRenderScene singleton] windowList] count]]);							
 	NSLog(@"BRRenderScene window stuff");	
 	BRWindow* win = [[[BRRenderScene singleton] windowList] objectAtIndex:0];
-	[[[BRRenderScene singleton] windowList] removeObjectAtIndex:0];
 	NSLog([NSString stringWithFormat: @"isOpaque: %i", 	[win isOpaque]]);		
 	NSLog([NSString stringWithFormat: @"acceptsFocus: %i", 	[win acceptsFocus]]);		
 	NSLog([NSString stringWithFormat: @"level: %i", 	[win level]]);		
 	[win setLevel:NSNormalWindowLevel];
 	BRRenderScene* scene = [BRRenderScene singleton];
-//	[BRRenderScene setSingleton:nil ];
+	[BRRenderScene setSingleton:nil ];
 
 	[[NSNotificationCenter defaultCenter] postNotificationName:@"BRDisplayManagerStopRenderingNotification"
 																											object:[BRDisplayManager sharedInstance]];
