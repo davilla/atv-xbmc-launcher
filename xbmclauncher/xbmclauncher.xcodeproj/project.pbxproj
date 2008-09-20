@@ -39,6 +39,7 @@
 		E4C9555B0E8199B300E6BAFE /* BackRow.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E4C9555A0E8199B300E6BAFE /* BackRow.framework */; };
 		E4C95B570E81C62100E6BAFE /* xbmcclientwrapper.mm in Sources */ = {isa = PBXBuildFile; fileRef = E4C95B560E81C62100E6BAFE /* xbmcclientwrapper.mm */; };
 		E4C960810E84063500E6BAFE /* Splash.png in Resources */ = {isa = PBXBuildFile; fileRef = E4C960800E84063500E6BAFE /* Splash.png */; };
+		E4C964B80E85A56400E6BAFE /* XBMCUpdateController.m in Sources */ = {isa = PBXBuildFile; fileRef = E4C964B70E85A56400E6BAFE /* XBMCUpdateController.m */; };
 		E4C9718A0E7C036400B33973 /* XBMCAppliance.m in Sources */ = {isa = PBXBuildFile; fileRef = E4C971890E7C036400B33973 /* XBMCAppliance.m */; };
 		E4C9727A0E7C15D800B33973 /* AppKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E4C972790E7C15D800B33973 /* AppKit.framework */; };
 		E4C972B10E7C337B00B33973 /* XBMCController.m in Sources */ = {isa = PBXBuildFile; fileRef = E4C972B00E7C337B00B33973 /* XBMCController.m */; };
@@ -76,6 +77,8 @@
 		E4C95B550E81C62100E6BAFE /* xbmcclientwrapper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = xbmcclientwrapper.h; sourceTree = "<group>"; };
 		E4C95B560E81C62100E6BAFE /* xbmcclientwrapper.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = xbmcclientwrapper.mm; sourceTree = "<group>"; };
 		E4C960800E84063500E6BAFE /* Splash.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Splash.png; sourceTree = "<group>"; };
+		E4C964B60E85A56400E6BAFE /* XBMCUpdateController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XBMCUpdateController.h; sourceTree = "<group>"; };
+		E4C964B70E85A56400E6BAFE /* XBMCUpdateController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XBMCUpdateController.m; sourceTree = "<group>"; };
 		E4C971880E7C036400B33973 /* XBMCAppliance.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XBMCAppliance.h; sourceTree = "<group>"; };
 		E4C971890E7C036400B33973 /* XBMCAppliance.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XBMCAppliance.m; sourceTree = "<group>"; };
 		E4C972790E7C15D800B33973 /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = ../MacOSX10.4u.sdk/System/Library/Frameworks/AppKit.framework; sourceTree = SDKROOT; };
@@ -141,6 +144,8 @@
 				E4C971890E7C036400B33973 /* XBMCAppliance.m */,
 				E4C972AF0E7C337B00B33973 /* XBMCController.h */,
 				E4C972B00E7C337B00B33973 /* XBMCController.m */,
+				E4C964B60E85A56400E6BAFE /* XBMCUpdateController.h */,
+				E4C964B70E85A56400E6BAFE /* XBMCUpdateController.m */,
 			);
 			name = Classes;
 			sourceTree = "<group>";
@@ -270,6 +275,7 @@
 				E4C9718A0E7C036400B33973 /* XBMCAppliance.m in Sources */,
 				E4C972B10E7C337B00B33973 /* XBMCController.m in Sources */,
 				E4C95B570E81C62100E6BAFE /* xbmcclientwrapper.mm in Sources */,
+				E4C964B80E85A56400E6BAFE /* XBMCUpdateController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

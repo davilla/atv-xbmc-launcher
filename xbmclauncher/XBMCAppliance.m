@@ -21,6 +21,13 @@
 
 #import "XBMCAppliance.h"
 #import "XBMCController.h"
+#import "XBMCUpdateController.h"
+
+typedef enum {
+	APPLICATION = 0,
+	UPDATER = 1
+} eControllerType;
+
 @implementation XBMCAppliance
 + (void) initialize
 {
@@ -63,17 +70,16 @@
 	}
 	NSNumber*	entry_type = [obj valueForKey:@"entry-type"];
 	//entry type is the key if this is an XBMC.app entry or something else like updater, etc
-	if( [entry_type isEqualToNumber:[NSNumber numberWithInt:0]] ){
+	if( [entry_type isEqualToNumber:[NSNumber numberWithInt: APPLICATION]] ){
 		//there can be more than one xbmc entry in the list, e.g. to test developer version etc.
 		//so read the path of current and pass to controller
 		NSString* path = [obj valueForKey:@"path"];
 		return [[[XBMCController alloc] initWithPath:path] autorelease];
-	} else if ( [identifier isEqualToString:@"XBMCUpdate"] ){
+	} 
+	else if ( [entry_type isEqualToNumber:[NSNumber numberWithInt: UPDATER]] ){
 		// here we want to use something like BRTextWithSpinnerController to get the update running
-		return [BRAlertController alertOfType:0
-																	 titled:identifier
-															primaryText:@"XBMC Update not implemented yet"
-														secondaryText:nil];		
+		NSURL* url = [obj valueForKey:@"URL"];
+		return [[[XBMCUpdateController alloc] initWithURL:url] autorelease];
 	} else {
 		return [BRAlertController alertOfType:0
 														titled:@"XBMCLauncher"

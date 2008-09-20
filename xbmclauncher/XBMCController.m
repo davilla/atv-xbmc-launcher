@@ -117,29 +117,21 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 {
 	NSLog(@"wasPushed");
 	[[BRDisplayManager sharedInstance] 	fadeOutDisplay];
-	/*
 	//We've just been put on screen, the user can see this controller's content now	
 	//Hide frontrow menu this seems not to be needed for 2.1. XBMC is aggressive enough...
 	//reenabled to test in 2.02
-	[[NSWorkspace sharedWorkspace]
-	 launchAppWithBundleIdentifier:@"com.teamxbmc.xbmc"
-	 options:NSWorkspaceLaunchAndHideOthers
-	 additionalEventParamDescriptor:NULL
-	 launchIdentifier:nil];
-	[[NSNotificationCenter defaultCenter] addObserver:self 
-						 selector:@selector(appTerminated:) 
-								 name:NSWorkspaceDidTerminateApplicationNotification 
-							 object:nil
-	 ];
-	*/
 	[[NSNotificationCenter defaultCenter] postNotificationName:@"BRDisplayManagerStopRenderingNotification"
 																											object:[BRDisplayManager sharedInstance]];
 	[[BRDisplayManager sharedInstance] releaseAllDisplays];
 	//start xbmc
 	task = [[NSTask alloc] init];
 	@try {
-		[task setLaunchPath: @"/usr/bin/open"];
-		[task setArguments:[NSArray arrayWithObject:@"/Users/frontrow/Applications/XBMC.app"]]; // fullscreen seems to be ignored...
+
+//		[task setLaunchPath: @"/usr/bin/open"];
+//		[task setArguments:[NSArray arrayWithObject:@"/Users/frontrow/Applications/XBMC.app"]];
+
+		[task setLaunchPath: mp_app_path];
+		[task setArguments:[NSArray arrayWithObject:@"-fs"]]; // fullscreen seems to be ignored...
 		[task launch];
 	} 
 	@catch (NSException* e) {
@@ -154,34 +146,22 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 		[[self stack] swapController:alert];
 		return [super wasPushed];
 	}
-	NSLog(@"app launched");
 
 	//enable XBMC-Client
 	m_enable_xbmcclient = YES;
 	//wait a bit for task to start
 	NSDate *future = [NSDate dateWithTimeIntervalSinceNow: 0.1];
 	[NSThread sleepUntilDate:future];
-/*
+
 	//attach our listener
 	[[NSNotificationCenter defaultCenter] addObserver:self
 																					 selector:@selector(checkTaskStatus:)
 																							 name:NSTaskDidTerminateNotification
 																						 object:task];
-*/
 	// NEVER! call super this brings Frontrow back on screen
 	//[super wasPushed];
 }
-- (void) appTerminated:(NSNotification *) note
-{
-    NSLog(@"terminated %@\n", [[note userInfo] objectForKey:@"NSApplicationName"]);
-	if(false){
-	// Show frontrow menu 
-	[[NSNotificationCenter defaultCenter] postNotificationName:@"BRDisplayManagerResumeRenderingNotification"
-																											object:[BRDisplayManager sharedInstance]];
-	[[BRDisplayManager sharedInstance] captureAllDisplays];
-	[[self stack] popController];
-	}
-}
+
 - (void) willBePopped
 {
 	// The user pressed Menu, but we've not been removed from the screen yet

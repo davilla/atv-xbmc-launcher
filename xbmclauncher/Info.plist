@@ -40,7 +40,7 @@
 			<key>priority</key>
 			<real>6</real>
 			<key>entry-type</key>
-			<real>0</real>
+			<integer>0</integer>
 			<key>path</key>
 			<string>/Users/frontrow/Applications/XBMC.app/Contents/MacOS/XBMC</string>
 		</dict>
@@ -61,14 +61,16 @@
 			<real>7</real>
 			<key>entry-type</key>
 			<real>1</real>
+			<key>URL</key>
+			<string>http://downloads.sourceforge.net/xbmc/XBMC_for_Mac-Atlantis-Beta_1.dmg</string>
 		</dict>
 	</array>
 	<key>FRApplianceIconHorizontalOffset</key>
 	<real>-0.055</real>
 	<key>FRApplianceIconReflectionOffset</key>
-	<real>-0.20999999999999999</real>
+	<real>-0.21</real>
 	<key>FRAppliancePreferedOrderValue</key>
-	<real>0.0</real>
+	<real>0</real>
 	<key>FRRemoteAppliance</key>
 	<true/>
 </dict>
