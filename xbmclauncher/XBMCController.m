@@ -133,7 +133,10 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 	NSLog([NSString stringWithFormat: @"windowRef: %i", [[[NSApplication sharedApplication] mainWindow] windowRef]]);
 	NSLog(@"BRRenderScene stuff");	
 	NSLog([NSString stringWithFormat: @"BRRenderScene windowList: %i", [[BRRenderScene singleton] windowList]]);							
-	NSLog([NSString stringWithFormat: @"BRRenderScene windowList size: %i", [[[BRRenderScene singleton] windowList] count]]);							
+	NSLog([NSString stringWithFormat: @"BRRenderScene windowList size: %i", [[[BRRenderScene singleton] windowList] count]]);
+	NSLog([NSString stringWithFormat: @"BRRenderScene opaque: %i", [[BRRenderScene singleton] opaque] ]);	
+	NSLog([NSString stringWithFormat: @"BRRenderScene size x: %i", [[BRRenderScene singleton] size].width]);							
+	NSLog([NSString stringWithFormat: @"BRRenderScene size y: %i", [[BRRenderScene singleton] size].height]);							
 	NSLog(@"BRRenderScene window stuff");	
 	BRWindow* win = [[[BRRenderScene singleton] windowList] objectAtIndex:0];
 	NSLog([NSString stringWithFormat: @"isOpaque: %i", 	[win isOpaque]]);		
@@ -141,7 +144,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 	NSLog([NSString stringWithFormat: @"level: %i", 	[win level]]);		
 	[win setLevel:NSNormalWindowLevel];
 	BRRenderScene* scene = [BRRenderScene singleton];
-	[BRRenderScene setSingleton:nil ];
+	[scene setOpaque:FALSE]; 
 
 	[[NSNotificationCenter defaultCenter] postNotificationName:@"BRDisplayManagerStopRenderingNotification"
 																											object:[BRDisplayManager sharedInstance]];
