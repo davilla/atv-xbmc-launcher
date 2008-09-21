@@ -119,10 +119,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 {
 	PRINT_SIGNATURE();
 //	[[BRDisplayManager sharedInstance] 	fadeOutDisplay];
-	//save stack for later use:
-	mp_stack = [self stack];
-	//set stack to nil, so nothing gets drawn
-	[self setStack: nil];
+
 	//We've just been put on screen, the user can see this controller's content now	
 	//Hide frontrow menu this seems not to be needed for 2.1. XBMC is aggressive enough...
 	//reenabled to test in 2.02
@@ -169,6 +166,10 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 	// NEVER! call super this brings Frontrow back on screen
 	//[super wasPushed];
+	//save stack for later use:
+	mp_stack = [self stack];
+	//set stack to nil, so nothing gets drawn
+	[self setStack: nil];
 }
 
 - (void) willBePopped
