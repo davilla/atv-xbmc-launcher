@@ -9,13 +9,11 @@
 #import <Cocoa/Cocoa.h>
 #import <BackRow/BackRow.h>
 
-@interface XBMCUpdateController : BRController {
+@interface XBMCUpdateController : BRCenteredMenuController {
 	int padding[16];	// credit is due here to SapphireCompatibilityClasses!!
-	NSURL * mp_url;
-	id	mp_update_urls_plist;
-	BRHeaderControl* mp_header;
-	BRListControl * mp_updates;
+	NSURL * mp_url; //url where to get udaters plist from
+	NSMutableArray* mp_items; //list items
+	NSMutableArray*	mp_updates; //list with entries what updates/downloads we offer 
 }
-- (NSRect) frame; //just here to get it compiling. method is from some super class
 - (id) initWithURL:(NSURL*) fp_url;
 @end
