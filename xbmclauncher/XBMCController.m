@@ -76,7 +76,6 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 	{
 		NSLog(@"task stopped! give back remote commands to Controller");
 		m_enable_xbmcclient = NO;
-		NSLog([NSString stringWithFormat: @"shielded: %i", CGShieldingWindowID(CGMainDisplayID())]);
 		// Return code for XBMC
 		int status = [[note object] terminationStatus];
 		
@@ -88,7 +87,6 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 		[[NSNotificationCenter defaultCenter] postNotificationName:@"BRDisplayManagerResumeRenderingNotification"
 																												object:[BRDisplayManager sharedInstance]];
 		[[BRDisplayManager sharedInstance] captureAllDisplays];
-		NSLog([NSString stringWithFormat: @"shielded: %i", CGShieldingWindowID(CGMainDisplayID())]);
 		if (status != 0)
 		{
 			BRAlertController* alert = [BRAlertController alertOfType:0 titled:nil
@@ -162,12 +160,12 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 																					 selector:@selector(checkTaskStatus:)
 																							 name:NSTaskDidTerminateNotification
 																						 object:task];
-	// NEVER! call super this brings Frontrow back on screen
-	//[super wasPushed];
 	//save stack for later use:
 	mp_stack = [self stack];
 	//set stack to nil, so nothing gets drawn
 	[self setStack: nil];
+	// NEVER! call super this brings Frontrow back on screen
+	//[super wasPushed];
 }
 
 - (void) willBePopped
