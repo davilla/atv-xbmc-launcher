@@ -19,11 +19,12 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
+#import <BackRow/BackRow.h>
 #import "XBMCController.h"
 #import "XBMCDebugHelpers.h"
 #import "xbmcclientwrapper.h"
-@class BRLayerController;
 
+@class BRLayerController;
 
 @implementation XBMCController
 - (id) init
@@ -69,6 +70,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 - (void)checkTaskStatus:(NSNotification *)note
 {
 	PRINT_SIGNATURE();
+	//reset stack, so stuff gets drawn
+	[self setStack: mp_stack];
 	if (! [task isRunning])
 	{
 		NSLog(@"task stopped! give back remote commands to Controller");
@@ -161,6 +164,10 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 																						 object:task];
 	// NEVER! call super this brings Frontrow back on screen
 	//[super wasPushed];
+	//save stack for later use:
+	mp_stack = [self stack];
+	//set stack to nil, so nothing gets drawn
+	[self setStack: nil];
 }
 
 - (void) willBePopped
@@ -220,10 +227,12 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 - (BOOL)brEventAction:(BREvent *)event
 {
 	if(m_enable_xbmcclient){
+	/*
 		if ([[self stack] peekController] != self){
 			NSLog(@"Not on top of the stack, exiting...");
 			return NO;
 		}
+	*/
 		unsigned int hashVal = [event pageUsageHash];
 		NSLog([NSString stringWithFormat:@"XBMCController: Button press hashVal = %i",hashVal]);
 		switch (hashVal)
