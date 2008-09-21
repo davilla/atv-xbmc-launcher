@@ -79,6 +79,7 @@
 		E4C960800E84063500E6BAFE /* Splash.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Splash.png; sourceTree = "<group>"; };
 		E4C964B60E85A56400E6BAFE /* XBMCUpdateController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XBMCUpdateController.h; sourceTree = "<group>"; };
 		E4C964B70E85A56400E6BAFE /* XBMCUpdateController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XBMCUpdateController.m; sourceTree = "<group>"; };
+		E4C965ED0E85C46300E6BAFE /* update_urls.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = update_urls.plist; path = ../data/update_urls.plist; sourceTree = SOURCE_ROOT; };
 		E4C971880E7C036400B33973 /* XBMCAppliance.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XBMCAppliance.h; sourceTree = "<group>"; };
 		E4C971890E7C036400B33973 /* XBMCAppliance.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XBMCAppliance.m; sourceTree = "<group>"; };
 		E4C972790E7C15D800B33973 /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = ../MacOSX10.4u.sdk/System/Library/Frameworks/AppKit.framework; sourceTree = SDKROOT; };
@@ -131,6 +132,7 @@
 				E4C974B90E7DAF7100B33973 /* killxbmchelper.sh */,
 				8D5B49B7048680CD000E48DA /* Info.plist */,
 				089C167DFE841241C02AAC07 /* InfoPlist.strings */,
+				E4C965ED0E85C46300E6BAFE /* update_urls.plist */,
 			);
 			name = Resources;
 			sourceTree = "<group>";
@@ -327,7 +329,7 @@
 				INSTALL_PATH = "/System/Library/CoreServices/Front Row.app/Contents/PlugIns/";
 				LIBRARY_SEARCH_PATHS = "$(SRCROOT)/..";
 				PRODUCT_NAME = XBMCLauncher;
-				SDKROOT = "$(DEVELOPER_SDK_DIR)/MacOSX10.4u.sdk\n";
+				SDKROOT = "$(DEVELOPER_SDK_DIR)/MacOSX10.4u.sdk";
 				WRAPPER_EXTENSION = frappliance;
 			};
 			name = Debug;
@@ -350,7 +352,7 @@
 				INSTALL_PATH = "/System/Library/CoreServices/Front Row.app/Contents/PlugIns/";
 				LIBRARY_SEARCH_PATHS = "$(SRCROOT)/..";
 				PRODUCT_NAME = XBMCLauncher;
-				SDKROOT = "$(DEVELOPER_SDK_DIR)/MacOSX10.4u.sdk\n";
+				SDKROOT = "$(DEVELOPER_SDK_DIR)/MacOSX10.4u.sdk";
 				WRAPPER_EXTENSION = frappliance;
 			};
 			name = Release;
