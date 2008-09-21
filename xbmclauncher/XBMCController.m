@@ -118,7 +118,11 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 - (void) wasPushed
 {
 	PRINT_SIGNATURE();
-	[[BRDisplayManager sharedInstance] 	fadeOutDisplay];
+//	[[BRDisplayManager sharedInstance] 	fadeOutDisplay];
+	//save stack for later use:
+	mp_stack = [self stack];
+	//set stack to nil, so nothing gets drawn
+	[self setStack: nil];
 	//We've just been put on screen, the user can see this controller's content now	
 	//Hide frontrow menu this seems not to be needed for 2.1. XBMC is aggressive enough...
 	//reenabled to test in 2.02
@@ -137,6 +141,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 		[task launch];
 	} 
 	@catch (NSException* e) {
+		//setup stack again
+		[self setStack:mp_stack];
 		// Show frontrow menu 
 		[[NSNotificationCenter defaultCenter] postNotificationName:@"BRDisplayManagerResumeRenderingNotification"
 																												object:[BRDisplayManager sharedInstance]];
@@ -160,10 +166,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 																					 selector:@selector(checkTaskStatus:)
 																							 name:NSTaskDidTerminateNotification
 																						 object:task];
-	//save stack for later use:
-	mp_stack = [self stack];
-	//set stack to nil, so nothing gets drawn
-	[self setStack: nil];
+
 	// NEVER! call super this brings Frontrow back on screen
 	//[super wasPushed];
 }
