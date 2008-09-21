@@ -60,9 +60,9 @@
 			<key>priority</key>
 			<real>7</real>
 			<key>entry-type</key>
-			<real>1</real>
+			<integer>1</integer>
 			<key>URL</key>
-			<string>http://downloads.sourceforge.net/xbmc/XBMC_for_Mac-Atlantis-Beta_1.dmg</string>
+			<string>http://atv-xbmc-launcher.googlecode.com/svn/trunk/data/update_urls.plist</string>
 		</dict>
 	</array>
 	<key>FRApplianceIconHorizontalOffset</key>
