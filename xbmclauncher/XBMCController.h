@@ -21,5 +21,4 @@
 
 - (id) initWithPath:(NSString*) f_path;
 - (void) checkTaskStatus:(NSNotification *)note;
-- (void) appTerminated:(NSNotification *) note;
 @end
