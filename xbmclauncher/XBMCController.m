@@ -118,6 +118,11 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 - (void) wasPushed
 {
 	PRINT_SIGNATURE();
+	//wait for frontrow to settle down
+	NSLog(@"waiting a bit...");
+	NSDate *future = [NSDate dateWithTimeIntervalSinceNow: 1.];
+	[NSThread sleepUntilDate:future];
+	NSLog(@"... finished");
 //	[[BRDisplayManager sharedInstance] 	fadeOutDisplay];
 
 	//We've just been put on screen, the user can see this controller's content now	
