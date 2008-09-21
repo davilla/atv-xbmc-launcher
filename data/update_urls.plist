@@ -1,15 +1,22 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
-<dict>
-	<key>Apps</key>
-	<array>
-		<dict>
-			<key>Name</key>
-			<string>Beta1</string>
-			<key>URL</key>
-			<string>http://downloads.sourceforge.net/xbmc/XBMC_for_Mac-Atlantis-Beta_1.dmg</string>
-		</dict>
-	</array>
-</dict>
+<array>
+	<dict>
+		<key>URL</key>
+		<string>http://downloads.sourceforge.net/xbmc/XBMC_for_Mac-Atlantis-Beta_1.dmg</string>
+		<key>Type</key>
+		<string>Application</string>
+		<key>Name</key>
+		<string>XBMC Beta1</string>
+	</dict>
+	<dict>
+		<key>URL</key>
+		<string>http://somewhere.com</string>
+		<key>Name</key>
+		<string>testSkin</string>
+		<key>Type</key>
+		<string>Skin</string>
+	</dict>
+</array>
 </plist>
