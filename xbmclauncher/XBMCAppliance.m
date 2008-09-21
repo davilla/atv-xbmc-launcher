@@ -22,6 +22,7 @@
 #import "XBMCAppliance.h"
 #import "XBMCController.h"
 #import "XBMCUpdateController.h"
+#import "XBMCDebugHelpers.h"
 
 typedef enum {
 	APPLICATION = 0,
@@ -31,7 +32,7 @@ typedef enum {
 @implementation XBMCAppliance
 + (void) initialize
 {
-	NSLog(@"XBMCAppliance initialize");
+	PRINT_SIGNATURE();
 	Class cls = NSClassFromString( @"BRFeatureManager" );
 	if ( cls == nil )
 		return;
@@ -40,7 +41,7 @@ typedef enum {
 
 // Override to allow FrontRow to load custom appliance plugins
 + (NSString *) className {
-	NSLog(@"XBMCAppliance className");
+	PRINT_SIGNATURE();
 	// this function creates an NSString from the contents of the
 	// struct objc_class, which means using this will not call this
 	// function recursively, and it'll also return the *real* class
@@ -78,7 +79,7 @@ typedef enum {
 	} 
 	else if ( [entry_type isEqualToNumber:[NSNumber numberWithInt: UPDATER]] ){
 		// here we want to use something like BRTextWithSpinnerController to get the update running
-		NSURL* url = [obj valueForKey:@"URL"];
+		NSURL* url = [NSURL URLWithString: [obj valueForKey:@"URL"]];
 		return [[[XBMCUpdateController alloc] initWithURL:url] autorelease];
 	} else {
 		return [BRAlertController alertOfType:0
