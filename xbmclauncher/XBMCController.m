@@ -20,6 +20,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
 #import "XBMCController.h"
+#import "XBMCDebugHelpers.h"
 #import "xbmcclientwrapper.h"
 @class BRLayerController;
 
@@ -34,7 +35,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 -(id) initWithPath:(NSString*) f_path
 {
-	NSLog(@"init XBMCController");
+	PRINT_SIGNATURE();
 	if ( ![super init] )
 		return ( nil );
 	m_enable_xbmcclient = NO;
@@ -46,7 +47,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 - (void)dealloc
 {
-	NSLog(@"deallocating...");
+	PRINT_SIGNATURE();
 	[mp_xbmclient release];
 	[mp_app_path release];
 	[super dealloc];
@@ -54,20 +55,20 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 - (void)controlWasActivated
 {
-	NSLog(@"controlWasActivated");
+	PRINT_SIGNATURE();
 	[super controlWasActivated];
 }
 
 - (void)controlWasDeactivated
 {
-	NSLog(@"controlWasDeactivated");
+	PRINT_SIGNATURE();
 	//gets called when powered down (long play)
 	//TODO: Shutdown xbmc?
 	[super controlWasDeactivated];
 }
 - (void)checkTaskStatus:(NSNotification *)note
 {
-	NSLog(@"checkTaskStatus");
+	PRINT_SIGNATURE();
 	if (! [task isRunning])
 	{
 		NSLog(@"task stopped! give back remote commands to Controller");
@@ -109,13 +110,13 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 {
 	// We're about to be placed on screen, but we're not yet there
 	// always call super
-	NSLog(@"willbePushed");
+	PRINT_SIGNATURE();
 	[super willBePushed];
 }
 
 - (void) wasPushed
 {
-	NSLog(@"wasPushed");
+	PRINT_SIGNATURE();
 	[[BRDisplayManager sharedInstance] 	fadeOutDisplay];
 	//We've just been put on screen, the user can see this controller's content now	
 	//Hide frontrow menu this seems not to be needed for 2.1. XBMC is aggressive enough...
@@ -165,7 +166,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 - (void) willBePopped
 {
 	// The user pressed Menu, but we've not been removed from the screen yet
-	NSLog(@"willbepopped");
+	PRINT_SIGNATURE();
 	m_enable_xbmcclient = NO;
 	// always call super
 	[super willBePopped];
@@ -174,7 +175,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 - (void) wasPopped
 {
 	// The user pressed Menu, removing us from the screen
-	NSLog(@"wasPopped");
+	PRINT_SIGNATURE();
 	// always call super
 	[super wasPopped];
 }
@@ -182,7 +183,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 - (void) willBeBuried
 {
 	// The user just chose an option, and we will be taken off the screen
-	NSLog(@"willbeBuried");
+	PRINT_SIGNATURE();
 	// always call super
 	[super willBeBuried];
 }
@@ -190,7 +191,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 - (void) wasBuriedByPushingController: (BRLayerController *) controller
 {
 	// The user chose an option and this controller os no longer on screen
-	NSLog(@"wasburiedbypushing");
+	PRINT_SIGNATURE();
 	// always call super
 	[super wasBuriedByPushingController: controller];
 }
@@ -198,7 +199,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 - (void) willBeExhumed
 {
 	// the user pressed Menu, but we've not been revealed yet
-	NSLog(@"willbeexhumed");
+	PRINT_SIGNATURE();
 	// always call super
 	[super willBeExhumed];
 }
@@ -206,7 +207,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 - (void) wasExhumedByPoppingController: (BRLayerController *) controller
 {
 	// handle being revealed when the user presses Menu
-	NSLog(@"wasExhumedByPopping");
+	PRINT_SIGNATURE();
 	// always call super
 	[super wasExhumedByPoppingController: controller];
 }
