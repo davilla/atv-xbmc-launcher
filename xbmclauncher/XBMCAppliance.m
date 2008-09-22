@@ -24,8 +24,8 @@
 #import "XBMCUpdateController.h"
 #import "XBMCDebugHelpers.h"
 
-//enable this one to get notifications to BRDisplayManger logged on command line
-//#define BRDISPLAY_MANAGER_OBSERVATION 1
+//enable this one to get notifications to BRDisplayManger logged
+#define BRDISPLAY_MANAGER_OBSERVATION 1
 
 typedef enum {
 	APPLICATION = 0,
