@@ -87,6 +87,10 @@
 	}
 }
 
+- (BOOL) isNetworkDependent{
+	return TRUE;
+}
+
 - (float)heightForRow:(long)row				{	return 0.0f; }
 - (BOOL)rowSelectable:(long)row				{	return YES;}
 - (long)itemCount							{	return (long) [mp_items count];}
