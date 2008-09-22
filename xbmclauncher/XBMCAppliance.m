@@ -24,6 +24,9 @@
 #import "XBMCUpdateController.h"
 #import "XBMCDebugHelpers.h"
 
+//enable this one to get notifications to BRDisplayManger logged on command line
+//#define BRDISPLAY_MANAGER_OBSERVATION 1
+
 typedef enum {
 	APPLICATION = 0,
 	UPDATER = 1
@@ -56,8 +59,33 @@ typedef enum {
 		NSLog(@"+[%@ className] called for whitelist check, so I'm lying, m'kay?", className);
 		className = @"RUIDVDAppliance";
 	}
-	
 	return className;
+}
+
+#ifdef BRDISPLAY_MANAGER_OBSERVATION
+- (void) listen:(NSNotification*) note{
+	NSLog(@"-------Logged %@", [note name]);
+}
+#endif
+
+- (id) init
+{
+	if( ![super init] )
+		return nil;
+#ifdef BRDISPLAY_MANAGER_OBSERVATION
+	[[NSNotificationCenter defaultCenter] addObserver:self
+																					 selector:@selector(listen:)
+																							 name:nil
+																						 object:[BRDisplayManager sharedInstance]];
+#endif
+	return self;
+}
+- (void) dealloc
+{
+#ifdef BRDISPLAY_MANAGER_OBSERVATION
+	[[NSNotificationCenter defaultCenter] removeObserver:self];
+#endif
+	[super dealloc];
 }
 
 - (id)controllerForIdentifier:(id)identifier {
