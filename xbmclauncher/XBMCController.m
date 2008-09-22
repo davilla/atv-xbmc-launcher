@@ -120,27 +120,17 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 {
 	PRINT_SIGNATURE();
 	[super wasPushed];
-	
-	[[NSNotificationCenter defaultCenter] postNotificationName:@"BRDisplayManagerDisplayOffline"
-																											object:[BRDisplayManager sharedInstance]];
-	
-//	[[BRDisplayManager sharedInstance] 	fadeOutDisplay];
 
 	//We've just been put on screen, the user can see this controller's content now	
-	//Hide frontrow menu this seems not to be needed for 2.1. XBMC is aggressive enough...
-	//reenabled to test in 2.02
+	//Hide frontrow (this is only needed in 720/1080p
+	[[NSNotificationCenter defaultCenter] postNotificationName:@"BRDisplayManagerDisplayOffline"
+																											object:[BRDisplayManager sharedInstance]];
 	[[BRDisplayManager sharedInstance] releaseAllDisplays];
 	[[NSNotificationCenter defaultCenter] postNotificationName:@"BRDisplayManagerStopRenderingNotification"
 																											object:[BRDisplayManager sharedInstance]];
-
-
 	//start xbmc
 	task = [[NSTask alloc] init];
 	@try {
-
-//		[task setLaunchPath: @"/usr/bin/open"];
-//		[task setArguments:[NSArray arrayWithObject:@"/Users/frontrow/Applications/XBMC.app"]];
-
 		[task setLaunchPath: mp_app_path];
 		[task setArguments:[NSArray arrayWithObject:@"-fs"]]; // fullscreen seems to be ignored...
 		[task launch];
