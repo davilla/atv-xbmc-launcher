@@ -8,7 +8,9 @@
 
 #import <Cocoa/Cocoa.h>
 #import <BackRow/BackRow.h>
+
 @class XBMCClientWrapper;
+
 @interface XBMCController : BRController {
 	int padding[16];	// credit is due here to SapphireCompatibilityClasses!!
 	
@@ -17,7 +19,6 @@
 	XBMCClientWrapper* mp_xbmclient;
 	BOOL m_enable_xbmcclient; //set to true so that menu events get sent to XBMC instead of this controller
 	NSTimer* timer;
-	id mp_stack;
 }
 
 - (id) initWithPath:(NSString*) f_path;

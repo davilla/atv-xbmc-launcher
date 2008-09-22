@@ -67,11 +67,12 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 	//TODO: Shutdown xbmc?
 	[super controlWasDeactivated];
 }
+
 - (void)checkTaskStatus:(NSNotification *)note
 {
 	PRINT_SIGNATURE();
-	//reset stack, so stuff gets drawn
-	[self setStack: mp_stack];
+	[[NSNotificationCenter defaultCenter] postNotificationName:@"BRDisplayManagerDisplayOnline"
+																											object:[BRDisplayManager sharedInstance]];
 	if (! [task isRunning])
 	{
 		NSLog(@"task stopped! give back remote commands to Controller");
@@ -118,15 +119,21 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 - (void) wasPushed
 {
 	PRINT_SIGNATURE();
-
+	[super wasPushed];
+	
+	[[NSNotificationCenter defaultCenter] postNotificationName:@"BRDisplayManagerDisplayOffline"
+																											object:[BRDisplayManager sharedInstance]];
+	
 //	[[BRDisplayManager sharedInstance] 	fadeOutDisplay];
 
 	//We've just been put on screen, the user can see this controller's content now	
 	//Hide frontrow menu this seems not to be needed for 2.1. XBMC is aggressive enough...
 	//reenabled to test in 2.02
+	[[BRDisplayManager sharedInstance] releaseAllDisplays];
 	[[NSNotificationCenter defaultCenter] postNotificationName:@"BRDisplayManagerStopRenderingNotification"
 																											object:[BRDisplayManager sharedInstance]];
-	[[BRDisplayManager sharedInstance] releaseAllDisplays];
+
+
 	//start xbmc
 	task = [[NSTask alloc] init];
 	@try {
@@ -139,8 +146,6 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 		[task launch];
 	} 
 	@catch (NSException* e) {
-		//setup stack again
-		[self setStack:mp_stack];
 		// Show frontrow menu 
 		[[NSNotificationCenter defaultCenter] postNotificationName:@"BRDisplayManagerResumeRenderingNotification"
 																												object:[BRDisplayManager sharedInstance]];
@@ -150,7 +155,6 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 																									primaryText:[NSString stringWithFormat:@"Error: Cannot launch XBMC. Path tried was:"]
 																									secondaryText:mp_app_path];
 		[[self stack] swapController:alert];
-		return [super wasPushed];
 	}
 
 	//enable XBMC-Client
@@ -164,13 +168,6 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 																					 selector:@selector(checkTaskStatus:)
 																							 name:NSTaskDidTerminateNotification
 																						 object:task];
-
-	// NEVER! call super this brings Frontrow back on screen
-	//[super wasPushed];
-	//save stack for later use:
-	mp_stack = [self stack];
-	//set stack to nil, so nothing gets drawn
-	[self setStack: nil];
 }
 
 - (void) willBePopped
@@ -225,6 +222,10 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 - (BOOL) recreateOnReselect
 { 
 	return true;
+}
+
+- (BOOL) firstResponder{
+	return TRUE;
 }
 
 - (BOOL)brEventAction:(BREvent *)event
