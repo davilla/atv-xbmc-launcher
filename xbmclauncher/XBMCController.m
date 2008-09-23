@@ -41,7 +41,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 		return ( nil );
 	m_enable_xbmcclient = NO;
 	mp_xbmclient = [[XBMCClientWrapper alloc] init];
-	mp_app_path=f_path;
+	mp_app_path = f_path;
 	[mp_app_path retain]; 
 	return self;
 }
@@ -73,9 +73,11 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 	PRINT_SIGNATURE();
 	[[NSNotificationCenter defaultCenter] postNotificationName:@"BRDisplayManagerDisplayOnline"
 																											object:[BRDisplayManager sharedInstance]];
+	//remove our listener
+	[[NSNotificationCenter defaultCenter] removeObserver:self];
 	if (! [task isRunning])
 	{
-		NSLog(@"task stopped! give back remote commands to Controller");
+		NSLog(@"task stopped! Give back remote commands to Controller");
 		m_enable_xbmcclient = NO;
 		// Return code for XBMC
 		int status = [[note object] terminationStatus];
@@ -90,15 +92,15 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 		[[BRDisplayManager sharedInstance] captureAllDisplays];
 		if (status != 0)
 		{
-			BRAlertController* alert = [BRAlertController alertOfType:0 titled:nil
-																										primaryText:[NSString stringWithFormat:@"Error: XBMC exited With Status: %i",status]
-																										secondaryText:nil];
-			[[self stack] swapController:alert];
 			//now we need to kill XBMCHelper! (if its even running)
 			//TODO for now we use a script as I don't know how to kill a Task with OSX API. any hints are pretty welcome!
 			NSString* killer_path = [[NSBundle bundleForClass:[self class]] pathForResource:@"killxbmchelper" ofType:@"sh"];
 			NSTask* killer = [NSTask launchedTaskWithLaunchPath:@"/bin/bash" arguments: [NSArray arrayWithObject:killer_path]];
 			[killer waitUntilExit];
+			BRAlertController* alert = [BRAlertController alertOfType:0 titled:nil
+																										primaryText:[NSString stringWithFormat:@"Error: XBMC exited With Status: %i",status]
+																									secondaryText:nil];
+			[[self stack] swapController:alert];
 		} else {
 			[[self stack] popController];
 		}
@@ -137,12 +139,14 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 	} 
 	@catch (NSException* e) {
 		// Show frontrow menu 
+		[[NSNotificationCenter defaultCenter] postNotificationName:@"BRDisplayManagerDisplayOnline"
+																												object:[BRDisplayManager sharedInstance]];
 		[[NSNotificationCenter defaultCenter] postNotificationName:@"BRDisplayManagerResumeRenderingNotification"
 																												object:[BRDisplayManager sharedInstance]];
 		[[BRDisplayManager sharedInstance] captureAllDisplays];
 		[[BRDisplayManager sharedInstance] 	fadeInDisplay];
 		BRAlertController* alert = [BRAlertController alertOfType:0 titled:nil
-																									primaryText:[NSString stringWithFormat:@"Error: Cannot launch XBMC. Path tried was:"]
+																									primaryText:[NSString stringWithFormat:@"Error: Cannot launch XBMC from path:"]
 																									secondaryText:mp_app_path];
 		[[self stack] swapController:alert];
 	}
@@ -274,34 +278,4 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 	}
 }
 
-/*
- NSLog(@"NSApplication stuff");
- NSLog([NSString stringWithFormat: @"nsapp: %i", [NSApplication sharedApplication]] );
- NSLog([NSString stringWithFormat: @"shielded: %i", CGShieldingWindowID(CGMainDisplayID())]);
- NSLog([NSString stringWithFormat: @"is hidden: %i", [[NSApplication sharedApplication] isHidden]]);
- NSLog([NSString stringWithFormat: @"is runnning: %i", [[NSApplication sharedApplication] isRunning]]);
- NSLog([NSString stringWithFormat: @"keyWindow: %i", [[NSApplication sharedApplication] keyWindow]]);
- NSLog([NSString stringWithFormat: @"modalwindow: %i", [[NSApplication sharedApplication] modalWindow]]);
- NSLog([NSString stringWithFormat: @"windowsCount: %i", [[[NSApplication sharedApplication] windows] count]]);
- NSLog([NSString stringWithFormat: @"isactive: %i", [[NSApplication sharedApplication] isActive]]);
- NSLog(@"NSApplication mainwindow stuff");
- NSLog([NSString stringWithFormat: @"windowNumber: %i", [[[NSApplication sharedApplication] mainWindow] windowNumber]]);
- NSLog([NSString stringWithFormat: @"windowRef: %i", [[[NSApplication sharedApplication] mainWindow] windowRef]]);
- NSLog(@"BRRenderScene stuff");	
- NSLog([NSString stringWithFormat: @"BRRenderScene windowList: %i", [[BRRenderScene singleton] windowList]]);							
- NSLog([NSString stringWithFormat: @"BRRenderScene windowList size: %i", [[[BRRenderScene singleton] windowList] count]]);
- NSLog([NSString stringWithFormat: @"BRRenderScene opaque: %i", [[BRRenderScene singleton] opaque] ]);	
- NSLog([NSString stringWithFormat: @"BRRenderScene size x: %i", [[BRRenderScene singleton] size].width]);							
- NSLog([NSString stringWithFormat: @"BRRenderScene size y: %i", [[BRRenderScene singleton] size].height]);							
- NSLog(@"BRRenderScene window stuff");	
- BRWindow* win = [[[BRRenderScene singleton] windowList] objectAtIndex:0];
- NSLog([NSString stringWithFormat: @"isOpaque: %i", 	[win isOpaque]]);		
- NSLog([NSString stringWithFormat: @"acceptsFocus: %i", 	[win acceptsFocus]]);		
- NSLog([NSString stringWithFormat: @"level: %i", 	[win level]]);		
- [win setLevel:NSNormalWindowLevel];
- BRRenderScene* scene = [BRRenderScene singleton];
- [scene setOpaque:FALSE]; 
- [scene setBackgroundRemoved:TRUE];
- [scene setDrawableContext:nil];
-*/
 @end
