@@ -42,7 +42,7 @@
 			<key>entry-type</key>
 			<integer>0</integer>
 			<key>path</key>
-			<string>/Users/frontrow/Applications/XBMC.app/Contents/MacOS/XBMC</string>
+			<string>/Applications/XBMC.app/Contents/MacOS/XBMC</string>
 		</dict>
 		<dict>
 			<key>identifier</key>
