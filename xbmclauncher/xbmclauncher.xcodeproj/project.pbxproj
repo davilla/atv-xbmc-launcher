@@ -31,6 +31,18 @@
 			name = buildAndCopyToATV;
 			productName = buildAndCopyToATV;
 		};
+		E4C96F8D0E89995800E6BAFE /* createInstaller */ = {
+			isa = PBXAggregateTarget;
+			buildConfigurationList = E4C96F940E89996C00E6BAFE /* Build configuration list for PBXAggregateTarget "createInstaller" */;
+			buildPhases = (
+				E4C96F8C0E89995800E6BAFE /* ShellScript */,
+			);
+			dependencies = (
+				E4C96F910E89995D00E6BAFE /* PBXTargetDependency */,
+			);
+			name = createInstaller;
+			productName = createInstaller;
+		};
 /* End PBXAggregateTarget section */
 
 /* Begin PBXBuildFile section */
@@ -42,6 +54,8 @@
 		E4C964B80E85A56400E6BAFE /* XBMCUpdateController.m in Sources */ = {isa = PBXBuildFile; fileRef = E4C964B70E85A56400E6BAFE /* XBMCUpdateController.m */; };
 		E4C96B4A0E866DA600E6BAFE /* XBMCDebugHelpers.m in Sources */ = {isa = PBXBuildFile; fileRef = E4C96B490E866DA600E6BAFE /* XBMCDebugHelpers.m */; };
 		E4C96F310E8865D700E6BAFE /* DebugController.m in Sources */ = {isa = PBXBuildFile; fileRef = E4C96F300E8865D700E6BAFE /* DebugController.m */; };
+		E4C96FD00E89A3AA00E6BAFE /* LICENSE.txt in Resources */ = {isa = PBXBuildFile; fileRef = E4C96FCC0E89A3AA00E6BAFE /* LICENSE.txt */; };
+		E4C96FD10E89A3AA00E6BAFE /* README.txt in Resources */ = {isa = PBXBuildFile; fileRef = E4C96FCD0E89A3AA00E6BAFE /* README.txt */; };
 		E4C9718A0E7C036400B33973 /* XBMCAppliance.m in Sources */ = {isa = PBXBuildFile; fileRef = E4C971890E7C036400B33973 /* XBMCAppliance.m */; };
 		E4C9727A0E7C15D800B33973 /* AppKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E4C972790E7C15D800B33973 /* AppKit.framework */; };
 		E4C972B10E7C337B00B33973 /* XBMCController.m in Sources */ = {isa = PBXBuildFile; fileRef = E4C972B00E7C337B00B33973 /* XBMCController.m */; };
@@ -62,6 +76,13 @@
 			proxyType = 1;
 			remoteGlobalIDString = 8D5B49AC048680CD000E48DA;
 			remoteInfo = xbmclauncher;
+		};
+		E4C96F900E89995D00E6BAFE /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 089C1669FE841209C02AAC07 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 8D5B49AC048680CD000E48DA /* XBMCLauncher */;
+			remoteInfo = XBMCLauncher;
 		};
 /* End PBXContainerItemProxy section */
 
@@ -86,9 +107,14 @@
 		E4C96B490E866DA600E6BAFE /* XBMCDebugHelpers.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XBMCDebugHelpers.m; sourceTree = "<group>"; };
 		E4C96F2F0E8865D700E6BAFE /* DebugController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DebugController.h; sourceTree = "<group>"; };
 		E4C96F300E8865D700E6BAFE /* DebugController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DebugController.m; sourceTree = "<group>"; };
+		E4C96FCB0E89A3AA00E6BAFE /* Makefile */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.make; path = Makefile; sourceTree = "<group>"; };
+		E4C96FCC0E89A3AA00E6BAFE /* LICENSE.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = LICENSE.txt; sourceTree = "<group>"; };
+		E4C96FCD0E89A3AA00E6BAFE /* README.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = README.txt; sourceTree = "<group>"; };
+		E4C96FCE0E89A3AA00E6BAFE /* install.sh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.sh; name = install.sh; path = tools/install.sh; sourceTree = "<group>"; };
+		E4C9701A0E89ABB000E6BAFE /* xcodeversion */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.sh; name = xcodeversion; path = tools/xcodeversion; sourceTree = "<group>"; };
 		E4C971880E7C036400B33973 /* XBMCAppliance.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XBMCAppliance.h; sourceTree = "<group>"; };
 		E4C971890E7C036400B33973 /* XBMCAppliance.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XBMCAppliance.m; sourceTree = "<group>"; };
-		E4C972790E7C15D800B33973 /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = ../MacOSX10.4u.sdk/System/Library/Frameworks/AppKit.framework; sourceTree = SDKROOT; };
+		E4C972790E7C15D800B33973 /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = System/Library/Frameworks/AppKit.framework; sourceTree = SDKROOT; };
 		E4C972AF0E7C337B00B33973 /* XBMCController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XBMCController.h; sourceTree = "<group>"; };
 		E4C972B00E7C337B00B33973 /* XBMCController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XBMCController.m; sourceTree = "<group>"; };
 		E4C974B90E7DAF7100B33973 /* killxbmchelper.sh */ = {isa = PBXFileReference; explicitFileType = text.script.sh; fileEncoding = 4; path = killxbmchelper.sh; sourceTree = "<group>"; };
@@ -111,13 +137,12 @@
 		089C166AFE841209C02AAC07 /* xbmclauncher */ = {
 			isa = PBXGroup;
 			children = (
-				E4C9555A0E8199B300E6BAFE /* BackRow.framework */,
+				E4C96FC80E89A39200E6BAFE /* deploymentHelpers */,
 				08FB77AFFE84173DC02AAC07 /* Classes */,
 				32C88E010371C26100C91783 /* Other Sources */,
 				089C167CFE841241C02AAC07 /* Resources */,
 				089C1671FE841209C02AAC07 /* Frameworks and Libraries */,
 				19C28FB8FE9D52D311CA2CBB /* Products */,
-				E4C972790E7C15D800B33973 /* AppKit.framework */,
 			);
 			name = xbmclauncher;
 			sourceTree = "<group>";
@@ -139,6 +164,8 @@
 				8D5B49B7048680CD000E48DA /* Info.plist */,
 				089C167DFE841241C02AAC07 /* InfoPlist.strings */,
 				E4C965ED0E85C46300E6BAFE /* update_urls.plist */,
+				E4C96FCC0E89A3AA00E6BAFE /* LICENSE.txt */,
+				E4C96FCD0E89A3AA00E6BAFE /* README.txt */,
 			);
 			name = Resources;
 			sourceTree = "<group>";
@@ -165,6 +192,8 @@
 		1058C7ACFEA557BF11CA2CBB /* Linked Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				E4C9555A0E8199B300E6BAFE /* BackRow.framework */,
+				E4C972790E7C15D800B33973 /* AppKit.framework */,
 				1058C7ADFEA557BF11CA2CBB /* Cocoa.framework */,
 			);
 			name = "Linked Frameworks";
@@ -195,6 +224,16 @@
 				32DBCF630370AF2F00C91783 /* xbmclauncher_Prefix.pch */,
 			);
 			name = "Other Sources";
+			sourceTree = "<group>";
+		};
+		E4C96FC80E89A39200E6BAFE /* deploymentHelpers */ = {
+			isa = PBXGroup;
+			children = (
+				E4C9701A0E89ABB000E6BAFE /* xcodeversion */,
+				E4C96FCB0E89A3AA00E6BAFE /* Makefile */,
+				E4C96FCE0E89A3AA00E6BAFE /* install.sh */,
+			);
+			name = deploymentHelpers;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -233,6 +272,7 @@
 				8D5B49AC048680CD000E48DA /* XBMCLauncher */,
 				E4C95D330E82D85000E6BAFE /* buildAndCopyToFrontRow */,
 				E4C95D490E82D92800E6BAFE /* buildAndCopyToATV */,
+				E4C96F8D0E89995800E6BAFE /* createInstaller */,
 			);
 		};
 /* End PBXProject section */
@@ -245,6 +285,8 @@
 				8D5B49B0048680CD000E48DA /* InfoPlist.strings in Resources */,
 				E4C974BA0E7DAF7100B33973 /* killxbmchelper.sh in Resources */,
 				E4C960810E84063500E6BAFE /* Splash.png in Resources */,
+				E4C96FD00E89A3AA00E6BAFE /* LICENSE.txt in Resources */,
+				E4C96FD10E89A3AA00E6BAFE /* README.txt in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -278,6 +320,19 @@
 			shellPath = /bin/sh;
 			shellScript = "APPLETV_IP=192.168.0.90\nscp -r $TARGET_BUILD_DIR/XBMCLauncher.frappliance frontrow@$APPLETV_IP:\nssh frontrow@$APPLETV_IP restartFinder\nexit 0";
 		};
+		E4C96F8C0E89995800E6BAFE /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "source scripts/createInstaller";
+		};
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
@@ -307,6 +362,11 @@
 			target = 8D5B49AC048680CD000E48DA /* XBMCLauncher */;
 			targetProxy = E4C95D4C0E82D92E00E6BAFE /* PBXContainerItemProxy */;
 		};
+		E4C96F910E89995D00E6BAFE /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 8D5B49AC048680CD000E48DA /* XBMCLauncher */;
+			targetProxy = E4C96F900E89995D00E6BAFE /* PBXContainerItemProxy */;
+		};
 /* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
@@ -325,6 +385,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = YES;
+				APP_VERSION = 0.1;
 				ARCHS = i386;
 				COPY_PHASE_STRIP = NO;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -340,6 +401,7 @@
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = xbmclauncher_Prefix.pch;
+				GCC_PREPROCESSOR_DEFINITIONS = DEBUG;
 				INFOPLIST_FILE = Info.plist;
 				INSTALL_PATH = "/System/Library/CoreServices/Front Row.app/Contents/PlugIns/";
 				LIBRARY_SEARCH_PATHS = "$(SRCROOT)/..";
@@ -353,6 +415,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = YES;
+				APP_VERSION = 0.1;
 				ARCHS = i386;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				FRAMEWORK_SEARCH_PATHS = (
@@ -379,6 +442,7 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ARCHS = "$(ONLY_ACTIVE_ARCH_PRE_XCODE_3_1)";
+				CURRENT_PROJECT_VERSION = 1;
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
@@ -443,6 +507,27 @@
 			};
 			name = Release;
 		};
+		E4C96F8E0E89995800E6BAFE /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COPY_PHASE_STRIP = NO;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				PRODUCT_NAME = createInstaller;
+			};
+			name = Debug;
+		};
+		E4C96F8F0E89995800E6BAFE /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COPY_PHASE_STRIP = YES;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				GCC_ENABLE_FIX_AND_CONTINUE = NO;
+				PRODUCT_NAME = createInstaller;
+				ZERO_LINK = NO;
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -478,6 +563,15 @@
 			buildConfigurations = (
 				E4C95D4A0E82D92800E6BAFE /* Debug */,
 				E4C95D4B0E82D92800E6BAFE /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		E4C96F940E89996C00E6BAFE /* Build configuration list for PBXAggregateTarget "createInstaller" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				E4C96F8E0E89995800E6BAFE /* Debug */,
+				E4C96F8F0E89995800E6BAFE /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

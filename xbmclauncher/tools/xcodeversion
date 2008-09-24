@@ -1,0 +1,146 @@
+#!/bin/sh
+
+# stupid script to update and get the version number in an xcode project (.xcodeproj only)
+#
+# copyright (C) 2007 ericiii.net, all rights reserved.
+#
+# version 1.0, 4/10/2007
+
+print_usage () {
+    COMMAND_BASENAME=`basename $0`
+    echo
+    echo "${COMMAND_BASENAME} - release versioning tool for Xcode projects"
+    echo "  usage:"
+    echo "    ${COMMAND_BASENAME} help"
+    echo "    ${COMMAND_BASENAME} version"
+    echo "    ${COMMAND_BASENAME} set <version-name>"
+    echo
+}
+
+# field separator is per line
+IFS="
+"
+
+find_project () {
+    PROJECT=""
+    ALL_PROJECTS=`/bin/ls -1 -d *.xcodeproj 2>/dev/null`
+    if [ z"${ALL_PROJECTS}" != z ] ; then
+	for i in ${ALL_PROJECTS} ; do
+	    if [ z"${PROJECT}" = z ] ; then
+		PROJECT=${i}
+	    else
+		echo "There are multiple projects in this directory.  xcodeversion does not work with multiple projects in the same directory."
+		print_usage
+		exit 3
+	    fi
+	done
+	if [ z"${PROJECT}" != z ] ; then
+        PROJECT_BASENAME=`basename "${PROJECT}" .xcodeproj`
+	    PROJECT=${PROJECT}/project.pbxproj
+	fi
+    fi
+}
+
+get_version () {
+    VERSION_NUM=$(sed -n 's/^[ 	]*APP_VERSION =[ 	]*\(.*\);.*$/\1/p' "${PROJECT}" | sort -u)
+    # strip " from beginning/end
+    VERSION_NUM=$(echo "$VERSION_NUM" | sed s/\"//g)
+    
+    if [ z"${VERSION_NUM}" = z ] ; then
+        if [ z"$1" != z"TERSE" ] ; then
+            echo "There does not seem to be a APP_VERSION key set for this project.  Add this key to your target's expert build settings."
+            echo
+        fi
+	exit 6
+    fi
+    num_lines=$(echo ${VERSION_NUM} | wc -l | sed 's/[ ]*\([0-9]*\).*/\1/')
+    if [ z"${num_lines}" != z"1" ] ; then
+        if [ z"$1" != z"TERSE" ] ; then
+            echo "There's more than one value for APP_VERSION in this project.  xcodeversion can only deal with projects where all targets are versioned together."
+            echo
+        fi
+	exit 6
+    fi
+}
+
+what_version () {
+    get_version $1
+    
+    if [ z"$1" != z"TERSE" ] ; then
+        echo "Current version of project ${PROJECT_BASENAME} is: "
+        echo "    ${VERSION_NUM}"
+        echo
+    else
+        echo "${VERSION_NUM}"
+    fi
+}
+
+new_version () {
+    NEW_VERSION_NUM=$1
+    if [ z"${NEW_VERSION_NUM}" = z ] ; then
+	echo "No new version number specified."
+	exit 7
+    fi
+    echo "Setting version of project ${PROJECT_BASENAME} to: "
+    echo "    ${NEW_VERSION_NUM}."
+    echo
+    sed "s/\(^[ 	]*APP_VERSION =[ 	]*\)\(.*\)\(;.*$\)/\1${NEW_VERSION_NUM}\3/" "${PROJECT}" > "${PROJECT}.new4"
+    mv "${PROJECT}.new4" "${PROJECT}"
+
+}
+
+##################### Main script starts here #####################
+
+# Make sure there is at least one argument.
+if [ z"$#" = z"0" ] ; then
+    echo "Operation specifier required."
+    print_usage
+    exit 1
+fi
+
+# Get the operation name and shift all the args down.
+OPERATION=$1
+shift
+
+if [ z"${OPERATION}" = z"help" ] ; then
+    print_help
+    exit 0
+fi
+
+# Locate a suitable Xcode project to act on.
+find_project
+if [ z"${PROJECT}" = z ] ; then
+echo "There are no Xcode project files in this directory.  xcodeversion needs a project to operate."
+exit 3
+fi
+
+# Do operation arg checking and then call the functions for the specific operations.
+if [ z"${OPERATION}" = z"version" ] ; then
+    ARG1=NORNMAL
+    if [ z"$#" = z"1" ] ; then
+        if [ z"$1" = z"-terse" ] ; then
+            ARG1=TERSE
+            shift
+        else
+            echo "The version operation supports only the optional -terse argument."
+            print_usage
+            exit 2
+        fi
+    fi
+    
+    what_version $ARG1
+elif [ z"${OPERATION}" = z"set" ] ; then
+        UPDATEALL="NO"
+
+    if [ z"$#" != z"1" ] ; then
+	echo "The set operation takes a version number (required)."
+	print_usage
+	exit 2
+    fi
+    new_version $1 $UPDATEALL
+else
+    echo "Unrecognized operation specifier \"${OPERATION}\"."
+    print_usage
+    exit 2
+fi
+
