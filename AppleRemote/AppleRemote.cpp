@@ -192,7 +192,7 @@ void AppleRemote::Initialize()
                         key = key_cookiesATV1X;
                         m_button_event_terminator = IR_Event_Term_ATV1X;
                     }
-                    else if (strstr(linebuf,"8N5455") || strstr(linebuf,"8N5461"))
+                    else if (strstr(linebuf,"8N5400") || strstr(linebuf,"8N5455") || strstr(linebuf,"8N5461"))
                     {
                         // r2.01 or r2.02   
                         atv_version_found = true;
