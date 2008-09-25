@@ -23,6 +23,7 @@
 #import "XBMCController.h"
 #import "XBMCUpdateController.h"
 #import "XBMCDebugHelpers.h"
+#import "XBMCPreferencesController.h"
 
 //enable this one to get notifications to BRDisplayManger logged
 #define BRDISPLAY_MANAGER_OBSERVATION 1
@@ -33,6 +34,7 @@ typedef enum {
 } eControllerType;
 
 @implementation XBMCAppliance
+
 + (void) initialize
 {
 	PRINT_SIGNATURE();
@@ -40,6 +42,13 @@ typedef enum {
 	if ( cls == nil )
 		return;
 	[[cls sharedInstance] enableFeatureNamed: [[NSBundle bundleForClass: self] bundleIdentifier]];
+	
+	//create default settings
+	NSMutableDictionary* defaultValues = [NSMutableDictionary dictionary];
+	[defaultValues setObject:[NSNumber numberWithInt:IR_INTERNAL_XBMCHELPER] forKey:XBMCIRControlType];
+	[defaultValues setObject:[NSNumber numberWithBool:NO] forKey:XBMCEnableUniversalXBMCHelper];
+	//register dictionary defaults
+	[[NSUserDefaults standardUserDefaults] registerDefaults:defaultValues];
 }
 
 // Override to allow FrontRow to load custom appliance plugins
@@ -56,7 +65,7 @@ typedef enum {
 	NSRange result = [[BRBacktracingException backtrace] rangeOfString:@"(in BackRow)"];
 	
 	if(result.location != NSNotFound) {
-		NSLog(@"+[%@ className] called for whitelist check, so I'm lying, m'kay?", className);
+		DLOG(@"+[%@ className] called for whitelist check, so I'm lying, m'kay?", className);
 		className = @"RUIDVDAppliance";
 	}
 	return className;
@@ -64,7 +73,7 @@ typedef enum {
 
 #ifdef BRDISPLAY_MANAGER_OBSERVATION
 - (void) listen:(NSNotification*) note{
-	NSLog(@"-------Logged %@", [note name]);
+	DLOG(@"-------Logged %@", [note name]);
 }
 #endif
 
