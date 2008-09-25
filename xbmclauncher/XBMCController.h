@@ -20,7 +20,7 @@
 
 #import <Cocoa/Cocoa.h>
 #import <BackRow/BackRow.h>
-#import <XBMCPreferencesController.h>
+#import <XBMCUserDefaults.h>
 
 @class XBMCClientWrapper;
 
@@ -29,13 +29,12 @@
 	
 	NSTask* mp_task; //task for xbmc. is needed as a member, as we check status later
 	NSString* mp_app_path; //which app to launch
+	NSString* mp_helper_path; //which helper to disable/enable/kill on error
 	BOOL m_xbmc_running; 
 	XBMCClientWrapper* mp_xbmclient;
-	eIRControlType m_ir_control_type; //read from preferences
-	BOOL m_universal_remote; //read from preferences. if true and m_control_type == IR_INTERNAL_XBMCHELPER 
-													 // XBMCHelper is started in universal remote mode
+	BOOL m_use_internal_ir; //read from preferences, if yes, XBMC's XBMCHelper is disabled
 }
 
-- (id) initWithPath:(NSString*) f_path;
+- (id) initWithAppPath:(NSString*) f_app_path helperPath:(NSString*) f_helper_path;
 - (void) checkTaskStatus:(NSNotification *)note;
 @end

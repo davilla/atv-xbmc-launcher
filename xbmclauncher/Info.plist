@@ -41,12 +41,14 @@
 			<real>6</real>
 			<key>entry-type</key>
 			<integer>0</integer>
-			<key>path</key>
+			<key>apppath</key>
 			<string>/Applications/XBMC.app/Contents/MacOS/XBMC</string>
+			<key>helperpath</key>
+			<string>/Applications/XBMC.app/Contents/Resources/XBMC/XBMCHelper</string>
 		</dict>
 		<dict>
 			<key>identifier</key>
-			<string>XBMCUpdate</string>
+			<string>Update</string>
 			<key>is-network-dependent</key>
 			<true/>
 			<key>is-share-dependent</key>
@@ -54,7 +56,7 @@
 			<key>is-store-category</key>
 			<false/>
 			<key>name</key>
-			<string>XBMCUpdate</string>
+			<string>Update</string>
 			<key>preferred-order</key>
 			<real>2</real>
 			<key>priority</key>
@@ -63,6 +65,24 @@
 			<integer>1</integer>
 			<key>URL</key>
 			<string>http://atv-xbmc-launcher.googlecode.com/svn/trunk/data/update_urls.plist</string>
+		</dict>
+		<dict>
+			<key>identifier</key>
+			<string>Settings</string>
+			<key>is-network-dependent</key>
+			<false/>
+			<key>is-share-dependent</key>
+			<false/>
+			<key>is-store-category</key>
+			<false/>
+			<key>name</key>
+			<string>Settings</string>
+			<key>preferred-order</key>
+			<real>3</real>
+			<key>priority</key>
+			<real>7</real>
+			<key>entry-type</key>
+			<integer>-1</integer>
 		</dict>
 	</array>
 	<key>FRApplianceIconHorizontalOffset</key>

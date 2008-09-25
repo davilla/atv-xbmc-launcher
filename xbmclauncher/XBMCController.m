@@ -27,25 +27,41 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 @class BRLayerController;
 
 @implementation XBMCController
+
+- (void) enableRendering{
+	[[NSNotificationCenter defaultCenter] postNotificationName:@"BRDisplayManagerDisplayOnline"
+																											object:[BRDisplayManager sharedInstance]];
+	[[NSNotificationCenter defaultCenter] postNotificationName:@"BRDisplayManagerResumeRenderingNotification"
+																											object:[BRDisplayManager sharedInstance]];
+	[[BRDisplayManager sharedInstance] captureAllDisplays];	
+}
+
+- (void) disableRendering{
+	[[NSNotificationCenter defaultCenter] postNotificationName:@"BRDisplayManagerDisplayOffline"
+																											object:[BRDisplayManager sharedInstance]];
+	[[BRDisplayManager sharedInstance] releaseAllDisplays];
+	[[NSNotificationCenter defaultCenter] postNotificationName:@"BRDisplayManagerStopRenderingNotification"
+																											object:[BRDisplayManager sharedInstance]];
+}
+
 - (id) init
 {
 	[self dealloc];
 	@throw [NSException exceptionWithName:@"BNRBadInitCall" reason:@"Init XBMCController with initWithPath" userInfo:nil];
 	return nil;
 }
-
--(id) initWithPath:(NSString*) f_path
+- (id) initWithAppPath:(NSString*) f_app_path helperPath:(NSString*) f_helper_path;
 {
 	PRINT_SIGNATURE();
 	if ( ![super init] )
 		return ( nil );
 	mp_xbmclient = [[XBMCClientWrapper alloc] init];
 	m_xbmc_running = NO;
-	mp_app_path = f_path;
-	[mp_app_path retain]; 
+	mp_app_path = [f_app_path retain];
+	mp_helper_path = [f_helper_path retain];
+
 	//read preferences
-	m_universal_remote = [[NSUserDefaults standardUserDefaults] boolForKey:XBMCEnableUniversalXBMCHelper];
-	m_ir_control_type = [[NSUserDefaults standardUserDefaults] integerForKey:XBMCIRControlType];
+	m_use_internal_ir = [[XBMCUserDefaults defaults] boolForKey:XBMC_USE_INTERNAL_IR];
 	return self;
 }
 
@@ -54,6 +70,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 	PRINT_SIGNATURE();
 	[mp_xbmclient release];
 	[mp_app_path release];
+	[mp_helper_path release];
 	[super dealloc];
 }
 
@@ -74,8 +91,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 - (void)checkTaskStatus:(NSNotification *)note
 {
 	PRINT_SIGNATURE();
-	[[NSNotificationCenter defaultCenter] postNotificationName:@"BRDisplayManagerDisplayOnline"
-																											object:[BRDisplayManager sharedInstance]];
+	[self enableRendering];
+
 	//remove our listener
 	[[NSNotificationCenter defaultCenter] removeObserver:self];
 	if (! [mp_task isRunning])
@@ -90,9 +107,6 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 		mp_task = nil;
 		
 		// Show frontrow menu 
-		[[NSNotificationCenter defaultCenter] postNotificationName:@"BRDisplayManagerResumeRenderingNotification"
-																												object:[BRDisplayManager sharedInstance]];
-		[[BRDisplayManager sharedInstance] captureAllDisplays];
 		if (status != 0)
 		{
 			//now we need to kill XBMCHelper! (if its even running)
@@ -121,37 +135,32 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 	[super willBePushed];
 }
 
-- (void) wasPushed
-{
+- (void) enableXBMCHelper{
+	PRINT_SIGNATURE();
+	//is enabled by default
+}
+
+- (void) disableXBMCHelper{
+	PRINT_SIGNATURE();
+	//XBMC's XBMCHelper is disabled through launching an own one (which does nothing)
+	//TODO this does not seem to work. Does XBMC try to kill other XBMCHelpers?
+	NSString* xbmc_dummy_path = [[NSBundle bundleForClass:[self class]] pathForResource:@"XBMCHelper" ofType:@""];
+	[NSTask launchedTaskWithLaunchPath:xbmc_dummy_path arguments: [NSArray array]];
+}
+
+- (void) wasPushed{
 	PRINT_SIGNATURE();
 	[super wasPushed];
 
 	//We've just been put on screen, the user can see this controller's content now	
 	//Hide frontrow (this is only needed in 720/1080p
-	[[NSNotificationCenter defaultCenter] postNotificationName:@"BRDisplayManagerDisplayOffline"
-																											object:[BRDisplayManager sharedInstance]];
-	[[BRDisplayManager sharedInstance] releaseAllDisplays];
-	[[NSNotificationCenter defaultCenter] postNotificationName:@"BRDisplayManagerStopRenderingNotification"
-																											object:[BRDisplayManager sharedInstance]];
+	[self disableRendering];
+	
 	//if enabled start our own instance of XBMCHelper
-	if(m_ir_control_type == IR_INTERNAL_XBMCHELPER){
-		DLOG(@"Using internal XBMCHelper...");
-		NSString* xbmchelper_path = [[NSBundle bundleForClass:[self class]] pathForResource:@"XBMCHelper" ofType:@""];
-		DLOG(@"... from %@ ...", xbmchelper_path);
-		if(m_universal_remote){
-			DLOG(@"... in universal mode");
-			[NSTask launchedTaskWithLaunchPath:xbmchelper_path arguments: [NSArray arrayWithObject:@"-u"]];
-		} else {
-			DLOG(@"... in normal mode");
-			[NSTask launchedTaskWithLaunchPath:xbmchelper_path arguments: [NSArray array]];
-			}
-	} else if( m_ir_control_type == IR_INTERNAL ){
-		//TODO: how to we keep XBMC from launching its XBMCHelper?
-		DLOG(@"Using internal IR mode");
-	} else if( m_ir_control_type == IR_XBMC ){
-		DLOG(@"Using XBMC IR mode");
+	if( m_use_internal_ir ){
+		[self disableXBMCHelper];
 	} else {
-		ELOG(@"IR mode undefined. BUG!");
+		[self enableXBMCHelper];	
 	}
 	//start xbmc
 	mp_task = [[NSTask alloc] init];
@@ -162,11 +171,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 	} 
 	@catch (NSException* e) {
 		// Show frontrow menu 
-		[[NSNotificationCenter defaultCenter] postNotificationName:@"BRDisplayManagerDisplayOnline"
-																												object:[BRDisplayManager sharedInstance]];
-		[[NSNotificationCenter defaultCenter] postNotificationName:@"BRDisplayManagerResumeRenderingNotification"
-																												object:[BRDisplayManager sharedInstance]];
-		[[BRDisplayManager sharedInstance] captureAllDisplays];
+		[self enableRendering];
 		[[BRDisplayManager sharedInstance] 	fadeInDisplay];
 		BRAlertController* alert = [BRAlertController alertOfType:0 titled:nil
 																									primaryText:[NSString stringWithFormat:@"Error: Cannot launch XBMC from path:"]
@@ -245,51 +250,46 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 - (BOOL)brEventAction:(BREvent *)event
 {
 	if( m_xbmc_running ){
-		if( m_ir_control_type == IR_INTERNAL ) {
-			unsigned int hashVal = [event pageUsageHash];
-			DLOG(@"XBMCController: Button press hashVal = %i",hashVal);
-			switch (hashVal)
-			{
-				case 65676:  // tap up
-					if([event value] == 1)
-						[mp_xbmclient handleEvent:ATV_BUTTON_UP_PRESS];
-					else
-						[mp_xbmclient handleEvent:ATV_BUTTON_UP_RELEASE];
-					return YES;
-				case 65677:  // tap down
-					if([event value] == 1)
-						[mp_xbmclient handleEvent:ATV_BUTTON_DOWN_PRESS];
-					else
-						[mp_xbmclient handleEvent:ATV_BUTTON_DOWN_RELEASE];
-					return YES;
-				case 65675:  // tap left
-					[mp_xbmclient handleEvent:ATV_BUTTON_LEFT];
-					return YES;
-				case 65674:  // tap right
-					[mp_xbmclient handleEvent:ATV_BUTTON_RIGHT];
-					return YES;
-				case 65673:  // tap play
-					[mp_xbmclient handleEvent:ATV_BUTTON_PLAY];
-					return YES;
-				case 786611: //hold right
-					[mp_xbmclient handleEvent:ATV_BUTTON_RIGHT_H];
-					return YES;
-				case 786612: //hold left
-					[mp_xbmclient handleEvent:ATV_BUTTON_LEFT_H];
-					return YES;
-				case 65670: //menu
-					[mp_xbmclient handleEvent:ATV_BUTTON_MENU];
-					return YES;
-				case 786496: //hold menu
-					[mp_xbmclient handleEvent:ATV_BUTTON_MENU_H];
-					return YES;
-				default:
-					ELOG(@"XBMCController: Unknown button press hashVal = %i",hashVal);
-					return NO;
-			}
-		}	else {
-			DLOG(@"Bypassing XBMCController internal IR");
-			return NO;
+		unsigned int hashVal = [event pageUsageHash];
+		DLOG(@"XBMCController: Button press hashVal = %i",hashVal);
+		switch (hashVal)
+		{
+			case 65676:  // tap up
+				if([event value] == 1)
+					[mp_xbmclient handleEvent:ATV_BUTTON_UP_PRESS];
+				else
+					[mp_xbmclient handleEvent:ATV_BUTTON_UP_RELEASE];
+				return YES;
+			case 65677:  // tap down
+				if([event value] == 1)
+					[mp_xbmclient handleEvent:ATV_BUTTON_DOWN_PRESS];
+				else
+					[mp_xbmclient handleEvent:ATV_BUTTON_DOWN_RELEASE];
+				return YES;
+			case 65675:  // tap left
+				[mp_xbmclient handleEvent:ATV_BUTTON_LEFT];
+				return YES;
+			case 65674:  // tap right
+				[mp_xbmclient handleEvent:ATV_BUTTON_RIGHT];
+				return YES;
+			case 65673:  // tap play
+				[mp_xbmclient handleEvent:ATV_BUTTON_PLAY];
+				return YES;
+			case 786611: //hold right
+				[mp_xbmclient handleEvent:ATV_BUTTON_RIGHT_H];
+				return YES;
+			case 786612: //hold left
+				[mp_xbmclient handleEvent:ATV_BUTTON_LEFT_H];
+				return YES;
+			case 65670: //menu
+				[mp_xbmclient handleEvent:ATV_BUTTON_MENU];
+				return YES;
+			case 786496: //hold menu
+				[mp_xbmclient handleEvent:ATV_BUTTON_MENU_H];
+				return YES;
+			default:
+				ELOG(@"XBMCController: Unknown button press hashVal = %i",hashVal);
+				return NO;
 		}
 	} else {
 		DLOG(@"XBMC not running. IR event goes upstairs");

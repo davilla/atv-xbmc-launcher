@@ -21,16 +21,6 @@
 #import <Cocoa/Cocoa.h>
 #import <BackRow/BackRow.h>
 
-//define keys for lookup in preferences
-typedef enum {
-	IR_INTERNAL = 0,
-	IR_INTERNAL_XBMCHELPER= 1,
-	IR_XBMC = 2 
-} eIRControlType;
- 
-extern NSString* const XBMCIRControlType; //NSNumber, uses eIRControlType
-extern NSString* const XBMCEnableUniversalXBMCHelper; //Bool, if yes, XBMCHelper is started in Universal Mode (if XBMCIRControlType == INTERNAL_XBMCHELPER)
-
 @interface XBMCPreferencesController : BRCenteredMenuController {
 	int padding[16];	// credit is due here to SapphireCompatibilityClasses!!
 	NSMutableArray* mp_items; //list items

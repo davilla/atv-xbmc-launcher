@@ -22,8 +22,9 @@
 #import "XBMCAppliance.h"
 #import "XBMCController.h"
 #import "XBMCUpdateController.h"
-#import "XBMCDebugHelpers.h"
 #import "XBMCPreferencesController.h"
+#import "XBMCDebugHelpers.h"
+#import "XBMCUserDefaults.h"
 
 //enable this one to get notifications to BRDisplayManger logged
 #define BRDISPLAY_MANAGER_OBSERVATION 1
@@ -45,10 +46,9 @@ typedef enum {
 	
 	//create default settings
 	NSMutableDictionary* defaultValues = [NSMutableDictionary dictionary];
-	[defaultValues setObject:[NSNumber numberWithInt:IR_INTERNAL_XBMCHELPER] forKey:XBMCIRControlType];
-	[defaultValues setObject:[NSNumber numberWithBool:NO] forKey:XBMCEnableUniversalXBMCHelper];
+	[defaultValues setValue:[NSNumber numberWithBool:YES] forKey:XBMC_USE_INTERNAL_IR];
 	//register dictionary defaults
-	[[NSUserDefaults standardUserDefaults] registerDefaults:defaultValues];
+	[[XBMCUserDefaults defaults] registerDefaults:defaultValues];
 }
 
 // Override to allow FrontRow to load custom appliance plugins
@@ -111,13 +111,16 @@ typedef enum {
 	if( [entry_type isEqualToNumber:[NSNumber numberWithInt: APPLICATION]] ){
 		//there can be more than one xbmc entry in the list, e.g. to test developer version etc.
 		//so read the path of current and pass to controller
-		NSString* path = [obj valueForKey:@"path"];
-		return [[[XBMCController alloc] initWithPath:path] autorelease];
+		NSString* appPath = [obj valueForKey:@"apppath"];
+		NSString* helperPath = [obj valueForKey:@"helperpath"];
+		return [[[XBMCController alloc] initWithAppPath:appPath helperPath:helperPath] autorelease];
 	} 
 	else if ( [entry_type isEqualToNumber:[NSNumber numberWithInt: UPDATER]] ){
 		// here we want to use something like BRTextWithSpinnerController to get the update running
 		NSURL* url = [NSURL URLWithString: [obj valueForKey:@"URL"]];
 		return [[[XBMCUpdateController alloc] initWithURL:url] autorelease];
+	} else if( [identifier isEqualToString:@"Settings"] ){
+		return [[[XBMCPreferencesController alloc] init] autorelease];
 	} else {
 		return [BRAlertController alertOfType:0
 														titled:@"XBMCLauncher"

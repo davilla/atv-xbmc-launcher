@@ -22,7 +22,6 @@
 #include "xbmcclientwrapper.h"
 #include "xbmcclient.h"
 #include "XBMCDebugHelpers.h"
-#include <iostream>
 #include <map>
 
 //typedef is here, as is seems that I can't put it into iterface declaration
@@ -58,7 +57,7 @@ typedef std::map<eATVClientEvent, CPacketBUTTON*> tEventMap;
 	m_socket = socket(AF_INET, SOCK_DGRAM, 0);
 	if (m_socket < 0)
 	{
-		std::cerr << "Error opening UDP socket! error: " <<  errno << std::endl;
+		ELOG(@"Error opening UDP socket! error: ", errno);
 		//TODO What to do?
 	}
 	return self;
@@ -74,7 +73,7 @@ typedef std::map<eATVClientEvent, CPacketBUTTON*> tEventMap;
 -(void) handleEvent:(eATVClientEvent) f_event{	
 	tEventMap::iterator it = mp_event_map->find(f_event);
 	if(it == mp_event_map->end()){
-		NSLog([NSString stringWithFormat:@"XBMCClientWrapperImpl::handleEvent: No mapping defined for event %i", f_event]);	
+		ELOG(@"XBMCClientWrapperImpl::handleEvent: No mapping defined for event %i", f_event);	
 		return;
 	}
 	CPacketBUTTON& packet = *(it->second);
@@ -85,18 +84,18 @@ typedef std::map<eATVClientEvent, CPacketBUTTON*> tEventMap;
 
 - (void) populateEventMap{
 	tEventMap& lr_map = *mp_event_map;
-	lr_map[ATV_BUTTON_PLAY] = new CPacketBUTTON("Select", "R1", BTN_DOWN | BTN_NO_REPEAT | BTN_QUEUE);
-	lr_map[ATV_BUTTON_RIGHT] = new CPacketBUTTON("Right", "R1", BTN_DOWN  | BTN_NO_REPEAT | BTN_QUEUE);
-	lr_map[ATV_BUTTON_RIGHT_H] = new CPacketBUTTON("Right", "R1", BTN_DOWN | BTN_NO_REPEAT | BTN_QUEUE);
-	lr_map[ATV_BUTTON_LEFT] = new CPacketBUTTON("Left",  "R1", BTN_DOWN  | BTN_NO_REPEAT | BTN_QUEUE);
-	lr_map[ATV_BUTTON_LEFT_H] = new CPacketBUTTON("Left", "R1", BTN_DOWN | BTN_NO_REPEAT | BTN_QUEUE);
-	lr_map[ATV_BUTTON_MENU] = new CPacketBUTTON("Menu", "R1", BTN_DOWN | BTN_NO_REPEAT | BTN_QUEUE);
+	lr_map.insert(std::make_pair(ATV_BUTTON_PLAY, new CPacketBUTTON("Select", "R1", BTN_DOWN | BTN_NO_REPEAT | BTN_QUEUE)));
+	lr_map.insert(std::make_pair(ATV_BUTTON_RIGHT, new CPacketBUTTON("Right", "R1", BTN_DOWN  | BTN_NO_REPEAT | BTN_QUEUE)));
+	lr_map.insert(std::make_pair(ATV_BUTTON_RIGHT_H, new CPacketBUTTON("Right", "R1", BTN_DOWN | BTN_NO_REPEAT | BTN_QUEUE)));
+	lr_map.insert(std::make_pair(ATV_BUTTON_LEFT, new CPacketBUTTON("Left",  "R1", BTN_DOWN  | BTN_NO_REPEAT | BTN_QUEUE)));
+	lr_map.insert(std::make_pair(ATV_BUTTON_LEFT_H, new CPacketBUTTON("Left", "R1", BTN_DOWN | BTN_NO_REPEAT | BTN_QUEUE)));
+	lr_map.insert(std::make_pair(ATV_BUTTON_MENU, new CPacketBUTTON("Menu", "R1", BTN_DOWN | BTN_NO_REPEAT | BTN_QUEUE)));
 	// Menu Hold will be used both for sending "Back" and for starting universal remote combinations (if universal mode is on)
-	lr_map[ATV_BUTTON_MENU_H] = new CPacketBUTTON("Back", "R1", BTN_DOWN | BTN_NO_REPEAT | BTN_QUEUE);
-	lr_map[ATV_BUTTON_UP_PRESS] = new CPacketBUTTON("Up", "R1", BTN_DOWN | BTN_NO_REPEAT | BTN_QUEUE);
-//	lr_map[ATV_BUTTON_UP_RELEASE] = new CPacketBUTTON("Up", "R1", BTN_UP | BTN_NO_REPEAT | BTN_QUEUE);
-	lr_map[ATV_BUTTON_DOWN_PRESS] = new CPacketBUTTON("Down", "R1", BTN_DOWN | BTN_NO_REPEAT | BTN_QUEUE);
-//	lr_map[ATV_BUTTON_DOWN_RELEASE] = new CPacketBUTTON("Down", "R1", BTN_UP | BTN_NO_REPEAT | BTN_QUEUE);
+	lr_map.insert(std::make_pair(ATV_BUTTON_MENU_H, new CPacketBUTTON("Back", "R1", BTN_DOWN | BTN_NO_REPEAT | BTN_QUEUE)));
+	lr_map.insert(std::make_pair(ATV_BUTTON_UP_PRESS, new CPacketBUTTON("Up", "R1", BTN_DOWN | BTN_NO_REPEAT | BTN_QUEUE)));
+//	lr_map.insert(std::make_pair(ATV_BUTTON_UP_RELEASE, new CPacketBUTTON("Up", "R1", BTN_UP | BTN_NO_REPEAT | BTN_QUEUE)));
+	lr_map.insert(std::make_pair(ATV_BUTTON_DOWN_PRESS, new CPacketBUTTON("Down", "R1", BTN_DOWN | BTN_NO_REPEAT | BTN_QUEUE)));
+//	lr_map.insert(std::make_pair(ATV_BUTTON_DOWN_RELEASE, new CPacketBUTTON("Down", "R1", BTN_UP | BTN_NO_REPEAT | BTN_QUEUE)));
 	//TODO
 	//ATV_BUTTON_PLAY_H, //atm it looks like we can't intercept that button/event
 	

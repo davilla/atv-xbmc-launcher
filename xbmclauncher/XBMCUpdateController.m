@@ -51,9 +51,9 @@
 }
 
 - (void) wasPushed {	
-	[super setListTitle: @"XBMCUpdater"];
-	[super setPrimaryInfoText: @"Available Downloads:"];
-	[super setSecondaryInfoText: @"(Those are just stubs, nothing is working yet)"];
+	[super setListTitle: @"XBMCLauncher"];
+	[super setPrimaryInfoText: @"Updater"];
+	[super setSecondaryInfoText: @"Available Downloads (Those are just stubs, nothing is working yet):"];
 
 	//this simple test worked, so we'll reuse this one I think
 	//[[self stack] swapController: [[QuDownloadController alloc] init]];

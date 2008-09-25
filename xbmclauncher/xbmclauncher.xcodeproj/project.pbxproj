@@ -31,18 +31,6 @@
 			name = buildAndCopyToATV;
 			productName = buildAndCopyToATV;
 		};
-		E4C96F8D0E89995800E6BAFE /* createInstaller */ = {
-			isa = PBXAggregateTarget;
-			buildConfigurationList = E4C96F940E89996C00E6BAFE /* Build configuration list for PBXAggregateTarget "createInstaller" */;
-			buildPhases = (
-				E4C96F8C0E89995800E6BAFE /* ShellScript */,
-			);
-			dependencies = (
-				E4C96F910E89995D00E6BAFE /* PBXTargetDependency */,
-			);
-			name = createInstaller;
-			productName = createInstaller;
-		};
 /* End PBXAggregateTarget section */
 
 /* Begin PBXBuildFile section */
@@ -50,17 +38,18 @@
 		8D5B49B4048680CD000E48DA /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1058C7ADFEA557BF11CA2CBB /* Cocoa.framework */; };
 		E4C9555B0E8199B300E6BAFE /* BackRow.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E4C9555A0E8199B300E6BAFE /* BackRow.framework */; };
 		E4C95B570E81C62100E6BAFE /* xbmcclientwrapper.mm in Sources */ = {isa = PBXBuildFile; fileRef = E4C95B560E81C62100E6BAFE /* xbmcclientwrapper.mm */; };
-		E4C960810E84063500E6BAFE /* Splash.png in Resources */ = {isa = PBXBuildFile; fileRef = E4C960800E84063500E6BAFE /* Splash.png */; };
 		E4C964B80E85A56400E6BAFE /* XBMCUpdateController.m in Sources */ = {isa = PBXBuildFile; fileRef = E4C964B70E85A56400E6BAFE /* XBMCUpdateController.m */; };
 		E4C96B4A0E866DA600E6BAFE /* XBMCDebugHelpers.m in Sources */ = {isa = PBXBuildFile; fileRef = E4C96B490E866DA600E6BAFE /* XBMCDebugHelpers.m */; };
 		E4C96F310E8865D700E6BAFE /* DebugController.m in Sources */ = {isa = PBXBuildFile; fileRef = E4C96F300E8865D700E6BAFE /* DebugController.m */; };
 		E4C96FD00E89A3AA00E6BAFE /* LICENSE.txt in Resources */ = {isa = PBXBuildFile; fileRef = E4C96FCC0E89A3AA00E6BAFE /* LICENSE.txt */; };
 		E4C96FD10E89A3AA00E6BAFE /* README.txt in Resources */ = {isa = PBXBuildFile; fileRef = E4C96FCD0E89A3AA00E6BAFE /* README.txt */; };
 		E4C970860E8AF0E400E6BAFE /* XBMCPreferencesController.m in Sources */ = {isa = PBXBuildFile; fileRef = E4C970850E8AF0E400E6BAFE /* XBMCPreferencesController.m */; };
-		E4C971640E8B0EE200E6BAFE /* XBMCHelper in Resources */ = {isa = PBXBuildFile; fileRef = E4C971630E8B0EE200E6BAFE /* XBMCHelper */; };
 		E4C9718A0E7C036400B33973 /* XBMCAppliance.m in Sources */ = {isa = PBXBuildFile; fileRef = E4C971890E7C036400B33973 /* XBMCAppliance.m */; };
+		E4C9718C0E8C26C400E6BAFE /* XBMCUserDefaults.m in Sources */ = {isa = PBXBuildFile; fileRef = E4C9718B0E8C26C400E6BAFE /* XBMCUserDefaults.m */; };
 		E4C9727A0E7C15D800B33973 /* AppKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E4C972790E7C15D800B33973 /* AppKit.framework */; };
 		E4C972B10E7C337B00B33973 /* XBMCController.m in Sources */ = {isa = PBXBuildFile; fileRef = E4C972B00E7C337B00B33973 /* XBMCController.m */; };
+		E4C972CD0E8C3F7000E6BAFE /* XBMCHelper.c in Sources */ = {isa = PBXBuildFile; fileRef = E4C972B20E8C3BA100E6BAFE /* XBMCHelper.c */; };
+		E4C972D80E8C3FE100E6BAFE /* XBMCHelper in Resources */ = {isa = PBXBuildFile; fileRef = E4C972C90E8C3F6100E6BAFE /* XBMCHelper */; };
 		E4C974BA0E7DAF7100B33973 /* killxbmchelper.sh in Resources */ = {isa = PBXBuildFile; fileRef = E4C974B90E7DAF7100B33973 /* killxbmchelper.sh */; };
 /* End PBXBuildFile section */
 
@@ -79,12 +68,12 @@
 			remoteGlobalIDString = 8D5B49AC048680CD000E48DA;
 			remoteInfo = xbmclauncher;
 		};
-		E4C96F900E89995D00E6BAFE /* PBXContainerItemProxy */ = {
+		E4C972E80E8C3FED00E6BAFE /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 089C1669FE841209C02AAC07 /* Project object */;
 			proxyType = 1;
-			remoteGlobalIDString = 8D5B49AC048680CD000E48DA /* XBMCLauncher */;
-			remoteInfo = XBMCLauncher;
+			remoteGlobalIDString = E4C972C80E8C3F6100E6BAFE /* XBMCHelper */;
+			remoteInfo = XBMCHelper;
 		};
 /* End PBXContainerItemProxy section */
 
@@ -101,7 +90,6 @@
 		E4C9596B0E81AB3800E6BAFE /* xbmcclient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = xbmcclient.h; sourceTree = "<group>"; };
 		E4C95B550E81C62100E6BAFE /* xbmcclientwrapper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = xbmcclientwrapper.h; sourceTree = "<group>"; };
 		E4C95B560E81C62100E6BAFE /* xbmcclientwrapper.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = xbmcclientwrapper.mm; sourceTree = "<group>"; };
-		E4C960800E84063500E6BAFE /* Splash.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Splash.png; sourceTree = "<group>"; };
 		E4C964B60E85A56400E6BAFE /* XBMCUpdateController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XBMCUpdateController.h; sourceTree = "<group>"; };
 		E4C964B70E85A56400E6BAFE /* XBMCUpdateController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XBMCUpdateController.m; sourceTree = "<group>"; };
 		E4C965ED0E85C46300E6BAFE /* update_urls.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = update_urls.plist; path = ../data/update_urls.plist; sourceTree = SOURCE_ROOT; };
@@ -116,12 +104,15 @@
 		E4C9701A0E89ABB000E6BAFE /* xcodeversion */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.sh; name = xcodeversion; path = tools/xcodeversion; sourceTree = "<group>"; };
 		E4C970840E8AF0E400E6BAFE /* XBMCPreferencesController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XBMCPreferencesController.h; sourceTree = "<group>"; };
 		E4C970850E8AF0E400E6BAFE /* XBMCPreferencesController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XBMCPreferencesController.m; sourceTree = "<group>"; };
-		E4C971630E8B0EE200E6BAFE /* XBMCHelper */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.executable"; path = XBMCHelper; sourceTree = "<group>"; };
 		E4C971880E7C036400B33973 /* XBMCAppliance.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XBMCAppliance.h; sourceTree = "<group>"; };
 		E4C971890E7C036400B33973 /* XBMCAppliance.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XBMCAppliance.m; sourceTree = "<group>"; };
+		E4C9718A0E8C26C400E6BAFE /* XBMCUserDefaults.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XBMCUserDefaults.h; sourceTree = "<group>"; };
+		E4C9718B0E8C26C400E6BAFE /* XBMCUserDefaults.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XBMCUserDefaults.m; sourceTree = "<group>"; };
 		E4C972790E7C15D800B33973 /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = System/Library/Frameworks/AppKit.framework; sourceTree = SDKROOT; };
 		E4C972AF0E7C337B00B33973 /* XBMCController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XBMCController.h; sourceTree = "<group>"; };
 		E4C972B00E7C337B00B33973 /* XBMCController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XBMCController.m; sourceTree = "<group>"; };
+		E4C972B20E8C3BA100E6BAFE /* XBMCHelper.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = XBMCHelper.c; sourceTree = "<group>"; };
+		E4C972C90E8C3F6100E6BAFE /* XBMCHelper */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = XBMCHelper; sourceTree = BUILT_PRODUCTS_DIR; };
 		E4C974B90E7DAF7100B33973 /* killxbmchelper.sh */ = {isa = PBXFileReference; explicitFileType = text.script.sh; fileEncoding = 4; path = killxbmchelper.sh; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -133,6 +124,13 @@
 				8D5B49B4048680CD000E48DA /* Cocoa.framework in Frameworks */,
 				E4C9727A0E7C15D800B33973 /* AppKit.framework in Frameworks */,
 				E4C9555B0E8199B300E6BAFE /* BackRow.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		E4C972C70E8C3F6100E6BAFE /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -164,8 +162,6 @@
 		089C167CFE841241C02AAC07 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
-				E4C971630E8B0EE200E6BAFE /* XBMCHelper */,
-				E4C960800E84063500E6BAFE /* Splash.png */,
 				E4C974B90E7DAF7100B33973 /* killxbmchelper.sh */,
 				8D5B49B7048680CD000E48DA /* Info.plist */,
 				089C167DFE841241C02AAC07 /* InfoPlist.strings */,
@@ -179,6 +175,8 @@
 		08FB77AFFE84173DC02AAC07 /* Classes */ = {
 			isa = PBXGroup;
 			children = (
+				E4C9718A0E8C26C400E6BAFE /* XBMCUserDefaults.h */,
+				E4C9718B0E8C26C400E6BAFE /* XBMCUserDefaults.m */,
 				E4C971880E7C036400B33973 /* XBMCAppliance.h */,
 				E4C95B550E81C62100E6BAFE /* xbmcclientwrapper.h */,
 				E4C95B560E81C62100E6BAFE /* xbmcclientwrapper.mm */,
@@ -221,6 +219,7 @@
 			isa = PBXGroup;
 			children = (
 				8D5B49B6048680CD000E48DA /* XBMCLauncher.frappliance */,
+				E4C972C90E8C3F6100E6BAFE /* XBMCHelper */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -228,6 +227,7 @@
 		32C88E010371C26100C91783 /* Other Sources */ = {
 			isa = PBXGroup;
 			children = (
+				E4C972B20E8C3BA100E6BAFE /* XBMCHelper.c */,
 				E4C9596B0E81AB3800E6BAFE /* xbmcclient.h */,
 				32DBCF630370AF2F00C91783 /* xbmclauncher_Prefix.pch */,
 			);
@@ -258,12 +258,29 @@
 			buildRules = (
 			);
 			dependencies = (
+				E4C972E90E8C3FED00E6BAFE /* PBXTargetDependency */,
 			);
 			name = XBMCLauncher;
 			productInstallPath = "$(HOME)/Library/Bundles";
 			productName = xbmclauncher;
 			productReference = 8D5B49B6048680CD000E48DA /* XBMCLauncher.frappliance */;
 			productType = "com.apple.product-type.bundle";
+		};
+		E4C972C80E8C3F6100E6BAFE /* XBMCHelper */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = E4C972D40E8C3F7300E6BAFE /* Build configuration list for PBXNativeTarget "XBMCHelper" */;
+			buildPhases = (
+				E4C972C60E8C3F6100E6BAFE /* Sources */,
+				E4C972C70E8C3F6100E6BAFE /* Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = XBMCHelper;
+			productName = XBMCHelperDummy;
+			productReference = E4C972C90E8C3F6100E6BAFE /* XBMCHelper */;
+			productType = "com.apple.product-type.tool";
 		};
 /* End PBXNativeTarget section */
 
@@ -280,7 +297,7 @@
 				8D5B49AC048680CD000E48DA /* XBMCLauncher */,
 				E4C95D330E82D85000E6BAFE /* buildAndCopyToFrontRow */,
 				E4C95D490E82D92800E6BAFE /* buildAndCopyToATV */,
-				E4C96F8D0E89995800E6BAFE /* createInstaller */,
+				E4C972C80E8C3F6100E6BAFE /* XBMCHelper */,
 			);
 		};
 /* End PBXProject section */
@@ -290,12 +307,11 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E4C972D80E8C3FE100E6BAFE /* XBMCHelper in Resources */,
 				8D5B49B0048680CD000E48DA /* InfoPlist.strings in Resources */,
 				E4C974BA0E7DAF7100B33973 /* killxbmchelper.sh in Resources */,
-				E4C960810E84063500E6BAFE /* Splash.png in Resources */,
 				E4C96FD00E89A3AA00E6BAFE /* LICENSE.txt in Resources */,
 				E4C96FD10E89A3AA00E6BAFE /* README.txt in Resources */,
-				E4C971640E8B0EE200E6BAFE /* XBMCHelper in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -329,19 +345,6 @@
 			shellPath = /bin/sh;
 			shellScript = "APPLETV_IP=192.168.0.90\nscp -r $TARGET_BUILD_DIR/XBMCLauncher.frappliance frontrow@$APPLETV_IP:\nssh frontrow@$APPLETV_IP restartFinder\nexit 0";
 		};
-		E4C96F8C0E89995800E6BAFE /* ShellScript */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "source scripts/createInstaller";
-		};
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
@@ -356,6 +359,15 @@
 				E4C96B4A0E866DA600E6BAFE /* XBMCDebugHelpers.m in Sources */,
 				E4C96F310E8865D700E6BAFE /* DebugController.m in Sources */,
 				E4C970860E8AF0E400E6BAFE /* XBMCPreferencesController.m in Sources */,
+				E4C9718C0E8C26C400E6BAFE /* XBMCUserDefaults.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		E4C972C60E8C3F6100E6BAFE /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				E4C972CD0E8C3F7000E6BAFE /* XBMCHelper.c in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -372,10 +384,10 @@
 			target = 8D5B49AC048680CD000E48DA /* XBMCLauncher */;
 			targetProxy = E4C95D4C0E82D92E00E6BAFE /* PBXContainerItemProxy */;
 		};
-		E4C96F910E89995D00E6BAFE /* PBXTargetDependency */ = {
+		E4C972E90E8C3FED00E6BAFE /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = 8D5B49AC048680CD000E48DA /* XBMCLauncher */;
-			targetProxy = E4C96F900E89995D00E6BAFE /* PBXContainerItemProxy */;
+			target = E4C972C80E8C3F6100E6BAFE /* XBMCHelper */;
+			targetProxy = E4C972E80E8C3FED00E6BAFE /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
@@ -517,23 +529,32 @@
 			};
 			name = Release;
 		};
-		E4C96F8E0E89995800E6BAFE /* Debug */ = {
+		E4C972CB0E8C3F6200E6BAFE /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
 				COPY_PHASE_STRIP = NO;
 				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_ENABLE_FIX_AND_CONTINUE = YES;
+				GCC_MODEL_TUNING = G5;
 				GCC_OPTIMIZATION_LEVEL = 0;
-				PRODUCT_NAME = createInstaller;
+				INSTALL_PATH = /usr/local/bin;
+				PREBINDING = NO;
+				PRODUCT_NAME = XBMCHelper;
 			};
 			name = Debug;
 		};
-		E4C96F8F0E89995800E6BAFE /* Release */ = {
+		E4C972CC0E8C3F6200E6BAFE /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
 				COPY_PHASE_STRIP = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				GCC_ENABLE_FIX_AND_CONTINUE = NO;
-				PRODUCT_NAME = createInstaller;
+				GCC_MODEL_TUNING = G5;
+				INSTALL_PATH = /usr/local/bin;
+				PREBINDING = NO;
+				PRODUCT_NAME = XBMCHelperDummy;
 				ZERO_LINK = NO;
 			};
 			name = Release;
@@ -577,11 +598,11 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		E4C96F940E89996C00E6BAFE /* Build configuration list for PBXAggregateTarget "createInstaller" */ = {
+		E4C972D40E8C3F7300E6BAFE /* Build configuration list for PBXNativeTarget "XBMCHelper" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				E4C96F8E0E89995800E6BAFE /* Debug */,
-				E4C96F8F0E89995800E6BAFE /* Release */,
+				E4C972CB0E8C3F6200E6BAFE /* Debug */,
+				E4C972CC0E8C3F6200E6BAFE /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
