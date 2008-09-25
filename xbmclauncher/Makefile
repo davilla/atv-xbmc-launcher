@@ -1,7 +1,7 @@
 # Makefile
 #
 # Copyright (C) 2007 Eric Steil III
-# edited by Stephan Diederich
+# shrinked for XBMCLauncher by Stephan Diederich
 # 
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -54,14 +54,18 @@ English.lproj/Localizable.strings: *.m
 build:
 	xcodebuild -configuration Debug
 	
-release:
+release: build/$(DISTCONFIG)/XBMCLauncher.frappliance/Contents/MacOS/XBMCLauncher
+
+build/$(DISTCONFIG)/XBMCLauncher.frappliance/Contents/MacOS/XBMCLauncher: *.h *.m
 	xcodebuild -configuration "$(DISTCONFIG)" clean $(EXTRA_OPTS)
 	xcodebuild -configuration "$(DISTCONFIG)" $(EXTRA_OPTS)
 
 	rm -rf "build/$(DISTCONFIG)/XBMCLauncher.frappliance.dSYM"
 
 docs: $(README_DEST) $(LICENSE_DEST)
-
+	mkdir -p "build/$(DISTCONFIG)/"
+	cp "$(README_SOURCE)" "$(LICENSE_SOURCE)" "build/$(DISTCONFIG)/"
+	
 $(README_DEST): $(README_SOURCE)
 	cp $(README_SOURCE) $(README_DEST)
 	
@@ -71,8 +75,6 @@ $(LICENSE_DEST): $(LICENSE_SOURCE)
 # Build the tarball for ATVLoader
 dist-tarball: docs release 
 	@echo "BUILDING DISTRIBUTION FOR XBMCLauncher $(VERSION) ($(REVISION))"
-	
-	cp "$(README_SOURCE)" "$(LICENSE_SOURCE)" "build/$(DISTCONFIG)/"
 	
 	# build tarball
 	mkdir -p "$(TMPROOT)/$(TARDIR)"
