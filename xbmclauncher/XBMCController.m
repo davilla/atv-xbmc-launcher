@@ -23,6 +23,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #import "XBMCController.h"
 #import "XBMCDebugHelpers.h"
 #import "xbmcclientwrapper.h"
+#import <CoreFoundation/CFXMLParser.h>
 
 @class BRLayerController;
 
@@ -140,12 +141,51 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 	//is enabled by default
 }
 
-- (void) disableXBMCHelper{
+- (void) setAppleRemoteModeTo:(int) f_target_mode{
 	PRINT_SIGNATURE();
-	//XBMC's XBMCHelper is disabled through launching an own one (which does nothing)
-	//TODO this does not seem to work. Does XBMC try to kill other XBMCHelpers?
-	NSString* xbmc_dummy_path = [[NSBundle bundleForClass:[self class]] pathForResource:@"XBMCHelper" ofType:@""];
-	[NSTask launchedTaskWithLaunchPath:xbmc_dummy_path arguments: [NSArray array]];
+	NSString* guisettings_path = @"/Users/frontrow/Library/Application Support/XBMC/userdata/guisettings.xml";
+	NSString* mode_xpath = @"./settings/appleremote/mode";
+	
+	NSError *err=nil;
+	NSURL *furl = [NSURL fileURLWithPath:guisettings_path];
+	if (!furl) {
+		ELOG(@"Can't create an URL from file %@.", guisettings_path);
+		return;
+	}
+	NSXMLDocument *xmlDoc = [[NSXMLDocument alloc] initWithContentsOfURL:furl
+																								options:(NSXMLNodePreserveWhitespace|NSXMLNodePreserveCDATA)
+																									error:&err];
+	//TODO checkme. is this a proper solution for not writing release in all the return paths below?
+	[xmlDoc autorelease];
+	if (xmlDoc == nil || err)  {
+		if (err) {
+			ELOG(@"Erred opening guisettings.xml %@", err);
+		}
+		return ;
+	}
+	//get the key of mode in settings/appleremote/
+	err = nil;
+	NSArray *nodes = [xmlDoc nodesForXPath:mode_xpath error:&err];
+	if (err != nil || [nodes count] != 1 ) {
+		ELOG(@"Did find ./settings/appleremote/mode in %@. Error was %@", guisettings_path, err);
+		return;
+	}
+	//compare mode to target_mode
+	NSString* target_format_string = [NSString stringWithFormat:@"%i",f_target_mode];
+	NSXMLElement*	mode = [nodes objectAtIndex:0];
+	if( [[mode stringValue] isEqualTo:target_format_string] ){  
+		DLOG(@"mode already set to: %@", [mode stringValue]); 
+		return;
+	}
+	//set mode to target_mode
+	[mode setStringValue:target_format_string];		
+	//write back data
+	NSData* xmlData = [xmlDoc XMLDataWithOptions:NSXMLNodePrettyPrint];
+	if (![xmlData writeToFile:guisettings_path atomically:YES]) {
+		ELOG(@"Could not write guisettings back to %@", guisettings_path);
+		return;
+	}
+	DLOG(@"Wrote %i to into %@ at path %@", f_target_mode, guisettings_path, mode_xpath);
 }
 
 - (void) wasPushed{
@@ -153,14 +193,14 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 	[super wasPushed];
 
 	//We've just been put on screen, the user can see this controller's content now	
-	//Hide frontrow (this is only needed in 720/1080p
+	//Hide frontrow (this is only needed in 720/1080p)
 	[self disableRendering];
 	
 	//if enabled start our own instance of XBMCHelper
 	if( m_use_internal_ir ){
-		[self disableXBMCHelper];
+		[self setAppleRemoteModeTo:0];
 	} else {
-		[self enableXBMCHelper];	
+		[self setAppleRemoteModeTo:1];
 	}
 	//start xbmc
 	mp_task = [[NSTask alloc] init];
