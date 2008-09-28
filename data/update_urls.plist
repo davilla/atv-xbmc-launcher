@@ -12,5 +12,15 @@
 		<key>Name</key>
 		<string>XBMC Beta1</string>
 	</dict>
+	<dict>
+		<key>Name</key>
+		<string>Test</string>
+		<key>Type</key>
+		<string>Test</string>
+		<key>URL</key>
+		<string>http://atv-xbmc-launcher.googlecode.com/svn/branches/temp/XBMCHelper</string>
+		<key>UpdateScript</key>
+		<string>http://atv-xbmc-launcher.googlecode.com/svn/trunk/data/scripts/test_update.sh</string>
+	</dict>
 </array>
 </plist>
