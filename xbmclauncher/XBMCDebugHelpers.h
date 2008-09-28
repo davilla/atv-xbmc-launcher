@@ -20,9 +20,6 @@
 
 #import <Cocoa/Cocoa.h>
 
-
-#define PRINT_SIGNATURE() NSLog(@"%s", __PRETTY_FUNCTION__)
-
 /*
  *  Stuff below was taken from LoggingUtils.h of ATVFiles
  *
@@ -44,3 +41,5 @@
 #define ELOG(s, ...) NSLog(@"[ERROR] " s, ##__VA_ARGS__)
 #define DLOG(s, ...) LOG(s, ##__VA_ARGS__)
 #endif
+
+#define PRINT_SIGNATURE() LOG(@"%s", __PRETTY_FUNCTION__)
