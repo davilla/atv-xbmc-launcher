@@ -3,20 +3,14 @@
 <plist version="1.0">
 <array>
 	<dict>
+		<key>UpdateScript</key>
+		<string>http://atv-xbmc-launcher.googlecode.com/svn/trunk/data/scripts/beta1_update.sh</string>
 		<key>URL</key>
 		<string>http://downloads.sourceforge.net/xbmc/XBMC_for_Mac-Atlantis-Beta_1.dmg</string>
 		<key>Type</key>
 		<string>Application</string>
 		<key>Name</key>
 		<string>XBMC Beta1</string>
-	</dict>
-	<dict>
-		<key>URL</key>
-		<string>http://somewhere.com</string>
-		<key>Name</key>
-		<string>testSkin</string>
-		<key>Type</key>
-		<string>Skin</string>
 	</dict>
 </array>
 </plist>
