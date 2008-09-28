@@ -51,7 +51,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 	@throw [NSException exceptionWithName:@"BNRBadInitCall" reason:@"Init XBMCController with initWithPath" userInfo:nil];
 	return nil;
 }
-- (id) initWithAppPath:(NSString*) f_app_path helperPath:(NSString*) f_helper_path;
+- (id) initWithAppPath:(NSString*) f_app_path helperPath:(NSString*) f_helper_path lauchAgentFileName:(NSString*) f_lauch_agent_file_name
 {
 	PRINT_SIGNATURE();
 	if ( ![super init] )
@@ -60,6 +60,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 	m_xbmc_running = NO;
 	mp_app_path = [f_app_path retain];
 	mp_helper_path = [f_helper_path retain];
+	mp_launch_agent_file_name = [f_lauch_agent_file_name retain];
 	mp_swatter_timer = nil;
 	//read preferences
 	m_use_internal_ir = [[XBMCUserDefaults defaults] boolForKey:XBMC_USE_INTERNAL_IR];
@@ -73,6 +74,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 	[mp_xbmclient release];
 	[mp_app_path release];
 	[mp_helper_path release];
+	[mp_launch_agent_file_name release];
 	[super dealloc];
 }
 
@@ -98,7 +100,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 	//remove our listener
 	[[NSNotificationCenter defaultCenter] removeObserver:self];
 	//delete a launchAgent if it's there
-	[XBMCController deleteHelperLaunchAgent]; 
+	[self deleteHelperLaunchAgent]; 
 	//disable swatter 
 	[self disableSwatterIfActive];
 
@@ -204,7 +206,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 	[self disableRendering];
 	
 	//delete a launchAgent if it's there
-	[XBMCController deleteHelperLaunchAgent];
+	[self deleteHelperLaunchAgent];
 	
 	//if enabled start our own instance of XBMCHelper
 	if( m_use_internal_ir ){
@@ -386,14 +388,16 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 			return [self inUserSettingsSetXpath:@"./settings/appleremote/mode" toInt:1];
 	}
 }
-+ (bool) deleteHelperLaunchAgent
+
+- (bool) deleteHelperLaunchAgent
 {
 	NSArray* lib_array = NSSearchPathForDirectoriesInDomains(NSLibraryDirectory, NSUserDomainMask, TRUE);
 	if([lib_array count] != 1){
 		ELOG("Bah, something went wrong trying to find users Library directory");
 		return FALSE;
 	}
-	NSString * launch_agent_file_path = [[lib_array objectAtIndex:0] stringByAppendingString:@"/LaunchAgents/org.xbmc.helper.plist"];
+	NSString * launch_agent_file_path = [[lib_array objectAtIndex:0] stringByAppendingString:@"/LaunchAgents/"];
+	launch_agent_file_path = [launch_agent_file_path stringByAppendingString:mp_launch_agent_file_name];
 	DLOG(@"trying to delete LaunchAgent file at %@", launch_agent_file_path);
 	if([[NSFileManager defaultManager] removeFileAtPath:launch_agent_file_path handler:nil]){
 		ILOG(@"Deleted LaunchAgent file at %@", launch_agent_file_path);

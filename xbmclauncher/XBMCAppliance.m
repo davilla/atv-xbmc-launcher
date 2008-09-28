@@ -115,7 +115,8 @@ typedef enum {
 		//so read the path of current and pass to controller
 		NSString* appPath = [obj valueForKey:@"apppath"];
 		NSString* helperPath = [obj valueForKey:@"helperpath"];
-		return [[[XBMCController alloc] initWithAppPath:appPath helperPath:helperPath] autorelease];
+		NSString* launch_agent_file_name = [obj valueForKey:@"LaunchAgentFileName"];
+		return [[[XBMCController alloc] initWithAppPath:appPath helperPath:helperPath lauchAgentFileName:launch_agent_file_name] autorelease];
 	} 
 	else if ( [entry_type isEqualToNumber:[NSNumber numberWithInt: UPDATER]] ){
 		// here we want to use something like BRTextWithSpinnerController to get the update running
