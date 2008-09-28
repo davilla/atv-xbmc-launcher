@@ -39,6 +39,7 @@
 - (id) initWithAppPath:(NSString*) f_app_path helperPath:(NSString*) f_helper_path;
 - (void) checkTaskStatus:(NSNotification *)note; //callback when XBMC quit or crashed
 - (bool) inUserSettingsSetXpath:(NSString*) f_xpath toInt:(int) f_value;
++ (bool) deleteHelperLaunchAgent;
 - (void) setupHelperSwatter; //starts a NSTimer which callback periodically searches for a running mp_helper_path app and kills it
 - (void) disableSwatterIfActive; //disables swatter and releases mp_swatter_timer
 - (void) killHelperApp:(NSTimer*) f_timer; //kills a running instance of mp_helper_path application; f_timer can be nil, it's not used

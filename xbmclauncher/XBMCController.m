@@ -110,11 +110,18 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 		[mp_task release];
 		mp_task = nil;
 		
+		//again try to set xbmchelper status what we want to have (in case it was changed during this session)
+		if( m_use_internal_ir ){
+			[self inUserSettingsSetXpath:@"./settings/appleremote/mode" toInt:0];
+		} else {
+			[self inUserSettingsSetXpath:@"./settings/appleremote/mode" toInt:1];
+		}
+		//try to kill XBMCHelper (it does not hurt if it's not running, but definately helps if it still is
+		[self killHelperApp:nil];
+		
 		// Show frontrow menu 
 		if (status != 0)
 		{
-			//now we need to kill XBMCHelper! (if its even running)
-			[self killHelperApp:nil];
 			BRAlertController* alert = [BRAlertController alertOfType:0 titled:nil
 																										primaryText:[NSString stringWithFormat:@"Error: XBMC exited With Status: %i",status]
 																									secondaryText:nil];
@@ -364,4 +371,18 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 		mp_swatter_timer = nil;
 	}
 }
+
++ (bool) deleteHelperLaunchAgent
+{
+	/*
+	NSArray* lib_array = NSSearchPathForDirectoriesInDomains(NSLibraryDirectory, NSUserDomainMask, TRUE);
+	if([lib_array count] != 1){
+		ELOG("Bah, something went wrong trying to find users Library directory");
+		return FALSE;
+	}
+	NSString * launch_agent_file_path = [[lib_array objectAtIndex:0] stringByAppendingString:@"/LaunchAgents/tv.xbmc.helper.plist"];
+	*/
+	return 0;
+}
+
 @end
