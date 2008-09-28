@@ -136,14 +136,17 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 	[super willBePushed];
 }
 
-- (void) enableXBMCHelper{
-	PRINT_SIGNATURE();
-	//is enabled by default
-}
-
 - (void) setAppleRemoteModeTo:(int) f_target_mode{
 	PRINT_SIGNATURE();
-	NSString* guisettings_path = @"/Users/frontrow/Library/Application Support/XBMC/userdata/guisettings.xml";
+	//assemble path to guisettings.xml
+	NSArray* app_support_path_array = NSSearchPathForDirectoriesInDomains(NSApplicationSupportDirectory, NSUserDomainMask, TRUE);
+	if([app_support_path_array count] != 1){
+		ELOG(@"Huh? No application support directory?");
+		return;
+	}
+	NSString* guisettings_path = [[app_support_path_array objectAtIndex:0] stringByAppendingString:@"/XBMC/userdata/guisettings.xml"];
+
+	//path in guisettings.xml where appleremote mode is stored
 	NSString* mode_xpath = @"./settings/appleremote/mode";
 	
 	NSError *err=nil;
