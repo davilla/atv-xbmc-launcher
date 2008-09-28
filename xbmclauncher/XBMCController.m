@@ -97,8 +97,11 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 	//remove our listener
 	[[NSNotificationCenter defaultCenter] removeObserver:self];
+	//delete a launchAgent if it's there
+	[XBMCController deleteHelperLaunchAgent]; 
 	//disable swatter 
 	[self disableSwatterIfActive];
+
 	if (![mp_task isRunning])
 	{
 		ILOG(@"XBMC quit.");
@@ -199,6 +202,9 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 	//We've just been put on screen, the user can see this controller's content now	
 	//Hide frontrow (this is only needed in 720/1080p)
 	[self disableRendering];
+	
+	//delete a launchAgent if it's there
+	[XBMCController deleteHelperLaunchAgent];
 	
 	//if enabled start our own instance of XBMCHelper
 	if( m_use_internal_ir ){
@@ -382,15 +388,20 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 }
 + (bool) deleteHelperLaunchAgent
 {
-	/*
 	NSArray* lib_array = NSSearchPathForDirectoriesInDomains(NSLibraryDirectory, NSUserDomainMask, TRUE);
 	if([lib_array count] != 1){
 		ELOG("Bah, something went wrong trying to find users Library directory");
 		return FALSE;
 	}
-	NSString * launch_agent_file_path = [[lib_array objectAtIndex:0] stringByAppendingString:@"/LaunchAgents/tv.xbmc.helper.plist"];
-	*/
-	return 0;
+	NSString * launch_agent_file_path = [[lib_array objectAtIndex:0] stringByAppendingString:@"/LaunchAgents/org.xbmc.helper.plist"];
+	DLOG(@"trying to delete LaunchAgent file at %@", launch_agent_file_path);
+	if([[NSFileManager defaultManager] removeFileAtPath:launch_agent_file_path handler:nil]){
+		ILOG(@"Deleted LaunchAgent file at %@", launch_agent_file_path);
+		return TRUE;
+	} else{
+		DLOG(@"Failed to delete LaunchAgent file at %@", launch_agent_file_path);
+		return FALSE;
+	}
 }
 
 @end
