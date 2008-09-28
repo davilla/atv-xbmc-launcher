@@ -20,12 +20,17 @@
 
 #import <Cocoa/Cocoa.h>
 #import <BackRow/BackRow.h>
+@class QuDownloadController;
 
 @interface XBMCUpdateController : BRCenteredMenuController {
 	int padding[16];	// credit is due here to SapphireCompatibilityClasses!!
 	NSURL * mp_url; //url where to get udaters plist from
 	NSMutableArray* mp_items; //list items
 	NSMutableArray*	mp_updates; //list with entries what updates/downloads we offer 
+	QuDownloadController* mp_downloader;
+	int m_update_item;
 }
+
 - (id) initWithURL:(NSURL*) fp_url;
+
 @end
