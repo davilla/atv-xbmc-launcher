@@ -92,10 +92,10 @@ typedef std::map<eATVClientEvent, CPacketBUTTON*> tEventMap;
 	lr_map.insert(std::make_pair(ATV_BUTTON_MENU, new CPacketBUTTON("Menu", "R1", BTN_DOWN | BTN_NO_REPEAT | BTN_QUEUE)));
 	// Menu Hold will be used both for sending "Back" and for starting universal remote combinations (if universal mode is on)
 	lr_map.insert(std::make_pair(ATV_BUTTON_MENU_H, new CPacketBUTTON("Back", "R1", BTN_DOWN | BTN_NO_REPEAT | BTN_QUEUE)));
-	lr_map.insert(std::make_pair(ATV_BUTTON_UP_PRESS, new CPacketBUTTON("Up", "R1", BTN_DOWN | BTN_NO_REPEAT | BTN_QUEUE)));
-//	lr_map.insert(std::make_pair(ATV_BUTTON_UP_RELEASE, new CPacketBUTTON("Up", "R1", BTN_UP | BTN_NO_REPEAT | BTN_QUEUE)));
-	lr_map.insert(std::make_pair(ATV_BUTTON_DOWN_PRESS, new CPacketBUTTON("Down", "R1", BTN_DOWN | BTN_NO_REPEAT | BTN_QUEUE)));
-//	lr_map.insert(std::make_pair(ATV_BUTTON_DOWN_RELEASE, new CPacketBUTTON("Down", "R1", BTN_UP | BTN_NO_REPEAT | BTN_QUEUE)));
+	lr_map.insert(std::make_pair(ATV_BUTTON_UP_PRESS, new CPacketBUTTON("Up", "R1", BTN_DOWN  | BTN_QUEUE)));
+	lr_map.insert(std::make_pair(ATV_BUTTON_UP_RELEASE, new CPacketBUTTON("Up", "R1", BTN_UP  | BTN_QUEUE)));
+	lr_map.insert(std::make_pair(ATV_BUTTON_DOWN_PRESS, new CPacketBUTTON("Down", "R1", BTN_DOWN | BTN_QUEUE)));
+	lr_map.insert(std::make_pair(ATV_BUTTON_DOWN_RELEASE, new CPacketBUTTON("Down", "R1", BTN_UP | BTN_QUEUE)));
 	//TODO
 	//ATV_BUTTON_PLAY_H, //atm it looks like we can't intercept that button/event
 	
