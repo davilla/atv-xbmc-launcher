@@ -56,10 +56,7 @@
 - (void) wasPushed {	
 	[super setListTitle: @"XBMCLauncher"];
 	[super setPrimaryInfoText: @"Updater"];
-	[super setSecondaryInfoText: @"Available Downloads (Those are just stubs, nothing is working yet):"];
-
-	//this simple test worked, so we'll reuse this one I think
-	//[[self stack] swapController: [[QuDownloadController alloc] init]];
+	[super setSecondaryInfoText: @"Available Downloads:"];
 	NSString *error;
 	NSPropertyListFormat format;
 	NSData* plistdata = [NSData dataWithContentsOfURL: mp_url];
