@@ -47,6 +47,8 @@ typedef enum {
 	//create default settings
 	NSMutableDictionary* defaultValues = [NSMutableDictionary dictionary];
 	[defaultValues setValue:[NSNumber numberWithBool:YES] forKey:XBMC_USE_INTERNAL_IR];
+	[defaultValues setValue:[NSNumber numberWithBool:YES] forKey:XBMC_USE_UNIVERSAL_REMOTE];
+	
 	//register dictionary defaults
 	[[XBMCUserDefaults defaults] registerDefaults:defaultValues];
 }

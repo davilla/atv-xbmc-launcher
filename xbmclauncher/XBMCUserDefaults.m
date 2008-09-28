@@ -11,6 +11,7 @@
 #import "XBMCUserDefaults.h"
 
 NSString* const XBMC_USE_INTERNAL_IR = @"UseInternalIR";
+NSString* const XBMC_USE_UNIVERSAL_REMOTE = @"UseXBMCsUniversalRemote";
 
 @implementation XBMCUserDefaults
 

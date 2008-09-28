@@ -13,6 +13,7 @@
 //define keys for lookup in preferences
 
 extern NSString* const XBMC_USE_INTERNAL_IR; //NSBool
+extern NSString* const XBMC_USE_UNIVERSAL_REMOTE; //use appleremote in universal mode
 
 @interface XBMCUserDefaults : NSUserDefaults {
 	NSString * _applicationID;
