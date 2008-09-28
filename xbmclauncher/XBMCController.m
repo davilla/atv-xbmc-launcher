@@ -60,7 +60,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 	m_xbmc_running = NO;
 	mp_app_path = [f_app_path retain];
 	mp_helper_path = [f_helper_path retain];
-
+	mp_swatter_timer = nil;
 	//read preferences
 	m_use_internal_ir = [[XBMCUserDefaults defaults] boolForKey:XBMC_USE_INTERNAL_IR];
 	return self;
@@ -69,6 +69,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 - (void)dealloc
 {
 	PRINT_SIGNATURE();
+	[self disableSwatterIfActive];
 	[mp_xbmclient release];
 	[mp_app_path release];
 	[mp_helper_path release];
@@ -96,7 +97,9 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 	//remove our listener
 	[[NSNotificationCenter defaultCenter] removeObserver:self];
-	if (! [mp_task isRunning])
+	//disable swatter 
+	[self disableSwatterIfActive];
+	if (![mp_task isRunning])
 	{
 		ILOG(@"XBMC quit.");
 		m_xbmc_running = NO;
@@ -111,10 +114,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 		if (status != 0)
 		{
 			//now we need to kill XBMCHelper! (if its even running)
-			//TODO for now we use a script as I don't know how to kill a Task with OSX API. any hints are pretty welcome!
-			NSString* killer_path = [[NSBundle bundleForClass:[self class]] pathForResource:@"killxbmchelper" ofType:@"sh"];
-			NSTask* killer = [NSTask launchedTaskWithLaunchPath:@"/bin/bash" arguments: [NSArray arrayWithObject:killer_path]];
-			[killer waitUntilExit];
+			[self killHelperApp:nil];
 			BRAlertController* alert = [BRAlertController alertOfType:0 titled:nil
 																										primaryText:[NSString stringWithFormat:@"Error: XBMC exited With Status: %i",status]
 																									secondaryText:nil];
@@ -199,7 +199,11 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 	
 	//if enabled start our own instance of XBMCHelper
 	if( m_use_internal_ir ){
-		[self inUserSettingsSetXpath:@"./settings/appleremote/mode" toInt:0];
+		//try to disable xbmchelper in guisettings.xml
+		bool worked = [self inUserSettingsSetXpath:@"./settings/appleremote/mode" toInt:0];
+		//if it did not work, set up a fly-swatter
+		if(!worked)
+			[self setupHelperSwatter];
 	} else {
 		[self inUserSettingsSetXpath:@"./settings/appleremote/mode" toInt:1];
 	}
@@ -338,4 +342,26 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 	}
 }
 
+- (void) killHelperApp:(NSTimer*) f_timer{
+	//TODO for now we use a script as I don't know how to kill a Task with OSX API. any hints are pretty welcome!
+	//TODO make this script/code use mp_helper_path as a path or name for the process to kill 
+	NSString* killer_path = [[NSBundle bundleForClass:[self class]] pathForResource:@"killxbmchelper" ofType:@"sh"];
+	NSTask* killer = [NSTask launchedTaskWithLaunchPath:@"/bin/bash" arguments: [NSArray arrayWithObject:killer_path]];
+	[killer waitUntilExit];
+}
+
+- (void) setupHelperSwatter{
+	PRINT_SIGNATURE();
+	[self disableSwatterIfActive];
+	mp_swatter_timer = [NSTimer scheduledTimerWithTimeInterval:1. target:self selector:@selector(killHelperApp:) userInfo:nil repeats:YES];
+	[mp_swatter_timer retain];
+}
+
+- (void) disableSwatterIfActive{
+	if(mp_swatter_timer){
+		[mp_swatter_timer invalidate];
+		[mp_swatter_timer release];
+		mp_swatter_timer = nil;
+	}
+}
 @end

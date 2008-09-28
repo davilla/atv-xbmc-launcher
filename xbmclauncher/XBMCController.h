@@ -30,12 +30,16 @@
 	NSTask* mp_task; //task for xbmc. is needed as a member, as we check status later
 	NSString* mp_app_path; //which app to launch
 	NSString* mp_helper_path; //which helper to disable/enable/kill on error
-	BOOL m_xbmc_running; 
-	XBMCClientWrapper* mp_xbmclient;
+	BOOL m_xbmc_running;  //true while xbmc is running
+	XBMCClientWrapper* mp_xbmclient; // our own event-client implementation
 	BOOL m_use_internal_ir; //read from preferences, if yes, XBMC's XBMCHelper is disabled
+	NSTimer* mp_swatter_timer; //timer used in helperapp-swatting
 }
 
 - (id) initWithAppPath:(NSString*) f_app_path helperPath:(NSString*) f_helper_path;
-- (void) checkTaskStatus:(NSNotification *)note;
+- (void) checkTaskStatus:(NSNotification *)note; //callback when XBMC quit or crashed
 - (bool) inUserSettingsSetXpath:(NSString*) f_xpath toInt:(int) f_value;
+- (void) setupHelperSwatter; //starts a NSTimer which callback periodically searches for a running mp_helper_path app and kills it
+- (void) disableSwatterIfActive; //disables swatter and releases mp_swatter_timer
+- (void) killHelperApp:(NSTimer*) f_timer; //kills a running instance of mp_helper_path application; f_timer can be nil, it's not used
 @end
