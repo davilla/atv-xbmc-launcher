@@ -17,7 +17,9 @@
 															primaryText:@"This message will disappear when finished"
 															secondaryText:@"...and maybe someone will beautify this message... :)"])
 		return nil;
+
 	mp_update_task = [[NSTask alloc] init];
+
 	[mp_update_task setLaunchPath:@"/bin/bash"];
 	[mp_update_task setArguments:[NSArray arrayWithObjects:fp_script_path,
 																fp_update_path,
@@ -33,7 +35,6 @@
 -(void) dealloc
 {
 	PRINT_SIGNATURE();
-	[mp_update_task release];
 	[super dealloc];
 }
 
@@ -48,7 +49,10 @@
 {
 	PRINT_SIGNATURE();
 	[[NSNotificationCenter defaultCenter] removeObserver:self];
-	[[self stack] popController];
+	[mp_update_task release];
+	mp_update_task = nil;
+//	[[self stack] popController];
+	[[self stack] swapController: [BRAlertController alertOfType:0 titled:@"Update finished!" primaryText:nil secondaryText:nil]];
 }
 
 - (BOOL)brEventAction:(BREvent *)event
