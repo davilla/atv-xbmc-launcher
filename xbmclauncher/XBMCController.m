@@ -111,11 +111,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 		mp_task = nil;
 		
 		//again try to set xbmchelper status what we want to have (in case it was changed during this session)
-		if( m_use_internal_ir ){
-			[self inUserSettingsSetXpath:@"./settings/appleremote/mode" toInt:0];
-		} else {
-			[self inUserSettingsSetXpath:@"./settings/appleremote/mode" toInt:1];
-		}
+		[self setDesiredAppleRemoteMode];
 		//try to kill XBMCHelper (it does not hurt if it's not running, but definately helps if it still is
 		[self killHelperApp:nil];
 		
@@ -207,12 +203,12 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 	//if enabled start our own instance of XBMCHelper
 	if( m_use_internal_ir ){
 		//try to disable xbmchelper in guisettings.xml
-		bool worked = [self inUserSettingsSetXpath:@"./settings/appleremote/mode" toInt:0];
+		bool worked = [self setDesiredAppleRemoteMode];
 		//if it did not work, set up a fly-swatter
 		if(!worked)
 			[self setupHelperSwatter];
 	} else {
-		[self inUserSettingsSetXpath:@"./settings/appleremote/mode" toInt:1];
+		[self setDesiredAppleRemoteMode];
 	}
 	//start xbmc
 	mp_task = [[NSTask alloc] init];
@@ -372,6 +368,18 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 	}
 }
 
+- (BOOL) setDesiredAppleRemoteMode
+{
+	if( m_use_internal_ir ){
+		return [self inUserSettingsSetXpath:@"./settings/appleremote/mode" toInt:0];
+	} else {
+		//check if universal remote is on
+		if ([[XBMCUserDefaults defaults] boolForKey:XBMC_USE_UNIVERSAL_REMOTE])
+			return [self inUserSettingsSetXpath:@"./settings/appleremote/mode" toInt:2];
+		else
+			return [self inUserSettingsSetXpath:@"./settings/appleremote/mode" toInt:1];
+	}
+}
 + (bool) deleteHelperLaunchAgent
 {
 	/*

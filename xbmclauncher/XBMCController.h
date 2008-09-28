@@ -38,6 +38,7 @@
 
 - (id) initWithAppPath:(NSString*) f_app_path helperPath:(NSString*) f_helper_path;
 - (void) checkTaskStatus:(NSNotification *)note; //callback when XBMC quit or crashed
+- (BOOL) setDesiredAppleRemoteMode; //sets appleremoteMode to 0,1 or 2 depeding on m_use_internal_ir and XBMC_USE_UNIVERSAL_REMOTE
 - (bool) inUserSettingsSetXpath:(NSString*) f_xpath toInt:(int) f_value;
 + (bool) deleteHelperLaunchAgent;
 - (void) setupHelperSwatter; //starts a NSTimer which callback periodically searches for a running mp_helper_path app and kills it
