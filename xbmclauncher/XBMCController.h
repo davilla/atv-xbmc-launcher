@@ -37,4 +37,5 @@
 
 - (id) initWithAppPath:(NSString*) f_app_path helperPath:(NSString*) f_helper_path;
 - (void) checkTaskStatus:(NSNotification *)note;
+- (bool) inUserSettingsSetXpath:(NSString*) f_xpath toInt:(int) f_value;
 @end

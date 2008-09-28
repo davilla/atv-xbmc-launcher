@@ -136,24 +136,21 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 	[super willBePushed];
 }
 
-- (void) setAppleRemoteModeTo:(int) f_target_mode{
+- (bool) inUserSettingsSetXpath:(NSString*) f_xpath toInt:(int) f_value{
 	PRINT_SIGNATURE();
 	//assemble path to guisettings.xml
 	NSArray* app_support_path_array = NSSearchPathForDirectoriesInDomains(NSApplicationSupportDirectory, NSUserDomainMask, TRUE);
 	if([app_support_path_array count] != 1){
 		ELOG(@"Huh? No application support directory?");
-		return;
+		return FALSE;
 	}
 	NSString* guisettings_path = [[app_support_path_array objectAtIndex:0] stringByAppendingString:@"/XBMC/userdata/guisettings.xml"];
-
-	//path in guisettings.xml where appleremote mode is stored
-	NSString* mode_xpath = @"./settings/appleremote/mode";
 	
 	NSError *err=nil;
 	NSURL *furl = [NSURL fileURLWithPath:guisettings_path];
 	if (!furl) {
 		ELOG(@"Can't create an URL from file %@.", guisettings_path);
-		return;
+		return FALSE;
 	}
 	NSXMLDocument *xmlDoc = [[NSXMLDocument alloc] initWithContentsOfURL:furl
 																								options:(NSXMLNodePreserveWhitespace|NSXMLNodePreserveCDATA)
@@ -164,21 +161,21 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 		if (err) {
 			ELOG(@"Erred opening guisettings.xml %@", err);
 		}
-		return ;
+		return FALSE;
 	}
 	//get the key of mode in settings/appleremote/
 	err = nil;
-	NSArray *nodes = [xmlDoc nodesForXPath:mode_xpath error:&err];
+	NSArray *nodes = [xmlDoc nodesForXPath:f_xpath error:&err];
 	if (err != nil || [nodes count] != 1 ) {
-		ELOG(@"Did find ./settings/appleremote/mode in %@. Error was %@", guisettings_path, err);
-		return;
+		ELOG(@"Did NOT find %@ in %@. Error was %@", f_xpath, guisettings_path, err);
+		return FALSE;
 	}
 	//compare mode to target_mode
-	NSString* target_format_string = [NSString stringWithFormat:@"%i",f_target_mode];
+	NSString* target_format_string = [NSString stringWithFormat:@"%i",f_value];
 	NSXMLElement*	mode = [nodes objectAtIndex:0];
 	if( [[mode stringValue] isEqualTo:target_format_string] ){  
-		DLOG(@"mode already set to: %@", [mode stringValue]); 
-		return;
+		DLOG(@"%@ already set to: %@",f_xpath, [mode stringValue]); 
+		return TRUE;
 	}
 	//set mode to target_mode
 	[mode setStringValue:target_format_string];		
@@ -186,9 +183,10 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 	NSData* xmlData = [xmlDoc XMLDataWithOptions:NSXMLNodePrettyPrint];
 	if (![xmlData writeToFile:guisettings_path atomically:YES]) {
 		ELOG(@"Could not write guisettings back to %@", guisettings_path);
-		return;
+		return FALSE;
 	}
-	DLOG(@"Wrote %i to into %@ at path %@", f_target_mode, guisettings_path, mode_xpath);
+	DLOG(@"Wrote %i to into %@ at path %@", f_value, guisettings_path, f_xpath);
+	return TRUE;
 }
 
 - (void) wasPushed{
@@ -201,9 +199,9 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 	
 	//if enabled start our own instance of XBMCHelper
 	if( m_use_internal_ir ){
-		[self setAppleRemoteModeTo:0];
+		[self inUserSettingsSetXpath:@"./settings/appleremote/mode" toInt:0];
 	} else {
-		[self setAppleRemoteModeTo:1];
+		[self inUserSettingsSetXpath:@"./settings/appleremote/mode" toInt:1];
 	}
 	//start xbmc
 	mp_task = [[NSTask alloc] init];
