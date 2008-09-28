@@ -60,7 +60,5 @@
 	else
 		return [super brEventAction:event];
 }
--(BOOL) recreateOnReselect {
-	return TRUE;
-}
+
 @end
