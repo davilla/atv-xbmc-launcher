@@ -118,30 +118,6 @@
 - (BOOL) isNetworkDependent{
 	return TRUE;
 }
-
-- (void) willBeBuried
-{
-	// The user just chose an option, and we will be taken off the screen
-	PRINT_SIGNATURE();
-	// always call super
-	[super willBeBuried];
-}
-
-- (void) wasBuriedByPushingController: (BRLayerController *) controller
-{
-	// The user chose an option and this controller os no longer on screen
-	PRINT_SIGNATURE();
-	// always call super
-	[super wasBuriedByPushingController: controller];
-}
-
-- (void) willBeExhumed
-{
-	// the user pressed Menu, but we've not been revealed yet
-	PRINT_SIGNATURE();
-	// always call super
-	[super willBeExhumed];
-}
 	
 - (void) wasExhumedByPoppingController: (id) controller
 {
