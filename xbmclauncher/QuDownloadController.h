@@ -9,6 +9,7 @@
 
 #import <Foundation/Foundation.h>
 #import <BackRow/BRController.h>
+#import <BackRowCompilerShutup.h>
 
 @class BRHeaderControl, BRTextControl, QuProgressBarControl;
 
@@ -27,7 +28,6 @@
 	NSString *							mp_urlstr;
 	BOOL										m_download_complete;
 }
--(NSRect)frame;
 
 + (void) clearAllDownloadCaches;
 + (NSString *) downloadCachePath;

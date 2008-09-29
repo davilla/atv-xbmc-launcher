@@ -9,6 +9,7 @@
 
 #import <Foundation/Foundation.h>
 #import <BackRow/BRControl.h>
+#import <BackRowCompilerShutup.h>
 
 @class BRRenderLayer, BRProgressBarWidget;
 
