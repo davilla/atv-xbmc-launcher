@@ -3,7 +3,7 @@
 <plist version="1.0">
 <dict>
 	<key>ATVPluginShortName</key>
-	<string>XBMC</string>
+	<string>XBMC/Boxee</string>
 	<key>CFBundleDevelopmentRegion</key>
 	<string>English</string>
 	<key>CFBundleExecutable</key>
@@ -50,6 +50,32 @@
 			<key>LaunchAgentFileName</key>
 			<string>org.xbmc.helper.plist</string>
 		</dict>
+		<dict>
+			<key>identifier</key>
+			<string>Boxee</string>
+			<key>is-network-dependent</key>
+			<false/>
+			<key>is-share-dependent</key>
+			<false/>
+			<key>is-store-category</key>
+			<false/>
+			<key>name</key>
+			<string>Boxee</string>
+			<key>preferred-order</key>
+			<real>1</real>
+			<key>priority</key>
+			<real>6</real>
+			<key>entry-type</key>
+			<integer>0</integer>
+			<key>apppath</key>
+			<string>/Applications/Boxee.app/Contents/MacOS/Boxee</string>
+			<key>helperpath</key>
+			<string>/Applications/Boxee.app/Contents/Resources/Boxee/XBMCHelper</string>
+			<key>guisettingspath</key>
+			<string>/BOXEE/UserData/guisettings.xml</string>
+			<key>LaunchAgentFileName</key>
+			<string>org.boxee.helper.plist</string>
+		</dict>	
 		<dict>
 			<key>identifier</key>
 			<string>Update</string>

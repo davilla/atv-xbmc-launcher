@@ -107,7 +107,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 	if (![mp_task isRunning])
 	{
-		ILOG(@"XBMC quit.");
+		ILOG(@"XBMC/Boxee quit.");
 		m_xbmc_running = NO;
 		// Return code for XBMC
 		int status = [[note object] terminationStatus];
@@ -231,7 +231,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 		[self enableRendering];
 		[[BRDisplayManager sharedInstance] 	fadeInDisplay];
 		BRAlertController* alert = [BRAlertController alertOfType:0 titled:nil
-																									primaryText:[NSString stringWithFormat:@"Error: Cannot launch XBMC from path:"]
+																									primaryText:[NSString stringWithFormat:@"Error: Cannot launch XBMC/Boxee from path:"]
 																									secondaryText:mp_app_path];
 		[[self stack] swapController:alert];
 	}
