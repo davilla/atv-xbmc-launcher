@@ -52,7 +52,7 @@
 	[mp_update_task release];
 	mp_update_task = nil;
 //	[[self stack] popController];
-	[[self stack] swapController: [BRAlertController alertOfType:0 titled:@"Update finished!" primaryText:nil secondaryText:nil]];
+	[[self stack] swapController: [BRAlertController alertOfType:0 titled:@"Update finished!" primaryText:@"Hit menu to return" secondaryText:nil]];
 }
 
 - (BOOL)brEventAction:(BREvent *)event
