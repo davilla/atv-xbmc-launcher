@@ -51,8 +51,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 	@throw [NSException exceptionWithName:@"BNRBadInitCall" reason:@"Init XBMCController with initWithPath" userInfo:nil];
 	return nil;
 }
-- (id) initWithAppPath:(NSString*) f_app_path helperPath:(NSString*) f_helper_path lauchAgentFileName:(NSString*) f_lauch_agent_file_name
-{
+- (id) initWithAppPath:(NSString*) f_app_path helperPath:(NSString*) f_helper_path lauchAgentFileName:(NSString*) f_lauch_agent_file_name guiSettingsPath:(NSString*) f_guisettings_path{
 	PRINT_SIGNATURE();
 	if ( ![super init] )
 		return ( nil );
@@ -61,6 +60,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 	mp_app_path = [f_app_path retain];
 	mp_helper_path = [f_helper_path retain];
 	mp_launch_agent_file_name = [f_lauch_agent_file_name retain];
+	mp_guisettings_path = [f_guisettings_path retain];
 	mp_swatter_timer = nil;
 	//read preferences
 	m_use_internal_ir = [[XBMCUserDefaults defaults] boolForKey:XBMC_USE_INTERNAL_IR];
@@ -75,6 +75,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 	[mp_app_path release];
 	[mp_helper_path release];
 	[mp_launch_agent_file_name release];
+	[mp_guisettings_path release];
 	[super dealloc];
 }
 
@@ -124,7 +125,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 		if (status != 0)
 		{
 			BRAlertController* alert = [BRAlertController alertOfType:0 titled:nil
-																										primaryText:[NSString stringWithFormat:@"Error: XBMC exited With Status: %i",status]
+																										primaryText:[NSString stringWithFormat:@"Error: XBMC/Boxee exited With Status: %i",status]
 																									secondaryText:nil];
 			[[self stack] swapController:alert];
 		} else {
@@ -152,7 +153,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 		ELOG(@"Huh? No application support directory?");
 		return FALSE;
 	}
-	NSString* guisettings_path = [[app_support_path_array objectAtIndex:0] stringByAppendingString:@"/XBMC/userdata/guisettings.xml"];
+	NSString* guisettings_path = [[app_support_path_array objectAtIndex:0] stringByAppendingString:mp_guisettings_path];
 	
 	NSError *err=nil;
 	NSURL *furl = [NSURL fileURLWithPath:guisettings_path];

@@ -31,13 +31,14 @@
 	NSString* mp_app_path; //which app to launch
 	NSString* mp_helper_path; //which helper to disable/enable/kill on error
 	NSString* mp_launch_agent_file_name; //filename of a LaunchAgent in ~/Library/LaunchAgents
+	NSString* mp_guisettings_path;
 	BOOL m_xbmc_running;  //true while xbmc is running
 	XBMCClientWrapper* mp_xbmclient; // our own event-client implementation
 	BOOL m_use_internal_ir; //read from preferences, if yes, XBMC's XBMCHelper is disabled
 	NSTimer* mp_swatter_timer; //timer used in helperapp-swatting
 }
 
-- (id) initWithAppPath:(NSString*) f_app_path helperPath:(NSString*) f_helper_path lauchAgentFileName:(NSString*) f_lauch_agent_file_name;
+- (id) initWithAppPath:(NSString*) f_app_path helperPath:(NSString*) f_helper_path lauchAgentFileName:(NSString*) f_lauch_agent_file_name guiSettingsPath:(NSString*) f_guisettings_path;
 - (void) checkTaskStatus:(NSNotification *)note; //callback when XBMC quit or crashed
 - (BOOL) setDesiredAppleRemoteMode; //sets appleremoteMode to 0,1 or 2 depeding on m_use_internal_ir and XBMC_USE_UNIVERSAL_REMOTE
 - (bool) inUserSettingsSetXpath:(NSString*) f_xpath toInt:(int) f_value;
