@@ -38,7 +38,7 @@
 			<key>preferred-order</key>
 			<real>1</real>
 			<key>priority</key>
-			<real>6</real>
+			<real>1</real>
 			<key>entry-type</key>
 			<integer>0</integer>
 			<key>apppath</key>
@@ -64,7 +64,7 @@
 			<key>preferred-order</key>
 			<real>1</real>
 			<key>priority</key>
-			<real>6</real>
+			<real>1</real>
 			<key>entry-type</key>
 			<integer>0</integer>
 			<key>apppath</key>
@@ -90,7 +90,7 @@
 			<key>preferred-order</key>
 			<real>2</real>
 			<key>priority</key>
-			<real>7</real>
+			<real>1</real>
 			<key>entry-type</key>
 			<integer>1</integer>
 			<key>URL</key>
@@ -110,7 +110,25 @@
 			<key>preferred-order</key>
 			<real>3</real>
 			<key>priority</key>
-			<real>7</real>
+			<real>1</real>
+			<key>entry-type</key>
+			<integer>-1</integer>
+		</dict>
+		<dict>
+			<key>identifier</key>
+			<string>About</string>
+			<key>is-network-dependent</key>
+			<false/>
+			<key>is-share-dependent</key>
+			<false/>
+			<key>is-store-category</key>
+			<false/>
+			<key>name</key>
+			<string>About</string>
+			<key>preferred-order</key>
+			<real>4</real>
+			<key>priority</key>
+			<real>1</real>
 			<key>entry-type</key>
 			<integer>-1</integer>
 		</dict>

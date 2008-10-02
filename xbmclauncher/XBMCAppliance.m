@@ -99,6 +99,23 @@ typedef enum {
 	[super dealloc];
 }
 
++ (BRAlertController*) getAboutController {
+	NSString* licence_string = @"This program is free software: you can redistribute it and/or modify\nit under the terms of the GNU General Public License as published by\nthe Free Software Foundation, either version 3 of the License, or\n\
+	(at your option) any later version.\n\
+	\n\
+	This program is distributed in the hope that it will be useful,\
+	but WITHOUT ANY WARRANTY; without even the implied warranty of\
+	MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the\
+	GNU General Public License for more details.\n\
+		You should have received a copy of the GNU General Public License\
+		along with this program.  If not, see <http://www.gnu.org/licenses/>.";
+	return [BRAlertController alertOfType:0 titled:@"About" 
+										 primaryText:@"XBMCLauncher"
+													secondaryText:[NSString stringWithFormat:@"Contributors: Scott Davilla / Stephan Diederich\nsee http://atv-xbmc-launcher.googlecode.com or http://www.xbmc.org for details\nCopyright (C) 2008 Team-XBMC\n%@",licence_string
+																	]];
+	
+}
+
 - (id)controllerForIdentifier:(id)identifier {
 	// find the proper entry in categories list from Info.plist
 	NSEnumerator *enumerator = [[[self applianceInfo] applianceCategoryDescriptors] objectEnumerator];
@@ -129,6 +146,8 @@ typedef enum {
 		return [[[XBMCUpdateController alloc] initWithURL:url] autorelease];
 	} else if( [identifier isEqualToString:@"Settings"] ){
 		return [[[XBMCPreferencesController alloc] init] autorelease];
+	} else if( [identifier isEqualToString:@"About"] ){
+		return [XBMCAppliance getAboutController];
 	} else {
 		return [BRAlertController alertOfType:0
 														titled:@"XBMCLauncher"
@@ -148,5 +167,6 @@ typedef enum {
 	}
 	return categories;
 }
+
 
 @end
