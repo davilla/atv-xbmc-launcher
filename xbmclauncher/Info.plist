@@ -75,7 +75,7 @@
 			<string>/BOXEE/UserData/guisettings.xml</string>
 			<key>LaunchAgentFileName</key>
 			<string>org.boxee.helper.plist</string>
-		</dict>	
+		</dict>
 		<dict>
 			<key>identifier</key>
 			<string>Update</string>
@@ -94,7 +94,7 @@
 			<key>entry-type</key>
 			<integer>1</integer>
 			<key>URL</key>
-			<string>http://atv-xbmc-launcher.googlecode.com/svn/trunk/data/update_urls.plist</string>
+			<string>http://atv-xbmc-launcher.googlecode.com/svn/tags/xbmc-info/update_urls.plist</string>
 		</dict>
 		<dict>
 			<key>identifier</key>
