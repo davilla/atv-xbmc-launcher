@@ -13,24 +13,24 @@
 		<string>XBMC Beta1</string>
 	</dict>
 	<dict>
-		<key>UpdateScript</key>
-		<string>http://atvusb-creator.googlecode.com/svn/tags/boxee-info/scripts/alpha-0.9.3033_update.sh</string>
-		<key>URL</key>
-		<string>http://dl.boxee.tv/boxee-atv.dmg</string>
-		<key>Type</key>
-		<string>Application</string>
 		<key>Name</key>
-		<string>Boxee alpha 0.9.3033</string>
+		<string>Test</string>
+		<key>Type</key>
+		<string>Test</string>
+		<key>URL</key>
+		<string>TODO</string>
+		<key>UpdateScript</key>
+		<string>http://atv-xbmc-launcher.googlecode.com/svn/tags/xbmc-info/scripts/launcher-update-0.1.sh</string>
 	</dict>
 	<dict>
 		<key>Name</key>
-		<string>Launcher Alpha 1</string>
+		<string>Test</string>
 		<key>Type</key>
-		<string>Launcher</string>
+		<string>Test</string>
 		<key>URL</key>
-		<string>http://mp-vipa5.informatik.uni-mannheim.de/~diederich/xbmc/XBMCLauncher-0.1-debug.run</string>
+		<string>http://atv-xbmc-launcher.googlecode.com/svn/branches/temp/AppleRemote/AppleRemote.h</string>
 		<key>UpdateScript</key>
-		<string>http://mp-vipa5.informatik.uni-mannheim.de/~diederich/xbmc/launcher-update-0.1.sh</string>
+		<string>http://atv-xbmc-launcher.googlecode.com/svn/trunk/data/scripts/test_update.sh</string>
 	</dict>
 </array>
 </plist>
