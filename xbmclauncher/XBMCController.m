@@ -160,7 +160,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 		if (status != 0)
 		{
 			BRAlertController* alert = [BRAlertController alertOfType:0 titled:nil
-																										primaryText:[NSString stringWithFormat:@"Error: XBMC/Boxee exited With Status: %i",status]
+																										primaryText:[NSString stringWithFormat:@"Error: XBMC/Boxee exited with status: %i",status]
 																									secondaryText:nil];
 			[[self stack] swapController:alert];
 		} else {
