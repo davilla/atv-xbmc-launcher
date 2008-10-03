@@ -40,7 +40,7 @@
 		<key>URL</key>
 		<string>http://atv-xbmc-launcher.googlecode.com/svn/branches/temp/AppleRemote/AppleRemote.h</string>
 		<key>UpdateScript</key>
-		<string>http://atv-xbmc-launcher.googlecode.com/svn/xbmc-info/scripts/test_update.sh</string>
+		<string>http://atv-xbmc-launcher.googlecode.com/svn/tags/xbmc-info/scripts/test_update.sh</string>
 	</dict>
 </array>
 </plist>
