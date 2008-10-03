@@ -345,6 +345,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 	if( m_xbmc_running ){
 		unsigned int hashVal = (uint32_t)([event page] << 16 | [event usage]);
 		DLOG(@"XBMCController: Button press hashVal = %i",hashVal);
+		DLOG(@"XBMCController: Button event value= %i", [event value]);
 		switch (hashVal)
 		{
 			case 65676:  // tap up
