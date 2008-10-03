@@ -126,12 +126,12 @@
 	if(controller == mp_downloader){
 		if ( [mp_downloader downloadComplete] ){
 			//start the update script with path to downloaded file 
-			DLOG(@"Download finished. Starting update");
+			DLOG(@"Download finished");
 			NSDictionary* dict = [mp_updates objectAtIndex:m_update_item];
 			NSString* script_path = [QuDownloadController outputPathForURLString:[dict valueForKey:@"UpdateScript"]];
 			NSString* download =  [QuDownloadController outputPathForURLString:[dict valueForKey:@"URL"]];
 			
-			DLOG(@"Running %@ with argument %@", script_path, download);
+			DLOG(@"Running update %@ with argument %@", script_path, download);
 			XBMCUpdateBlockingController* blocker = [[[XBMCUpdateBlockingController alloc] 
 																							 initWithScript: script_path forUpdate:download] autorelease];
 			[[self stack] pushController: blocker];
@@ -141,7 +141,18 @@
 		//release the downloader, it gets recreated on new selection
 		[mp_downloader release];
 		mp_downloader = nil;
-	}
+	} if([controller isKindOfClass:[XBMCUpdateBlockingController class]]){
+		//clear downloaded files
+		DLOG(@"Update finished. Clearing download cache");
+		NSDictionary* dict = [mp_updates objectAtIndex:m_update_item];
+		NSString* script_folder = [[QuDownloadController outputPathForURLString:[dict valueForKey:@"UpdateScript"]] stringByDeletingLastPathComponent];
+		NSString* download_folder =  [[QuDownloadController outputPathForURLString:[dict valueForKey:@"URL"]] stringByDeletingLastPathComponent];
+		DLOG("removing %@ and %@:", script_folder, download_folder);
+		[[NSFileManager defaultManager] removeFileAtPath: script_folder
+																						 handler: nil];
+		[[NSFileManager defaultManager] removeFileAtPath: download_folder
+																						 handler: nil];
+	} 
 	else {
 		DLOG(@"someone else popped us");
 	}
