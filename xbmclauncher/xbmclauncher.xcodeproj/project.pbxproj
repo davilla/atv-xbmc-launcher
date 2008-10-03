@@ -51,8 +51,6 @@
 		E4C9718C0E8C26C400E6BAFE /* XBMCUserDefaults.m in Sources */ = {isa = PBXBuildFile; fileRef = E4C9718B0E8C26C400E6BAFE /* XBMCUserDefaults.m */; };
 		E4C9727A0E7C15D800B33973 /* AppKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E4C972790E7C15D800B33973 /* AppKit.framework */; };
 		E4C972B10E7C337B00B33973 /* XBMCController.m in Sources */ = {isa = PBXBuildFile; fileRef = E4C972B00E7C337B00B33973 /* XBMCController.m */; };
-		E4C972CD0E8C3F7000E6BAFE /* XBMCHelper.c in Sources */ = {isa = PBXBuildFile; fileRef = E4C972B20E8C3BA100E6BAFE /* XBMCHelper.c */; };
-		E4C972D80E8C3FE100E6BAFE /* XBMCHelper in Resources */ = {isa = PBXBuildFile; fileRef = E4C972C90E8C3F6100E6BAFE /* XBMCHelper */; };
 		E4C974BA0E7DAF7100B33973 /* killxbmchelper.sh in Resources */ = {isa = PBXBuildFile; fileRef = E4C974B90E7DAF7100B33973 /* killxbmchelper.sh */; };
 /* End PBXBuildFile section */
 
@@ -70,13 +68,6 @@
 			proxyType = 1;
 			remoteGlobalIDString = 8D5B49AC048680CD000E48DA;
 			remoteInfo = xbmclauncher;
-		};
-		E4C972E80E8C3FED00E6BAFE /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 089C1669FE841209C02AAC07 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = E4C972C80E8C3F6100E6BAFE;
-			remoteInfo = XBMCHelper;
 		};
 /* End PBXContainerItemProxy section */
 
@@ -121,7 +112,6 @@
 		E4C972AF0E7C337B00B33973 /* XBMCController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XBMCController.h; sourceTree = "<group>"; };
 		E4C972B00E7C337B00B33973 /* XBMCController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XBMCController.m; sourceTree = "<group>"; };
 		E4C972B20E8C3BA100E6BAFE /* XBMCHelper.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = XBMCHelper.c; sourceTree = "<group>"; };
-		E4C972C90E8C3F6100E6BAFE /* XBMCHelper */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = XBMCHelper; sourceTree = BUILT_PRODUCTS_DIR; };
 		E4C974B90E7DAF7100B33973 /* killxbmchelper.sh */ = {isa = PBXFileReference; explicitFileType = text.script.sh; fileEncoding = 4; path = killxbmchelper.sh; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -133,13 +123,6 @@
 				8D5B49B4048680CD000E48DA /* Cocoa.framework in Frameworks */,
 				E4C9727A0E7C15D800B33973 /* AppKit.framework in Frameworks */,
 				E4C9555B0E8199B300E6BAFE /* BackRow.framework in Frameworks */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		E4C972C70E8C3F6100E6BAFE /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -227,7 +210,6 @@
 			isa = PBXGroup;
 			children = (
 				8D5B49B6048680CD000E48DA /* XBMCLauncher.frappliance */,
-				E4C972C90E8C3F6100E6BAFE /* XBMCHelper */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -281,29 +263,12 @@
 			buildRules = (
 			);
 			dependencies = (
-				E4C972E90E8C3FED00E6BAFE /* PBXTargetDependency */,
 			);
 			name = XBMCLauncher;
 			productInstallPath = "$(HOME)/Library/Bundles";
 			productName = xbmclauncher;
 			productReference = 8D5B49B6048680CD000E48DA /* XBMCLauncher.frappliance */;
 			productType = "com.apple.product-type.bundle";
-		};
-		E4C972C80E8C3F6100E6BAFE /* XBMCHelper */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = E4C972D40E8C3F7300E6BAFE /* Build configuration list for PBXNativeTarget "XBMCHelper" */;
-			buildPhases = (
-				E4C972C60E8C3F6100E6BAFE /* Sources */,
-				E4C972C70E8C3F6100E6BAFE /* Frameworks */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-			);
-			name = XBMCHelper;
-			productName = XBMCHelperDummy;
-			productReference = E4C972C90E8C3F6100E6BAFE /* XBMCHelper */;
-			productType = "com.apple.product-type.tool";
 		};
 /* End PBXNativeTarget section */
 
@@ -320,7 +285,6 @@
 				8D5B49AC048680CD000E48DA /* XBMCLauncher */,
 				E4C95D330E82D85000E6BAFE /* buildAndCopyToFrontRow */,
 				E4C95D490E82D92800E6BAFE /* buildAndCopyToATV */,
-				E4C972C80E8C3F6100E6BAFE /* XBMCHelper */,
 			);
 		};
 /* End PBXProject section */
@@ -330,7 +294,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				E4C972D80E8C3FE100E6BAFE /* XBMCHelper in Resources */,
 				8D5B49B0048680CD000E48DA /* InfoPlist.strings in Resources */,
 				E4C974BA0E7DAF7100B33973 /* killxbmchelper.sh in Resources */,
 				E4C96FD00E89A3AA00E6BAFE /* LICENSE.txt in Resources */,
@@ -389,14 +352,6 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		E4C972C60E8C3F6100E6BAFE /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				E4C972CD0E8C3F7000E6BAFE /* XBMCHelper.c in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
@@ -409,11 +364,6 @@
 			isa = PBXTargetDependency;
 			target = 8D5B49AC048680CD000E48DA /* XBMCLauncher */;
 			targetProxy = E4C95D4C0E82D92E00E6BAFE /* PBXContainerItemProxy */;
-		};
-		E4C972E90E8C3FED00E6BAFE /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = E4C972C80E8C3F6100E6BAFE /* XBMCHelper */;
-			targetProxy = E4C972E80E8C3FED00E6BAFE /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
@@ -555,36 +505,6 @@
 			};
 			name = Release;
 		};
-		E4C972CB0E8C3F6200E6BAFE /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ALWAYS_SEARCH_USER_PATHS = NO;
-				COPY_PHASE_STRIP = NO;
-				GCC_DYNAMIC_NO_PIC = NO;
-				GCC_ENABLE_FIX_AND_CONTINUE = YES;
-				GCC_MODEL_TUNING = G5;
-				GCC_OPTIMIZATION_LEVEL = 0;
-				INSTALL_PATH = /usr/local/bin;
-				PREBINDING = NO;
-				PRODUCT_NAME = XBMCHelper;
-			};
-			name = Debug;
-		};
-		E4C972CC0E8C3F6200E6BAFE /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ALWAYS_SEARCH_USER_PATHS = NO;
-				COPY_PHASE_STRIP = YES;
-				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				GCC_ENABLE_FIX_AND_CONTINUE = NO;
-				GCC_MODEL_TUNING = G5;
-				INSTALL_PATH = /usr/local/bin;
-				PREBINDING = NO;
-				PRODUCT_NAME = XBMCHelperDummy;
-				ZERO_LINK = NO;
-			};
-			name = Release;
-		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -620,15 +540,6 @@
 			buildConfigurations = (
 				E4C95D4A0E82D92800E6BAFE /* Debug */,
 				E4C95D4B0E82D92800E6BAFE /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		E4C972D40E8C3F7300E6BAFE /* Build configuration list for PBXNativeTarget "XBMCHelper" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				E4C972CB0E8C3F6200E6BAFE /* Debug */,
-				E4C972CC0E8C3F6200E6BAFE /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
