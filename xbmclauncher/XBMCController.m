@@ -343,7 +343,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 - (BOOL)brEventAction:(BREvent *)event
 {
 	if( m_xbmc_running ){
-		unsigned int hashVal = [event pageUsageHash];
+		unsigned int hashVal = (uint32_t)([event page] << 16 | [event usage]);
 		DLOG(@"XBMCController: Button press hashVal = %i",hashVal);
 		switch (hashVal)
 		{
