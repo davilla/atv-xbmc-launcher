@@ -23,45 +23,11 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #import "XBMCController.h"
 #import "XBMCDebugHelpers.h"
 #import "xbmcclientwrapper.h"
-#import <BackRowCompilerShutup.h>
+#import <CoreFoundation/CFXMLParser.h>
 
 @class BRLayerController;
 
-@interface XBMCController (private)
-
-- (void) disableScreenSaver;
-- (void) enableScreenSaver;
-
-- (void) enableRendering;
-- (void) disableRendering;
-
-- (void) checkTaskStatus:(NSNotification *)note; //callback when XBMC quit or crashed
-- (BOOL) setDesiredAppleRemoteMode; //sets appleremoteMode to 0,1 or 2 depeding on m_use_internal_ir and XBMC_USE_UNIVERSAL_REMOTE
-- (BOOL) inUserSettingsSetXpath:(NSString*) f_xpath toInt:(int) f_value;
-- (BOOL) deleteHelperLaunchAgent;
-- (void) setupHelperSwatter; //starts a NSTimer which callback periodically searches for a running mp_helper_path app and kills it
-- (void) disableSwatterIfActive; //disables swatter and releases mp_swatter_timer
-- (void) killHelperApp:(NSTimer*) f_timer; //kills a running instance of mp_helper_path application; f_timer can be nil, it's not used
-
-@end
-
 @implementation XBMCController
-
-- (void) disableScreenSaver{
-	PRINT_SIGNATURE();
-	//store screen saver state and disable it
-	//!!BRSettingsFacade setScreenSaverEnabled does change the plist, but does _not_ seem to work
-	m_screen_saver_timeout = [[BRSettingsFacade singleton] screenSaverTimeout];
-	[[BRSettingsFacade singleton] setScreenSaverTimeout:-1];
-	[[BRSettingsFacade singleton] flushDiskChanges];
-}
-
-- (void) enableScreenSaver{
-	PRINT_SIGNATURE();
-	//reset screen saver to user settings
-	[[BRSettingsFacade singleton] setScreenSaverTimeout: m_screen_saver_timeout];
-	[[BRSettingsFacade singleton] flushDiskChanges];
-}
 
 - (void) enableRendering{
 	[[NSNotificationCenter defaultCenter] postNotificationName:@"BRDisplayManagerDisplayOnline"
@@ -85,7 +51,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 	@throw [NSException exceptionWithName:@"BNRBadInitCall" reason:@"Init XBMCController with initWithPath" userInfo:nil];
 	return nil;
 }
-- (id) initWithAppPath:(NSString*) f_app_path helperPath:(NSString*) f_helper_path lauchAgentFileName:(NSString*) f_lauch_agent_file_name guiSettingsPath:(NSString*) f_guisettings_path{
+- (id) initWithAppPath:(NSString*) f_app_path helperPath:(NSString*) f_helper_path lauchAgentFileName:(NSString*) f_lauch_agent_file_name
+{
 	PRINT_SIGNATURE();
 	if ( ![super init] )
 		return ( nil );
@@ -94,7 +61,6 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 	mp_app_path = [f_app_path retain];
 	mp_helper_path = [f_helper_path retain];
 	mp_launch_agent_file_name = [f_lauch_agent_file_name retain];
-	mp_guisettings_path = [f_guisettings_path retain];
 	mp_swatter_timer = nil;
 	//read preferences
 	m_use_internal_ir = [[XBMCUserDefaults defaults] boolForKey:XBMC_USE_INTERNAL_IR];
@@ -109,7 +75,6 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 	[mp_app_path release];
 	[mp_helper_path release];
 	[mp_launch_agent_file_name release];
-	[mp_guisettings_path release];
 	[super dealloc];
 }
 
@@ -138,11 +103,10 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 	[self deleteHelperLaunchAgent]; 
 	//disable swatter 
 	[self disableSwatterIfActive];
-	//reenable screensaver
-	[self enableScreenSaver];
+
 	if (![mp_task isRunning])
 	{
-		ILOG(@"XBMC/Boxee quit.");
+		ILOG(@"XBMC quit.");
 		m_xbmc_running = NO;
 		// Return code for XBMC
 		int status = [[note object] terminationStatus];
@@ -160,7 +124,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 		if (status != 0)
 		{
 			BRAlertController* alert = [BRAlertController alertOfType:0 titled:nil
-																										primaryText:[NSString stringWithFormat:@"Error: XBMC/Boxee exited With Status: %i",status]
+																										primaryText:[NSString stringWithFormat:@"Error: XBMC exited With Status: %i",status]
 																									secondaryText:nil];
 			[[self stack] swapController:alert];
 		} else {
@@ -180,7 +144,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 	[super willBePushed];
 }
 
-- (BOOL) inUserSettingsSetXpath:(NSString*) f_xpath toInt:(int) f_value{
+- (bool) inUserSettingsSetXpath:(NSString*) f_xpath toInt:(int) f_value{
 	PRINT_SIGNATURE();
 	//assemble path to guisettings.xml
 	NSArray* app_support_path_array = NSSearchPathForDirectoriesInDomains(NSApplicationSupportDirectory, NSUserDomainMask, TRUE);
@@ -188,7 +152,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 		ELOG(@"Huh? No application support directory?");
 		return FALSE;
 	}
-	NSString* guisettings_path = [[app_support_path_array objectAtIndex:0] stringByAppendingString:mp_guisettings_path];
+	NSString* guisettings_path = [[app_support_path_array objectAtIndex:0] stringByAppendingString:@"/XBMC/userdata/guisettings.xml"];
 	
 	NSError *err=nil;
 	NSURL *furl = [NSURL fileURLWithPath:guisettings_path];
@@ -243,6 +207,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 	
 	//delete a launchAgent if it's there
 	[self deleteHelperLaunchAgent];
+	
 	//if enabled start our own instance of XBMCHelper
 	if( m_use_internal_ir ){
 		//try to disable xbmchelper in guisettings.xml
@@ -265,13 +230,11 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 		[self enableRendering];
 		[[BRDisplayManager sharedInstance] 	fadeInDisplay];
 		BRAlertController* alert = [BRAlertController alertOfType:0 titled:nil
-																									primaryText:[NSString stringWithFormat:@"Error: Cannot launch XBMC/Boxee from path:"]
+																									primaryText:[NSString stringWithFormat:@"Error: Cannot launch XBMC from path:"]
 																									secondaryText:mp_app_path];
 		[[self stack] swapController:alert];
 	}
 	m_xbmc_running = YES;
-	//reenable screensaver
-	[self disableScreenSaver];
 	//wait a bit for task to start
 	NSDate *future = [NSDate dateWithTimeIntervalSinceNow: 0.1];
 	[NSThread sleepUntilDate:future];
@@ -343,7 +306,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 - (BOOL)brEventAction:(BREvent *)event
 {
 	if( m_xbmc_running ){
-		unsigned int hashVal = (uint32_t)([event page] << 16 | [event usage]);
+		unsigned int hashVal = [event pageUsageHash];
 		DLOG(@"XBMCController: Button press hashVal = %i",hashVal);
 		switch (hashVal)
 		{
@@ -392,11 +355,9 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 - (void) killHelperApp:(NSTimer*) f_timer{
 	//TODO for now we use a script as I don't know how to kill a Task with OSX API. any hints are pretty welcome!
+	//TODO make this script/code use mp_helper_path as a path or name for the process to kill 
 	NSString* killer_path = [[NSBundle bundleForClass:[self class]] pathForResource:@"killxbmchelper" ofType:@"sh"];
-	NSTask* killer = [NSTask launchedTaskWithLaunchPath:@"/bin/bash" arguments: [NSArray arrayWithObjects
-																																							 :killer_path,
-																																							 [mp_helper_path lastPathComponent],
-																																							 nil]];
+	NSTask* killer = [NSTask launchedTaskWithLaunchPath:@"/bin/bash" arguments: [NSArray arrayWithObject:killer_path]];
 	[killer waitUntilExit];
 }
 
@@ -428,7 +389,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 	}
 }
 
-- (BOOL) deleteHelperLaunchAgent
+- (bool) deleteHelperLaunchAgent
 {
 	NSArray* lib_array = NSSearchPathForDirectoriesInDomains(NSLibraryDirectory, NSUserDomainMask, TRUE);
 	if([lib_array count] != 1){

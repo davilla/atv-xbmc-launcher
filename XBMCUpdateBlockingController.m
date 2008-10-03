@@ -51,8 +51,8 @@
 	[[NSNotificationCenter defaultCenter] removeObserver:self];
 	[mp_update_task release];
 	mp_update_task = nil;
-	[self setTitle:@"Update finished!"];
-	[self setPrimaryText:@"Hit menu to return"];
+//	[[self stack] popController];
+	[[self stack] swapController: [BRAlertController alertOfType:0 titled:@"Update finished!" primaryText:nil secondaryText:nil]];
 }
 
 - (BOOL)brEventAction:(BREvent *)event

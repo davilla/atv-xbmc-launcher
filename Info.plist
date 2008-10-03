@@ -3,7 +3,7 @@
 <plist version="1.0">
 <dict>
 	<key>ATVPluginShortName</key>
-	<string>XBMC/Boxee</string>
+	<string>XBMC</string>
 	<key>CFBundleDevelopmentRegion</key>
 	<string>English</string>
 	<key>CFBundleExecutable</key>
@@ -38,43 +38,15 @@
 			<key>preferred-order</key>
 			<real>1</real>
 			<key>priority</key>
-			<real>1</real>
+			<real>6</real>
 			<key>entry-type</key>
 			<integer>0</integer>
 			<key>apppath</key>
 			<string>/Applications/XBMC.app/Contents/MacOS/XBMC</string>
 			<key>helperpath</key>
 			<string>/Applications/XBMC.app/Contents/Resources/XBMC/XBMCHelper</string>
-			<key>guisettingspath</key>
-			<string>/XBMC/userdata/guisettings.xml</string>
 			<key>LaunchAgentFileName</key>
 			<string>org.xbmc.helper.plist</string>
-		</dict>
-		<dict>
-			<key>identifier</key>
-			<string>Boxee</string>
-			<key>is-network-dependent</key>
-			<false/>
-			<key>is-share-dependent</key>
-			<false/>
-			<key>is-store-category</key>
-			<false/>
-			<key>name</key>
-			<string>Boxee</string>
-			<key>preferred-order</key>
-			<real>1</real>
-			<key>priority</key>
-			<real>1</real>
-			<key>entry-type</key>
-			<integer>0</integer>
-			<key>apppath</key>
-			<string>/Applications/Boxee.app/Contents/MacOS/Boxee</string>
-			<key>helperpath</key>
-			<string>/Applications/Boxee.app/Contents/Resources/Boxee/bin/boxeeservice</string>
-			<key>guisettingspath</key>
-			<string>/BOXEE/UserData/guisettings.xml</string>
-			<key>LaunchAgentFileName</key>
-			<string>tv.boxee.helper.plist</string>
 		</dict>
 		<dict>
 			<key>identifier</key>
@@ -90,11 +62,11 @@
 			<key>preferred-order</key>
 			<real>2</real>
 			<key>priority</key>
-			<real>1</real>
+			<real>7</real>
 			<key>entry-type</key>
 			<integer>1</integer>
 			<key>URL</key>
-			<string>http://atv-xbmc-launcher.googlecode.com/svn/tags/xbmc-info/update_urls.plist</string>
+			<string>http://atv-xbmc-launcher.googlecode.com/svn/trunk/data/update_urls.plist</string>
 		</dict>
 		<dict>
 			<key>identifier</key>
@@ -110,25 +82,7 @@
 			<key>preferred-order</key>
 			<real>3</real>
 			<key>priority</key>
-			<real>1</real>
-			<key>entry-type</key>
-			<integer>-1</integer>
-		</dict>
-		<dict>
-			<key>identifier</key>
-			<string>About</string>
-			<key>is-network-dependent</key>
-			<false/>
-			<key>is-share-dependent</key>
-			<false/>
-			<key>is-store-category</key>
-			<false/>
-			<key>name</key>
-			<string>About</string>
-			<key>preferred-order</key>
-			<real>4</real>
-			<key>priority</key>
-			<real>1</real>
+			<real>7</real>
 			<key>entry-type</key>
 			<integer>-1</integer>
 		</dict>
