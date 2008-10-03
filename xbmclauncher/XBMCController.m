@@ -23,11 +23,45 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #import "XBMCController.h"
 #import "XBMCDebugHelpers.h"
 #import "xbmcclientwrapper.h"
-#import <CoreFoundation/CFXMLParser.h>
+#import <BackRowCompilerShutup.h>
 
 @class BRLayerController;
 
+@interface XBMCController (private)
+
+- (void) disableScreenSaver;
+- (void) enableScreenSaver;
+
+- (void) enableRendering;
+- (void) disableRendering;
+
+- (void) checkTaskStatus:(NSNotification *)note; //callback when XBMC quit or crashed
+- (BOOL) setDesiredAppleRemoteMode; //sets appleremoteMode to 0,1 or 2 depeding on m_use_internal_ir and XBMC_USE_UNIVERSAL_REMOTE
+- (BOOL) inUserSettingsSetXpath:(NSString*) f_xpath toInt:(int) f_value;
+- (BOOL) deleteHelperLaunchAgent;
+- (void) setupHelperSwatter; //starts a NSTimer which callback periodically searches for a running mp_helper_path app and kills it
+- (void) disableSwatterIfActive; //disables swatter and releases mp_swatter_timer
+- (void) killHelperApp:(NSTimer*) f_timer; //kills a running instance of mp_helper_path application; f_timer can be nil, it's not used
+
+@end
+
 @implementation XBMCController
+
+- (void) disableScreenSaver{
+	PRINT_SIGNATURE();
+	//store screen saver state and disable it
+	//!!BRSettingsFacade setScreenSaverEnabled does change the plist, but does _not_ seem to work
+	m_screen_saver_timeout = [[BRSettingsFacade singleton] screenSaverTimeout];
+	[[BRSettingsFacade singleton] setScreenSaverTimeout:-1];
+	[[BRSettingsFacade singleton] flushDiskChanges];
+}
+
+- (void) enableScreenSaver{
+	PRINT_SIGNATURE();
+	//reset screen saver to user settings
+	[[BRSettingsFacade singleton] setScreenSaverTimeout: m_screen_saver_timeout];
+	[[BRSettingsFacade singleton] flushDiskChanges];
+}
 
 - (void) enableRendering{
 	[[NSNotificationCenter defaultCenter] postNotificationName:@"BRDisplayManagerDisplayOnline"
@@ -104,7 +138,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 	[self deleteHelperLaunchAgent]; 
 	//disable swatter 
 	[self disableSwatterIfActive];
-
+	//reenable screensaver
+	[self enableScreenSaver];
 	if (![mp_task isRunning])
 	{
 		ILOG(@"XBMC/Boxee quit.");
@@ -145,7 +180,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 	[super willBePushed];
 }
 
-- (bool) inUserSettingsSetXpath:(NSString*) f_xpath toInt:(int) f_value{
+- (BOOL) inUserSettingsSetXpath:(NSString*) f_xpath toInt:(int) f_value{
 	PRINT_SIGNATURE();
 	//assemble path to guisettings.xml
 	NSArray* app_support_path_array = NSSearchPathForDirectoriesInDomains(NSApplicationSupportDirectory, NSUserDomainMask, TRUE);
@@ -208,7 +243,6 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 	
 	//delete a launchAgent if it's there
 	[self deleteHelperLaunchAgent];
-	
 	//if enabled start our own instance of XBMCHelper
 	if( m_use_internal_ir ){
 		//try to disable xbmchelper in guisettings.xml
@@ -236,6 +270,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 		[[self stack] swapController:alert];
 	}
 	m_xbmc_running = YES;
+	//reenable screensaver
+	[self disableScreenSaver];
 	//wait a bit for task to start
 	NSDate *future = [NSDate dateWithTimeIntervalSinceNow: 0.1];
 	[NSThread sleepUntilDate:future];
@@ -390,7 +426,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 	}
 }
 
-- (bool) deleteHelperLaunchAgent
+- (BOOL) deleteHelperLaunchAgent
 {
 	NSArray* lib_array = NSSearchPathForDirectoriesInDomains(NSLibraryDirectory, NSUserDomainMask, TRUE);
 	if([lib_array count] != 1){
