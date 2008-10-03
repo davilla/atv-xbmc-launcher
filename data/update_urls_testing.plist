@@ -24,13 +24,13 @@
 	</dict>
 	<dict>
 		<key>Name</key>
-		<string>Test</string>
+		<string>Launcher Alpha 1</string>
 		<key>Type</key>
-		<string>Test</string>
+		<string>Launcher</string>
 		<key>URL</key>
-		<string>http://atv-xbmc-launcher.googlecode.com/svn/branches/temp/AppleRemote/AppleRemote.h</string>
+		<string>http://mp-vipa5.informatik.uni-mannheim.de/xbmc/XBMCLauncher-0.1-debug.run</string>
 		<key>UpdateScript</key>
-		<string>http://atv-xbmc-launcher.googlecode.com/svn/trunk/data/scripts/test_update.sh</string>
+		<string>http://mp-vipa5.informatik.uni-mannheim.de/xbmc/launcher-update-0.1.sh</string>
 	</dict>
 </array>
 </plist>
