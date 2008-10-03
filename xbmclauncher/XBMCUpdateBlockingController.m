@@ -48,11 +48,20 @@
 - (void)updateFinished:(NSNotification *)note
 {
 	PRINT_SIGNATURE();
+	int status = [[note object] terminationStatus];
 	[[NSNotificationCenter defaultCenter] removeObserver:self];
 	[mp_update_task release];
 	mp_update_task = nil;
-	[self setTitle:@"Update finished!"];
-	[self setPrimaryText:@"Hit menu to return"];
+	DLOG(@"return with status: %i", status);
+	if (status != 0)
+	{
+		[self setTitle:nil];
+		[self setPrimaryText:[NSString stringWithFormat:@"Error: Update script exited with status: %i",status]];
+		[self setSecondaryText:nil];
+	} else {
+		[self setTitle:@"Update finished!"];
+		[self setPrimaryText:@"Hit menu to return"];
+	}
 }
 
 - (BOOL)brEventAction:(BREvent *)event
