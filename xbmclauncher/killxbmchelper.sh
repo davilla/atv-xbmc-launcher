@@ -7,7 +7,7 @@
 # Description: does what it says...
 
 #name of the app to kill
-XBMCHELPER="XBMCHelper"
+XBMCHELPER="$1"
 
 #change logfile to get some debug output
 LOGFILE=/dev/null

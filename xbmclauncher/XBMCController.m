@@ -392,9 +392,11 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 - (void) killHelperApp:(NSTimer*) f_timer{
 	//TODO for now we use a script as I don't know how to kill a Task with OSX API. any hints are pretty welcome!
-	//TODO make this script/code use mp_helper_path as a path or name for the process to kill 
 	NSString* killer_path = [[NSBundle bundleForClass:[self class]] pathForResource:@"killxbmchelper" ofType:@"sh"];
-	NSTask* killer = [NSTask launchedTaskWithLaunchPath:@"/bin/bash" arguments: [NSArray arrayWithObject:killer_path]];
+	NSTask* killer = [NSTask launchedTaskWithLaunchPath:@"/bin/bash" arguments: [NSArray arrayWithObjects
+																																							 :killer_path,
+																																							 [mp_helper_path lastPathComponent],
+																																							 nil]];
 	[killer waitUntilExit];
 }
 
