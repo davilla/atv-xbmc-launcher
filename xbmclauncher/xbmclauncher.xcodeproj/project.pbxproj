@@ -102,7 +102,6 @@
 		E4C95B560E81C62100E6BAFE /* xbmcclientwrapper.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = xbmcclientwrapper.mm; sourceTree = "<group>"; };
 		E4C964B60E85A56400E6BAFE /* XBMCUpdateController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XBMCUpdateController.h; sourceTree = "<group>"; };
 		E4C964B70E85A56400E6BAFE /* XBMCUpdateController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XBMCUpdateController.m; sourceTree = "<group>"; };
-		E4C965ED0E85C46300E6BAFE /* update_urls.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = update_urls.plist; path = ../data/update_urls.plist; sourceTree = SOURCE_ROOT; };
 		E4C96B480E866DA600E6BAFE /* XBMCDebugHelpers.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XBMCDebugHelpers.h; sourceTree = "<group>"; };
 		E4C96B490E866DA600E6BAFE /* XBMCDebugHelpers.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XBMCDebugHelpers.m; sourceTree = "<group>"; };
 		E4C96F2F0E8865D700E6BAFE /* DebugController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DebugController.h; sourceTree = "<group>"; };
@@ -175,7 +174,6 @@
 				E4C974B90E7DAF7100B33973 /* killxbmchelper.sh */,
 				8D5B49B7048680CD000E48DA /* Info.plist */,
 				089C167DFE841241C02AAC07 /* InfoPlist.strings */,
-				E4C965ED0E85C46300E6BAFE /* update_urls.plist */,
 				E4C96FCC0E89A3AA00E6BAFE /* LICENSE.txt */,
 				E4C96FCD0E89A3AA00E6BAFE /* README.txt */,
 			);
