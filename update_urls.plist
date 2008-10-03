@@ -4,7 +4,7 @@
 <array>
 	<dict>
 		<key>UpdateScript</key>
-		<string>http://atv-xbmc-launcher.googlecode.com/svn/trunk/data/scripts/beta1_update.sh</string>
+		<string>http://atv-xbmc-launcher.googlecode.com/svn/tags/xbmc-info/scripts/beta1_update.sh</string>
 		<key>URL</key>
 		<string>http://downloads.sourceforge.net/xbmc/XBMC_for_Mac-Atlantis-Beta_1.dmg</string>
 		<key>Type</key>
