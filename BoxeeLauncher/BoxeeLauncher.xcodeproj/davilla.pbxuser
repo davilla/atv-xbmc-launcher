@@ -1,0 +1,295 @@
+// !$*UTF8*$!
+{
+	089C1669FE841209C02AAC07 /* Project object */ = {
+		activeBuildConfigurationName = Release;
+		activeExecutable = F5119B610E931D2C0038BA75 /* BoxeeHelper */;
+		activeTarget = 8D5B49AC048680CD000E48DA /* BoxeeLauncher */;
+		addToTargets = (
+			8D5B49AC048680CD000E48DA /* BoxeeLauncher */,
+		);
+		breakpointsGroup = F511A1150E9321F50038BA75 /* XCBreakpointsBucket */;
+		codeSenseManager = F5119B740E931D330038BA75 /* Code sense */;
+		executables = (
+			F5119B610E931D2C0038BA75 /* BoxeeHelper */,
+		);
+		perUserDictionary = {
+			PBXConfiguration.PBXFileTableDataSource3.PBXExecutablesDataSource = {
+				PBXFileTableDataSourceColumnSortingDirectionKey = "-1";
+				PBXFileTableDataSourceColumnSortingKey = PBXExecutablesDataSource_NameID;
+				PBXFileTableDataSourceColumnWidthsKey = (
+					22,
+					300,
+					337,
+				);
+				PBXFileTableDataSourceColumnsKey = (
+					PBXExecutablesDataSource_ActiveFlagID,
+					PBXExecutablesDataSource_NameID,
+					PBXExecutablesDataSource_CommentsID,
+				);
+			};
+			PBXConfiguration.PBXFileTableDataSource3.PBXFileTableDataSource = {
+				PBXFileTableDataSourceColumnSortingDirectionKey = "-1";
+				PBXFileTableDataSourceColumnSortingKey = PBXFileDataSource_Filename_ColumnID;
+				PBXFileTableDataSourceColumnWidthsKey = (
+					20,
+					230,
+					20,
+					48,
+					43,
+					43,
+					20,
+				);
+				PBXFileTableDataSourceColumnsKey = (
+					PBXFileDataSource_FiletypeID,
+					PBXFileDataSource_Filename_ColumnID,
+					PBXFileDataSource_Built_ColumnID,
+					PBXFileDataSource_ObjectSize_ColumnID,
+					PBXFileDataSource_Errors_ColumnID,
+					PBXFileDataSource_Warnings_ColumnID,
+					PBXFileDataSource_Target_ColumnID,
+				);
+			};
+			PBXConfiguration.PBXTargetDataSource.PBXTargetDataSource = {
+				PBXFileTableDataSourceColumnSortingDirectionKey = "-1";
+				PBXFileTableDataSourceColumnSortingKey = PBXFileDataSource_Filename_ColumnID;
+				PBXFileTableDataSourceColumnWidthsKey = (
+					20,
+					200,
+					256,
+					20,
+					48,
+					43,
+					43,
+				);
+				PBXFileTableDataSourceColumnsKey = (
+					PBXFileDataSource_FiletypeID,
+					PBXFileDataSource_Filename_ColumnID,
+					PBXTargetDataSource_PrimaryAttribute,
+					PBXFileDataSource_Built_ColumnID,
+					PBXFileDataSource_ObjectSize_ColumnID,
+					PBXFileDataSource_Errors_ColumnID,
+					PBXFileDataSource_Warnings_ColumnID,
+				);
+			};
+			PBXPerProjectTemplateStateSaveDate = 244523397;
+			PBXWorkspaceStateSaveDate = 244523397;
+		};
+		sourceControlManager = F5119B730E931D330038BA75 /* Source Control */;
+		userBuildSettings = {
+		};
+	};
+	32DBCF630370AF2F00C91783 /* BoxeeLauncher_Prefix.pch */ = {
+		uiCtxt = {
+			sepNavIntBoundsRect = "{{0, 0}, {753, 330}}";
+			sepNavSelRange = "{91, 0}";
+			sepNavVisRect = "{{0, 0}, {753, 330}}";
+		};
+	};
+	8D5B49AC048680CD000E48DA /* BoxeeLauncher */ = {
+		activeExec = 0;
+	};
+	8D5B49B7048680CD000E48DA /* Info.plist */ = {
+		uiCtxt = {
+			sepNavIntBoundsRect = "{{0, 0}, {766, 1400}}";
+			sepNavSelRange = "{2050, 0}";
+			sepNavVisRect = "{{0, 233}, {766, 497}}";
+			sepNavWindowFrame = "{{358, 77}, {811, 626}}";
+		};
+	};
+	E40C63180E901C9400255C90 /* QuDownloadController.m */ = {
+		uiCtxt = {
+			sepNavIntBoundsRect = "{{0, 0}, {753, 5684}}";
+			sepNavSelRange = "{988, 13}";
+			sepNavVisRect = "{{0, 360}, {753, 330}}";
+		};
+	};
+	E40C64C90E903D9400255C90 /* BoxeeUpdateBlockingController.h */ = {
+		uiCtxt = {
+			sepNavIntBoundsRect = "{{0, 0}, {753, 330}}";
+			sepNavSelRange = "{382, 6}";
+			sepNavVisRect = "{{0, 0}, {753, 330}}";
+		};
+	};
+	E40C64CA0E903D9400255C90 /* BoxeeUpdateBlockingController.m */ = {
+		uiCtxt = {
+			sepNavIntBoundsRect = "{{0, 0}, {980, 952}}";
+			sepNavSelRange = "{1624, 0}";
+			sepNavVisRect = "{{0, 348}, {753, 330}}";
+		};
+	};
+	E40C664A0E9199B700255C90 /* BackRowCompilerShutup.h */ = {
+		uiCtxt = {
+			sepNavIntBoundsRect = "{{0, 0}, {753, 350}}";
+			sepNavSelRange = "{48, 0}";
+			sepNavVisRect = "{{0, 0}, {753, 330}}";
+		};
+	};
+	E4C9596B0E81AB3800E6BAFE /* BoxeeClient.h */ = {
+		uiCtxt = {
+			sepNavIntBoundsRect = "{{0, 0}, {938, 11284}}";
+			sepNavSelRange = "{5619, 0}";
+			sepNavVisRect = "{{0, 2965}, {766, 497}}";
+			sepNavWindowFrame = "{{15, 147}, {811, 626}}";
+		};
+	};
+	E4C95B550E81C62100E6BAFE /* BoxeeClientwrapper.h */ = {
+		uiCtxt = {
+			sepNavIntBoundsRect = "{{0, 0}, {766, 630}}";
+			sepNavSelRange = "{995, 19}";
+			sepNavVisRect = "{{0, 54}, {766, 497}}";
+			sepNavWindowFrame = "{{153, 21}, {811, 626}}";
+		};
+	};
+	E4C95B560E81C62100E6BAFE /* BoxeeClientwrapper.mm */ = {
+		uiCtxt = {
+			sepNavIntBoundsRect = "{{0, 0}, {766, 1736}}";
+			sepNavSelRange = "{3741, 23}";
+			sepNavVisRect = "{{0, 519}, {766, 497}}";
+			sepNavWindowFrame = "{{22, 152}, {811, 626}}";
+		};
+	};
+	E4C95D330E82D85000E6BAFE /* buildAndCopyToFrontRow */ = {
+		activeExec = 0;
+	};
+	E4C95D490E82D92800E6BAFE /* buildAndCopyToATV */ = {
+		activeExec = 0;
+	};
+	E4C964B60E85A56400E6BAFE /* BoxeeUpdateController.h */ = {
+		uiCtxt = {
+			sepNavIntBoundsRect = "{{0, 0}, {753, 518}}";
+			sepNavSelRange = "{35, 13}";
+			sepNavVisRect = "{{0, 0}, {753, 330}}";
+		};
+	};
+	E4C964B70E85A56400E6BAFE /* BoxeeUpdateController.m */ = {
+		uiCtxt = {
+			sepNavIntBoundsRect = "{{0, 0}, {782, 2212}}";
+			sepNavSelRange = "{1526, 14}";
+			sepNavVisRect = "{{0, 627}, {753, 330}}";
+		};
+	};
+	E4C965ED0E85C46300E6BAFE /* update_urls.plist */ = {
+		uiCtxt = {
+			sepNavIntBoundsRect = "{{0, 0}, {753, 330}}";
+			sepNavSelRange = "{518, 0}";
+			sepNavVisRect = "{{0, 0}, {753, 330}}";
+			sepNavWindowFrame = "{{65, 135}, {811, 626}}";
+		};
+	};
+	E4C96FCB0E89A3AA00E6BAFE /* Makefile */ = {
+		uiCtxt = {
+			sepNavIntBoundsRect = "{{0, 0}, {753, 1862}}";
+			sepNavSelRange = "{837, 13}";
+			sepNavVisRect = "{{0, 0}, {753, 330}}";
+		};
+	};
+	E4C96FCD0E89A3AA00E6BAFE /* README.txt */ = {
+		uiCtxt = {
+			sepNavIntBoundsRect = "{{0, 0}, {753, 476}}";
+			sepNavSelRange = "{167, 0}";
+			sepNavVisRect = "{{0, 0}, {753, 330}}";
+		};
+	};
+	E4C970850E8AF0E400E6BAFE /* BoxeePreferencesController.m */ = {
+		uiCtxt = {
+			sepNavIntBoundsRect = "{{0, 0}, {842, 1218}}";
+			sepNavSelRange = "{958, 0}";
+			sepNavVisRect = "{{0, 374}, {753, 330}}";
+		};
+	};
+	E4C971880E7C036400B33973 /* BoxeeAppliance.h */ = {
+		uiCtxt = {
+			sepNavIntBoundsRect = "{{0, 0}, {766, 497}}";
+			sepNavSelRange = "{866, 5}";
+			sepNavVisRect = "{{0, 0}, {766, 497}}";
+			sepNavWindowFrame = "{{38, 126}, {811, 626}}";
+		};
+	};
+	E4C971890E7C036400B33973 /* BoxeeAppliance.m */ = {
+		uiCtxt = {
+			sepNavIntBoundsRect = "{{0, 0}, {1274, 2072}}";
+			sepNavSelRange = "{4683, 0}";
+			sepNavVisRect = "{{0, 1634}, {753, 330}}";
+		};
+	};
+	E4C9718B0E8C26C400E6BAFE /* BoxeeUserDefaults.m */ = {
+		uiCtxt = {
+			sepNavIntBoundsRect = "{{0, 0}, {992, 1218}}";
+			sepNavSelRange = "{899, 0}";
+			sepNavVisRect = "{{0, 304}, {753, 330}}";
+		};
+	};
+	E4C972AF0E7C337B00B33973 /* BoxeeController.h */ = {
+		uiCtxt = {
+			sepNavIntBoundsRect = "{{0, 0}, {848, 686}}";
+			sepNavSelRange = "{2090, 18}";
+			sepNavVisRect = "{{0, 356}, {753, 330}}";
+			sepNavWindowFrame = "{{130, 42}, {811, 626}}";
+		};
+	};
+	E4C972B00E7C337B00B33973 /* BoxeeController.m */ = {
+		uiCtxt = {
+			sepNavIntBoundsRect = "{{0, 0}, {842, 5768}}";
+			sepNavSelRange = "{7765, 0}";
+			sepNavVisRect = "{{0, 3080}, {753, 330}}";
+			sepNavWindowFrame = "{{84, 84}, {811, 626}}";
+		};
+	};
+	E4C972B20E8C3BA100E6BAFE /* BoxeeHelper.c */ = {
+		uiCtxt = {
+			sepNavIntBoundsRect = "{{0, 0}, {753, 330}}";
+			sepNavSelRange = "{14, 5}";
+			sepNavVisRect = "{{0, 0}, {753, 330}}";
+		};
+	};
+	E4C972C80E8C3F6100E6BAFE /* BoxeeHelper */ = {
+		activeExec = 0;
+		executables = (
+			F5119B610E931D2C0038BA75 /* BoxeeHelper */,
+		);
+	};
+	F5119B610E931D2C0038BA75 /* BoxeeHelper */ = {
+		isa = PBXExecutable;
+		activeArgIndex = 2147483647;
+		activeArgIndices = (
+		);
+		argumentStrings = (
+		);
+		autoAttachOnCrash = 1;
+		configStateDict = {
+		};
+		customDataFormattersEnabled = 1;
+		debuggerPlugin = GDBDebugging;
+		disassemblyDisplayState = 0;
+		dylibVariantSuffix = "";
+		enableDebugStr = 1;
+		environmentEntries = (
+		);
+		executableSystemSymbolLevel = 0;
+		executableUserSymbolLevel = 0;
+		libgmallocEnabled = 0;
+		name = BoxeeHelper;
+		savedGlobals = {
+		};
+		sourceDirectories = (
+		);
+	};
+	F5119B730E931D330038BA75 /* Source Control */ = {
+		isa = PBXSourceControlManager;
+		fallbackIsa = XCSourceControlManager;
+		isSCMEnabled = 0;
+		scmConfiguration = {
+		};
+		scmType = "";
+	};
+	F5119B740E931D330038BA75 /* Code sense */ = {
+		isa = PBXCodeSenseManager;
+		indexTemplatePath = "";
+	};
+	F511A1150E9321F50038BA75 /* XCBreakpointsBucket */ = {
+		isa = XCBreakpointsBucket;
+		name = "Project Breakpoints";
+		objects = (
+		);
+	};
+}

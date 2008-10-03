@@ -4,23 +4,13 @@
 <array>
 	<dict>
 		<key>UpdateScript</key>
-		<string>http://atv-xbmc-launcher.googlecode.com/svn/trunk/data/scripts/beta1_update.sh</string>
+		<string>http://atvusb-creator.googlecode.com/svn/tags/boxee-info/scripts/alpha-0.9.3033_update.sh</string>
 		<key>URL</key>
-		<string>http://downloads.sourceforge.net/xbmc/XBMC_for_Mac-Atlantis-Beta_1.dmg</string>
+		<string>http://dl.boxee.tv/boxee-atv.dmg</string>
 		<key>Type</key>
 		<string>Application</string>
 		<key>Name</key>
-		<string>XBMC Beta1</string>
-	</dict>
-	<dict>
-		<key>Name</key>
-		<string>Test</string>
-		<key>Type</key>
-		<string>Test</string>
-		<key>URL</key>
-		<string>http://atv-xbmc-launcher.googlecode.com/svn/branches/temp/AppleRemote/AppleRemote.h</string>
-		<key>UpdateScript</key>
-		<string>http://atv-xbmc-launcher.googlecode.com/svn/trunk/data/scripts/test_update.sh</string>
+		<string>Boxee alpha 0.9.3033</string>
 	</dict>
 </array>
 </plist>
