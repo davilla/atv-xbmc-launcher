@@ -14,11 +14,11 @@
 	</dict>
 	<dict>
 		<key>Name</key>
-		<string>Test</string>
+		<string>XBMC/Boxee Launcher 0.1</string>
 		<key>Type</key>
-		<string>Test</string>
+		<string>Launcher</string>
 		<key>URL</key>
-		<string>TODO</string>
+		<string>http://mp-vipa5.informatik.uni-mannheim.de/~diederich/xbmc/XBMCLauncher-0.1-debug.run</string>
 		<key>UpdateScript</key>
 		<string>http://atv-xbmc-launcher.googlecode.com/svn/tags/xbmc-info/scripts/launcher-update-0.1.sh</string>
 	</dict>
