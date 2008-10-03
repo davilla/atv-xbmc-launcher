@@ -81,6 +81,23 @@ elif [ "$COMMAND" = "install" ]; then
       kill `ps awx | grep [F]inder | awk '{print $1}'`
     fi
   fi # prefix empty
+elif [ "$COMMAND" = "installrestart" ]; then
+  
+  # move old frappliance existing out of way
+  if [ -d "$LAUNCHER_DEST/$LAUNCHER_NAME" ]; then
+    echo "== Removing old $LAUNCHER_NAME"
+    /bin/rm -rf "$LAUNCHER_DEST/$LAUNCHER_NAME" || die "Unable to remove old $LAUNCHER_NAME"
+  fi
+
+  echo "== Extracting $LAUNCHER_NAME"
+  /usr/bin/ditto -k -x --rsrc "$SRCDIR/@ARCHIVE_NAME@" "$LAUNCHER_DEST" || die "Unable to install $LAUNCHER_NAME"
+  /usr/sbin/chown -R root:wheel "$LAUNCHER_DEST/$LAUNCHER_NAME"
+  /bin/chmod -R 755 "$LAUNCHER_DEST/$LAUNCHER_NAME"
+  
+  echo "$LAUNCHER_NAME successfully installed."
+  echo
+
+	kill `ps awx | grep [F]inder | awk '{print $1}'`
 fi
 
 # remount root as we found it
