@@ -10,7 +10,17 @@
 		<key>Type</key>
 		<string>Application</string>
 		<key>Name</key>
-		<string>XBMC Beta1</string>
+		<string>XBMC Atlantis Beta1</string>
+	</dict>
+	<dict>
+		<key>UpdateScript</key>
+		<string>http://atvusb-creator.googlecode.com/svn/tags/boxee-info/scripts/alpha-0.9.3383_update.sh</string>
+		<key>URL</key>
+		<string>http://dl.boxee.tv/boxee-atv.dmg</string>
+		<key>Type</key>
+		<string>Application</string>
+		<key>Name</key>
+		<string>Boxee alpha 0.9.3383</string>
 	</dict>
 	<dict>
 		<key>Name</key>
