@@ -28,7 +28,7 @@ if [ -e $DISKIMAGE ]; then
   fi
   if [ ! -d "/Users/frontrow/Video Playlists" ]; then
     echo $PW | sudo -S mkdir "/Users/frontrow/Video Playlists"
-    echo $PW | sudo -S chown "/Users/frontrow/Video Playlists"
+    echo $PW | sudo -S chown frontrow:frontrow "/Users/frontrow/Video Playlists"
   fi
   if [ ! -d /Users/frontrow/Music ]; then
     echo $PW | sudo -S mkdir /Users/frontrow/Music
@@ -36,7 +36,7 @@ if [ -e $DISKIMAGE ]; then
   fi
   if [ ! -d "/Users/frontrow/Music Playlists" ]; then
     echo $PW | sudo -S mkdir "/Users/frontrow/Music Playlists"
-    echo $PW | sudo -S chown "/Users/frontrow/Music Playlists"
+    echo $PW | sudo -S chown frontrow:frontrow "/Users/frontrow/Music Playlists"
   fi
   if [ ! -d /Users/frontrow/Pictures ]; then
     echo $PW | sudo -S mkdir /Users/frontrow/Pictures
