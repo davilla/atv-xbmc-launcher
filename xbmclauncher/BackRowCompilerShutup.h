@@ -23,3 +23,8 @@
 -(void) setFrame:(CGRect) f_rect;
 
 @end
+
+@interface BRSettingsFacade (compat)
+- (int) screenSaverTimeout;
+- (void) setScreenSaverTimeout:(int) f_timeout;
+@end
