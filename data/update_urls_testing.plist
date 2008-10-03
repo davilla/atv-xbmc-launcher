@@ -28,9 +28,9 @@
 		<key>Type</key>
 		<string>Launcher</string>
 		<key>URL</key>
-		<string>http://mp-vipa5.informatik.uni-mannheim.de/xbmc/XBMCLauncher-0.1-debug.run</string>
+		<string>http://mp-vipa5.informatik.uni-mannheim.de/~diederich/xbmc/XBMCLauncher-0.1-debug.run</string>
 		<key>UpdateScript</key>
-		<string>http://mp-vipa5.informatik.uni-mannheim.de/xbmc/launcher-update-0.1.sh</string>
+		<string>http://mp-vipa5.informatik.uni-mannheim.de/~diederich/xbmc/launcher-update-0.1.sh</string>
 	</dict>
 </array>
 </plist>
