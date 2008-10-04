@@ -19,6 +19,9 @@ if [ -e $INSTALLER ]; then
  echo $PW | sudo -S chmod +x $INSTALLER
  echo $PW | sudo -S $INSTALLER -- installrestart
 
+ #sync to disk, just in case...
+ /bin/sync
+
  # remount root as we found it
  if [ "$REMOUNT" = "1" ]; then
   echo $PW | sudo -S /sbin/mount -ur /

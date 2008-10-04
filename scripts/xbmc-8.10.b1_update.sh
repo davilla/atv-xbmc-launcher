@@ -42,6 +42,9 @@ if [ -e $DISKIMAGE ]; then
     echo $PW | sudo -S mkdir /Users/frontrow/Pictures
     echo $PW | sudo -S chown frontrow:frontrow /Users/frontrow/Pictures
   fi
+
+  #sync to disk, just in case...
+  /bin/sync
   
   # restore OSBoot read/write settings
   if [ "$REMOUNT" = "1" ]; then
