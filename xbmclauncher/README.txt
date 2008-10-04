@@ -1,20 +1,22 @@
 ## XBMCLauncher Readme
-Version 0.1 (xxx)
 September 24, 2008
 Copyright (c) 2008 Stephan Diederich / Team-XBMC
 
-
-just a stub for the moment.
-Homepage: http://atv-xbmc-launcher.googlecode.com
+see http://atv-xbmc-launcher.googlecode.com for details
 
 ## Release Notes
+
+### 0.2
+- fixed IR Handling for ATV 2.2
+- added self-update
+- combined XBMC/Boxee launcher
+- fixed issues with Boxee launching
+- added About including license
 
 ### 0.1
 first testing version released
 
 ## License
-
-Copyright (C) 2007-2008 Eric Steil III.
 
 XBMCLaucher is licensed under GPL 3.  The full license can be found in LICENSE.txt.
  
