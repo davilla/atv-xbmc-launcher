@@ -7,18 +7,6 @@
 	objects = {
 
 /* Begin PBXAggregateTarget section */
-		E4C95D330E82D85000E6BAFE /* buildAndCopyToFrontRow */ = {
-			isa = PBXAggregateTarget;
-			buildConfigurationList = E4C95D380E82D87500E6BAFE /* Build configuration list for PBXAggregateTarget "buildAndCopyToFrontRow" */;
-			buildPhases = (
-				E4C95D320E82D85000E6BAFE /* ShellScript */,
-			);
-			dependencies = (
-				E4C95D370E82D85600E6BAFE /* PBXTargetDependency */,
-			);
-			name = buildAndCopyToFrontRow;
-			productName = copyToFrontRow;
-		};
 		E4C95D490E82D92800E6BAFE /* buildAndCopyToATV */ = {
 			isa = PBXAggregateTarget;
 			buildConfigurationList = E4C95D590E82D99900E6BAFE /* Build configuration list for PBXAggregateTarget "buildAndCopyToATV" */;
@@ -55,13 +43,6 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
-		E4C95D360E82D85600E6BAFE /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 089C1669FE841209C02AAC07 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 8D5B49AC048680CD000E48DA;
-			remoteInfo = xbmclauncher;
-		};
 		E4C95D4C0E82D92E00E6BAFE /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 089C1669FE841209C02AAC07 /* Project object */;
@@ -283,7 +264,6 @@
 			projectRoot = "";
 			targets = (
 				8D5B49AC048680CD000E48DA /* XBMCLauncher */,
-				E4C95D330E82D85000E6BAFE /* buildAndCopyToFrontRow */,
 				E4C95D490E82D92800E6BAFE /* buildAndCopyToATV */,
 			);
 		};
@@ -304,19 +284,6 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		E4C95D320E82D85000E6BAFE /* ShellScript */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "#for the following line to work you need write access to the PlugIns Folder...\ncp -R $TARGET_BUILD_DIR/xbmclauncher.frappliance /System/Library/CoreServices/Front\\ Row.app/Contents/PlugIns/\nkillall Front\\ Row\n";
-		};
 		E4C95D480E82D92800E6BAFE /* ShellScript */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -355,11 +322,6 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
-		E4C95D370E82D85600E6BAFE /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = 8D5B49AC048680CD000E48DA /* XBMCLauncher */;
-			targetProxy = E4C95D360E82D85600E6BAFE /* PBXContainerItemProxy */;
-		};
 		E4C95D4D0E82D92E00E6BAFE /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = 8D5B49AC048680CD000E48DA /* XBMCLauncher */;
@@ -463,27 +425,6 @@
 			};
 			name = Release;
 		};
-		E4C95D340E82D85000E6BAFE /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				COPY_PHASE_STRIP = NO;
-				GCC_DYNAMIC_NO_PIC = NO;
-				GCC_OPTIMIZATION_LEVEL = 0;
-				PRODUCT_NAME = copyToFrontRow;
-			};
-			name = Debug;
-		};
-		E4C95D350E82D85000E6BAFE /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				COPY_PHASE_STRIP = YES;
-				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				GCC_ENABLE_FIX_AND_CONTINUE = NO;
-				PRODUCT_NAME = copyToFrontRow;
-				ZERO_LINK = NO;
-			};
-			name = Release;
-		};
 		E4C95D4A0E82D92800E6BAFE /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -522,15 +463,6 @@
 			buildConfigurations = (
 				1DEB913F08733D840010E9CD /* Debug */,
 				1DEB914008733D840010E9CD /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		E4C95D380E82D87500E6BAFE /* Build configuration list for PBXAggregateTarget "buildAndCopyToFrontRow" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				E4C95D340E82D85000E6BAFE /* Debug */,
-				E4C95D350E82D85000E6BAFE /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
