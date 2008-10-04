@@ -92,7 +92,6 @@
 		E4C972790E7C15D800B33973 /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = System/Library/Frameworks/AppKit.framework; sourceTree = SDKROOT; };
 		E4C972AF0E7C337B00B33973 /* XBMCController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XBMCController.h; sourceTree = "<group>"; };
 		E4C972B00E7C337B00B33973 /* XBMCController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XBMCController.m; sourceTree = "<group>"; };
-		E4C972B20E8C3BA100E6BAFE /* XBMCHelper.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = XBMCHelper.c; sourceTree = "<group>"; };
 		E4C974B90E7DAF7100B33973 /* killxbmchelper.sh */ = {isa = PBXFileReference; explicitFileType = text.script.sh; fileEncoding = 4; path = killxbmchelper.sh; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -198,7 +197,6 @@
 		32C88E010371C26100C91783 /* Other Sources */ = {
 			isa = PBXGroup;
 			children = (
-				E4C972B20E8C3BA100E6BAFE /* XBMCHelper.c */,
 				E4C9596B0E81AB3800E6BAFE /* xbmcclient.h */,
 				32DBCF630370AF2F00C91783 /* xbmclauncher_Prefix.pch */,
 			);
