@@ -16,10 +16,10 @@
 @interface QuProgressBarControl : BRControl
 {
 	int padding[16];
-    //BRRenderLayer *         _layer;
-    BRProgressBarWidget *   _widget;
-    float                   _maxValue;
-    float                   _minValue;
+	//BRRenderLayer *         _layer;
+	BRProgressBarWidget *   _widget;
+	float                   _maxValue;
+	float                   _minValue;
 }
 
 - (id) init;

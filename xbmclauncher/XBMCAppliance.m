@@ -107,12 +107,12 @@ typedef enum {
 	but WITHOUT ANY WARRANTY; without even the implied warranty of\
 	MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the\
 	GNU General Public License for more details.\n\
-		You should have received a copy of the GNU General Public License\
-		along with this program.  If not, see <http://www.gnu.org/licenses/>.";
+	You should have received a copy of the GNU General Public License\
+	along with this program.  If not, see <http://www.gnu.org/licenses/>.";
 	return [BRAlertController alertOfType:0 titled:@"About" 
-										 primaryText:@"XBMCLauncher"
+														primaryText:@"XBMCLauncher"
 													secondaryText:[NSString stringWithFormat:@"Contributors: Scott Davilla / Stephan Diederich\nsee http://atv-xbmc-launcher.googlecode.com or http://www.xbmc.org for details\nCopyright (C) 2008 Team-XBMC\n%@",licence_string
-																	]];
+																				 ]];
 	
 }
 
@@ -136,9 +136,9 @@ typedef enum {
 		NSString* guisettings_path = [obj valueForKey:@"guisettingspath"];
 		return [[[XBMCController alloc] initWithAppPath:appPath 
 																				 helperPath:helperPath 
-																				 lauchAgentFileName:launch_agent_file_name 
-																				 guiSettingsPath:guisettings_path
-																				 ] autorelease];
+																 lauchAgentFileName:launch_agent_file_name 
+																		guiSettingsPath:guisettings_path
+						 ] autorelease];
 	} 
 	else if ( [entry_type isEqualToNumber:[NSNumber numberWithInt: UPDATER]] ){
 		// here we want to use something like BRTextWithSpinnerController to get the update running
@@ -150,9 +150,9 @@ typedef enum {
 		return [XBMCAppliance getAboutController];
 	} else {
 		return [BRAlertController alertOfType:0
-														titled:@"XBMCLauncher"
-											 primaryText:@"Error"
-										 secondaryText:@"Unknown menu entry. This should definately NOT happen"];
+																	 titled:@"XBMCLauncher"
+															primaryText:@"Error"
+														secondaryText:@"Unknown menu entry. This should definately NOT happen"];
 	}
 }
 

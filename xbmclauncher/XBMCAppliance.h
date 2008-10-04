@@ -22,7 +22,7 @@
 #import <BackRow/BackRow.h>
 
 @interface XBMCAppliance : BRBaseAppliance {
-
+	
 }
 
 @end

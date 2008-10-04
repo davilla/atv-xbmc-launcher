@@ -35,8 +35,8 @@ extern OSStatus CGSOrderWindow(CGSConnectionRef cid, const CGSWindow wid,
 															 CGSWindowOrderingMode place, CGSWindow relativeToWindowID /* can be NULL */);   
 extern OSStatus CGSGetWindowLevel(CGSConnectionRef cid, CGSWindow wid, 
 																	int *level);
-																	
-																	
+
+
 @implementation DebugController
 
 

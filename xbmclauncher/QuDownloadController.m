@@ -93,7 +93,7 @@
 	if ( [super init] == nil )
 		return ( nil );
 	mp_urlstr = [fp_path retain];
-
+	
 	//create gui elements
 	_header = [[BRHeaderControl alloc] init];
 	_sourceText = [[BRTextControl alloc] init];

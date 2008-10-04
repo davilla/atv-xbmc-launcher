@@ -14,12 +14,12 @@
 - (id) initWithScript:(NSString*) fp_script_path forUpdate:(NSString*) fp_update_path {
 	PRINT_SIGNATURE();
 	if( ! [super initWithType:0 titled:@"Running update..."
-															primaryText:@"This message will disappear when finished"
-															secondaryText:@"...and maybe someone will beautify this message... :)"])
+								primaryText:@"This message will disappear when finished"
+							secondaryText:@"...and maybe someone will beautify this message... :)"])
 		return nil;
-
+	
 	mp_update_task = [[NSTask alloc] init];
-
+	
 	[mp_update_task setLaunchPath:@"/bin/bash"];
 	[mp_update_task setArguments:[NSArray arrayWithObjects:fp_script_path,
 																fp_update_path,

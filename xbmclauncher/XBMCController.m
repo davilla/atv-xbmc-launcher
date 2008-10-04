@@ -5,19 +5,19 @@
 //  Created by Stephan Diederich on 13.09.08.
 //  Copyright 2008 Stephan Diederich. All rights reserved.
 /*
-This program is free software: you can redistribute it and/or modify
-it under the terms of the GNU General Public License as published by
-the Free Software Foundation, either version 3 of the License, or
-(at your option) any later version.
-
-This program is distributed in the hope that it will be useful,
-but WITHOUT ANY WARRANTY; without even the implied warranty of
-MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-GNU General Public License for more details.
-
-You should have received a copy of the GNU General Public License
-along with this program.  If not, see <http://www.gnu.org/licenses/>.
-*/
+ This program is free software: you can redistribute it and/or modify
+ it under the terms of the GNU General Public License as published by
+ the Free Software Foundation, either version 3 of the License, or
+ (at your option) any later version.
+ 
+ This program is distributed in the hope that it will be useful,
+ but WITHOUT ANY WARRANTY; without even the implied warranty of
+ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ GNU General Public License for more details.
+ 
+ You should have received a copy of the GNU General Public License
+ along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
 
 #import <BackRow/BackRow.h>
 #import "XBMCController.h"
@@ -131,7 +131,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 {
 	PRINT_SIGNATURE();
 	[self enableRendering];
-
+	
 	//remove our listener
 	[[NSNotificationCenter defaultCenter] removeObserver:self];
 	//delete a launchAgent if it's there
@@ -197,8 +197,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 		return FALSE;
 	}
 	NSXMLDocument *xmlDoc = [[NSXMLDocument alloc] initWithContentsOfURL:furl
-																								options:(NSXMLNodePreserveWhitespace|NSXMLNodePreserveCDATA)
-																									error:&err];
+																															 options:(NSXMLNodePreserveWhitespace|NSXMLNodePreserveCDATA)
+																																 error:&err];
 	//TODO checkme. is this a proper solution for not writing release in all the return paths below?
 	[xmlDoc autorelease];
 	if (xmlDoc == nil || err)  {
@@ -236,7 +236,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 - (void) wasPushed{
 	PRINT_SIGNATURE();
 	[super wasPushed];
-
+	
 	//We've just been put on screen, the user can see this controller's content now	
 	//Hide frontrow (this is only needed in 720/1080p)
 	[self disableRendering];
@@ -266,7 +266,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 		[[BRDisplayManager sharedInstance] 	fadeInDisplay];
 		BRAlertController* alert = [BRAlertController alertOfType:0 titled:nil
 																									primaryText:[NSString stringWithFormat:@"Error: Cannot launch XBMC/Boxee from path:"]
-																									secondaryText:mp_app_path];
+																								secondaryText:mp_app_path];
 		[[self stack] swapController:alert];
 	}
 	m_xbmc_running = YES;
@@ -275,7 +275,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 	//wait a bit for task to start
 	NSDate *future = [NSDate dateWithTimeIntervalSinceNow: 0.1];
 	[NSThread sleepUntilDate:future];
-
+	
 	//attach our listener
 	[[NSNotificationCenter defaultCenter] addObserver:self
 																					 selector:@selector(checkTaskStatus:)
@@ -346,7 +346,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 		unsigned int hashVal = (uint32_t)([event page] << 16 | [event usage]);
 		DLOG(@"XBMCController: Button press hashVal = %i",hashVal);
 		DLOG(@"XBMCController: Button event value= %i", [event value]);
-//		DLOG(@"XBMCController: Button event description= %@", [event description]);
+		//		DLOG(@"XBMCController: Button event description= %@", [event description]);
 		switch (hashVal)
 		{
 			case 65676:  // tap up

@@ -39,7 +39,7 @@ NSString* const XBMC_USE_UNIVERSAL_REMOTE = @"UseXBMCsUniversalRemote";
 - (void) dealloc
 {
 	[[NSNotificationCenter defaultCenter] removeObserver:self];
-
+	
 	[_applicationID release];
 	[_registrationDictionary release];
 	[super dealloc];

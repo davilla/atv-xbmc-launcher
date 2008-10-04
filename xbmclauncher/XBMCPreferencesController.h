@@ -24,7 +24,7 @@
 @interface XBMCPreferencesController : BRCenteredMenuController {
 	int padding[16];	// credit is due here to SapphireCompatibilityClasses!!
 	NSMutableArray* mp_items; //list items
-
+	
 }
 
 - (void) recreateMenuList;

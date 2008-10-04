@@ -54,16 +54,16 @@
 }
 
 - (void) wasPushed {	
-	[super setListTitle: @"XBMCLauncher"];
+	[super setListTitle: @"XBMC/Boxee Launcher"];
 	[super setPrimaryInfoText: @"Updater"];
 	[super setSecondaryInfoText: @"Available Downloads:"];
 	NSString *error;
 	NSPropertyListFormat format;
 	NSData* plistdata = [NSData dataWithContentsOfURL: mp_url];
 	mp_updates = [[NSPropertyListSerialization propertyListFromData:plistdata
-																					 mutabilityOption:NSPropertyListImmutable
-																										 format:&format
-																								errorDescription:&error] retain];
+																								 mutabilityOption:NSPropertyListImmutable
+																													 format:&format
+																								 errorDescription:&error] retain];
 	if(!mp_updates)
 	{
     NSLog(error);
@@ -121,10 +121,10 @@
 	DLOG(@"File: %@ MD5:%@", f_file_path, f_md5);
 	NSString* md5checkerpath = [[NSBundle bundleForClass:[self class]] pathForResource:@"compareMD5" ofType:@"sh"];
 	NSTask* md5task = [NSTask launchedTaskWithLaunchPath:@"/bin/bash" arguments: [NSArray arrayWithObjects
-																																							 :md5checkerpath,
-																																							 f_file_path,
-																																							 f_md5,
-																																							 nil]];
+																																								:md5checkerpath,
+																																								f_file_path,
+																																								f_md5,
+																																								nil]];
 	//get md5 of file specified	
 	[md5task waitUntilExit];
 	return ([md5task terminationStatus] == 0);
@@ -148,9 +148,9 @@
 			if( md5 && ! [XBMCUpdateController checkMD5SumOfFile:download correctMD5:md5] ){
 				[[self stack] pushController: [BRAlertController alertOfType:0 
 																															titled:@"Error" 
-																															primaryText:@"MD5 sums don't match. Please try to redownload."
-																															secondaryText:@"If this message still appears after redownload, updates have changed.This should be corrected automatically in a few hours, if not please file an issue at http://atv-xbmc-launcher.googlecode.com. Thanks!" 
-																															]];
+																												 primaryText:@"MD5 sums don't match. Please try to redownload."
+																											 secondaryText:@"If this message still appears after redownload, updates have changed.This should be corrected automatically in a few hours, if not please file an issue at http://atv-xbmc-launcher.googlecode.com. Thanks!" 
+																			 ]];
 				DLOG(@"Removing broken downloads...");				
 				[[NSFileManager defaultManager] removeFileAtPath: [script_path stringByDeletingLastPathComponent]
 																								 handler: nil];
@@ -163,7 +163,7 @@
 			
 			DLOG(@"Running update %@ with argument %@", script_path, download);
 			XBMCUpdateBlockingController* blocker = [[[XBMCUpdateBlockingController alloc] 
-																							 initWithScript: script_path forUpdate:download] autorelease];
+																								initWithScript: script_path forUpdate:download] autorelease];
 			[[self stack] pushController: blocker];
 		}else {
 			DLOG(@"Download not yet completed");
