@@ -12,7 +12,7 @@ if [ -e $DISKIMAGE ]; then
   # Check if / is mounted read only
   if mount | grep ' on / '  | grep -q 'read-only'; then
     REMOUNT=1
-    /sbin/mount -uw /
+    echo $PW | sudo -S /sbin/mount -uw /
   fi
 
   # install xbmc app
@@ -33,7 +33,7 @@ if [ -e $DISKIMAGE ]; then
 
   # restore OSBoot read/write settings
   if [ "$REMOUNT" = "1" ]; then
-    /sbin/mount -ur /
+    echo $PW | sudo -S /sbin/mount -ur /
   fi
 
   exit 0
