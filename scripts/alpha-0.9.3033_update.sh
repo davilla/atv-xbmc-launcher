@@ -31,6 +31,9 @@ if [ -e $DISKIMAGE ]; then
   #delete launch.agent file. This is needed if appletv is rebooted before first Boxee launch
   rm /Users/frontrow/Library/LaunchAgents/tv.boxee.helper.plist
 
+  #sync to disk, just in case...
+  /bin/sync
+
   # restore OSBoot read/write settings
   if [ "$REMOUNT" = "1" ]; then
     echo $PW | sudo -S /sbin/mount -ur /
