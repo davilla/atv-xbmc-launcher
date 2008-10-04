@@ -31,6 +31,8 @@
 		<string>http://mp-vipa5.informatik.uni-mannheim.de/~diederich/xbmc/XBMCLauncher-0.2-debug.run</string>
 		<key>UpdateScript</key>
 		<string>http://atv-xbmc-launcher.googlecode.com/svn/tags/xbmc-info/scripts/launcher-update-0.2.sh</string>
+		<key>MD5</key>
+		<string>6f1e100545abe644c34aab5fc8cb53da</string>
 	</dict>
 	<dict>
 		<key>Name</key>
@@ -41,6 +43,8 @@
 		<string>http://atv-xbmc-launcher.googlecode.com/svn/branches/temp/AppleRemote/AppleRemote.h</string>
 		<key>UpdateScript</key>
 		<string>http://atv-xbmc-launcher.googlecode.com/svn/tags/xbmc-info/scripts/test_update.sh</string>
+		<key>MD5</key>
+		<string>6f1e10</string>		
 	</dict>
 </array>
 </plist>
