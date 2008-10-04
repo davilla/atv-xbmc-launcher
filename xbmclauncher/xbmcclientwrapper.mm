@@ -84,6 +84,7 @@ typedef std::map<eATVClientEvent, CPacketBUTTON*> tEventMap;
 
 - (void) populateEventMap{
 	tEventMap& lr_map = *mp_event_map;
+  
 	lr_map.insert(std::make_pair(ATV_BUTTON_PLAY, new CPacketBUTTON("A", "XG", BTN_DOWN | BTN_NO_REPEAT | BTN_QUEUE)));
 	lr_map.insert(std::make_pair(ATV_BUTTON_RIGHT, new CPacketBUTTON("Right", "R1", BTN_DOWN | BTN_NO_REPEAT | BTN_QUEUE)));
 	lr_map.insert(std::make_pair(ATV_BUTTON_RIGHT_RELEASE, new CPacketBUTTON("Right", "R1", BTN_UP | BTN_NO_REPEAT | BTN_QUEUE)));
@@ -96,12 +97,12 @@ typedef std::map<eATVClientEvent, CPacketBUTTON*> tEventMap;
 	lr_map.insert(std::make_pair(ATV_BUTTON_DOWN, new CPacketBUTTON("Down", "R1", BTN_DOWN | BTN_QUEUE)));
 	lr_map.insert(std::make_pair(ATV_BUTTON_DOWN_RELEASE, new CPacketBUTTON("Down", "R1", BTN_UP | BTN_QUEUE)));
 
-	//play hold only present on atv >=2.2
-	lr_map.insert(std::make_pair(ATV_BUTTON_PLAY_H, new CPacketBUTTON("c", "KB", BTN_DOWN | BTN_NO_REPEAT | BTN_QUEUE)));
-
-	//below 2 are only present ATV < 2.2
+	// only present on ATV <= 2.1
 	lr_map.insert(std::make_pair(ATV_BUTTON_RIGHT_H, new CPacketBUTTON("Right", "R1", BTN_DOWN | BTN_NO_REPEAT | BTN_QUEUE)));	
 	lr_map.insert(std::make_pair(ATV_BUTTON_LEFT_H, new CPacketBUTTON("Left", "R1", BTN_DOWN | BTN_NO_REPEAT | BTN_QUEUE)));
+
+	// only present on atv >= 2.2
+	lr_map.insert(std::make_pair(ATV_BUTTON_PLAY_H, new CPacketBUTTON("c", "KB", BTN_DOWN | BTN_NO_REPEAT | BTN_QUEUE)));
 }
 @end;
 

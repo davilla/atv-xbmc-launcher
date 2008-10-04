@@ -367,29 +367,29 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 				else
 					[mp_xbmclient handleEvent:ATV_BUTTON_LEFT_RELEASE];
 				return YES;
+			case 786612: // hold left (THIS EVENT IS ONLY PRESENT ON ATV <= 2.1)
+				[mp_xbmclient handleEvent:ATV_BUTTON_LEFT_H];
+				return YES;
 			case 65674:  // tap right
 				if([event value] == 1)
 					[mp_xbmclient handleEvent:ATV_BUTTON_RIGHT];
 				else
 					[mp_xbmclient handleEvent:ATV_BUTTON_RIGHT_RELEASE];
 				return YES;
+			case 786611: // hold right (THIS EVENT IS ONLY PRESENT ON ATV <= 2.1)
+				[mp_xbmclient handleEvent:ATV_BUTTON_RIGHT_H];
+				return YES;
 			case 65673:  // tap play
 				[mp_xbmclient handleEvent:ATV_BUTTON_PLAY];
 				return YES;
-			case 786611: //hold right //THIS EVENT IS ONLY PRESENT ON ATV <2.2
-				[mp_xbmclient handleEvent:ATV_BUTTON_RIGHT_H];
+			case 65668:  // hold play  (THIS EVENT IS ONLY PRESENT ON ATV >= 2.2)
+				[mp_xbmclient handleEvent:ATV_BUTTON_PLAY_H];
 				return YES;
-			case 786612: //hold left //THIS EVENT IS ONLY PRESENT ON ATV <2.2
-				[mp_xbmclient handleEvent:ATV_BUTTON_LEFT_H];
-				return YES;
-			case 65670: //menu
+			case 65670:  // menu
 				[mp_xbmclient handleEvent:ATV_BUTTON_MENU];
 				return YES;
-			case 786496: //hold menu
+			case 786496: // hold menu
 				[mp_xbmclient handleEvent:ATV_BUTTON_MENU_H];
-				return YES;
-			case 65668: //hold play
-				[mp_xbmclient handleEvent:ATV_BUTTON_PLAY_H];
 				return YES;
 			default:
 				ELOG(@"XBMCController: Unknown button press hashVal = %i",hashVal);
