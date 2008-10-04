@@ -346,33 +346,40 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 		unsigned int hashVal = (uint32_t)([event page] << 16 | [event usage]);
 		DLOG(@"XBMCController: Button press hashVal = %i",hashVal);
 		DLOG(@"XBMCController: Button event value= %i", [event value]);
+//		DLOG(@"XBMCController: Button event description= %@", [event description]);
 		switch (hashVal)
 		{
 			case 65676:  // tap up
 				if([event value] == 1)
-					[mp_xbmclient handleEvent:ATV_BUTTON_UP_PRESS];
+					[mp_xbmclient handleEvent:ATV_BUTTON_UP];
 				else
 					[mp_xbmclient handleEvent:ATV_BUTTON_UP_RELEASE];
 				return YES;
 			case 65677:  // tap down
 				if([event value] == 1)
-					[mp_xbmclient handleEvent:ATV_BUTTON_DOWN_PRESS];
+					[mp_xbmclient handleEvent:ATV_BUTTON_DOWN];
 				else
 					[mp_xbmclient handleEvent:ATV_BUTTON_DOWN_RELEASE];
 				return YES;
 			case 65675:  // tap left
-				[mp_xbmclient handleEvent:ATV_BUTTON_LEFT];
+				if([event value] == 1)
+					[mp_xbmclient handleEvent:ATV_BUTTON_LEFT];
+				else
+					[mp_xbmclient handleEvent:ATV_BUTTON_LEFT_RELEASE];
 				return YES;
 			case 65674:  // tap right
-				[mp_xbmclient handleEvent:ATV_BUTTON_RIGHT];
+				if([event value] == 1)
+					[mp_xbmclient handleEvent:ATV_BUTTON_RIGHT];
+				else
+					[mp_xbmclient handleEvent:ATV_BUTTON_RIGHT_RELEASE];
 				return YES;
 			case 65673:  // tap play
 				[mp_xbmclient handleEvent:ATV_BUTTON_PLAY];
 				return YES;
-			case 786611: //hold right
+			case 786611: //hold right //THIS EVENT IS ONLY PRESENT ON ATV <2.2
 				[mp_xbmclient handleEvent:ATV_BUTTON_RIGHT_H];
 				return YES;
-			case 786612: //hold left
+			case 786612: //hold left //THIS EVENT IS ONLY PRESENT ON ATV <2.2
 				[mp_xbmclient handleEvent:ATV_BUTTON_LEFT_H];
 				return YES;
 			case 65670: //menu
@@ -380,6 +387,9 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 				return YES;
 			case 786496: //hold menu
 				[mp_xbmclient handleEvent:ATV_BUTTON_MENU_H];
+				return YES;
+			case 65668: //hold play
+				[mp_xbmclient handleEvent:ATV_BUTTON_PLAY_H];
 				return YES;
 			default:
 				ELOG(@"XBMCController: Unknown button press hashVal = %i",hashVal);

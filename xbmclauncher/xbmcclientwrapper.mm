@@ -84,21 +84,24 @@ typedef std::map<eATVClientEvent, CPacketBUTTON*> tEventMap;
 
 - (void) populateEventMap{
 	tEventMap& lr_map = *mp_event_map;
-	lr_map.insert(std::make_pair(ATV_BUTTON_PLAY, new CPacketBUTTON("Select", "R1", BTN_DOWN | BTN_NO_REPEAT | BTN_QUEUE)));
-	lr_map.insert(std::make_pair(ATV_BUTTON_RIGHT, new CPacketBUTTON("Right", "R1", BTN_DOWN  | BTN_NO_REPEAT | BTN_QUEUE)));
-	lr_map.insert(std::make_pair(ATV_BUTTON_RIGHT_H, new CPacketBUTTON("Right", "R1", BTN_DOWN | BTN_NO_REPEAT | BTN_QUEUE)));
-	lr_map.insert(std::make_pair(ATV_BUTTON_LEFT, new CPacketBUTTON("Left",  "R1", BTN_DOWN  | BTN_NO_REPEAT | BTN_QUEUE)));
-	lr_map.insert(std::make_pair(ATV_BUTTON_LEFT_H, new CPacketBUTTON("Left", "R1", BTN_DOWN | BTN_NO_REPEAT | BTN_QUEUE)));
+	lr_map.insert(std::make_pair(ATV_BUTTON_PLAY, new CPacketBUTTON("A", "XG", BTN_DOWN | BTN_NO_REPEAT | BTN_QUEUE)));
+	lr_map.insert(std::make_pair(ATV_BUTTON_RIGHT, new CPacketBUTTON("Right", "R1", BTN_DOWN | BTN_QUEUE)));
+	lr_map.insert(std::make_pair(ATV_BUTTON_RIGHT_RELEASE, new CPacketBUTTON("Right", "R1", BTN_UP  | BTN_QUEUE)));
+	lr_map.insert(std::make_pair(ATV_BUTTON_LEFT, new CPacketBUTTON("Left",  "R1", BTN_DOWN | BTN_QUEUE)));
+	lr_map.insert(std::make_pair(ATV_BUTTON_LEFT_RELEASE, new CPacketBUTTON("Left",  "R1", BTN_UP | BTN_QUEUE)));
 	lr_map.insert(std::make_pair(ATV_BUTTON_MENU, new CPacketBUTTON("Menu", "R1", BTN_DOWN | BTN_NO_REPEAT | BTN_QUEUE)));
-	// Menu Hold will be used both for sending "Back" and for starting universal remote combinations (if universal mode is on)
 	lr_map.insert(std::make_pair(ATV_BUTTON_MENU_H, new CPacketBUTTON("Back", "R1", BTN_DOWN | BTN_NO_REPEAT | BTN_QUEUE)));
-	lr_map.insert(std::make_pair(ATV_BUTTON_UP_PRESS, new CPacketBUTTON("Up", "R1", BTN_DOWN  | BTN_QUEUE)));
+	lr_map.insert(std::make_pair(ATV_BUTTON_UP, new CPacketBUTTON("Up", "R1", BTN_DOWN  | BTN_QUEUE)));
 	lr_map.insert(std::make_pair(ATV_BUTTON_UP_RELEASE, new CPacketBUTTON("Up", "R1", BTN_UP  | BTN_QUEUE)));
-	lr_map.insert(std::make_pair(ATV_BUTTON_DOWN_PRESS, new CPacketBUTTON("Down", "R1", BTN_DOWN | BTN_QUEUE)));
+	lr_map.insert(std::make_pair(ATV_BUTTON_DOWN, new CPacketBUTTON("Down", "R1", BTN_DOWN | BTN_QUEUE)));
 	lr_map.insert(std::make_pair(ATV_BUTTON_DOWN_RELEASE, new CPacketBUTTON("Down", "R1", BTN_UP | BTN_QUEUE)));
-	//TODO
-	//ATV_BUTTON_PLAY_H, //atm it looks like we can't intercept that button/event
-	
+
+	//play hold only present on atv >=2.2
+	lr_map.insert(std::make_pair(ATV_BUTTON_PLAY_H, new CPacketBUTTON("c", "KB", BTN_DOWN | BTN_NO_REPEAT | BTN_QUEUE)));
+
+	//below 2 are only present ATV < 2.2
+	lr_map.insert(std::make_pair(ATV_BUTTON_RIGHT_H, new CPacketBUTTON("Right", "R1", BTN_DOWN | BTN_NO_REPEAT | BTN_QUEUE)));	
+	lr_map.insert(std::make_pair(ATV_BUTTON_LEFT_H, new CPacketBUTTON("Left", "R1", BTN_DOWN | BTN_NO_REPEAT | BTN_QUEUE)));
 }
 @end;
 
