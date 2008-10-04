@@ -32,11 +32,11 @@
 		<key>Type</key>
 		<string>Launcher</string>
 		<key>URL</key>
-		<string>http://mp-vipa5.informatik.uni-mannheim.de/~diederich/xbmc/XBMCLauncher-0.2-debug.run</string>
+		<string>http://atv-xbmc-launcher.googlecode.com/files/XBMCLauncher-0.2-debug.run</string>
 		<key>UpdateScript</key>
 		<string>http://atv-xbmc-launcher.googlecode.com/svn/tags/xbmc-info/scripts/launcher-update-0.2.sh</string>
 		<key>MD5</key>
-		<string>2bc2270406e1f32770b0e79d2653a668</string>
+		<string>bd701a1ebc3d65b01ebf51652b3d9fbd</string>
 	</dict>
 	<dict>
 		<key>Name</key>
