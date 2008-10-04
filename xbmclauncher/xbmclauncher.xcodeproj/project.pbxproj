@@ -27,6 +27,7 @@
 		E40C631B0E901C9400255C90 /* QuProgressBarControl.m in Sources */ = {isa = PBXBuildFile; fileRef = E40C63170E901C9400255C90 /* QuProgressBarControl.m */; };
 		E40C631C0E901C9400255C90 /* QuDownloadController.m in Sources */ = {isa = PBXBuildFile; fileRef = E40C63180E901C9400255C90 /* QuDownloadController.m */; };
 		E40C64CB0E903D9400255C90 /* XBMCUpdateBlockingController.m in Sources */ = {isa = PBXBuildFile; fileRef = E40C64CA0E903D9400255C90 /* XBMCUpdateBlockingController.m */; };
+		E489767F0E97B4370002B1EC /* compareMD5.sh in Resources */ = {isa = PBXBuildFile; fileRef = E489767E0E97B4370002B1EC /* compareMD5.sh */; };
 		E4C9555B0E8199B300E6BAFE /* BackRow.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E4C9555A0E8199B300E6BAFE /* BackRow.framework */; };
 		E4C95B570E81C62100E6BAFE /* xbmcclientwrapper.mm in Sources */ = {isa = PBXBuildFile; fileRef = E4C95B560E81C62100E6BAFE /* xbmcclientwrapper.mm */; };
 		E4C964B80E85A56400E6BAFE /* XBMCUpdateController.m in Sources */ = {isa = PBXBuildFile; fileRef = E4C964B70E85A56400E6BAFE /* XBMCUpdateController.m */; };
@@ -68,6 +69,7 @@
 		E40C64C90E903D9400255C90 /* XBMCUpdateBlockingController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XBMCUpdateBlockingController.h; sourceTree = "<group>"; };
 		E40C64CA0E903D9400255C90 /* XBMCUpdateBlockingController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XBMCUpdateBlockingController.m; sourceTree = "<group>"; };
 		E40C664A0E9199B700255C90 /* BackRowCompilerShutup.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BackRowCompilerShutup.h; sourceTree = "<group>"; };
+		E489767E0E97B4370002B1EC /* compareMD5.sh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.sh; path = compareMD5.sh; sourceTree = "<group>"; };
 		E4C9555A0E8199B300E6BAFE /* BackRow.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = BackRow.framework; path = ../BackRow.framework; sourceTree = SOURCE_ROOT; };
 		E4C9596B0E81AB3800E6BAFE /* xbmcclient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = xbmcclient.h; sourceTree = "<group>"; };
 		E4C95B550E81C62100E6BAFE /* xbmcclientwrapper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = xbmcclientwrapper.h; sourceTree = "<group>"; };
@@ -134,6 +136,7 @@
 		089C167CFE841241C02AAC07 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				E489767E0E97B4370002B1EC /* compareMD5.sh */,
 				E4C974B90E7DAF7100B33973 /* killxbmchelper.sh */,
 				8D5B49B7048680CD000E48DA /* Info.plist */,
 				089C167DFE841241C02AAC07 /* InfoPlist.strings */,
@@ -276,6 +279,7 @@
 				E4C974BA0E7DAF7100B33973 /* killxbmchelper.sh in Resources */,
 				E4C96FD00E89A3AA00E6BAFE /* LICENSE.txt in Resources */,
 				E4C96FD10E89A3AA00E6BAFE /* README.txt in Resources */,
+				E489767F0E97B4370002B1EC /* compareMD5.sh in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -115,7 +115,21 @@
 - (BOOL) isNetworkDependent{
 	return TRUE;
 }
-	
+
++ (BOOL) checkMD5SumOfFile:(NSString*) f_file_path correctMD5:(NSString*) f_md5{
+	PRINT_SIGNATURE();
+	DLOG(@"File: %@ MD5:%@", f_file_path, f_md5);
+	NSString* md5checkerpath = [[NSBundle bundleForClass:[self class]] pathForResource:@"compareMD5" ofType:@"sh"];
+	NSTask* md5task = [NSTask launchedTaskWithLaunchPath:@"/bin/bash" arguments: [NSArray arrayWithObjects
+																																							 :md5checkerpath,
+																																							 f_file_path,
+																																							 f_md5,
+																																							 nil]];
+	//get md5 of file specified	
+	[md5task waitUntilExit];
+	return ([md5task terminationStatus] == 0);
+}
+
 - (void) wasExhumedByPoppingController: (id) controller
 {
 	// handle being revealed when the user presses Menu
@@ -130,6 +144,22 @@
 			NSDictionary* dict = [mp_updates objectAtIndex:m_update_item];
 			NSString* script_path = [QuDownloadController outputPathForURLString:[dict valueForKey:@"UpdateScript"]];
 			NSString* download =  [QuDownloadController outputPathForURLString:[dict valueForKey:@"URL"]];
+			NSString* md5 = [dict objectForKey:@"MD5"];
+			if( md5 && ! [XBMCUpdateController checkMD5SumOfFile:download correctMD5:md5] ){
+				[[self stack] pushController: [BRAlertController alertOfType:0 
+																															titled:@"Error" 
+																															primaryText:@"MD5 sums don't match. Please try to redownload."
+																															secondaryText:@"If this message still appears after redownload, updates have changed.This should be corrected automatically in a few hours, if not please file an issue at http://atv-xbmc-launcher.googlecode.com. Thanks!" 
+																															]];
+				DLOG(@"Removing broken downloads...");				
+				[[NSFileManager defaultManager] removeFileAtPath: [script_path stringByDeletingLastPathComponent]
+																								 handler: nil];
+				[[NSFileManager defaultManager] removeFileAtPath: [download stringByDeletingLastPathComponent]
+																								 handler: nil];
+				return;
+			} else {
+				DLOG(@"MD5 sums matched or none was present");
+			}
 			
 			DLOG(@"Running update %@ with argument %@", script_path, download);
 			XBMCUpdateBlockingController* blocker = [[[XBMCUpdateBlockingController alloc] 
@@ -141,7 +171,7 @@
 		//release the downloader, it gets recreated on new selection
 		[mp_downloader release];
 		mp_downloader = nil;
-	} if([controller isKindOfClass:[XBMCUpdateBlockingController class]]){
+	} else if([controller isKindOfClass:[XBMCUpdateBlockingController class]]){
 		//clear downloaded files
 		DLOG(@"Update finished. Clearing download cache");
 		NSDictionary* dict = [mp_updates objectAtIndex:m_update_item];
@@ -154,7 +184,7 @@
 																						 handler: nil];
 	} 
 	else {
-		DLOG(@"someone else popped us");
+		DLOG(@"Someone else popped us");
 	}
 }
 
