@@ -15,6 +15,9 @@ if [ -e $INSTALLER ]; then
   echo $PW | sudo -S /sbin/mount -uw /
  fi
 
+ #delete boxeelauncher 0.1 if present
+ echo $PW | sudo -S rm -rf /System/Library/CoreServices/Finder.app/Contents/PlugIns/BoxeeLauncher.frappliance
+ 
  #  install new launcher
  echo $PW | sudo -S chmod +x $INSTALLER
  echo $PW | sudo -S $INSTALLER -- install /
