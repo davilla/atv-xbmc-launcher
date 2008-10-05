@@ -444,6 +444,7 @@
 
 - (void) killHelperApp:(NSTimer*) f_timer{
   PRINT_SIGNATURE();
+  DLOG(@"Trying to kill: %@", [mp_helper_path lastPathComponent]); 
 	//TODO for now we use a script as I don't know how to kill a Task with OSX API. any hints are pretty welcome!
 	NSString* killer_path = [[NSBundle bundleForClass:[self class]] pathForResource:@"killxbmchelper" ofType:@"sh"];
 	NSTask* killer = [NSTask launchedTaskWithLaunchPath:@"/bin/bash" arguments: [NSArray arrayWithObjects
