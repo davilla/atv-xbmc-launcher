@@ -42,7 +42,7 @@
 - (void) setupHelperSwatter; //starts a NSTimer which callback periodically searches for a running mp_helper_path app and kills it
 - (void) disableSwatterIfActive; //disables swatter and releases mp_swatter_timer
 - (void) killHelperApp:(NSTimer*) f_timer; //kills a running instance of mp_helper_path application; f_timer can be nil, it's not used
-
+- (void) startAppAndAttachListener;
 @end
 
 @implementation XBMCController
@@ -244,11 +244,8 @@
 	return TRUE;
 }
 
-- (void) wasPushed{
-	PRINT_SIGNATURE();
-	[super wasPushed];
-	
-	//We've just been put on screen, the user can see this controller's content now	
+-(void) startAppAndAttachListener{
+  PRINT_SIGNATURE();
 	//Hide frontrow (this is only needed in 720/1080p)
 	[self disableRendering];
 	
@@ -264,6 +261,7 @@
 	} else {
 		[self setDesiredAppleRemoteMode];
 	}
+  
 	//start xbmc
 	mp_task = [[NSTask alloc] init];
 	@try {
@@ -316,7 +314,14 @@
       DLOG(@"Process is visible, making it front");
       SetFrontProcess(&psn);
     }
-  }
+  }  
+}
+
+- (void) wasPushed{
+	PRINT_SIGNATURE();
+	[super wasPushed];
+  //We've just been put on screen, the user can see this controller's content now	
+  [self startAppAndAttachListener];
 }
 
 - (void) willBePopped
