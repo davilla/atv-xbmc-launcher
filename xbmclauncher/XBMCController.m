@@ -156,16 +156,27 @@
 		//try to kill XBMCHelper (it does not hurt if it's not running, but definately helps if it still is
 		[self killHelperApp:nil];
 		
-		// Show frontrow menu 
-		if (status != 0)
-		{
-			BRAlertController* alert = [BRAlertController alertOfType:0 titled:nil
-																										primaryText:[NSString stringWithFormat:@"Error: XBMC/Boxee exited with status: %i",status]
-																									secondaryText:nil];
-			[[self stack] swapController:alert];
-		} else {
-			[[self stack] popController];
-		}
+		// use exit status to decide what to do
+    switch(status){
+      case 0:
+        [[self stack] popController];
+        break;
+      case 66:
+        DLOG(@"XBMC wants us to restart ATV. Don't do this for now");
+        [[self stack] popController];
+        break;
+      case 65:
+        DLOG(@"XBMC wants to be restarted. Don't do this for now");
+        [[self stack] popController];
+        break;
+      default:
+      {
+        BRAlertController* alert = [BRAlertController alertOfType:0 titled:nil
+                                                      primaryText:[NSString stringWithFormat:@"Error: XBMC/Boxee exited with status: %i",status]
+                                                    secondaryText:nil];
+        [[self stack] swapController:alert];        
+      }
+    }
 	} else {
 		//Task is still running. How come?!
 		ELOG(@"Task still running. This is definately a bug :/");
