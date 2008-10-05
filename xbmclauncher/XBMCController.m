@@ -427,6 +427,7 @@
 }
 
 - (void) killHelperApp:(NSTimer*) f_timer{
+  PRINT_SIGNATURE();
 	//TODO for now we use a script as I don't know how to kill a Task with OSX API. any hints are pretty welcome!
 	NSString* killer_path = [[NSBundle bundleForClass:[self class]] pathForResource:@"killxbmchelper" ofType:@"sh"];
 	NSTask* killer = [NSTask launchedTaskWithLaunchPath:@"/bin/bash" arguments: [NSArray arrayWithObjects
@@ -444,6 +445,7 @@
 }
 
 - (void) disableSwatterIfActive{
+  PRINT_SIGNATURE();
 	if(mp_swatter_timer){
 		[mp_swatter_timer invalidate];
 		[mp_swatter_timer release];
@@ -466,6 +468,7 @@
 
 - (BOOL) deleteHelperLaunchAgent
 {
+  PRINT_SIGNATURE();
 	NSArray* lib_array = NSSearchPathForDirectoriesInDomains(NSLibraryDirectory, NSUserDomainMask, TRUE);
 	if([lib_array count] != 1){
 		ELOG("Bah, something went wrong trying to find users Library directory");
