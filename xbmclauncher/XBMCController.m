@@ -281,6 +281,31 @@
 																					 selector:@selector(checkTaskStatus:)
 																							 name:NSTaskDidTerminateNotification
 																						 object:mp_task];
+  // Bring XBMC to the front to capture keyboard input
+  ProcessSerialNumber psn;
+  OSErr err;
+  
+  // loop until we find the process
+  DLOG(@"Waiting to get process...");
+  while([mp_task isRunning] && procNotFound == (err = GetProcessForPID([mp_task processIdentifier], &psn))) {
+    // wait...
+    [NSThread sleepUntilDate:[NSDate dateWithTimeIntervalSinceNow:0.5]];
+  }
+  
+  if(err) {
+    ELOG(@"Error getting PSN: %d", err);
+  } else {
+    DLOG(@"Waiting for process to be visible");
+    // wait for it to be visible
+    while([mp_task isRunning] && !IsProcessVisible(&psn)) {
+      // do nothing!
+      [NSThread sleepUntilDate:[NSDate dateWithTimeIntervalSinceNow:0.5]];
+    }
+    if( [mp_task isRunning] ){
+      DLOG(@"Process is visible, making it front");
+      SetFrontProcess(&psn);
+    }
+  }
 }
 
 - (void) willBePopped
