@@ -166,8 +166,8 @@
         [[self stack] popController];
         break;
       case 65:
-        DLOG(@"XBMC wants to be restarted. Don't do this for now");
-        [[self stack] popController];
+        DLOG(@"XBMC wants to be restarted. Do that");
+        [self startAppAndAttachListener];
         break;
       default:
       {
