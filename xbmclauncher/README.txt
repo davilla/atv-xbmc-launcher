@@ -6,6 +6,11 @@ see http://atv-xbmc-launcher.googlecode.com for details
 
 ## Release Notes
 
+### 0.3
+- fixed issues with XBMC not getting keyboard input (Thanks ericIII!)
+- added version number in About dialog
+- respect XBMC's wish to restart
+
 ### 0.2
 - fixed IR Handling for ATV 2.2
 - added self-update
