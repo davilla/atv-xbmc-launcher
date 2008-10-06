@@ -85,6 +85,7 @@
 	@throw [NSException exceptionWithName:@"BNRBadInitCall" reason:@"Init XBMCController with initWithPath" userInfo:nil];
 	return nil;
 }
+
 - (id) initWithAppPath:(NSString*) f_app_path helperPath:(NSString*) f_helper_path lauchAgentFileName:(NSString*) f_lauch_agent_file_name guiSettingsPath:(NSString*) f_guisettings_path{
 	PRINT_SIGNATURE();
 	if ( ![super init] )
@@ -193,54 +194,58 @@
 
 - (BOOL) inUserSettingsSetXpath:(NSString*) f_xpath toInt:(int) f_value{
 	PRINT_SIGNATURE();
-	//assemble path to guisettings.xml
-	NSArray* app_support_path_array = NSSearchPathForDirectoriesInDomains(NSApplicationSupportDirectory, NSUserDomainMask, TRUE);
-	if([app_support_path_array count] != 1){
-		ELOG(@"Huh? No application support directory?");
-		return FALSE;
-	}
-	NSString* guisettings_path = [[app_support_path_array objectAtIndex:0] stringByAppendingString:mp_guisettings_path];
-	
-	NSError *err=nil;
-	NSURL *furl = [NSURL fileURLWithPath:guisettings_path];
-	if (!furl) {
-		ELOG(@"Can't create an URL from file %@.", guisettings_path);
-		return FALSE;
-	}
-	NSXMLDocument *xmlDoc = [[NSXMLDocument alloc] initWithContentsOfURL:furl
-																															 options:(NSXMLNodePreserveWhitespace|NSXMLNodePreserveCDATA)
-																																 error:&err];
-	//TODO checkme. is this a proper solution for not writing release in all the return paths below?
-	[xmlDoc autorelease];
-	if (xmlDoc == nil || err)  {
-		if (err) {
-			ELOG(@"Erred opening guisettings.xml %@", err);
-		}
-		return FALSE;
-	}
-	//get the key of mode in settings/appleremote/
-	err = nil;
-	NSArray *nodes = [xmlDoc nodesForXPath:f_xpath error:&err];
-	if (err != nil || [nodes count] != 1 ) {
-		ELOG(@"Did NOT find %@ in %@. Error was %@", f_xpath, guisettings_path, err);
-		return FALSE;
-	}
-	//compare mode to target_mode
-	NSString* target_format_string = [NSString stringWithFormat:@"%i",f_value];
-	NSXMLElement*	mode = [nodes objectAtIndex:0];
-	if( [[mode stringValue] isEqualTo:target_format_string] ){  
-		DLOG(@"%@ already set to: %@",f_xpath, [mode stringValue]); 
-		return TRUE;
-	}
-	//set mode to target_mode
-	[mode setStringValue:target_format_string];		
-	//write back data
-	NSData* xmlData = [xmlDoc XMLDataWithOptions:NSXMLNodePrettyPrint];
-	if (![xmlData writeToFile:guisettings_path atomically:YES]) {
-		ELOG(@"Could not write guisettings back to %@", guisettings_path);
-		return FALSE;
-	}
-	DLOG(@"Wrote %i to into %@ at path %@", f_value, guisettings_path, f_xpath);
+  if( mp_guisettings_path ){
+    //assemble path to guisettings.xml
+    NSArray* app_support_path_array = NSSearchPathForDirectoriesInDomains(NSApplicationSupportDirectory, NSUserDomainMask, TRUE);
+    if([app_support_path_array count] != 1){
+      ELOG(@"Huh? No application support directory?");
+      return FALSE;
+    }
+    NSString* guisettings_path = [[app_support_path_array objectAtIndex:0] stringByAppendingString:mp_guisettings_path];
+    
+    NSError *err=nil;
+    NSURL *furl = [NSURL fileURLWithPath:guisettings_path];
+    if (!furl) {
+      ELOG(@"Can't create an URL from file %@.", guisettings_path);
+      return FALSE;
+    }
+    NSXMLDocument *xmlDoc = [[NSXMLDocument alloc] initWithContentsOfURL:furl
+                                                                 options:(NSXMLNodePreserveWhitespace|NSXMLNodePreserveCDATA)
+                                                                   error:&err];
+    //TODO checkme. is this a proper solution for not writing release in all the return paths below?
+    [xmlDoc autorelease];
+    if (xmlDoc == nil || err)  {
+      if (err) {
+        ELOG(@"Erred opening guisettings.xml %@", err);
+      }
+      return FALSE;
+    }
+    //get the key of mode in settings/appleremote/
+    err = nil;
+    NSArray *nodes = [xmlDoc nodesForXPath:f_xpath error:&err];
+    if (err != nil || [nodes count] != 1 ) {
+      ELOG(@"Did NOT find %@ in %@. Error was %@", f_xpath, guisettings_path, err);
+      return FALSE;
+    }
+    //compare mode to target_mode
+    NSString* target_format_string = [NSString stringWithFormat:@"%i",f_value];
+    NSXMLElement*	mode = [nodes objectAtIndex:0];
+    if( [[mode stringValue] isEqualTo:target_format_string] ){  
+      DLOG(@"%@ already set to: %@",f_xpath, [mode stringValue]); 
+      return TRUE;
+    }
+    //set mode to target_mode
+    [mode setStringValue:target_format_string];		
+    //write back data
+    NSData* xmlData = [xmlDoc XMLDataWithOptions:NSXMLNodePrettyPrint];
+    if (![xmlData writeToFile:guisettings_path atomically:YES]) {
+      ELOG(@"Could not write guisettings back to %@", guisettings_path);
+      return FALSE;
+    }
+    DLOG(@"Wrote %i to into %@ at path %@", f_value, guisettings_path, f_xpath);
+  } else {
+    DLOG(@"No guisettingspath, nothing done");
+  }
 	return TRUE;
 }
 
@@ -486,21 +491,27 @@
 - (BOOL) deleteHelperLaunchAgent
 {
   PRINT_SIGNATURE();
-	NSArray* lib_array = NSSearchPathForDirectoriesInDomains(NSLibraryDirectory, NSUserDomainMask, TRUE);
-	if([lib_array count] != 1){
-		ELOG("Bah, something went wrong trying to find users Library directory");
-		return FALSE;
-	}
-	NSString * launch_agent_file_path = [[lib_array objectAtIndex:0] stringByAppendingString:@"/LaunchAgents/"];
-	launch_agent_file_path = [launch_agent_file_path stringByAppendingString:mp_launch_agent_file_name];
-	DLOG(@"trying to delete LaunchAgent file at %@", launch_agent_file_path);
-	if([[NSFileManager defaultManager] removeFileAtPath:launch_agent_file_path handler:nil]){
-		ILOG(@"Deleted LaunchAgent file at %@", launch_agent_file_path);
-		return TRUE;
-	} else{
-		DLOG(@"Failed to delete LaunchAgent file at %@", launch_agent_file_path);
-		return FALSE;
-	}
+  if(mp_launch_agent_file_name) {
+    NSArray* lib_array = NSSearchPathForDirectoriesInDomains(NSLibraryDirectory, NSUserDomainMask, TRUE);
+    if([lib_array count] != 1){
+      ELOG("Bah, something went wrong trying to find users Library directory");
+      return FALSE;
+    }
+    NSString * launch_agent_file_path = [[lib_array objectAtIndex:0] stringByAppendingString:@"/LaunchAgents/"];
+    launch_agent_file_path = [launch_agent_file_path stringByAppendingString:mp_launch_agent_file_name];
+    DLOG(@"trying to delete LaunchAgent file at %@", launch_agent_file_path);
+    if([[NSFileManager defaultManager] removeFileAtPath:launch_agent_file_path handler:nil]){
+      ILOG(@"Deleted LaunchAgent file at %@", launch_agent_file_path);
+      return TRUE;
+    } else{
+      DLOG(@"Failed to delete LaunchAgent file at %@", launch_agent_file_path);
+      return FALSE;
+    }
+  } else {
+    //no file given, just do nothing
+    DLOG("No mp_launch_agent_file_name - don't try to delete it");
+    return TRUE;
+  }
 }
 
 @end

@@ -71,10 +71,6 @@
 			<string>/Applications/Boxee.app/Contents/MacOS/Boxee</string>
 			<key>helperpath</key>
 			<string>/Applications/Boxee.app/Contents/Resources/Boxee/bin/boxeeservice</string>
-			<key>guisettingspath</key>
-			<string>/BOXEE/UserData/guisettings.xml</string>
-			<key>LaunchAgentFileName</key>
-			<string>tv.boxee.helper.plist</string>
 		</dict>
 		<dict>
 			<key>identifier</key>
