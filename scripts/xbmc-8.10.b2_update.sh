@@ -48,18 +48,18 @@ if [ -e $DISKIMAGE ]; then
     echo $PW | sudo -S chown frontrow:frontrow /Users/frontrow/Pictures
   fi
 
-  if [ ! -d "/Users/frontrow/Library/Application\ Support/XBMC/userdata/" ]; then
-  	mkdir -p "/Users/frontrow/Library/Application\ Support/XBMC/userdata/"
+  if [ ! -d "/Users/frontrow/Library/Application Support/XBMC/userdata/" ]; then
+  	mkdir -p "/Users/frontrow/Library/Application Support/XBMC/userdata/"
   fi
-
-  #d4rk said this is already done in installer; do it anyway, can't hurt
-  echo $PW | sudo -S chown -R frontrow "/Users/frontrow/Library/Application Support/XBMC"
 
   #add advancedsettings for better h.264 experience
   AVDSETTINGS_PATH="/Users/frontrow/Library/Application Support/XBMC/userdata/advancedsettings.xml"
   if [ ! -e "$AVDSETTINGS_PATH" ]; then
   	echo "<advancedsettings><skiploopfilter>48</sliploopfilter></advancedsettings>" >> "$AVDSETTINGS_PATH"
   fi
+
+  #d4rk said this is already done in installer; do it anyway, can't hurt
+  echo $PW | sudo -S chown -R frontrow "/Users/frontrow/Library/Application Support/XBMC"
   
   #delete xbmchelper in beta2 as is crashs on startup 
   if [ -e /Applications/XBMC.app/Contents/Resources/XBMC/XBMCHelper ]; then
