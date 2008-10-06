@@ -27,19 +27,24 @@
 	long long               _gotLength;
 	NSString *							mp_urlstr;
 	BOOL										m_download_complete;
+  BOOL                    m_md5sum_mismatch;
+  NSString *              mp_md5;
 }
 
 + (void) clearAllDownloadCaches;
 + (NSString *) downloadCachePath;
 + (NSString *) outputPathForURLString: (NSString *) urlstr;
++ (BOOL) checkMD5SumOfFile:(NSString*) f_file_path MD5:(NSString*) f_md5;
 
-- (id) initWithDownloadPath:(NSString*) fp_download_path;
+- (id) initWithDownloadPath:(NSString*) fp_download_path MD5:(NSString*) fp_md5;
 - (BOOL) beginDownload;
 - (BOOL) resumeDownload;
 - (void) cancelDownload;
 - (void) deleteDownload;
 
 - (BOOL) downloadComplete;
+
+- (BOOL) MD5SumMismatch;
 
 // stack callbacks
 - (BOOL) isNetworkDependent;

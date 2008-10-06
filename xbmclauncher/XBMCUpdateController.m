@@ -106,28 +106,15 @@
 		return;
 	}
 	DLOG(@"Downloaded update script to %@. Starting download of update...", script_path);
-	//now start the real download
-	mp_downloader = [[QuDownloadController alloc] initWithDownloadPath:[dict valueForKey:@"URL"]];
+	//now start the real download, optionally check for md5 when finished
+  NSString* md5 = [dict objectForKey:@"MD5"];
+	mp_downloader = [[QuDownloadController alloc] initWithDownloadPath:[dict valueForKey:@"URL"] MD5:md5];
 	[mp_downloader setTitle:[NSString stringWithFormat:@"Downloading update: %@",[dict valueForKey:@"Name"]]];
 	[[self stack] pushController: mp_downloader];
 }
 
 - (BOOL) isNetworkDependent{
 	return TRUE;
-}
-
-+ (BOOL) checkMD5SumOfFile:(NSString*) f_file_path correctMD5:(NSString*) f_md5{
-	PRINT_SIGNATURE();
-	DLOG(@"File: %@ MD5:%@", f_file_path, f_md5);
-	NSString* md5checkerpath = [[NSBundle bundleForClass:[self class]] pathForResource:@"compareMD5" ofType:@"sh"];
-	NSTask* md5task = [NSTask launchedTaskWithLaunchPath:@"/bin/bash" arguments: [NSArray arrayWithObjects
-																																								:md5checkerpath,
-																																								f_file_path,
-																																								f_md5,
-																																								nil]];
-	//get md5 of file specified	
-	[md5task waitUntilExit];
-	return ([md5task terminationStatus] == 0);
 }
 
 - (void) wasExhumedByPoppingController: (id) controller
@@ -139,32 +126,24 @@
 	//if the download controller popped us check if download was properly finished
 	if(controller == mp_downloader){
 		if ( [mp_downloader downloadComplete] ){
-			//start the update script with path to downloaded file 
-			DLOG(@"Download finished");
-			NSDictionary* dict = [mp_updates objectAtIndex:m_update_item];
-			NSString* script_path = [QuDownloadController outputPathForURLString:[dict valueForKey:@"UpdateScript"]];
-			NSString* download =  [QuDownloadController outputPathForURLString:[dict valueForKey:@"URL"]];
-			NSString* md5 = [dict objectForKey:@"MD5"];
-			if( md5 && ! [XBMCUpdateController checkMD5SumOfFile:download correctMD5:md5] ){
-				[[self stack] pushController: [BRAlertController alertOfType:0 
-																															titled:@"Error" 
-																												 primaryText:@"MD5 sums don't match. Please try to redownload."
-																											 secondaryText:@"If this message still appears after redownload, updates have changed.This should be corrected automatically in a few hours, if not please file an issue at http://atv-xbmc-launcher.googlecode.com. Thanks!" 
-																			 ]];
-				DLOG(@"Removing broken downloads...");				
-				[[NSFileManager defaultManager] removeFileAtPath: [script_path stringByDeletingLastPathComponent]
-																								 handler: nil];
-				[[NSFileManager defaultManager] removeFileAtPath: [download stringByDeletingLastPathComponent]
-																								 handler: nil];
-				return;
-			} else {
-				DLOG(@"MD5 sums matched or none was present");
-			}
-			
-			DLOG(@"Running update %@ with argument %@", script_path, download);
-			XBMCUpdateBlockingController* blocker = [[[XBMCUpdateBlockingController alloc] 
+      DLOG(@"Download finished");
+      if ( [ mp_downloader MD5SumMismatch] ){
+        [[self stack] pushController: [BRAlertController alertOfType:0 
+                                                              titled:@"Error" 
+                                                         primaryText:@"MD5 sums don't match. Please try to redownload."
+                                                       secondaryText:@"If this message still appears after redownload, updates have changed.This should be corrected automatically in a few hours, if not please file an issue at http://atv-xbmc-launcher.googlecode.com. Thanks!" 
+                                       ]];
+        return;
+      } else {                                     
+        //start the update script with path to downloaded file 
+        NSDictionary* dict = [mp_updates objectAtIndex:m_update_item];
+        NSString* script_path = [QuDownloadController outputPathForURLString:[dict valueForKey:@"UpdateScript"]];
+        NSString* download =  [QuDownloadController outputPathForURLString:[dict valueForKey:@"URL"]];
+        DLOG(@"Running update %@ with argument %@", script_path, download);
+        XBMCUpdateBlockingController* blocker = [[[XBMCUpdateBlockingController alloc] 
 																								initWithScript: script_path forUpdate:download] autorelease];
-			[[self stack] pushController: blocker];
+        [[self stack] pushController: blocker];
+      }
 		}else {
 			DLOG(@"Download not yet completed");
 		}

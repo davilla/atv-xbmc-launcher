@@ -10,8 +10,23 @@
 #import "QuDownloadController.h"
 #import "QuProgressBarControl.h"
 #import <BackRow/BackRow.h>
+#import <XBMCDebugHelpers.h>
 
 @implementation QuDownloadController
+
++ (BOOL) checkMD5SumOfFile:(NSString*) f_file_path MD5:(NSString*) f_md5{
+	PRINT_SIGNATURE();
+	DLOG(@"File: %@ MD5:%@", f_file_path, f_md5);
+	NSString* md5checkerpath = [[NSBundle bundleForClass:[self class]] pathForResource:@"compareMD5" ofType:@"sh"];
+	NSTask* md5task = [NSTask launchedTaskWithLaunchPath:@"/bin/bash" arguments: [NSArray arrayWithObjects
+																																								:md5checkerpath,
+																																								f_file_path,
+																																								f_md5,
+																																								nil]];
+	//get md5 of file specified	
+	[md5task waitUntilExit];
+	return ([md5task terminationStatus] == 0);
+}
 
 + (void) clearAllDownloadCaches
 {
@@ -89,11 +104,13 @@
 	
 }
 
-- (id) initWithDownloadPath:(NSString*) fp_path {
+- (id) initWithDownloadPath:(NSString*) fp_path MD5:(NSString*) fp_md5{
+  PRINT_SIGNATURE();
 	if ( [super init] == nil )
 		return ( nil );
 	mp_urlstr = [fp_path retain];
-	
+	mp_md5 = [fp_md5 retain];
+  
 	//create gui elements
 	_header = [[BRHeaderControl alloc] init];
 	_sourceText = [[BRTextControl alloc] init];
@@ -111,13 +128,14 @@
 - (void) dealloc
 {
 	[self cancelDownload];
-	
+  
 	[_header release];
 	[_sourceText release];
 	[_progressBar release];
 	[_downloader release];
 	[_outputPath release];
 	[mp_urlstr release];	
+  [mp_md5 release];
 	[super dealloc];
 }
 
@@ -383,6 +401,10 @@ willResumeWithResponse: (NSURLResponse *) response
 	[_progressBar setCurrentValue: (float) _gotLength];
 }
 
+- (BOOL) MD5SumMismatch{
+  return m_md5sum_mismatch;
+}
+
 - (void) downloadDidFinish: (NSURLDownload *) download
 {
 	// completed the download: set progress full (just in case) and
@@ -390,15 +412,25 @@ willResumeWithResponse: (NSURLResponse *) response
 	[_progressBar setPercentage: 100.0f];
 	
 	NSLog( @"Download finished" );
-	
+	m_download_complete = TRUE;
+  
 	// we'll swap ourselves off the stack here, so let's remove our
 	// reference to the downloader, just in case calling -cancel now
 	// might cause a problem
 	[_downloader autorelease];
 	_downloader = nil;
-	m_download_complete = TRUE;
-	[[self stack] popController];
+  if( mp_md5 && ! [QuDownloadController checkMD5SumOfFile:_outputPath MD5:mp_md5] ){
+    m_md5sum_mismatch = TRUE;
+    DLOG(@"Remove broken download");				
+    [[NSFileManager defaultManager] removeFileAtPath: [_outputPath stringByDeletingLastPathComponent]
+                                             handler: nil];
+  } else {
+    DLOG(@"MD5 sums matched or none was given");
+    m_md5sum_mismatch = FALSE;
+  }
+  [[self stack] popController];
 }
+
 - (BOOL) downloadComplete{
 	return m_download_complete;
 }
