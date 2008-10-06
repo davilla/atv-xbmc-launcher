@@ -70,7 +70,6 @@
 		E40C64CA0E903D9400255C90 /* XBMCUpdateBlockingController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XBMCUpdateBlockingController.m; sourceTree = "<group>"; };
 		E40C664A0E9199B700255C90 /* BackRowCompilerShutup.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BackRowCompilerShutup.h; sourceTree = "<group>"; };
 		E489767E0E97B4370002B1EC /* compareMD5.sh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.sh; path = compareMD5.sh; sourceTree = "<group>"; };
-		E4897CB30E9929C20002B1EC /* XBMCLocalizationHelpers.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XBMCLocalizationHelpers.h; sourceTree = "<group>"; };
 		E4C9555A0E8199B300E6BAFE /* BackRow.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = BackRow.framework; path = ../BackRow.framework; sourceTree = SOURCE_ROOT; };
 		E4C9596B0E81AB3800E6BAFE /* xbmcclient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = xbmcclient.h; sourceTree = "<group>"; };
 		E4C95B550E81C62100E6BAFE /* xbmcclientwrapper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = xbmcclientwrapper.h; sourceTree = "<group>"; };
@@ -166,7 +165,6 @@
 				E4C96F300E8865D700E6BAFE /* DebugController.m */,
 				E4C970840E8AF0E400E6BAFE /* XBMCPreferencesController.h */,
 				E4C970850E8AF0E400E6BAFE /* XBMCPreferencesController.m */,
-				E4897CB30E9929C20002B1EC /* XBMCLocalizationHelpers.h */,
 			);
 			name = Classes;
 			sourceTree = "<group>";
