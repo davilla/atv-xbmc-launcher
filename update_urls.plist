@@ -6,7 +6,7 @@
 		<key>UpdateScript</key>
 		<string>http://atv-xbmc-launcher.googlecode.com/svn/tags/xbmc-info/scripts/xbmc-8.10.b2_update.sh</string>
 		<key>URL</key>
-		<string>http://xbmc.org:8080/XBMC_for_Mac-Atlantis-Beta_2.dmg</string>
+		<string>http://downloads.sourceforge.net/xbmc/XBMC_for_Mac-Atlantis-Beta_2.dmg</string>
 		<key>Type</key>
 		<string>Application</string>
 <!--		<key>MD5</key>
