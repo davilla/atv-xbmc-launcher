@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<array>
+	<dict>
+		<key>UpdateScript</key>
+		<string>http://atv-xbmc-launcher.googlecode.com/svn/tags/xbmc-info/scripts/xbmc-8.10.b2_update.sh</string>
+		<key>URL</key>
+		<string>http://xbmc.org:8080/XBMC_for_Mac-Atlantis-Beta_2.dmg</string>
+		<key>Type</key>
+		<string>Application</string>
+		<key>MD5</key>
+		<string>5499a1e2e269675085feed4139be2f51</string>
+		<key>Name</key>
+		<string>XBMC Atlantis Beta2</string>
+	</dict>
+	<dict>
+		<key>UpdateScript</key>
+		<string>http://atvusb-creator.googlecode.com/svn/tags/boxee-info/scripts/alpha-0.9.3383_update.sh</string>
+		<key>URL</key>
+		<string>http://dl.boxee.tv/boxee-atv.dmg</string>
+		<key>Type</key>
+		<string>Application</string>
+		<key>Name</key>
+		<string>Boxee alpha 0.9.3383</string>
+		<key>MD5</key>
+		<string>1c90986c587853543b75c7a2495c183e</string>
+	</dict>
+	<dict>
+		<key>Name</key>
+		<string>XBMC/Boxee Launcher 0.3</string>
+		<key>Type</key>
+		<string>Launcher</string>
+		<key>URL</key>
+#		<string>http://atv-xbmc-launcher.googlecode.com/files/XBMCLauncher-0.3-debug.run</string>
+		<string>http://mp-vipa5.informatik.uni-mannheim.de/~diederich/xbmc/XBMCLauncher-0.3-debug.run</string>
+		<key>UpdateScript</key>
+		<string>http://atv-xbmc-launcher.googlecode.com/svn/tags/xbmc-info/scripts/launcher-update-0.3.sh</string>
+#		<key>MD5</key>
+#		<string>bd701a1ebc3d65b01ebf51652b3d9fbd</string>
+	</dict>
+</array>
+</plist>
