@@ -9,8 +9,9 @@
 		<string>http://xbmc.org:8080/XBMC_for_Mac-Atlantis-Beta_2.dmg</string>
 		<key>Type</key>
 		<string>Application</string>
-		<key>MD5</key>
+<!--		<key>MD5</key>
 		<string>5499a1e2e269675085feed4139be2f51</string>
+-->
 		<key>Name</key>
 		<string>XBMC Atlantis Beta2</string>
 	</dict>
