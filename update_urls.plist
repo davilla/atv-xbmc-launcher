@@ -38,8 +38,10 @@
 <!--
 		<string>http://atv-xbmc-launcher.googlecode.com/files/XBMCLauncher-0.3-debug.run</string>
 -->
+<!--
 		<key>MD5</key>
 		<string>97ff940308400379fb54e3c34399e398</string>
+-->
 	</dict>
 </array>
 </plist>
