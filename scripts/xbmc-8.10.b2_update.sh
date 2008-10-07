@@ -20,11 +20,6 @@ if [ -e $DISKIMAGE ]; then
   echo $PW | sudo -S installer -pkg /Volumes/XBMC/"XBMC Media Center.mpkg" -target /
   echo $PW | sudo -S hdiutil detach /Volumes/XBMC
 
-  # restore OSBoot read/write settings
-  if [ "$REMOUNT" = "1" ]; then
-    echo $PW | sudo -S /sbin/mount -ur /
-  fi
-
   # handle any post-install items here
   # perl to bash convertion of postflight script pending
   if [ ! -d /Users/frontrow/Movies ]; then
@@ -60,6 +55,7 @@ if [ -e $DISKIMAGE ]; then
 
   #d4rk said this is already done in installer; do it anyway, can't hurt
   echo $PW | sudo -S chown -R frontrow "/Users/frontrow/Library/Application Support/XBMC"
+  echo $PW | sudo -S chown -R frontrow "/Users/frontrow/Library/Application Support/Remote Buddy"
   
   #delete xbmchelper in beta2 as is crashs on startup 
   if [ -e /Applications/XBMC.app/Contents/Resources/XBMC/XBMCHelper ]; then
@@ -73,6 +69,11 @@ if [ -e $DISKIMAGE ]; then
   
   #sync to disk, just in case...
   /bin/sync
+
+  # restore OSBoot read/write settings
+  if [ "$REMOUNT" = "1" ]; then
+    echo $PW | sudo -S /sbin/mount -ur /
+  fi
 
   exit 0
 fi
