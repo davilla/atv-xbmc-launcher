@@ -4,6 +4,18 @@
 <array>
 	<dict>
 		<key>UpdateScript</key>
+		<string>http://atv-xbmc-launcher.googlecode.com/svn/tags/xbmc-info/scripts/xbmc-8.10.b2_update.sh</string>
+		<key>URL</key>
+		<string>http://downloads.sourceforge.net/xbmc/XBMC_for_Mac-Atlantis-Beta_2.dmg</string>
+		<key>Type</key>
+		<string>Application</string>
+		<key>MD5</key>
+		<string>6cba91046d0e17f409adbef9873acea1</string>
+		<key>Name</key>
+		<string>XBMC Atlantis Beta2</string>
+	</dict>
+	<dict>
+		<key>UpdateScript</key>
 		<string>http://atv-xbmc-launcher.googlecode.com/svn/tags/xbmc-info/scripts/xbmc-8.10.b1_update.sh</string>
 		<key>URL</key>
 		<string>http://downloads.sourceforge.net/xbmc/XBMC_for_Mac-Atlantis-Beta_1.dmg</string>
