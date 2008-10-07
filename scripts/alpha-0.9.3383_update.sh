@@ -23,9 +23,10 @@ if [ -e $DISKIMAGE ]; then
   # handle any post-install items here
 
   # clean up
+  # fixme -> the below is not correct for a symlink
   #if [ -e /Users/Frontrow/Movies/boxee-0.9.3383 ]; then
-  # something makes this symlink during install so zap it.
-  echo $PW | sudo -S rm /Users/Frontrow/Movies/boxee-0.9.3383
+    # something makes this symlink during install so zap it.
+    echo $PW | sudo -S rm /Users/Frontrow/Movies/boxee-0.9.3383
   #fi
 
   #delete launch.agent file. This is needed if appletv is rebooted before first Boxee launch
