@@ -14,10 +14,10 @@ LOGFILE=/dev/null
 #LOGFILE=/Users/frontrow/xbmhelperkiller.log
 
 ### Get PID of XBMCHelper ###
-PID=`ps auxww | grep "$XBMCHELPER" | awk '!/grep/ {print $2}'`
+PID=`ps auxww | grep "$XBMCHELPER" | awk '!/grep|killxbmchelper/ {print $2}'`
 if [[ -z $PID ]]; then
-  echo "Error:" $XBMCHELPER "not running!" >> $LOGFILE
-  exit 2
+  echo "Error:" $XBMCHELPER "not running" >> $LOGFILE
+  exit 0
 fi
 
 kill $PID
