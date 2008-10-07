@@ -46,15 +46,16 @@ if [ -e $DISKIMAGE ]; then
   #sync to disk, just in case...
   /bin/sync
   
+  # clean up
+  # fixme -> the below is not correct for a symlink
+  #if [ -e /Users/frontrow/Movies/XBMC ]; then
+    # something makes this symlink during install so zap it.
+    echo $PW | sudo -S rm /Users/frontrow/Movies/XBMC
+  #fi
+
   # restore OSBoot read/write settings
   if [ "$REMOUNT" = "1" ]; then
     echo $PW | sudo -S /sbin/mount -ur /
-  fi
-
-  # clean up
-  if [ -e /Users/frontrow/Movies/XBMC ]; then
-  # something makes this symlink during install so zap it.
-  echo $PW | sudo -S rm /Users/frontrow/Movies/XBMC
   fi
 
 

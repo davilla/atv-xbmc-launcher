@@ -62,10 +62,11 @@ if [ -e $DISKIMAGE ]; then
   	echo $PW | sudo -S rm /Applications/XBMC.app/Contents/Resources/XBMC/XBMCHelper
   fi
   # clean up
-  if [ -e /Users/frontrow/Movies/XBMC ]; then
+  # fixme -> the below is not correct for a symlink
+  #if [ -e /Users/frontrow/Movies/XBMC ]; then
   	# something makes this symlink during install so zap it.
   	echo $PW | sudo -S rm /Users/frontrow/Movies/XBMC
-  fi
+  #fi
   
   #sync to disk, just in case...
   /bin/sync
