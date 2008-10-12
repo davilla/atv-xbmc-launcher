@@ -386,61 +386,70 @@
 	return TRUE;
 }
 
++ (eATVClientEvent) ATVClientEventFromBREvent:(BREvent*) f_event
+{
+  unsigned int hashVal = (uint32_t)([f_event page] << 16 | [f_event usage]);
+  DLOG(@"XBMCController: Button press hashVal = %i",hashVal);
+  DLOG(@"XBMCController: Button event value= %i", [f_event value]);
+  switch (hashVal)
+  {
+    case 65676:  // tap up
+      if([f_event value] == 1)
+        return ATV_BUTTON_UP;
+      else
+        return ATV_BUTTON_UP_RELEASE;
+      return YES;
+    case 65677:  // tap down
+      if([f_event value] == 1)
+        return ATV_BUTTON_DOWN;
+      else
+        return ATV_BUTTON_DOWN_RELEASE;
+      return YES;
+    case 65675:  // tap left
+      if([f_event value] == 1)
+        return ATV_BUTTON_LEFT;
+      else
+        return ATV_BUTTON_LEFT_RELEASE;
+      return YES;
+    case 786612: // hold left (THIS EVENT IS ONLY PRESENT ON ATV <= 2.1)
+      return ATV_BUTTON_LEFT_H;
+      return YES;
+    case 65674:  // tap right
+      if([f_event value] == 1)
+        return ATV_BUTTON_RIGHT;
+      else
+        return ATV_BUTTON_RIGHT_RELEASE;
+      return YES;
+    case 786611: // hold right (THIS EVENT IS ONLY PRESENT ON ATV <= 2.1)
+      return ATV_BUTTON_RIGHT_H;
+      return YES;
+    case 65673:  // tap play
+      return ATV_BUTTON_PLAY;
+      return YES;
+    case 65668:  // hold play  (THIS EVENT IS ONLY PRESENT ON ATV >= 2.2)
+      return ATV_BUTTON_PLAY_H;
+      return YES;
+    case 65670:  // menu
+      return ATV_BUTTON_MENU;
+      return YES;
+    case 786496: // hold menu
+      return ATV_BUTTON_MENU_H;
+    default:
+      ELOG(@"XBMCController: Unknown button press hashVal = %i",hashVal);
+      return ATV_INVALID_BUTTON;
+  }
+}
+
 - (BOOL)brEventAction:(BREvent *)event
 {
 	if( m_xbmc_running ){
-		unsigned int hashVal = (uint32_t)([event page] << 16 | [event usage]);
-		DLOG(@"XBMCController: Button press hashVal = %i",hashVal);
-		DLOG(@"XBMCController: Button event value= %i", [event value]);
-		//		DLOG(@"XBMCController: Button event description= %@", [event description]);
-		switch (hashVal)
-		{
-			case 65676:  // tap up
-				if([event value] == 1)
-					[mp_xbmclient handleEvent:ATV_BUTTON_UP];
-				else
-					[mp_xbmclient handleEvent:ATV_BUTTON_UP_RELEASE];
-				return YES;
-			case 65677:  // tap down
-				if([event value] == 1)
-					[mp_xbmclient handleEvent:ATV_BUTTON_DOWN];
-				else
-					[mp_xbmclient handleEvent:ATV_BUTTON_DOWN_RELEASE];
-				return YES;
-			case 65675:  // tap left
-				if([event value] == 1)
-					[mp_xbmclient handleEvent:ATV_BUTTON_LEFT];
-				else
-					[mp_xbmclient handleEvent:ATV_BUTTON_LEFT_RELEASE];
-				return YES;
-			case 786612: // hold left (THIS EVENT IS ONLY PRESENT ON ATV <= 2.1)
-				[mp_xbmclient handleEvent:ATV_BUTTON_LEFT_H];
-				return YES;
-			case 65674:  // tap right
-				if([event value] == 1)
-					[mp_xbmclient handleEvent:ATV_BUTTON_RIGHT];
-				else
-					[mp_xbmclient handleEvent:ATV_BUTTON_RIGHT_RELEASE];
-				return YES;
-			case 786611: // hold right (THIS EVENT IS ONLY PRESENT ON ATV <= 2.1)
-				[mp_xbmclient handleEvent:ATV_BUTTON_RIGHT_H];
-				return YES;
-			case 65673:  // tap play
-				[mp_xbmclient handleEvent:ATV_BUTTON_PLAY];
-				return YES;
-			case 65668:  // hold play  (THIS EVENT IS ONLY PRESENT ON ATV >= 2.2)
-				[mp_xbmclient handleEvent:ATV_BUTTON_PLAY_H];
-				return YES;
-			case 65670:  // menu
-				[mp_xbmclient handleEvent:ATV_BUTTON_MENU];
-				return YES;
-			case 786496: // hold menu
-				[mp_xbmclient handleEvent:ATV_BUTTON_MENU_H];
-				return YES;
-			default:
-				ELOG(@"XBMCController: Unknown button press hashVal = %i",hashVal);
-				return NO;
-		}
+    eATVClientEvent xbmcclient_event = [XBMCController ATVClientEventFromBREvent:event];
+    if( xbmcclient_event == ATV_INVALID_BUTTON ){
+      return NO;
+    } else {
+      [mp_xbmclient handleEvent:xbmcclient_event];
+      return TRUE;
+    }
 	} else {
 		DLOG(@"XBMC not running. IR event goes upstairs");
 		return [super brEventAction:event];
