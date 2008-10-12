@@ -25,6 +25,10 @@
 #import "xbmcclientwrapper.h"
 #import <BackRowCompilerShutup.h>
 
+//activation sequence for Controller events (events which are not sent to controlled app, but are used in this controller, e.g. to kill the app)
+const eATVClientEvent XBMC_CONTROLLER_EVENT_ACTIVATION_SEQUENCE[]={ATV_BUTTON_MENU, ATV_BUTTON_MENU, ATV_BUTTON_PLAY};
+const double XBMC_CONTROLLER_EVENT_TIMEOUT= -0.5; //timeout for activation sequence in seconds
+
 @class BRLayerController;
 
 @interface XBMCController (private)
@@ -97,6 +101,8 @@
 	mp_launch_agent_file_name = [f_lauch_agent_file_name retain];
 	mp_guisettings_path = [f_guisettings_path retain];
 	mp_swatter_timer = nil;
+	m_controller_event_state = CONTROLLER_EVENT_START_STATE;
+	mp_controller_event_timestamp = nil; 
 	//read preferences
 	m_use_internal_ir = [[XBMCUserDefaults defaults] boolForKey:XBMC_USE_INTERNAL_IR];
 	return self;
@@ -111,6 +117,7 @@
 	[mp_helper_path release];
 	[mp_launch_agent_file_name release];
 	[mp_guisettings_path release];
+	[mp_controller_event_timestamp release];
 	[super dealloc];
 }
 
@@ -386,11 +393,67 @@
 	return TRUE;
 }
 
+-(void) handleControllerEvent:(eATVClientEvent) f_event{
+  PRINT_SIGNATURE();
+  switch (f_event){
+    case ATV_BUTTON_PLAY:
+      if([mp_task isRunning])
+        [mp_task terminate];
+      break;
+    default:
+      DLOG(@"Unknown controller event: %i", f_event);
+  }
+}
+
+-(BOOL) isControllerEvent:(eATVClientEvent) f_event{
+  switch(m_controller_event_state){
+    case CONTROLLER_EVENT_START_STATE:
+      if(f_event == XBMC_CONTROLLER_EVENT_ACTIVATION_SEQUENCE[0]){
+        [mp_controller_event_timestamp release];
+        mp_controller_event_timestamp = [[NSDate dateWithTimeIntervalSinceNow:0.] retain];
+        m_controller_event_state = CONTROLLER_EVENT_STATE_1;
+      }
+      break;
+    case CONTROLLER_EVENT_STATE_1:
+      if(f_event == XBMC_CONTROLLER_EVENT_ACTIVATION_SEQUENCE[1] && [mp_controller_event_timestamp timeIntervalSinceNow] > XBMC_CONTROLLER_EVENT_TIMEOUT){
+        [mp_controller_event_timestamp release];
+        mp_controller_event_timestamp = [[NSDate dateWithTimeIntervalSinceNow:0.] retain];
+        m_controller_event_state = CONTROLLER_EVENT_STATE_2;
+      } else if(f_event == XBMC_CONTROLLER_EVENT_ACTIVATION_SEQUENCE[0]){
+        [mp_controller_event_timestamp release];
+        mp_controller_event_timestamp = [[NSDate dateWithTimeIntervalSinceNow:0.] retain];
+        m_controller_event_state = CONTROLLER_EVENT_STATE_1;
+      }
+      else
+        m_controller_event_state = CONTROLLER_EVENT_START_STATE;
+      break;
+    case CONTROLLER_EVENT_STATE_2:
+      if(f_event == XBMC_CONTROLLER_EVENT_ACTIVATION_SEQUENCE[2] && [mp_controller_event_timestamp timeIntervalSinceNow] > XBMC_CONTROLLER_EVENT_TIMEOUT){
+        ILOG(@"Recognized controller event. Next button press goes to XBMCController");
+        m_controller_event_state = CONTROLLER_EVENT_STATE_3;
+      }
+      else if(f_event == XBMC_CONTROLLER_EVENT_ACTIVATION_SEQUENCE[0]){
+        [mp_controller_event_timestamp release];
+        mp_controller_event_timestamp = [[NSDate dateWithTimeIntervalSinceNow:0.] retain];
+        m_controller_event_state = CONTROLLER_EVENT_STATE_1;
+      } 
+      else
+        m_controller_event_state = CONTROLLER_EVENT_START_STATE;
+      break;
+    case CONTROLLER_EVENT_STATE_3:
+        m_controller_event_state = CONTROLLER_EVENT_START_STATE;
+        return true;
+    default:
+      ELOG(@"Something went wrong in controller event state machine. Resetting it...");
+      m_controller_event_state = CONTROLLER_EVENT_START_STATE;
+  }
+  return false;
+}
+
 + (eATVClientEvent) ATVClientEventFromBREvent:(BREvent*) f_event
 {
   unsigned int hashVal = (uint32_t)([f_event page] << 16 | [f_event usage]);
-  DLOG(@"XBMCController: Button press hashVal = %i",hashVal);
-  DLOG(@"XBMCController: Button event value= %i", [f_event value]);
+  DLOG(@"XBMCController: Button press hashVal = %i; event value %i", hashVal, [f_event value]);
   switch (hashVal)
   {
     case 65676:  // tap up
@@ -446,6 +509,9 @@
     eATVClientEvent xbmcclient_event = [XBMCController ATVClientEventFromBREvent:event];
     if( xbmcclient_event == ATV_INVALID_BUTTON ){
       return NO;
+    } else if( [self isControllerEvent:xbmcclient_event] ){
+      [self handleControllerEvent:xbmcclient_event];
+      return TRUE;
     } else {
       [mp_xbmclient handleEvent:xbmcclient_event];
       return TRUE;

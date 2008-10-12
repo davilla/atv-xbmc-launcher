@@ -24,6 +24,13 @@
 
 @class XBMCClientWrapper;
 
+typedef enum {
+  CONTROLLER_EVENT_START_STATE,
+  CONTROLLER_EVENT_STATE_1,
+  CONTROLLER_EVENT_STATE_2,
+  CONTROLLER_EVENT_STATE_3
+} eControllerEventState;
+
 @interface XBMCController : BRController {
 	int padding[16];	// credit is due here to SapphireCompatibilityClasses!!
 	
@@ -37,6 +44,8 @@
 	BOOL m_use_internal_ir; //read from preferences, if yes, XBMC's XBMCHelper is disabled
 	NSTimer* mp_swatter_timer; //timer used in helperapp-swatting
 	int m_screen_saver_timeout;
+	NSDate* mp_controller_event_timestamp; //timestamp to check for controller event
+	eControllerEventState m_controller_event_state;
 }
 
 - (id) initWithAppPath:(NSString*) f_app_path helperPath:(NSString*) f_helper_path lauchAgentFileName:(NSString*) f_lauch_agent_file_name guiSettingsPath:(NSString*) f_guisettings_path;
