@@ -49,10 +49,9 @@ typedef std::map<eATVClientEvent, CPacketBUTTON*> tEventMap;
 	if ( ![super init] )
 		return nil;
 	
-	mp_adress = fp_adress;
+	mp_adress = [fp_adress retain];
 	mp_event_map = new tEventMap;
 	[self populateEventMap];
-	[fp_adress retain];		
 	//open udp port etc
 	m_socket = socket(AF_INET, SOCK_DGRAM, 0);
 	if (m_socket < 0)
@@ -65,7 +64,7 @@ typedef std::map<eATVClientEvent, CPacketBUTTON*> tEventMap;
 
 -(void) dealloc{
 	PRINT_SIGNATURE();
-	[mp_adress retain];
+	[mp_adress release];
 	delete mp_event_map;
 	[super dealloc];
 }
