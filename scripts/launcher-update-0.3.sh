@@ -27,7 +27,7 @@ if [ -e $INSTALLER ]; then
  /bin/sync
 
  #backup old Keymap.xml if it exists
- if [ -e "$XBMC_USERDATA/Keymap.xml" ]
+ if [ -e "$XBMC_USERDATA/Keymap.xml" ]; then
  	mv "$XBMC_USERDATA/Keymap.xml" "$XBMC_USERDATA/Keymap.xml.bak"
  fi
  
