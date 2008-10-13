@@ -39,9 +39,7 @@ const double XBMC_CONTROLLER_EVENT_TIMEOUT= -0.5; //timeout for activation seque
 - (void) enableRendering;
 - (void) disableRendering;
 
-- (void) checkTaskStatus:(NSNotification *)note; //callback when XBMC quit or crashed
-- (BOOL) setDesiredAppleRemoteMode; //sets appleremoteMode to 0,1 or 2 depeding on m_use_internal_ir and XBMC_USE_UNIVERSAL_REMOTE
-- (BOOL) inUserSettingsSetXpath:(NSString*) f_xpath toInt:(int) f_value;
+- (void) checkTaskStatus:(NSNotification *)note; //callback when App quit or crashed
 - (BOOL) deleteHelperLaunchAgent;
 - (void) setupHelperSwatter; //starts a NSTimer which callback periodically searches for a running mp_helper_path app and kills it
 - (void) disableSwatterIfActive; //disables swatter and releases mp_swatter_timer
@@ -90,7 +88,7 @@ const double XBMC_CONTROLLER_EVENT_TIMEOUT= -0.5; //timeout for activation seque
 	return nil;
 }
 
-- (id) initWithAppPath:(NSString*) f_app_path helperPath:(NSString*) f_helper_path lauchAgentFileName:(NSString*) f_lauch_agent_file_name guiSettingsPath:(NSString*) f_guisettings_path{
+- (id) initWithAppPath:(NSString*) f_app_path helperPath:(NSString*) f_helper_path lauchAgentFileName:(NSString*) f_lauch_agent_file_name {
 	PRINT_SIGNATURE();
 	if ( ![super init] )
 		return ( nil );
@@ -99,12 +97,9 @@ const double XBMC_CONTROLLER_EVENT_TIMEOUT= -0.5; //timeout for activation seque
 	mp_app_path = [f_app_path retain];
 	mp_helper_path = [f_helper_path retain];
 	mp_launch_agent_file_name = [f_lauch_agent_file_name retain];
-	mp_guisettings_path = [f_guisettings_path retain];
 	mp_swatter_timer = nil;
 	m_controller_event_state = CONTROLLER_EVENT_START_STATE;
 	mp_controller_event_timestamp = nil; 
-	//read preferences
-	m_use_internal_ir = [[XBMCUserDefaults defaults] boolForKey:XBMC_USE_INTERNAL_IR];
 	return self;
 }
 
@@ -116,7 +111,6 @@ const double XBMC_CONTROLLER_EVENT_TIMEOUT= -0.5; //timeout for activation seque
 	[mp_app_path release];
 	[mp_helper_path release];
 	[mp_launch_agent_file_name release];
-	[mp_guisettings_path release];
 	[mp_controller_event_timestamp release];
 	[super dealloc];
 }
@@ -159,8 +153,6 @@ const double XBMC_CONTROLLER_EVENT_TIMEOUT= -0.5; //timeout for activation seque
 		[mp_task release];
 		mp_task = nil;
 		
-		//again try to set xbmchelper status what we want to have (in case it was changed during this session)
-		[self setDesiredAppleRemoteMode];
 		//try to kill XBMCHelper (it does not hurt if it's not running, but definately helps if it still is
 		[self killHelperApp:nil];
 		
@@ -199,63 +191,6 @@ const double XBMC_CONTROLLER_EVENT_TIMEOUT= -0.5; //timeout for activation seque
 	[super willBePushed];
 }
 
-- (BOOL) inUserSettingsSetXpath:(NSString*) f_xpath toInt:(int) f_value{
-	PRINT_SIGNATURE();
-  if( mp_guisettings_path ){
-    //assemble path to guisettings.xml
-    NSArray* app_support_path_array = NSSearchPathForDirectoriesInDomains(NSApplicationSupportDirectory, NSUserDomainMask, TRUE);
-    if([app_support_path_array count] != 1){
-      ELOG(@"Huh? No application support directory?");
-      return FALSE;
-    }
-    NSString* guisettings_path = [[app_support_path_array objectAtIndex:0] stringByAppendingString:mp_guisettings_path];
-    
-    NSError *err=nil;
-    NSURL *furl = [NSURL fileURLWithPath:guisettings_path];
-    if (!furl) {
-      ELOG(@"Can't create an URL from file %@.", guisettings_path);
-      return FALSE;
-    }
-    NSXMLDocument *xmlDoc = [[NSXMLDocument alloc] initWithContentsOfURL:furl
-                                                                 options:(NSXMLNodePreserveWhitespace|NSXMLNodePreserveCDATA)
-                                                                   error:&err];
-    //TODO checkme. is this a proper solution for not writing release in all the return paths below?
-    [xmlDoc autorelease];
-    if (xmlDoc == nil || err)  {
-      if (err) {
-        ELOG(@"Erred opening guisettings.xml %@", err);
-      }
-      return FALSE;
-    }
-    //get the key of mode in settings/appleremote/
-    err = nil;
-    NSArray *nodes = [xmlDoc nodesForXPath:f_xpath error:&err];
-    if (err != nil || [nodes count] != 1 ) {
-      ELOG(@"Did NOT find %@ in %@. Error was %@", f_xpath, guisettings_path, err);
-      return FALSE;
-    }
-    //compare mode to target_mode
-    NSString* target_format_string = [NSString stringWithFormat:@"%i",f_value];
-    NSXMLElement*	mode = [nodes objectAtIndex:0];
-    if( [[mode stringValue] isEqualTo:target_format_string] ){  
-      DLOG(@"%@ already set to: %@",f_xpath, [mode stringValue]); 
-      return TRUE;
-    }
-    //set mode to target_mode
-    [mode setStringValue:target_format_string];		
-    //write back data
-    NSData* xmlData = [xmlDoc XMLDataWithOptions:NSXMLNodePrettyPrint];
-    if (![xmlData writeToFile:guisettings_path atomically:YES]) {
-      ELOG(@"Could not write guisettings back to %@", guisettings_path);
-      return FALSE;
-    }
-    DLOG(@"Wrote %i to into %@ at path %@", f_value, guisettings_path, f_xpath);
-  } else {
-    DLOG(@"No guisettingspath, nothing done");
-  }
-	return TRUE;
-}
-
 -(void) startAppAndAttachListener{
   PRINT_SIGNATURE();
 	//Hide frontrow (this is only needed in 720/1080p)
@@ -263,16 +198,6 @@ const double XBMC_CONTROLLER_EVENT_TIMEOUT= -0.5; //timeout for activation seque
 	
 	//delete a launchAgent if it's there
 	[self deleteHelperLaunchAgent];
-	//if enabled start our own instance of XBMCHelper
-	if( m_use_internal_ir ){
-		//try to disable xbmchelper in guisettings.xml
-		bool worked = [self setDesiredAppleRemoteMode];
-		//if it did not work, set up a fly-swatter
-		if(!worked)
-			[self setupHelperSwatter];
-	} else {
-		[self setDesiredAppleRemoteMode];
-	}
   
 	//start xbmc
 	mp_task = [[NSTask alloc] init];
@@ -547,19 +472,6 @@ const double XBMC_CONTROLLER_EVENT_TIMEOUT= -0.5; //timeout for activation seque
 		[mp_swatter_timer invalidate];
 		[mp_swatter_timer release];
 		mp_swatter_timer = nil;
-	}
-}
-
-- (BOOL) setDesiredAppleRemoteMode
-{
-	if( m_use_internal_ir ){
-		return [self inUserSettingsSetXpath:@"./settings/appleremote/mode" toInt:0];
-	} else {
-		//check if universal remote is on
-		if ([[XBMCUserDefaults defaults] boolForKey:XBMC_USE_UNIVERSAL_REMOTE])
-			return [self inUserSettingsSetXpath:@"./settings/appleremote/mode" toInt:2];
-		else
-			return [self inUserSettingsSetXpath:@"./settings/appleremote/mode" toInt:1];
 	}
 }
 

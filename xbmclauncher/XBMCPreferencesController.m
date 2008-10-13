@@ -48,13 +48,6 @@
 	PRINT_SIGNATURE();
 	//hack! TODO: if there are more items, do proper selection handling with index 
 	if(index == 0){
-		int val = [[XBMCUserDefaults defaults] boolForKey:XBMC_USE_INTERNAL_IR];
-		[[XBMCUserDefaults defaults] setBool:!val forKey:XBMC_USE_INTERNAL_IR];
-		[[XBMCUserDefaults defaults] synchronize];
-		[[self itemForRow:index] setRightJustifiedText:[[XBMCUserDefaults defaults] boolForKey:XBMC_USE_INTERNAL_IR] ? @"Yes": @"No"];
-		[self recreateMenuList];
-	}
-	else if (index == 1){
 		int val = [[XBMCUserDefaults defaults] boolForKey:XBMC_USE_UNIVERSAL_REMOTE];
 		[[XBMCUserDefaults defaults] setBool:!val forKey:XBMC_USE_UNIVERSAL_REMOTE];
 		[[XBMCUserDefaults defaults] synchronize];
@@ -73,14 +66,8 @@
 		[mp_items removeAllObjects];
 	}
 	id item = [BRTextMenuItemLayer menuItem];
-	[item setTitle:@"Use Internal Remote Control"];
-	[item setRightJustifiedText:[[XBMCUserDefaults defaults] boolForKey:XBMC_USE_INTERNAL_IR] ? @"Yes": @"No"];
-	[mp_items addObject:item];
-	if( ! [[XBMCUserDefaults defaults] boolForKey:XBMC_USE_INTERNAL_IR] ){
-		item = [BRTextMenuItemLayer menuItem];
-		[item setTitle:@"Use XBMC's Universal Mode"];
-		[item setRightJustifiedText:[[XBMCUserDefaults defaults] boolForKey:XBMC_USE_UNIVERSAL_REMOTE] ? @"Yes": @"No"];
-		[mp_items addObject:item];
-	}
+  [item setTitle:@"XBMC::Use Universal Mode"];
+  [item setRightJustifiedText:[[XBMCUserDefaults defaults] boolForKey:XBMC_USE_UNIVERSAL_REMOTE] ? @"Yes": @"No"];
+  [mp_items addObject:item];
 }
 @end

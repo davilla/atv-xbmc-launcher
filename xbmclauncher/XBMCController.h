@@ -38,15 +38,13 @@ typedef enum {
 	NSString* mp_app_path; //which app to launch
 	NSString* mp_helper_path; //which helper to disable/enable/kill on error
 	NSString* mp_launch_agent_file_name; //filename of a LaunchAgent in ~/Library/LaunchAgents
-	NSString* mp_guisettings_path;
 	BOOL m_xbmc_running;  //true while xbmc is running
 	XBMCClientWrapper* mp_xbmclient; // our own event-client implementation
-	BOOL m_use_internal_ir; //read from preferences, if yes, XBMC's XBMCHelper is disabled
 	NSTimer* mp_swatter_timer; //timer used in helperapp-swatting
 	int m_screen_saver_timeout;
 	NSDate* mp_controller_event_timestamp; //timestamp to check for controller event
 	eControllerEventState m_controller_event_state;
 }
 
-- (id) initWithAppPath:(NSString*) f_app_path helperPath:(NSString*) f_helper_path lauchAgentFileName:(NSString*) f_lauch_agent_file_name guiSettingsPath:(NSString*) f_guisettings_path;
+- (id) initWithAppPath:(NSString*) f_app_path helperPath:(NSString*) f_helper_path lauchAgentFileName:(NSString*) f_lauch_agent_file_name;
 @end

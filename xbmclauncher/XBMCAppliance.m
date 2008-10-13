@@ -46,7 +46,6 @@ typedef enum {
 	
 	//create default settings
 	NSMutableDictionary* defaultValues = [NSMutableDictionary dictionary];
-	[defaultValues setValue:[NSNumber numberWithBool:YES] forKey:XBMC_USE_INTERNAL_IR];
 	[defaultValues setValue:[NSNumber numberWithBool:YES] forKey:XBMC_USE_UNIVERSAL_REMOTE];
 	
 	//register dictionary defaults
@@ -139,11 +138,9 @@ typedef enum {
 		NSString* appPath = [obj valueForKey:@"apppath"];
 		NSString* helperPath = [obj valueForKey:@"helperpath"];
 		NSString* launch_agent_file_name = [obj valueForKey:@"LaunchAgentFileName"];
-		NSString* guisettings_path = [obj valueForKey:@"guisettingspath"];
 		return [[[XBMCController alloc] initWithAppPath:appPath 
 																				 helperPath:helperPath 
 																 lauchAgentFileName:launch_agent_file_name 
-																		guiSettingsPath:guisettings_path
 						 ] autorelease];
 	} 
 	else if ( [entry_type isEqualToNumber:[NSNumber numberWithInt: UPDATER]] ){

@@ -45,8 +45,6 @@
 			<string>/Applications/XBMC.app/Contents/MacOS/XBMC</string>
 			<key>helperpath</key>
 			<string>/Applications/XBMC.app/Contents/Resources/XBMC/XBMCHelper</string>
-			<key>guisettingspath</key>
-			<string>/XBMC/userdata/guisettings.xml</string>
 			<key>LaunchAgentFileName</key>
 			<string>org.xbmc.helper.plist</string>
 		</dict>
