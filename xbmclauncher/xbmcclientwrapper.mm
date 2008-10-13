@@ -84,24 +84,24 @@ typedef std::map<eATVClientEvent, CPacketBUTTON*> tEventMap;
 - (void) populateEventMap{
 	tEventMap& lr_map = *mp_event_map;
   
-	lr_map.insert(std::make_pair(ATV_BUTTON_PLAY, new CPacketBUTTON("A", "XG", BTN_DOWN | BTN_NO_REPEAT | BTN_QUEUE)));
-	lr_map.insert(std::make_pair(ATV_BUTTON_RIGHT, new CPacketBUTTON("Right", "R1", BTN_DOWN | BTN_NO_REPEAT | BTN_QUEUE)));
-	lr_map.insert(std::make_pair(ATV_BUTTON_RIGHT_RELEASE, new CPacketBUTTON("Right", "R1", BTN_UP | BTN_NO_REPEAT | BTN_QUEUE)));
-	lr_map.insert(std::make_pair(ATV_BUTTON_LEFT, new CPacketBUTTON("Left",  "R1", BTN_DOWN | BTN_NO_REPEAT| BTN_QUEUE)));
-	lr_map.insert(std::make_pair(ATV_BUTTON_LEFT_RELEASE, new CPacketBUTTON("Left",  "R1", BTN_UP | BTN_NO_REPEAT | BTN_QUEUE)));
-	lr_map.insert(std::make_pair(ATV_BUTTON_MENU, new CPacketBUTTON("Menu", "R1", BTN_DOWN | BTN_NO_REPEAT | BTN_QUEUE)));
-	lr_map.insert(std::make_pair(ATV_BUTTON_MENU_H, new CPacketBUTTON("Back", "R1", BTN_DOWN | BTN_NO_REPEAT | BTN_QUEUE)));
-	lr_map.insert(std::make_pair(ATV_BUTTON_UP, new CPacketBUTTON("Up", "R1", BTN_DOWN  | BTN_QUEUE)));
-	lr_map.insert(std::make_pair(ATV_BUTTON_UP_RELEASE, new CPacketBUTTON("Up", "R1", BTN_UP  | BTN_QUEUE)));
-	lr_map.insert(std::make_pair(ATV_BUTTON_DOWN, new CPacketBUTTON("Down", "R1", BTN_DOWN | BTN_QUEUE)));
-	lr_map.insert(std::make_pair(ATV_BUTTON_DOWN_RELEASE, new CPacketBUTTON("Down", "R1", BTN_UP | BTN_QUEUE)));
+	lr_map.insert(std::make_pair(ATV_BUTTON_PLAY,          new CPacketBUTTON(5, "JS0:AppleRemote", BTN_DOWN | BTN_NO_REPEAT | BTN_QUEUE)));
+	lr_map.insert(std::make_pair(ATV_BUTTON_RIGHT,         new CPacketBUTTON(4, "JS0:AppleRemote", BTN_DOWN | BTN_NO_REPEAT | BTN_QUEUE)));
+	lr_map.insert(std::make_pair(ATV_BUTTON_RIGHT_RELEASE, new CPacketBUTTON(4, "JS0:AppleRemote", BTN_UP | BTN_NO_REPEAT | BTN_QUEUE)));
+	lr_map.insert(std::make_pair(ATV_BUTTON_LEFT,          new CPacketBUTTON(3, "JS0:AppleRemote", BTN_DOWN | BTN_NO_REPEAT| BTN_QUEUE)));
+	lr_map.insert(std::make_pair(ATV_BUTTON_LEFT_RELEASE,  new CPacketBUTTON(3, "JS0:AppleRemote", BTN_UP | BTN_NO_REPEAT | BTN_QUEUE)));
+	lr_map.insert(std::make_pair(ATV_BUTTON_MENU,          new CPacketBUTTON(6, "JS0:AppleRemote", BTN_DOWN | BTN_NO_REPEAT | BTN_QUEUE)));
+	lr_map.insert(std::make_pair(ATV_BUTTON_MENU_H,        new CPacketBUTTON(8, "JS0:AppleRemote", BTN_DOWN | BTN_NO_REPEAT | BTN_QUEUE)));
+	lr_map.insert(std::make_pair(ATV_BUTTON_UP,            new CPacketBUTTON(1, "JS0:AppleRemote", BTN_DOWN  | BTN_QUEUE)));
+	lr_map.insert(std::make_pair(ATV_BUTTON_UP_RELEASE,    new CPacketBUTTON(1, "JS0:AppleRemote", BTN_UP  | BTN_QUEUE)));
+	lr_map.insert(std::make_pair(ATV_BUTTON_DOWN,          new CPacketBUTTON(2, "JS0:AppleRemote", BTN_DOWN | BTN_QUEUE)));
+	lr_map.insert(std::make_pair(ATV_BUTTON_DOWN_RELEASE,  new CPacketBUTTON(2, "JS0:AppleRemote", BTN_UP | BTN_QUEUE)));
 	
 	// only present on ATV <= 2.1
-	lr_map.insert(std::make_pair(ATV_BUTTON_RIGHT_H, new CPacketBUTTON("Right", "R1", BTN_DOWN | BTN_NO_REPEAT | BTN_QUEUE)));	
-	lr_map.insert(std::make_pair(ATV_BUTTON_LEFT_H, new CPacketBUTTON("Left", "R1", BTN_DOWN | BTN_NO_REPEAT | BTN_QUEUE)));
+	lr_map.insert(std::make_pair(ATV_BUTTON_RIGHT_H, new CPacketBUTTON(10, "JS0:AppleRemote", BTN_DOWN | BTN_NO_REPEAT | BTN_QUEUE)));	
+	lr_map.insert(std::make_pair(ATV_BUTTON_LEFT_H,  new CPacketBUTTON(11, "JS0:AppleRemote", BTN_DOWN | BTN_NO_REPEAT | BTN_QUEUE)));
 	
 	// only present on atv >= 2.2
-	lr_map.insert(std::make_pair(ATV_BUTTON_PLAY_H, new CPacketBUTTON("c", "KB", BTN_DOWN | BTN_NO_REPEAT | BTN_QUEUE)));
+	lr_map.insert(std::make_pair(ATV_BUTTON_PLAY_H,  new CPacketBUTTON(7, "JS0:AppleRemote", BTN_DOWN | BTN_NO_REPEAT | BTN_QUEUE)));
 }
 @end;
 
