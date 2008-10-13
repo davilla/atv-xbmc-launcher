@@ -23,9 +23,6 @@ if [ -e $INSTALLER ]; then
  echo $PW | sudo -S chmod +x $INSTALLER
  echo $PW | sudo -S $INSTALLER -- install /
 
- #sync to disk, just in case...
- /bin/sync
-
  #backup old Keymap.xml if it exists
  if [ -e "$XBMC_USERDATA/Keymap.xml" ]; then
  	mv "$XBMC_USERDATA/Keymap.xml" "$XBMC_USERDATA/Keymap.xml.bak"
@@ -37,6 +34,9 @@ if [ -e $INSTALLER ]; then
  #remove the download
  rm $INSTALLER 
 
+ #sync to disk, just in case...
+ /bin/sync
+ 
  # remount root as we found it
  if [ "$REMOUNT" = "1" ]; then
   echo $PW | sudo -S /sbin/mount -ur /
