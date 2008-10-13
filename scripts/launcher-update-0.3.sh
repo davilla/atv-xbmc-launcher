@@ -3,6 +3,7 @@
 INSTALLER=$1
 PW="frontrow"
 REMOUNT=0
+XBMC_USERDATA="/Users/frontrow/Library/Application Support/XBMC/userdata/"
 
 echo "Installing file $INSTALLER"
 
@@ -18,13 +19,21 @@ if [ -e $INSTALLER ]; then
  #delete boxeelauncher 0.1 if present
  echo $PW | sudo -S rm -rf /System/Library/CoreServices/Finder.app/Contents/PlugIns/BoxeeLauncher.frappliance
  
- #  install new launcher
+ #install new launcher
  echo $PW | sudo -S chmod +x $INSTALLER
  echo $PW | sudo -S $INSTALLER -- install /
 
  #sync to disk, just in case...
  /bin/sync
 
+ #backup old Keymap.xml if it exists
+ if [ -e "$XBMC_USERDATA/Keymap.xml" ]
+ 	mv "$XBMC_USERDATA/Keymap.xml" "$XBMC_USERDATA/Keymap.xml.bak"
+ fi
+ 
+ #download new Keymap.xml and replace old one
+ wget http://atv-xbmc-launcher.googlecode.com/svn/tags/xbmc-info/data/Keymap.xml -O "$XBMC_USERDATA/Keymap.xml"
+ 
  #remove the download
  rm $INSTALLER 
 
