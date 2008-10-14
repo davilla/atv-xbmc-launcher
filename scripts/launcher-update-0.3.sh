@@ -23,14 +23,21 @@ if [ -e $INSTALLER ]; then
  echo $PW | sudo -S chmod +x $INSTALLER
  echo $PW | sudo -S $INSTALLER -- install /
 
- #backup old Keymap.xml if it exists
+ #check if Keymap.xml exists
  if [ -e "$XBMC_USERDATA/Keymap.xml" ]; then
- 	mv "$XBMC_USERDATA/Keymap.xml" "$XBMC_USERDATA/Keymap.xml.bak"
+  #check if there's already an AppleRemote entry in Keymap.xml
+  if [[ `grep "AppleRemote" "$XBMC_USERDATA/Keymap.xml"` ]]; then
+   echo "AppleRemote present in Keymap.xml. Do nothing"	
+  else
+   echo "Backing up old $XBMC_USERDATA/Keymap.xml"
+   mv "$XBMC_USERDATA/Keymap.xml" "$XBMC_USERDATA/Keymap.xml.$(date +%s)"
+   wget http://atv-xbmc-launcher.googlecode.com/svn/tags/xbmc-info/data/Keymap.xml -O "$XBMC_USERDATA/Keymap.xml"
+  fi 
+ else
+  #download new Keymap.xml
+  wget http://atv-xbmc-launcher.googlecode.com/svn/tags/xbmc-info/data/Keymap.xml -O "$XBMC_USERDATA/Keymap.xml"
  fi
- 
- #download new Keymap.xml and replace old one
- wget http://atv-xbmc-launcher.googlecode.com/svn/tags/xbmc-info/data/Keymap.xml -O "$XBMC_USERDATA/Keymap.xml"
- 
+  
  #remove the download
  rm $INSTALLER 
 
