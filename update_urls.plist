@@ -16,18 +16,6 @@
 	</dict>
 	<dict>
 		<key>UpdateScript</key>
-		<string>http://atv-xbmc-launcher.googlecode.com/svn/tags/xbmc-info/scripts/xbmc-8.10.b1_update.sh</string>
-		<key>URL</key>
-		<string>http://downloads.sourceforge.net/xbmc/XBMC_for_Mac-Atlantis-Beta_1.dmg</string>
-		<key>Type</key>
-		<string>Application</string>
-		<key>MD5</key>
-		<string>f18de725a61eadab19cc57a997f76c4f</string>
-		<key>Name</key>
-		<string>XBMC Atlantis Beta1</string>
-	</dict>
-	<dict>
-		<key>UpdateScript</key>
 		<string>http://atvusb-creator.googlecode.com/svn/tags/boxee-info/scripts/alpha-0.9.3383_update.sh</string>
 		<key>URL</key>
 		<string>http://dl.boxee.tv/boxee-atv.dmg</string>
