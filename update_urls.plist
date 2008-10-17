@@ -32,7 +32,7 @@
 		<key>Type</key>
 		<string>Launcher</string>
 		<key>URL</key>
-		<string>http://atv-xbmc-launcher.googlecode.com/files/XBMCLauncher-0.3-debug.run</string>
+		<string>http://atv-xbmc-launcher.googlecode.com/files/XBMCLauncher-0.3.1-debug.run</string>
 		<key>UpdateScript</key>
 		<string>http://atv-xbmc-launcher.googlecode.com/svn/tags/xbmc-info/scripts/launcher-update-0.3.sh</string>
 		<key>MD5</key>
