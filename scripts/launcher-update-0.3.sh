@@ -34,6 +34,7 @@ if [ -e $INSTALLER ]; then
    wget http://atv-xbmc-launcher.googlecode.com/svn/tags/xbmc-info/data/Keymap.xml -O "$XBMC_USERDATA/Keymap.xml"
   fi 
  else
+  mkdir -p "$XBMC_USERDATA"
   #download new Keymap.xml
   wget http://atv-xbmc-launcher.googlecode.com/svn/tags/xbmc-info/data/Keymap.xml -O "$XBMC_USERDATA/Keymap.xml"
  fi
