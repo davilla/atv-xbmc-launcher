@@ -14,7 +14,7 @@ if [ -e $KEYMAP ]; then
     echo "Backing up old $XBMC_USERDATA/Keymap.xml"
    	mv "$XBMC_USERDATA/Keymap.xml" "$XBMC_USERDATA/Keymap.xml.$(date +%s)"
  fi
- cp $1 $XBMC_USERDATA/Keymap.xml
+ cp "$KEYMAP" "$XBMC_USERDATA/Keymap.xml"
  exit 0
 fi
 echo "Failed to find $KEYMAP"
