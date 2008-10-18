@@ -46,7 +46,7 @@
 		<key>URL</key>
 		<string>http://atv-xbmc-launcher.googlecode.com/svn/tags/xbmc-info/data/Keymap.xml</string>
 		<key>UpdateScript</key>
-		<string>http://atv-xbmc-launcher.googlecode.com/svn-history/r234/tags/xbmc-info/scripts/Keymap-update.sh</string>
+		<string>http://atv-xbmc-launcher.googlecode.com/svn/tags/xbmc-info/scripts/Keymap-update.sh</string>
 		<key>MD5</key>
 		<string>47ac2f90969dd945be3bc94db5cbcac8</string>
 	</dict>
