@@ -38,5 +38,17 @@
 		<key>MD5</key>
 		<string>2ab5dbb19e625a1710d2ce43b7b84e88</string>
 	</dict>
+	<dict>
+		<key>Name</key>
+		<string>Keymap.xml for XBMC / Launcher 0.3</string>
+		<key>Type</key>
+		<string>Keymap</string>
+		<key>URL</key>
+		<string>http://atv-xbmc-launcher.googlecode.com/svn/tags/xbmc-info/data/Keymap.xml</string>
+		<key>UpdateScript</key>
+		<string>http://atv-xbmc-launcher.googlecode.com/svn/tags/xbmc-info/scripts/Keymap-update.sh</string>
+		<key>MD5</key>
+		<string>47ac2f90969dd945be3bc94db5cbcac8</string>
+	</dict>
 </array>
 </plist>
