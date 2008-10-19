@@ -8,11 +8,6 @@ XBMC_USERDATA="/Users/frontrow/Library/Application Support/XBMC/userdata/"
 
 echo "Installing file $INSTALLER"
 
-if [ ! -e $KEYMAP ]; then
-  echo "Failed to find KEYMAP $KEYMAP"
-  exit -1
-fi
-
 # check that disk-image exists
 if [ -e $INSTALLER ]; then
 
@@ -29,6 +24,13 @@ if [ -e $INSTALLER ]; then
  echo $PW | sudo -S chmod +x $INSTALLER
  echo $PW | sudo -S $INSTALLER -- install /
 
+ if [ ! "$KEYMAP" ]; then
+  #this seems to be a launcher <= 0.3.1 -> 0.4 update which does not know about multiple downloads
+  #but launcher comes with embedded Keymap.xml, so use that one 
+  echo "Found <=0.3.1 to 0.4 update. Using Launcher's bundled Keymap.xml"
+  KEYMAP=/System/Library/CoreServices/Finder.app/Contents/PlugIns/XBMCLauncher.frappliance/Contents/Resources/Keymap.xml
+ fi
+
  #check if Keymap.xml exists
  if [ -e "$XBMC_USERDATA/Keymap.xml" ]; then
   #check if there's already an AppleRemote entry in Keymap.xml
@@ -41,7 +43,8 @@ if [ -e $INSTALLER ]; then
   fi 
  else
   mkdir -p "$XBMC_USERDATA"
-  #download new Keymap.xml
+  #copy new Keymap.xml
+  echo "Installing new Keymap.xml to $XBMC_USERDATA/Keymap.xml"
   cp "$KEYMAP" "$XBMC_USERDATA/Keymap.xml"
  fi
   
