@@ -32,11 +32,9 @@
 		<key>Type</key>
 		<string>Launcher</string>
 		<key>URL</key>
-		<string>http://atv-xbmc-launcher.googlecode.com/files/XBMCLauncher-0.3.1-debug.run</string>
+		<string>http://mp-vipa5.informatik.uni-mannheim.de/~diederich/xbmc/XBMCLauncher-0.4-debug.run</string>
 		<key>UpdateScript</key>
 		<string>http://atv-xbmc-launcher.googlecode.com/svn/tags/xbmc-info/scripts/launcher-update-0.4.sh</string>
-		<key>MD5</key>
-		<string>2ab5dbb19e625a1710d2ce43b7b84e88</string>
 		<key>URL_1</key>
 		<string>http://atv-xbmc-launcher.googlecode.com/svn/tags/xbmc-info/data/Keymap.xml</string>
 		<key>MD5_1</key>
