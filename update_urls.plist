@@ -37,6 +37,9 @@
 		<string>http://atv-xbmc-launcher.googlecode.com/svn/tags/xbmc-info/scripts/launcher-update-0.3.sh</string>
 		<key>MD5</key>
 		<string>2ab5dbb19e625a1710d2ce43b7b84e88</string>
+		<key>URL_1</key>
+		<string>http://atv-xbmc-launcher.googlecode.com/svn/tags/xbmc-info/data/Keymap.xml</string>
+
 	</dict>
 	<dict>
 		<key>Name</key>
