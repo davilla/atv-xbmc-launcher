@@ -5,11 +5,16 @@ Copyright (c) 2008 Stephan Diederich / Team-XBMC
 see http://atv-xbmc-launcher.googlecode.com for details
 
 ## Release Notes
+### 0.4
+- added multiple download possibility for updates
+- fixed about box
 
 ### 0.3
 - fixed issues with XBMC not getting keyboard input (Thanks ericIII!)
 - added version number in About dialog
 - respect XBMC's wish to restart
+- changed appleremote behaviour
+- removed unneeded settings
 
 ### 0.2
 - fixed IR Handling for ATV 2.2
