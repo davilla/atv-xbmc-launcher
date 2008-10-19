@@ -107,6 +107,7 @@
 	DLOG(@"Downloaded update script to %@. Starting download of update...", script_path);
   [mp_downloads removeAllObjects];
 	//now start the real download, optionally check for md5 when finished
+  [mp_downloads addObject:[QuDownloadController outputPathForURLString:[dict valueForKey:@"URL"]]];
 	mp_downloader = [[QuDownloadController alloc] initWithDownloadPath:[dict valueForKey:@"URL"] MD5:[dict objectForKey:@"MD5"]];
 	[mp_downloader setTitle:[NSString stringWithFormat:@"Downloading update: %@",[dict valueForKey:@"Name"]]];
 	[[self stack] pushController: mp_downloader];
@@ -135,9 +136,7 @@
         return;
       } else {     
         NSDictionary* dict = [mp_updates objectAtIndex:m_update_item];
-        [mp_downloads addObject:[QuDownloadController outputPathForURLString:[dict valueForKey:@"URL"]]];
         //check if there is another download we want to start
-
         NSString* next_url_lookup = [NSString stringWithFormat:@"URL_%i",[mp_downloads count]];
         DLOG(@"checking for next URL with %@", next_url_lookup);
         NSString* l_url = [dict valueForKey:next_url_lookup];
@@ -146,6 +145,7 @@
           //there' another download. start that one first
           NSString* next_md5_lookup = [NSString stringWithFormat:@"MD5_%i",[mp_downloads count]];
           [mp_downloader release]; 
+          [mp_downloads addObject:[QuDownloadController outputPathForURLString:l_url]];
           mp_downloader = [[QuDownloadController alloc] initWithDownloadPath:l_url 
                                                                          MD5:[dict objectForKey:next_md5_lookup]];
           [mp_downloader setTitle:[NSString stringWithFormat:@"Downloading update: %@",[dict valueForKey:@"Name"]]];
