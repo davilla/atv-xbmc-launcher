@@ -11,7 +11,7 @@
 
 @implementation XBMCUpdateBlockingController
 
-- (id) initWithScript:(NSString*) fp_script_path forUpdate:(NSString*) fp_update_path {
+- (id) initWithScript:(NSString*) fp_script_path downloads:(NSArray*) fp_update_paths {
 	PRINT_SIGNATURE();
 	if( ! [super initWithType:0 titled:@"Running update..."
 								primaryText:@"This message will disappear when finished"
@@ -21,10 +21,9 @@
 	mp_update_task = [[NSTask alloc] init];
 	
 	[mp_update_task setLaunchPath:@"/bin/bash"];
-	[mp_update_task setArguments:[NSArray arrayWithObjects:fp_script_path,
-																fp_update_path,
-																nil
-																]];
+  NSMutableArray* arguments = [NSMutableArray arrayWithObject:fp_script_path];
+  [arguments addObjectsFromArray:fp_update_paths];
+	[mp_update_task setArguments: arguments];
 	[[NSNotificationCenter defaultCenter] addObserver:self
 																					 selector:@selector(updateFinished:)
 																							 name:NSTaskDidTerminateNotification

@@ -28,7 +28,8 @@
 	NSMutableArray* mp_items; //list items
 	NSMutableArray*	mp_updates; //list with entries what updates/downloads we offer 
 	QuDownloadController* mp_downloader;
-	int m_update_item;
+	int m_update_item; //item that was selected;
+  NSMutableArray* mp_downloads; //list of downloaded files
 }
 
 - (id) initWithURL:(NSURL*) fp_url;

@@ -39,6 +39,7 @@
 	if( ! [super init])
 		return nil;
 	mp_url = [fp_url retain];
+  mp_downloads = [[NSMutableArray alloc] init];
 	return self;
 }
 
@@ -47,10 +48,8 @@
 	[mp_url release];
 	[mp_updates release];
 	[mp_items release]; 
+  [mp_downloads release]; 
 	[super dealloc];
-}
-
-- (void) willbePushed {
 }
 
 - (void) wasPushed {	
@@ -106,9 +105,9 @@
 		return;
 	}
 	DLOG(@"Downloaded update script to %@. Starting download of update...", script_path);
+  [mp_downloads removeAllObjects];
 	//now start the real download, optionally check for md5 when finished
-  NSString* md5 = [dict objectForKey:@"MD5"];
-	mp_downloader = [[QuDownloadController alloc] initWithDownloadPath:[dict valueForKey:@"URL"] MD5:md5];
+	mp_downloader = [[QuDownloadController alloc] initWithDownloadPath:[dict valueForKey:@"URL"] MD5:[dict objectForKey:@"MD5"]];
 	[mp_downloader setTitle:[NSString stringWithFormat:@"Downloading update: %@",[dict valueForKey:@"Name"]]];
 	[[self stack] pushController: mp_downloader];
 }
@@ -134,14 +133,30 @@
                                                        secondaryText:@"If this message still appears after redownload, updates have changed.This should be corrected automatically in a few hours, if not please file an issue at http://atv-xbmc-launcher.googlecode.com. Thanks!" 
                                        ]];
         return;
-      } else {                                     
-        //start the update script with path to downloaded file 
+      } else {     
         NSDictionary* dict = [mp_updates objectAtIndex:m_update_item];
+        [mp_downloads addObject:[QuDownloadController outputPathForURLString:[dict valueForKey:@"URL"]]];
+        //check if there is another download we want to start
+
+        NSString* next_url_lookup = [NSString stringWithFormat:@"URL_%i",[mp_downloads count]];
+        DLOG(@"checking for next URL with %@", next_url_lookup);
+        NSString* l_url = [dict valueForKey:next_url_lookup];
+        if(l_url){
+          DLOG(@"found new url: %@", l_url);
+          //there' another download. start that one first
+          NSString* next_md5_lookup = [NSString stringWithFormat:@"MD5_%i",[mp_downloads count]];
+          [mp_downloader release]; 
+          mp_downloader = [[QuDownloadController alloc] initWithDownloadPath:l_url 
+                                                                         MD5:[dict objectForKey:next_md5_lookup]];
+          [mp_downloader setTitle:[NSString stringWithFormat:@"Downloading update: %@",[dict valueForKey:@"Name"]]];
+          [[self stack] pushController: mp_downloader];
+          return;
+        }
+        //start the update script with path to downloaded file(s) 
         NSString* script_path = [QuDownloadController outputPathForURLString:[dict valueForKey:@"UpdateScript"]];
-        NSString* download =  [QuDownloadController outputPathForURLString:[dict valueForKey:@"URL"]];
-        DLOG(@"Running update %@ with argument %@", script_path, download);
+        DLOG(@"Running update %@ with argument %@", script_path, mp_downloads);
         XBMCUpdateBlockingController* blocker = [[[XBMCUpdateBlockingController alloc] 
-																								initWithScript: script_path forUpdate:download] autorelease];
+																								initWithScript: script_path downloads:mp_downloads] autorelease];
         [[self stack] pushController: blocker];
       }
 		}else {

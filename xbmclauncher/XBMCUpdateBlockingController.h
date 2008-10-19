@@ -15,7 +15,7 @@
 	NSTask* mp_update_task;
 }
 
-- (id) initWithScript:(NSString*) fp_script_path forUpdate:(NSString*) fp_update_path;
+- (id) initWithScript:(NSString*) fp_script_path downloads:(NSArray*) fp_update_paths;
 - (void) updateFinished:(NSNotification *)note;
 
 @end
