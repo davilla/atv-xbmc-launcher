@@ -8,7 +8,7 @@ XBMC_USERDATA="/Users/frontrow/Library/Application Support/XBMC/userdata/"
 
 echo "Installing file $INSTALLER"
 
-if [ -e $KEYMAP ]; then
+if [ ! -e $KEYMAP ]; then
   echo "Failed to find KEYMAP $KEYMAP"
   exit -1
 fi
