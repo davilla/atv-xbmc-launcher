@@ -95,7 +95,10 @@
 	frame.origin.x = (masterFrame.size.width - frame.size.width) * 0.5f;
 	frame.origin.y = masterFrame.origin.y + (masterFrame.size.height * (1.0f / 8.0f));
 	[_progressBar setFrame: frame];
-	
+  
+	[self setSourceText: mp_urlstr];   // this lays itself out
+  [_progressBar setCurrentValue: [_progressBar minValue]];
+  
 	// add the controls
 	[self addControl: _header];
 	[self addControl: _sourceText];
@@ -118,15 +121,12 @@
 	
 	// work out our desired output path
 	_outputPath = [[QuDownloadController outputPathForURLString: mp_urlstr] retain];
-	
-	[self setTitle: mp_title];
-	[self setSourceText: mp_urlstr];   // this lays itself out
-	[_progressBar setCurrentValue: [_progressBar minValue]];
 	return ( self );
 }
 
 - (void) dealloc
 {
+  PRINT_SIGNATURE();
 	[self cancelDownload];
   
 	[_header release];
@@ -215,7 +215,7 @@
 - (void)controlWasActivated;
 {
 	[self drawSelf];
-	
+  	
 	if ( [self beginDownload] == NO )
 	{
 		[self setTitle: @"Download Failed"];
@@ -248,15 +248,9 @@
 }
 - (void) setSourceText: (NSString *) srcText
 {
-	//   [_sourceText setTextAttributes: [[BRThemeInfo sharedTheme] paragraphTextAttributes]];
 	[_sourceText setText: srcText withAttributes:[[BRThemeInfo sharedTheme] paragraphTextAttributes]];
-	
 	// layout this item
 	NSRect masterFrame = [self frame];
-	
-	// [_sourceText setMaximumSize: NSMakeSize(masterFrame.size.width * 0.66f,
-	//                                       masterFrame.size.height)];
-	
 	CGSize txtSize = [_sourceText renderedSize];
 	
 	CGRect frame;

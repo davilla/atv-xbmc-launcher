@@ -22,7 +22,6 @@
 	
 	NSURLDownload *         _downloader;
 	NSString *              _outputPath;
-	NSString *							mp_title;
 	long long               _totalLength;
 	long long               _gotLength;
 	NSString *							mp_urlstr;
