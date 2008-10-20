@@ -13,6 +13,10 @@
 		<string>6cba91046d0e17f409adbef9873acea1</string>
 		<key>Name</key>
 		<string>XBMC Atlantis Beta2</string>
+		<key>URL_1</key>		
+		<string>http://atv-xbmc-launcher.googlecode.com/svn/tags/xbmc-info/data/Keymap.xml</string>		
+		<key>MD5_1</key>		
+		<string>47ac2f90969dd945be3bc94db5cbcac8</string>
 	</dict>
 	<dict>
 		<key>UpdateScript</key>
