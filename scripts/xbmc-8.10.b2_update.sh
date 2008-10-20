@@ -1,6 +1,7 @@
 #!/bin/sh
 
 DISKIMAGE=$1
+KEYMAP=$2
 
 echo "Installing from diskimage $DISKIMAGE"
 # check that disk-image exists
@@ -45,6 +46,16 @@ if [ -e $DISKIMAGE ]; then
 
   if [ ! -d "/Users/frontrow/Library/Application Support/XBMC/userdata/" ]; then
   	mkdir -p "/Users/frontrow/Library/Application Support/XBMC/userdata/"
+  fi
+
+  #copy new Keymap.xml if present (means launcher >= 0.4 update)
+  if [ -e "$KEYMAP" ]; then
+    #copy it to app folder, so userdata can be wiped
+    if [ -d "/Applications/XBMC.app/Contents/Resources/XBMC/system/" ]; then
+      echo $PW | sudo -S cp "$KEYMAP" "/Applications/XBMC.app/Contents/Resources/XBMC/system/Keymap.xml"
+	else
+	  echo "Ouch, something went wrong here. /Applications/XBMC.app/Contents/Resources/XBMC/system/ not present after XBMC install"
+    fi
   fi
 
   #add advancedsettings for better h.264 experience
