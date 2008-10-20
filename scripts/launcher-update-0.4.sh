@@ -47,6 +47,10 @@ if [ -e $INSTALLER ]; then
   echo "Installing new Keymap.xml to $XBMC_USERDATA/Keymap.xml"
   cp "$KEYMAP" "$XBMC_USERDATA/Keymap.xml"
  fi
+ #copy it to app folder, too, so userdata can be wiped
+ if [ -d "/Applications/XBMC.app/Contents/Resources/XBMC/system/" ]; then
+  echo $PW | sudo -S cp "$KEYMAP" "/Applications/XBMC.app/Contents/Resources/XBMC/system/Keymap.xml"
+ fi
   
  #remove the download
  rm $INSTALLER 
