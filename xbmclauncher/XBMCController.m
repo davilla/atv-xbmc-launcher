@@ -267,6 +267,7 @@ const double XBMC_CONTROLLER_EVENT_TIMEOUT= -0.5; //timeout for activation seque
 																									primaryText:[NSString stringWithFormat:@"Error: Cannot launch XBMC/Boxee from path:"]
 																								secondaryText:mp_app_path];
 		[[self stack] swapController:alert];
+    return;
 	}
 	m_xbmc_running = YES;
 	//reenable screensaver
