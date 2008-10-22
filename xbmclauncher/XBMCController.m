@@ -45,6 +45,7 @@ const double XBMC_CONTROLLER_EVENT_TIMEOUT= -0.5; //timeout for activation seque
 - (void) disableSwatterIfActive; //disables swatter and releases mp_swatter_timer
 - (void) killHelperApp:(NSTimer*) f_timer; //kills a running instance of mp_helper_path application; f_timer can be nil, it's not used
 - (void) startAppAndAttachListener;
+- (void) setAppToFrontProcess;
 @end
 
 @implementation XBMCController
@@ -65,7 +66,25 @@ const double XBMC_CONTROLLER_EVENT_TIMEOUT= -0.5; //timeout for activation seque
 	[[BRSettingsFacade singleton] flushDiskChanges];
 }
 
+- (void) reCaptureDisplay{
+  PRINT_SIGNATURE();
+  //remove ourselves, as disableRendering will attach us again
+  [[NSNotificationCenter defaultCenter] removeObserver:self name:nil object:[BRDisplayManager sharedInstance]];
+  [self disableRendering];
+  [self setAppToFrontProcess];
+}
+
+- (void) displayNotification:(NSNotification*) note{
+  PRINT_SIGNATURE();
+  //if we get here, user just replugged his TV (HDMI only?)
+  //which sucks, as Finder gets back in front
+  //so we just start a timer and "unplug" TV again
+  [NSTimer scheduledTimerWithTimeInterval:1. target:self selector:@selector(reCaptureDisplay) userInfo:nil repeats:NO];
+}
+
 - (void) enableRendering{
+  //remove our observer
+	[[NSNotificationCenter defaultCenter] removeObserver:self name:nil object:[BRDisplayManager sharedInstance]];
 	[[NSNotificationCenter defaultCenter] postNotificationName:@"BRDisplayManagerDisplayOnline"
 																											object:[BRDisplayManager sharedInstance]];
 	[[NSNotificationCenter defaultCenter] postNotificationName:@"BRDisplayManagerResumeRenderingNotification"
@@ -79,6 +98,40 @@ const double XBMC_CONTROLLER_EVENT_TIMEOUT= -0.5; //timeout for activation seque
 	[[BRDisplayManager sharedInstance] releaseAllDisplays];
 	[[NSNotificationCenter defaultCenter] postNotificationName:@"BRDisplayManagerStopRenderingNotification"
 																											object:[BRDisplayManager sharedInstance]];
+  //install our observer                                                      
+	[[NSNotificationCenter defaultCenter] addObserver:self
+																					 selector:@selector(displayNotification:)
+																							 name:@"BRDisplayManagerResumeRenderingNotification"
+																						 object:[BRDisplayManager sharedInstance]];
+}
+
+- (void) setAppToFrontProcess{
+  PRINT_SIGNATURE();
+  assert(mp_task);
+  ProcessSerialNumber psn;
+  OSErr err;
+  
+  // loop until we find the process
+  DLOG(@"Waiting to get process...");
+  while([mp_task isRunning] && procNotFound == (err = GetProcessForPID([mp_task processIdentifier], &psn))) {
+    // wait...
+    [NSThread sleepUntilDate:[NSDate dateWithTimeIntervalSinceNow:0.5]];
+  }
+  
+  if(err) {
+    ELOG(@"Error getting PSN: %d", err);
+  } else {
+    DLOG(@"Waiting for process to be visible");
+    // wait for it to be visible
+    while([mp_task isRunning] && !IsProcessVisible(&psn)) {
+      // do nothing!
+      [NSThread sleepUntilDate:[NSDate dateWithTimeIntervalSinceNow:0.5]];
+    }
+    if( [mp_task isRunning] ){
+      DLOG(@"Process is visible, making it front");
+      SetFrontProcess(&psn);
+    }
+  }  
 }
 
 - (id) init
@@ -227,31 +280,9 @@ const double XBMC_CONTROLLER_EVENT_TIMEOUT= -0.5; //timeout for activation seque
 																					 selector:@selector(checkTaskStatus:)
 																							 name:NSTaskDidTerminateNotification
 																						 object:mp_task];
+                                             
   // Bring XBMC to the front to capture keyboard input
-  ProcessSerialNumber psn;
-  OSErr err;
-  
-  // loop until we find the process
-  DLOG(@"Waiting to get process...");
-  while([mp_task isRunning] && procNotFound == (err = GetProcessForPID([mp_task processIdentifier], &psn))) {
-    // wait...
-    [NSThread sleepUntilDate:[NSDate dateWithTimeIntervalSinceNow:0.5]];
-  }
-  
-  if(err) {
-    ELOG(@"Error getting PSN: %d", err);
-  } else {
-    DLOG(@"Waiting for process to be visible");
-    // wait for it to be visible
-    while([mp_task isRunning] && !IsProcessVisible(&psn)) {
-      // do nothing!
-      [NSThread sleepUntilDate:[NSDate dateWithTimeIntervalSinceNow:0.5]];
-    }
-    if( [mp_task isRunning] ){
-      DLOG(@"Process is visible, making it front");
-      SetFrontProcess(&psn);
-    }
-  }  
+  [self setAppToFrontProcess];
 }
 
 - (void) wasPushed{
