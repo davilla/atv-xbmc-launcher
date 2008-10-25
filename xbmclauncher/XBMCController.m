@@ -66,25 +66,8 @@ const double XBMC_CONTROLLER_EVENT_TIMEOUT= -0.5; //timeout for activation seque
 	[[BRSettingsFacade singleton] flushDiskChanges];
 }
 
-- (void) reCaptureDisplay{
-  PRINT_SIGNATURE();
-  //remove ourselves, as disableRendering will attach us again
-  [[NSNotificationCenter defaultCenter] removeObserver:self name:nil object:[BRDisplayManager sharedInstance]];
-  [self disableRendering];
-  [self setAppToFrontProcess];
-}
-
-- (void) displayNotification:(NSNotification*) note{
-  PRINT_SIGNATURE();
-  //if we get here, user just replugged his TV (HDMI only?)
-  //which sucks, as Finder gets back in front
-  //so we just start a timer and "unplug" TV again
-  [NSTimer scheduledTimerWithTimeInterval:1. target:self selector:@selector(reCaptureDisplay) userInfo:nil repeats:NO];
-}
-
 - (void) enableRendering{
   //remove our observer
-	[[NSNotificationCenter defaultCenter] removeObserver:self name:nil object:[BRDisplayManager sharedInstance]];
 	[[NSNotificationCenter defaultCenter] postNotificationName:@"BRDisplayManagerDisplayOnline"
 																											object:[BRDisplayManager sharedInstance]];
 	[[NSNotificationCenter defaultCenter] postNotificationName:@"BRDisplayManagerResumeRenderingNotification"
@@ -98,11 +81,6 @@ const double XBMC_CONTROLLER_EVENT_TIMEOUT= -0.5; //timeout for activation seque
 	[[BRDisplayManager sharedInstance] releaseAllDisplays];
 	[[NSNotificationCenter defaultCenter] postNotificationName:@"BRDisplayManagerStopRenderingNotification"
 																											object:[BRDisplayManager sharedInstance]];
-  //install our observer                                                      
-	[[NSNotificationCenter defaultCenter] addObserver:self
-																					 selector:@selector(displayNotification:)
-																							 name:@"BRDisplayManagerResumeRenderingNotification"
-																						 object:[BRDisplayManager sharedInstance]];
 }
 
 - (void) setAppToFrontProcess{
