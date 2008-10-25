@@ -204,7 +204,7 @@ const double XBMC_CONTROLLER_EVENT_TIMEOUT= -0.5; //timeout for activation seque
       {
         BRAlertController* alert = [BRAlertController alertOfType:0 titled:nil
                                                       primaryText:[NSString stringWithFormat:@"Error: XBMC/Boxee exited with status: %i",status]
-                                                    secondaryText:nil];
+                                                    secondaryText:@"Hit menu to return"];
         [[self stack] swapController:alert];        
       }
     }
