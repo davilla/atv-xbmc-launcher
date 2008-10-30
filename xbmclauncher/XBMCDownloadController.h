@@ -1,7 +1,7 @@
 //
-//  QuDownloadController.h
-//  QuDownloader
-//
+//  XBMCDownloadController.h
+//  XBMCDownloader
+//  based on QuDownloader
 //  Created by Alan Quatermain on 19/04/07.
 //  Copyright 2007 AwkwwardTV. All rights reserved.
 //
@@ -11,14 +11,14 @@
 #import <BackRow/BRController.h>
 #import <BackRowCompilerShutup.h>
 
-@class BRHeaderControl, BRTextControl, QuProgressBarControl;
+@class BRHeaderControl, BRTextControl, XBMCProgressBarControl;
 
-@interface QuDownloadController : BRController
+@interface XBMCDownloadController : BRController
 {
 	int		padding[16];
 	BRHeaderControl *       _header;
 	BRTextControl *         _sourceText;
-	QuProgressBarControl *  _progressBar;
+	XBMCProgressBarControl *  _progressBar;
 	
 	NSURLDownload *         _downloader;
 	NSString *              _outputPath;

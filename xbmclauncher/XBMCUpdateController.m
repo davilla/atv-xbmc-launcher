@@ -21,7 +21,7 @@
 #import "XBMCUpdateController.h"
 #import "XBMCDebugHelpers.h"
 #import "XBMCUpdateBlockingController.h"
-#import "QuDownloadController.h"
+#import "XBMCDownloadController.h"
 
 @class BRLayerController;
 @implementation XBMCUpdateController
@@ -96,8 +96,8 @@
 		ELOG(@"Could not download update script from %@", [dict valueForKey:@"UpdateScript"]);
 		return;
 	}
-	//store it where QuDownloader stores stuff, too
-	NSString* script_path = [QuDownloadController outputPathForURLString:[dict valueForKey:@"UpdateScript"]];
+	//store it where XBMCDownloader stores stuff, too
+	NSString* script_path = [XBMCDownloadController outputPathForURLString:[dict valueForKey:@"UpdateScript"]];
 	[[NSFileManager defaultManager] createDirectoryAtPath: [script_path stringByDeletingLastPathComponent]
 																						 attributes: nil];
 	if( ! [script_data writeToFile:script_path atomically:YES] ) {
@@ -107,8 +107,8 @@
 	DLOG(@"Downloaded update script to %@. Starting download of update...", script_path);
   [mp_downloads removeAllObjects];
 	//now start the real download, optionally check for md5 when finished
-  [mp_downloads addObject:[QuDownloadController outputPathForURLString:[dict valueForKey:@"URL"]]];
-	mp_downloader = [[QuDownloadController alloc] initWithDownloadPath:[dict valueForKey:@"URL"] MD5:[dict objectForKey:@"MD5"]];
+  [mp_downloads addObject:[XBMCDownloadController outputPathForURLString:[dict valueForKey:@"URL"]]];
+	mp_downloader = [[XBMCDownloadController alloc] initWithDownloadPath:[dict valueForKey:@"URL"] MD5:[dict objectForKey:@"MD5"]];
 	[mp_downloader setTitle:[NSString stringWithFormat:@"Downloading update: %@",[dict valueForKey:@"Name"]]];
 	[[self stack] pushController: mp_downloader];
 }
@@ -145,15 +145,15 @@
           //there' another download. start that one first
           NSString* next_md5_lookup = [NSString stringWithFormat:@"MD5_%i",[mp_downloads count]];
           [mp_downloader release]; 
-          [mp_downloads addObject:[QuDownloadController outputPathForURLString:l_url]];
-          mp_downloader = [[QuDownloadController alloc] initWithDownloadPath:l_url 
+          [mp_downloads addObject:[XBMCDownloadController outputPathForURLString:l_url]];
+          mp_downloader = [[XBMCDownloadController alloc] initWithDownloadPath:l_url 
                                                                          MD5:[dict objectForKey:next_md5_lookup]];
           [mp_downloader setTitle:[NSString stringWithFormat:@"Downloading update: %@",[dict valueForKey:@"Name"]]];
           [[self stack] pushController: mp_downloader];
           return;
         }
         //start the update script with path to downloaded file(s) 
-        NSString* script_path = [QuDownloadController outputPathForURLString:[dict valueForKey:@"UpdateScript"]];
+        NSString* script_path = [XBMCDownloadController outputPathForURLString:[dict valueForKey:@"UpdateScript"]];
         DLOG(@"Running update %@ with argument %@", script_path, mp_downloads);
         XBMCUpdateBlockingController* blocker = [[[XBMCUpdateBlockingController alloc] 
 																								initWithScript: script_path downloads:mp_downloads] autorelease];
@@ -169,8 +169,8 @@
 		//clear downloaded files
 		DLOG(@"Update finished. Clearing download cache");
 		NSDictionary* dict = [mp_updates objectAtIndex:m_update_item];
-		NSString* script_folder = [[QuDownloadController outputPathForURLString:[dict valueForKey:@"UpdateScript"]] stringByDeletingLastPathComponent];
-		NSString* download_folder =  [[QuDownloadController outputPathForURLString:[dict valueForKey:@"URL"]] stringByDeletingLastPathComponent];
+		NSString* script_folder = [[XBMCDownloadController outputPathForURLString:[dict valueForKey:@"UpdateScript"]] stringByDeletingLastPathComponent];
+		NSString* download_folder =  [[XBMCDownloadController outputPathForURLString:[dict valueForKey:@"URL"]] stringByDeletingLastPathComponent];
 		DLOG("removing %@ and %@:", script_folder, download_folder);
 		[[NSFileManager defaultManager] removeFileAtPath: script_folder
 																						 handler: nil];

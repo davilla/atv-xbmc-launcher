@@ -1,17 +1,17 @@
 //
-//  QuProgressBarControl.m
-//  QuDownloader
-//
+//  XBMCProgressBarControl.m
+//  XBMCDownloader
+//  base on QuDownloader
 //  Created by Alan Quatermain on 19/04/07.
 //  Copyright 2007 AwkwardTV. All rights reserved.
 //
 // Updated by nito 08-20-08 - works in 2.x
 
 
-#import "QuProgressBarControl.h"
+#import "XBMCProgressBarControl.h"
 #import <BackRow/BackRow.h>
 
-@implementation QuProgressBarControl
+@implementation XBMCProgressBarControl
 
 - (id) init
 {

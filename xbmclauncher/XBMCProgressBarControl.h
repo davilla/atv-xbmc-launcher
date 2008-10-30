@@ -1,7 +1,7 @@
 //
-//  QuProgressBarControl.h
-//  QuDownloader
-//
+//  XBMCProgressBarControl.h
+//  XBMCDownloader
+//  based on QuDownloader
 //  Created by Alan Quatermain on 19/04/07.
 //  Copyright 2007 AwkwardTV. All rights reserved.
 //
@@ -13,7 +13,7 @@
 
 @class BRRenderLayer, BRProgressBarWidget;
 
-@interface QuProgressBarControl : BRControl
+@interface XBMCProgressBarControl : BRControl
 {
 	int padding[16];
 	//BRRenderLayer *         _layer;

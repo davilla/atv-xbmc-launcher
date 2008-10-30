@@ -1,18 +1,18 @@
 //
-//  QuDownloadController.m
-//  QuDownloader
-//
+//  XBMCDownloadController.m
+//  XBMCDownloader
+//  based on QuDownloader
 //  Created by Alan Quatermain on 19/04/07.
 //  Copyright 2007 AwkwardTV. All rights reserved.
 //
 // Updated by nito 08-20-08 - works in 2.x
 
-#import "QuDownloadController.h"
-#import "QuProgressBarControl.h"
+#import "XBMCDownloadController.h"
+#import "XBMCProgressBarControl.h"
 #import <BackRow/BackRow.h>
 #import <XBMCDebugHelpers.h>
 
-@implementation QuDownloadController
+@implementation XBMCDownloadController
 
 + (BOOL) checkMD5SumOfFile:(NSString*) f_file_path MD5:(NSString*) f_md5{
 	PRINT_SIGNATURE();
@@ -117,10 +117,10 @@
 	//create gui elements
 	_header = [[BRHeaderControl alloc] init];
 	_sourceText = [[BRTextControl alloc] init];
-	_progressBar = [[QuProgressBarControl alloc] init];
+	_progressBar = [[XBMCProgressBarControl alloc] init];
 	
 	// work out our desired output path
-	_outputPath = [[QuDownloadController outputPathForURLString: mp_urlstr] retain];
+	_outputPath = [[XBMCDownloadController outputPathForURLString: mp_urlstr] retain];
 	return ( self );
 }
 
@@ -413,7 +413,7 @@ willResumeWithResponse: (NSURLResponse *) response
 	// might cause a problem
 	[_downloader autorelease];
 	_downloader = nil;
-  if( mp_md5 && ! [QuDownloadController checkMD5SumOfFile:_outputPath MD5:mp_md5] ){
+  if( mp_md5 && ! [XBMCDownloadController checkMD5SumOfFile:_outputPath MD5:mp_md5] ){
     m_md5sum_mismatch = TRUE;
     DLOG(@"Remove broken download");				
     [[NSFileManager defaultManager] removeFileAtPath: [_outputPath stringByDeletingLastPathComponent]

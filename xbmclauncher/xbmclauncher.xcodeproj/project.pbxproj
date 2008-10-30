@@ -24,8 +24,8 @@
 /* Begin PBXBuildFile section */
 		8D5B49B0048680CD000E48DA /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 089C167DFE841241C02AAC07 /* InfoPlist.strings */; };
 		8D5B49B4048680CD000E48DA /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1058C7ADFEA557BF11CA2CBB /* Cocoa.framework */; };
-		E40C631B0E901C9400255C90 /* QuProgressBarControl.m in Sources */ = {isa = PBXBuildFile; fileRef = E40C63170E901C9400255C90 /* QuProgressBarControl.m */; };
-		E40C631C0E901C9400255C90 /* QuDownloadController.m in Sources */ = {isa = PBXBuildFile; fileRef = E40C63180E901C9400255C90 /* QuDownloadController.m */; };
+		E40C631B0E901C9400255C90 /* XBMCProgressBarControl.m in Sources */ = {isa = PBXBuildFile; fileRef = E40C63170E901C9400255C90 /* XBMCProgressBarControl.m */; };
+		E40C631C0E901C9400255C90 /* XBMCDownloadController.m in Sources */ = {isa = PBXBuildFile; fileRef = E40C63180E901C9400255C90 /* XBMCDownloadController.m */; };
 		E40C64CB0E903D9400255C90 /* XBMCUpdateBlockingController.m in Sources */ = {isa = PBXBuildFile; fileRef = E40C64CA0E903D9400255C90 /* XBMCUpdateBlockingController.m */; };
 		E489767F0E97B4370002B1EC /* compareMD5.sh in Resources */ = {isa = PBXBuildFile; fileRef = E489767E0E97B4370002B1EC /* compareMD5.sh */; };
 		E4C9555B0E8199B300E6BAFE /* BackRow.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E4C9555A0E8199B300E6BAFE /* BackRow.framework */; };
@@ -63,10 +63,10 @@
 		8D5B49B6048680CD000E48DA /* XBMCLauncher.frappliance */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = XBMCLauncher.frappliance; sourceTree = BUILT_PRODUCTS_DIR; };
 		8D5B49B7048680CD000E48DA /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		D2F7E65807B2D6F200F64583 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = /System/Library/Frameworks/CoreData.framework; sourceTree = "<absolute>"; };
-		E40C63170E901C9400255C90 /* QuProgressBarControl.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QuProgressBarControl.m; sourceTree = "<group>"; };
-		E40C63180E901C9400255C90 /* QuDownloadController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QuDownloadController.m; sourceTree = "<group>"; };
-		E40C63190E901C9400255C90 /* QuProgressBarControl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QuProgressBarControl.h; sourceTree = "<group>"; };
-		E40C631A0E901C9400255C90 /* QuDownloadController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QuDownloadController.h; sourceTree = "<group>"; };
+		E40C63170E901C9400255C90 /* XBMCProgressBarControl.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XBMCProgressBarControl.m; sourceTree = "<group>"; };
+		E40C63180E901C9400255C90 /* XBMCDownloadController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XBMCDownloadController.m; sourceTree = "<group>"; };
+		E40C63190E901C9400255C90 /* XBMCProgressBarControl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XBMCProgressBarControl.h; sourceTree = "<group>"; };
+		E40C631A0E901C9400255C90 /* XBMCDownloadController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XBMCDownloadController.h; sourceTree = "<group>"; };
 		E40C64C90E903D9400255C90 /* XBMCUpdateBlockingController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XBMCUpdateBlockingController.h; sourceTree = "<group>"; };
 		E40C64CA0E903D9400255C90 /* XBMCUpdateBlockingController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XBMCUpdateBlockingController.m; sourceTree = "<group>"; };
 		E40C664A0E9199B700255C90 /* BackRowCompilerShutup.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BackRowCompilerShutup.h; sourceTree = "<group>"; };
@@ -212,10 +212,10 @@
 		E40C63110E901C2D00255C90 /* updater */ = {
 			isa = PBXGroup;
 			children = (
-				E40C63190E901C9400255C90 /* QuProgressBarControl.h */,
-				E40C63170E901C9400255C90 /* QuProgressBarControl.m */,
-				E40C63180E901C9400255C90 /* QuDownloadController.m */,
-				E40C631A0E901C9400255C90 /* QuDownloadController.h */,
+				E40C63190E901C9400255C90 /* XBMCProgressBarControl.h */,
+				E40C63170E901C9400255C90 /* XBMCProgressBarControl.m */,
+				E40C63180E901C9400255C90 /* XBMCDownloadController.m */,
+				E40C631A0E901C9400255C90 /* XBMCDownloadController.h */,
 				E4C964B60E85A56400E6BAFE /* XBMCUpdateController.h */,
 				E4C964B70E85A56400E6BAFE /* XBMCUpdateController.m */,
 				E40C64C90E903D9400255C90 /* XBMCUpdateBlockingController.h */,
@@ -319,8 +319,8 @@
 				E4C96F310E8865D700E6BAFE /* DebugController.m in Sources */,
 				E4C970860E8AF0E400E6BAFE /* XBMCPreferencesController.m in Sources */,
 				E4C9718C0E8C26C400E6BAFE /* XBMCUserDefaults.m in Sources */,
-				E40C631B0E901C9400255C90 /* QuProgressBarControl.m in Sources */,
-				E40C631C0E901C9400255C90 /* QuDownloadController.m in Sources */,
+				E40C631B0E901C9400255C90 /* XBMCProgressBarControl.m in Sources */,
+				E40C631C0E901C9400255C90 /* XBMCDownloadController.m in Sources */,
 				E40C64CB0E903D9400255C90 /* XBMCUpdateBlockingController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -351,7 +351,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = YES;
-				APP_VERSION = 0.4;
+				APP_VERSION = 0.4.1;
 				ARCHS = i386;
 				COPY_PHASE_STRIP = NO;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -381,7 +381,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = YES;
-				APP_VERSION = 0.4;
+				APP_VERSION = 0.4.1;
 				ARCHS = i386;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				FRAMEWORK_SEARCH_PATHS = (
