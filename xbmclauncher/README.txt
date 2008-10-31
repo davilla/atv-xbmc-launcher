@@ -5,6 +5,10 @@ Copyright (c) 2008 Stephan Diederich / Team-XBMC
 see http://atv-xbmc-launcher.googlecode.com for details
 
 ## Release Notes
+### 0.5
+- fixed name clash problems with SoftwareMenu (QuDownloader)
+- fixed a bug where screensaver was not reenabled
+
 ### 0.4
 - added multiple download possibility for updates
 - fixed about box
