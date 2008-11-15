@@ -28,17 +28,15 @@
 	</dict>
 	<dict>
 		<key>Name</key>
-		<string>XBMC/Boxee Launcher 0.5</string>
+		<string>XBMC/Boxee Launcher 0.6</string>
 		<key>Type</key>
 		<string>Launcher</string>
 		<key>URL</key>
-		<string>http://mp-vipa5.informatik.uni-mannheim.de/~diederich/xbmc/XBMCLauncher-0.5-debug.run</string>
+		<string>http://mp-vipa5.informatik.uni-mannheim.de/~diederich/xbmc/XBMCLauncher-0.6-debug.run</string>
 		<key>UpdateScript</key>
-		<string>http://atv-xbmc-launcher.googlecode.com/svn/tags/xbmc-info/scripts/launcher-update-0.5.sh</string>
-		<key>URL_1</key>
-		<string>http://atv-xbmc-launcher.googlecode.com/svn/tags/xbmc-info/data/Keymap.xml</string>
-		<key>MD5_1</key>
-		<string>47ac2f90969dd945be3bc94db5cbcac8</string>
+		<string>http://atv-xbmc-launcher.googlecode.com/svn/tags/xbmc-info/scripts/launcher-update-0.6.sh</string>
+		<key>MD5</key>
+		<string>59be7542ce438cd8c3543630d802031d</string>
 	</dict>
 </array>
 </plist>
