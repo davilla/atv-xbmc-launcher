@@ -4,19 +4,15 @@
 <array>
 	<dict>
 		<key>UpdateScript</key>
-		<string>http://atv-xbmc-launcher.googlecode.com/svn/tags/xbmc-info/scripts/xbmc-8.10.b2_update.sh</string>
+		<string>http://atv-xbmc-launcher.googlecode.com/svn/tags/xbmc-info/scripts/xbmc-8.10_update.sh</string>
 		<key>URL</key>
-		<string>http://downloads.sourceforge.net/xbmc/XBMC_for_Mac-Atlantis-Beta_2.dmg</string>
+		<string>http://downloads.sourceforge.net/xbmc/XBMC_for_Mac-8.10.dmg</string>
 		<key>Type</key>
 		<string>Application</string>
 		<key>MD5</key>
-		<string>6cba91046d0e17f409adbef9873acea1</string>
+		<string>bb6dc9ab63af1deb633dbc43a7c4d41e</string>
 		<key>Name</key>
-		<string>XBMC Atlantis Beta2</string>
-		<key>URL_1</key>
-		<string>http://atv-xbmc-launcher.googlecode.com/svn/tags/xbmc-info/data/Keymap.xml</string>
-		<key>MD5_1</key>
-		<string>47ac2f90969dd945be3bc94db5cbcac8</string>
+		<string>XBMC Atlantis</string>
 	</dict>
 	<dict>
 		<key>UpdateScript</key>
@@ -32,15 +28,15 @@
 	</dict>
 	<dict>
 		<key>Name</key>
-		<string>XBMC/Boxee Launcher 0.5</string>
+		<string>XBMC/Boxee Launcher 0.6</string>
 		<key>Type</key>
 		<string>Launcher</string>
 		<key>URL</key>
-		<string>http://atv-xbmc-launcher.googlecode.com/files/XBMCLauncher-0.5-debug.run</string>
+		<string>http://atv-xbmc-launcher.googlecode.com/files/XBMCLauncher-0.6-debug.run</string>
 		<key>MD5</key>
-		<string>79f637a55e906997a4d69c6932b1a0e9</string>
+		<string>ea3e2d9af2a49e131db8588d79fe5624</string>
 		<key>UpdateScript</key>
-		<string>http://atv-xbmc-launcher.googlecode.com/svn/tags/xbmc-info/scripts/launcher-update-0.5.sh</string>
+		<string>http://atv-xbmc-launcher.googlecode.com/svn/tags/xbmc-info/scripts/launcher-update-0.6.sh</string>
 	</dict>
 </array>
 </plist>
