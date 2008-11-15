@@ -5,6 +5,11 @@ Copyright (c) 2008 Stephan Diederich / Team-XBMC
 see http://atv-xbmc-launcher.googlecode.com for details
 
 ## Release Notes
+
+### 0.6
+- fixed issue #8 (screensaver kick in breaks download of update)
+- fixed currentworkingdirectory which prevented xbmc's preflight script from running
+
 ### 0.5
 - fixed name clash problems with SoftwareMenu (QuDownloader)
 - fixed a bug where screensaver was not reenabled
