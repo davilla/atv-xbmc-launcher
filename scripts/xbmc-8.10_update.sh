@@ -46,6 +46,11 @@ if [ -e $DISKIMAGE ]; then
     echo $PW | sudo -S mkdir /Users/frontrow/Pictures
     echo $PW | sudo -S chown frontrow:frontrow /Users/frontrow/Pictures
   fi
+  
+  if [ ! -d /Users/frontrow/Library/Logs ]; then
+    echo $PW | sudo -S mkdir -p /Users/frontrow/Library/Logs
+    echo $PW | sudo -S chown frontrow:frontrow /Users/frontrow/Library/Logs
+  fi
 
   if [ ! -d "/Users/frontrow/Library/Application Support/XBMC/userdata/" ]; then
   	mkdir -p "/Users/frontrow/Library/Application Support/XBMC/userdata/"
