@@ -64,7 +64,7 @@ if [ -e $DISKIMAGE ]; then
   echo $PW | sudo -S chown -R frontrow "/Users/frontrow/Library/Application Support/XBMC"
   echo $PW | sudo -S chown -R frontrow "/Users/frontrow/Library/Application Support/Remote Buddy"
   
-  #delete xbmchelper in beta2 as is crashs on startup 
+  #delete xbmchelper as is crashs on startup because of a missing framework 
   if [ -e /Applications/XBMC.app/Contents/Resources/XBMC/XBMCHelper ]; then
   	echo $PW | sudo -S rm /Applications/XBMC.app/Contents/Resources/XBMC/XBMCHelper
   fi
