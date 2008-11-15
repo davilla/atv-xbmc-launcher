@@ -28,6 +28,7 @@
 	BOOL										m_download_complete;
   BOOL                    m_md5sum_mismatch;
   NSString *              mp_md5;
+  int m_screen_saver_timeout;
 }
 
 + (void) clearAllDownloadCaches;

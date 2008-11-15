@@ -14,6 +14,22 @@
 
 @implementation XBMCDownloadController
 
+- (void) disableScreenSaver{
+	PRINT_SIGNATURE();
+	//store screen saver state and disable it
+	//!!BRSettingsFacade setScreenSaverEnabled does change the plist, but does _not_ seem to work
+	m_screen_saver_timeout = [[BRSettingsFacade singleton] screenSaverTimeout];
+	[[BRSettingsFacade singleton] setScreenSaverTimeout:-1];
+	[[BRSettingsFacade singleton] flushDiskChanges];
+}
+
+- (void) enableScreenSaver{
+	PRINT_SIGNATURE();
+	//reset screen saver to user settings
+	[[BRSettingsFacade singleton] setScreenSaverTimeout: m_screen_saver_timeout];
+	[[BRSettingsFacade singleton] flushDiskChanges];
+}
+
 + (BOOL) checkMD5SumOfFile:(NSString*) f_file_path MD5:(NSString*) f_md5{
 	PRINT_SIGNATURE();
 	DLOG(@"File: %@ MD5:%@", f_file_path, f_md5);
@@ -121,6 +137,7 @@
 	
 	// work out our desired output path
 	_outputPath = [[XBMCDownloadController outputPathForURLString: mp_urlstr] retain];
+  
 	return ( self );
 }
 
@@ -215,7 +232,7 @@
 - (void)controlWasActivated;
 {
 	[self drawSelf];
-  	
+  [self disableScreenSaver];
 	if ( [self beginDownload] == NO )
 	{
 		[self setTitle: @"Download Failed"];
@@ -229,6 +246,7 @@
 - (void)controlWillDeactivate;
 {
 	[self cancelDownload];
+  [self enableScreenSaver];
 	[super controlWillDeactivate];
 }
 
