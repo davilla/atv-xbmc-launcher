@@ -18,9 +18,10 @@
 // 
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
-
+#import <Cocoa/Cocoa.h>
 typedef enum{
-	ATV_BUTTON_PLAY=0,
+  ATV_BUTTON_DONT_USE_THIS = 0, //don't use zero, as those enums get converted to strings later
+	ATV_BUTTON_PLAY=1,
 	ATV_BUTTON_PLAY_H, //present on ATV>=2.2
 	ATV_BUTTON_RIGHT,
 	ATV_BUTTON_RIGHT_RELEASE,
@@ -37,12 +38,10 @@ typedef enum{
 	ATV_INVALID_BUTTON
 } eATVClientEvent;
 
-@class XBMCClientWrapperImpl;
-
 @interface XBMCClientWrapper : NSObject{
-	XBMCClientWrapperImpl* mp_impl;
+	struct XBMCClientWrapperImpl* mp_impl;
 }
-
+- (id) initWithUniversalMode:(bool) f_yes_no serverAddress:(NSString*) fp_server;
 -(void) handleEvent:(eATVClientEvent) f_event;
 
 @end

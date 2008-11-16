@@ -123,7 +123,8 @@ const double XBMC_CONTROLLER_EVENT_TIMEOUT= -0.5; //timeout for activation seque
 	PRINT_SIGNATURE();
 	if ( ![super init] )
 		return ( nil );
-	mp_xbmclient = [[XBMCClientWrapper alloc] init];
+  bool use_universal = [[XBMCUserDefaults defaults] boolForKey:XBMC_USE_UNIVERSAL_REMOTE];
+	mp_xbmclient = [[XBMCClientWrapper alloc] initWithUniversalMode:use_universal serverAddress:@"localhost"];
 	m_xbmc_running = NO;
 	mp_app_path = [f_app_path retain];
 	mp_helper_path = [f_helper_path retain];
