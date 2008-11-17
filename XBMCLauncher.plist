@@ -12,6 +12,10 @@
 		<string>e64157fa3aefe83885630015166ccf7f</string>
 		<key>Version</key>
 		<string>0.6</string>
+		<key>thelicense</key>
+		<string>http://atv-xbmc-launcher.googlecode.com/svn/trunk/LICENSE.txt</string>
+		<key>theDesc</key>
+		<string>http://atv-xbmc-launcher.googlecode.com/svn/tags/SoftwareMenu/Description.txt</string>
 	</dict>
 </dict>
 </plist>
