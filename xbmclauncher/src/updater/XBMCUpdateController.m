@@ -22,6 +22,7 @@
 #import "XBMCDebugHelpers.h"
 #import "XBMCUpdateBlockingController.h"
 #import "XBMCDownloadController.h"
+#import "XBMCSimpleDownloader.h"
 
 @class BRLayerController;
 @implementation XBMCUpdateController
@@ -110,7 +111,7 @@
   [mp_downloads removeAllObjects];
 	//now start the real download, optionally check for md5 when finished
   [mp_downloads addObject:[XBMCDownloadController outputPathForURLString:[dict valueForKey:@"URL"]]];
-	mp_downloader = [[XBMCDownloadController alloc] initWithDownloadPath:[dict valueForKey:@"URL"] MD5:[dict objectForKey:@"MD5"]];
+	mp_downloader = [[XBMCSimpleDownloader alloc] initWithDownloadPath:[dict valueForKey:@"URL"] MD5:[dict objectForKey:@"MD5"]];
 	[mp_downloader setTitle:[NSString stringWithFormat:@"Downloading: %@",[dict valueForKey:@"Name"]]];
 	[[self stack] pushController: mp_downloader];
 }
