@@ -37,7 +37,7 @@
 	[super dealloc];
 }
 
--(void) wasPushed
+-(void) controlWasActivated
 {
 	PRINT_SIGNATURE();
 	[mp_update_task launch];
