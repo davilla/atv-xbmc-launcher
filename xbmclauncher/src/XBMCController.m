@@ -215,14 +215,6 @@ const double XBMC_CONTROLLER_EVENT_TIMEOUT= -0.5; //timeout for activation seque
 	}
 } 
 
-- (void) willBePushed
-{
-	// We're about to be placed on screen, but we're not yet there
-	// always call super
-	PRINT_SIGNATURE();
-	[super willBePushed];
-}
-
 -(void) startAppAndAttachListener{
   PRINT_SIGNATURE();
 	//Hide frontrow (this is only needed in 720/1080p)
@@ -271,52 +263,12 @@ const double XBMC_CONTROLLER_EVENT_TIMEOUT= -0.5; //timeout for activation seque
   [self startAppAndAttachListener];
 }
 
-- (void) willBePopped
-{
-	// The user pressed Menu, but we've not been removed from the screen yet
-	PRINT_SIGNATURE();
-	// always call super
-	[super willBePopped];
-}
-
 - (void) wasPopped
 {
 	// The user pressed Menu, removing us from the screen
 	PRINT_SIGNATURE();
 	// always call super
 	[super wasPopped];
-}
-
-- (void) willBeBuried
-{
-	// The user just chose an option, and we will be taken off the screen
-	PRINT_SIGNATURE();
-	// always call super
-	[super willBeBuried];
-}
-
-- (void) wasBuriedByPushingController: (BRLayerController *) controller
-{
-	// The user chose an option and this controller os no longer on screen
-	PRINT_SIGNATURE();
-	// always call super
-	[super wasBuriedByPushingController: controller];
-}
-
-- (void) willBeExhumed
-{
-	// the user pressed Menu, but we've not been revealed yet
-	PRINT_SIGNATURE();
-	// always call super
-	[super willBeExhumed];
-}
-
-- (void) wasExhumedByPoppingController: (BRLayerController *) controller
-{
-	// handle being revealed when the user presses Menu
-	PRINT_SIGNATURE();
-	// always call super
-	[super wasExhumedByPoppingController: controller];
 }
 
 - (BOOL) recreateOnReselect
