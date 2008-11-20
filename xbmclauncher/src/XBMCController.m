@@ -68,6 +68,7 @@ const double XBMC_CONTROLLER_EVENT_TIMEOUT= -0.5; //timeout for activation seque
 
 - (void) enableRendering{
   //remove our observer
+  PRINT_SIGNATURE();
 	[[NSNotificationCenter defaultCenter] postNotificationName:@"BRDisplayManagerDisplayOnline"
 																											object:[BRDisplayManager sharedInstance]];
 	[[NSNotificationCenter defaultCenter] postNotificationName:@"BRDisplayManagerResumeRenderingNotification"
@@ -76,6 +77,7 @@ const double XBMC_CONTROLLER_EVENT_TIMEOUT= -0.5; //timeout for activation seque
 }
 
 - (void) disableRendering{
+  PRINT_SIGNATURE();
 	[[NSNotificationCenter defaultCenter] postNotificationName:@"BRDisplayManagerDisplayOffline"
 																											object:[BRDisplayManager sharedInstance]];
 	[[BRDisplayManager sharedInstance] releaseAllDisplays];
@@ -184,10 +186,8 @@ const double XBMC_CONTROLLER_EVENT_TIMEOUT= -0.5; //timeout for activation seque
 		// release the old task, as a new one gets created (if
 		[mp_task release];
 		mp_task = nil;
-		
 		//try to kill XBMCHelper (it does not hurt if it's not running, but definately helps if it still is
 		[self killHelperApp:nil];
-		
 		// use exit status to decide what to do
     switch(status){
       case 0:
@@ -216,10 +216,7 @@ const double XBMC_CONTROLLER_EVENT_TIMEOUT= -0.5; //timeout for activation seque
 } 
 
 -(void) startAppAndAttachListener{
-  PRINT_SIGNATURE();
-	//Hide frontrow (this is only needed in 720/1080p)
-	[self disableRendering];
-	
+  PRINT_SIGNATURE();	
 	//delete a launchAgent if it's there
 	[self deleteHelperLaunchAgent];
   
@@ -254,6 +251,8 @@ const double XBMC_CONTROLLER_EVENT_TIMEOUT= -0.5; //timeout for activation seque
                                              
   // Bring XBMC to the front to capture keyboard input
   [self setAppToFrontProcess];
+	//Hide frontrow (this is only needed in 720/1080p)
+	[self disableRendering];
 }
 
 - (void) wasPushed{
@@ -411,6 +410,7 @@ const double XBMC_CONTROLLER_EVENT_TIMEOUT= -0.5; //timeout for activation seque
 
 - (void) killHelperApp:(NSTimer*) f_timer{
   PRINT_SIGNATURE();
+  NSAutoreleasePool* pool = [[NSAutoreleasePool alloc] init];
   DLOG(@"Trying to kill: %@", [mp_helper_path lastPathComponent]); 
 	//TODO for now we use a script as I don't know how to kill a Task with OSX API. any hints are pretty welcome!
 	NSString* killer_path = [[NSBundle bundleForClass:[self class]] pathForResource:@"killxbmchelper" ofType:@"sh"];
@@ -419,6 +419,7 @@ const double XBMC_CONTROLLER_EVENT_TIMEOUT= -0.5; //timeout for activation seque
 																																							 [mp_helper_path lastPathComponent],
 																																							 nil]];
 	[killer waitUntilExit];
+  [pool release];
 }
 
 - (void) setupHelperSwatter{
@@ -440,27 +441,31 @@ const double XBMC_CONTROLLER_EVENT_TIMEOUT= -0.5; //timeout for activation seque
 - (BOOL) deleteHelperLaunchAgent
 {
   PRINT_SIGNATURE();
+  NSAutoreleasePool* pool = [[NSAutoreleasePool alloc] init];
+  bool ret;
   if(mp_launch_agent_file_name) {
     NSArray* lib_array = NSSearchPathForDirectoriesInDomains(NSLibraryDirectory, NSUserDomainMask, TRUE);
     if([lib_array count] != 1){
       ELOG("Bah, something went wrong trying to find users Library directory");
-      return FALSE;
+      ret = FALSE;
     }
     NSString * launch_agent_file_path = [[lib_array objectAtIndex:0] stringByAppendingString:@"/LaunchAgents/"];
     launch_agent_file_path = [launch_agent_file_path stringByAppendingString:mp_launch_agent_file_name];
     DLOG(@"trying to delete LaunchAgent file at %@", launch_agent_file_path);
     if([[NSFileManager defaultManager] removeFileAtPath:launch_agent_file_path handler:nil]){
       ILOG(@"Deleted LaunchAgent file at %@", launch_agent_file_path);
-      return TRUE;
+      ret = TRUE;
     } else{
       DLOG(@"Failed to delete LaunchAgent file at %@", launch_agent_file_path);
-      return FALSE;
+      ret = FALSE;
     }
   } else {
     //no file given, just do nothing
     DLOG("No mp_launch_agent_file_name - don't try to delete it");
-    return TRUE;
+    ret = TRUE;
   }
+  [pool release];
+  return ret;
 }
 
 @end
