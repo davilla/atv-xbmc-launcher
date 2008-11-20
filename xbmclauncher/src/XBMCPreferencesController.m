@@ -32,9 +32,6 @@
 	[super dealloc];
 }
 
-- (void) willbePushed {
-}
-
 - (void) wasPushed {	
 	[super setListTitle: @"XBMCLauncher"];
 	[super setPrimaryInfoText:@"Settings"];
