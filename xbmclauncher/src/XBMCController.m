@@ -166,6 +166,7 @@ const double XBMC_CONTROLLER_EVENT_TIMEOUT= -0.5; //timeout for activation seque
 - (void)checkTaskStatus:(NSNotification *)note
 {
 	PRINT_SIGNATURE();
+  NSAutoreleasePool* pool = [[NSAutoreleasePool alloc] init];
 	[self enableRendering];
 	
 	//remove our listener
@@ -213,10 +214,12 @@ const double XBMC_CONTROLLER_EVENT_TIMEOUT= -0.5; //timeout for activation seque
 		//Task is still running. How come?!
 		ELOG(@"Task still running. This is definately a bug :/");
 	}
+  [pool release];
 } 
 
 -(void) startAppAndAttachListener{
   PRINT_SIGNATURE();	
+  NSAutoreleasePool* pool = [[NSAutoreleasePool alloc] init];
 	//delete a launchAgent if it's there
 	[self deleteHelperLaunchAgent];
   
@@ -234,6 +237,7 @@ const double XBMC_CONTROLLER_EVENT_TIMEOUT= -0.5; //timeout for activation seque
 																									primaryText:[NSString stringWithFormat:@"Error: Cannot launch XBMC/Boxee from path:"]
 																								secondaryText:mp_app_path];
 		[[self stack] swapController:alert];
+    [pool release];
     return;
 	}
 	m_xbmc_running = YES;
@@ -253,6 +257,7 @@ const double XBMC_CONTROLLER_EVENT_TIMEOUT= -0.5; //timeout for activation seque
   [self setAppToFrontProcess];
 	//Hide frontrow (this is only needed in 720/1080p)
 	[self disableRendering];
+  [pool release];
 }
 
 - (void) wasPushed{
