@@ -47,6 +47,7 @@
 - (void)updateFinished:(NSNotification *)note
 {
 	PRINT_SIGNATURE();
+  NSAutoreleasePool* pool = [[NSAutoreleasePool alloc] init];
 	int status = [[note object] terminationStatus];
 	[[NSNotificationCenter defaultCenter] removeObserver:self];
 	[mp_update_task release];
@@ -61,6 +62,7 @@
 		[self setTitle:@"Update finished!"];
 		[self setPrimaryText:@"Hit menu to return"];
 	}
+  [pool release];
 }
 
 - (BOOL)brEventAction:(BREvent *)event
