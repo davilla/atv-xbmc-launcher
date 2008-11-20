@@ -371,27 +371,4 @@ willResumeWithResponse: (NSURLResponse *) response
 	return m_download_complete;
 }
 
-- (void) wasPushed{
-  PRINT_SIGNATURE();
-  [super wasPushed];
-}
-- (void) wasPopped{
-  PRINT_SIGNATURE();
-  [super wasPopped];
-}
-
-- (BOOL)depthLimited{
-  PRINT_SIGNATURE();
-  return FALSE;
-}
-
-- (BOOL)isValidAfterDataUpdate{
-  PRINT_SIGNATURE();
-  return TRUE;
-}
-
-- (long)errorNumberForNoContent{
-  PRINT_SIGNATURE();
-  return 0;
-}
 @end
