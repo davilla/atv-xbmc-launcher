@@ -19,11 +19,11 @@
  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#import <BackRow/BackRow.h>
 #import "XBMCController.h"
+#import <BackRow/BackRow.h>
+#import <BackRowCompilerShutup.h>
 #import "XBMCDebugHelpers.h"
 #import "xbmcclientwrapper.h"
-#import <BackRowCompilerShutup.h>
 
 //activation sequence for Controller events (events which are not sent to controlled app, but are used in this controller, e.g. to kill the app)
 const eATVClientEvent XBMC_CONTROLLER_EVENT_ACTIVATION_SEQUENCE[]={ATV_BUTTON_MENU, ATV_BUTTON_MENU, ATV_BUTTON_PLAY};
