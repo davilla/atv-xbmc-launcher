@@ -40,6 +40,8 @@
 		return nil;
 	mp_url = [fp_url retain];
   mp_downloads = [[NSMutableArray alloc] init];
+  mp_downloader = nil;
+  mp_blocking_updater = nil;
 	return self;
 }
 
@@ -117,14 +119,18 @@
 	return TRUE;
 }
 
-- (void) wasExhumedByPoppingController: (id) controller
-{
-	// handle being revealed when the user presses Menu
-	PRINT_SIGNATURE();
-	// always call super
-	[super wasExhumedByPoppingController: controller];
+- (float)heightForRow:(long)row				{	return 0.0f; }
+- (BOOL)rowSelectable:(long)row				{	return YES;}
+- (long)itemCount							{	return (long) [mp_items count];}
+- (id)itemForRow:(long)row					{	return [mp_items objectAtIndex:row]; }
+- (long)rowForTitle:(id)title				{	return (long)[mp_items indexOfObject:title]; }
+- (id)titleForRow:(long)row					{	return [[mp_items objectAtIndex:row] title]; }
+
+- (void)controlWasActivated{
+  PRINT_SIGNATURE();
+
 	//if the download controller popped us check if download was properly finished
-	if(controller == mp_downloader){
+	if(mp_downloader){
 		if ( [mp_downloader downloadComplete] ){
       DLOG(@"Download finished");
       if ( [ mp_downloader MD5SumMismatch] ){
@@ -147,7 +153,7 @@
           [mp_downloader release]; 
           [mp_downloads addObject:[XBMCDownloadController outputPathForURLString:l_url]];
           mp_downloader = [[XBMCDownloadController alloc] initWithDownloadPath:l_url 
-                                                                         MD5:[dict objectForKey:next_md5_lookup]];
+                                                                           MD5:[dict objectForKey:next_md5_lookup]];
           [mp_downloader setTitle:[NSString stringWithFormat:@"Downloading update: %@",[dict valueForKey:@"Name"]]];
           [[self stack] pushController: mp_downloader];
           return;
@@ -155,9 +161,9 @@
         //start the update script with path to downloaded file(s) 
         NSString* script_path = [XBMCDownloadController outputPathForURLString:[dict valueForKey:@"UpdateScript"]];
         DLOG(@"Running update %@ with argument %@", script_path, mp_downloads);
-        XBMCUpdateBlockingController* blocker = [[[XBMCUpdateBlockingController alloc] 
-																								initWithScript: script_path downloads:mp_downloads] autorelease];
-        [[self stack] pushController: blocker];
+        mp_blocking_updater = [[XBMCUpdateBlockingController alloc] 
+                                                  initWithScript: script_path downloads:mp_downloads];
+        [[self stack] pushController: mp_blocking_updater];
       }
 		}else {
 			DLOG(@"Download not yet completed");
@@ -165,7 +171,7 @@
 		//release the downloader, it gets recreated on new selection
 		[mp_downloader release];
 		mp_downloader = nil;
-	} else if([controller isKindOfClass:[XBMCUpdateBlockingController class]]){
+	} else if(mp_blocking_updater) {
 		//clear downloaded files
 		DLOG(@"Update finished. Clearing download cache");
 		NSDictionary* dict = [mp_updates objectAtIndex:m_update_item];
@@ -176,17 +182,22 @@
 																						 handler: nil];
 		[[NSFileManager defaultManager] removeFileAtPath: download_folder
 																						 handler: nil];
-	} 
-	else {
-		DLOG(@"Someone else popped us");
-	}
+    [mp_blocking_updater release];
+    mp_blocking_updater = nil;
+	} else {
+    DLOG(@"We were just activated, nothing todo yet");
+  }
+  [super controlWasActivated];
 }
 
-- (float)heightForRow:(long)row				{	return 0.0f; }
-- (BOOL)rowSelectable:(long)row				{	return YES;}
-- (long)itemCount							{	return (long) [mp_items count];}
-- (id)itemForRow:(long)row					{	return [mp_items objectAtIndex:row]; }
-- (long)rowForTitle:(id)title				{	return (long)[mp_items indexOfObject:title]; }
-- (id)titleForRow:(long)row					{	return [[mp_items objectAtIndex:row] title]; }
+- (void)controlWasDeactivated{
+  PRINT_SIGNATURE();
+    [super controlWasDeactivated];
+}
+
+- (void) wasPopped{
+  PRINT_SIGNATURE();
+  [super wasPopped];
+}
 
 @end
