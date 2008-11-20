@@ -95,6 +95,7 @@
 
 - (void) drawSelf
 {	
+  PRINT_SIGNATURE();
 	// lay out our UI
 	NSRect masterFrame = [self frame];
 	NSRect frame = masterFrame;
@@ -119,8 +120,6 @@
 	[self addControl: _header];
 	[self addControl: _sourceText];
 	[self addControl: _progressBar];
-	
-	
 }
 
 - (id) initWithDownloadPath:(NSString*) fp_path MD5:(NSString*) fp_md5{
@@ -137,7 +136,6 @@
 	
 	// work out our desired output path
 	_outputPath = [[XBMCDownloadController outputPathForURLString: mp_urlstr] retain];
-  
 	return ( self );
 }
 
@@ -231,7 +229,8 @@
 // stack callbacks
 - (void)controlWasActivated;
 {
-	[self drawSelf];
+  PRINT_SIGNATURE();
+  [self drawSelf];
   [self disableScreenSaver];
 	if ( [self beginDownload] == NO )
 	{
@@ -243,11 +242,12 @@
 	[super controlWasActivated];
 }
 
-- (void)controlWillDeactivate;
+- (void)controlWasDeactivated;
 {
+  PRINT_SIGNATURE();
 	[self cancelDownload];
   [self enableScreenSaver];
-	[super controlWillDeactivate];
+	[super controlWasDeactivated];
 }
 
 - (BOOL) isNetworkDependent
@@ -445,5 +445,14 @@ willResumeWithResponse: (NSURLResponse *) response
 
 - (BOOL) downloadComplete{
 	return m_download_complete;
+}
+
+- (void) wasPushed{
+  PRINT_SIGNATURE();
+  [super wasPushed];
+}
+- (void) wasPopped{
+  PRINT_SIGNATURE();
+  [super wasPopped];
 }
 @end
