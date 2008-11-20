@@ -111,7 +111,7 @@
 	//now start the real download, optionally check for md5 when finished
   [mp_downloads addObject:[XBMCDownloadController outputPathForURLString:[dict valueForKey:@"URL"]]];
 	mp_downloader = [[XBMCDownloadController alloc] initWithDownloadPath:[dict valueForKey:@"URL"] MD5:[dict objectForKey:@"MD5"]];
-	[mp_downloader setTitle:[NSString stringWithFormat:@"Downloading update: %@",[dict valueForKey:@"Name"]]];
+	[mp_downloader setTitle:[NSString stringWithFormat:@"Downloading: %@",[dict valueForKey:@"Name"]]];
 	[[self stack] pushController: mp_downloader];
 }
 
