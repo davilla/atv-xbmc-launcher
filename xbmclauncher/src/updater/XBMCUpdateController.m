@@ -140,6 +140,8 @@
                                                          primaryText:@"MD5 sums don't match. Please try to redownload."
                                                        secondaryText:@"If this message still appears after redownload, updates have changed.This should be corrected automatically in a few hours, if not please file an issue at http://atv-xbmc-launcher.googlecode.com. Thanks!" 
                                        ]];
+        [mp_downloader release];
+        mp_downloader = nil;
         return;
       } else {     
         NSDictionary* dict = [mp_updates objectAtIndex:m_update_item];
