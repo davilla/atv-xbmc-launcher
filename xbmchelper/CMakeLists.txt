@@ -1,7 +1,7 @@
 cmake_minimum_required(VERSION 2.6)
 
 PROJECT(xbmchelper)
-
+set(CMAKE_OSX_SYSROOT /Developer/SDKs/MacOSX10.4u.sdk)
 
 SET(XBMCHELPER_SRCS 
 	main.mm
