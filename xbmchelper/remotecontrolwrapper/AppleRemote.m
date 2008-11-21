@@ -33,7 +33,8 @@
 #import <IOKit/IOCFPlugIn.h>
 #import <IOKit/hid/IOHIDKeys.h>
 
-const char* AppleRemoteDeviceName = "AppleIRController";
+//const char* AppleRemoteDeviceName = "AppleIRController";
+const char* AppleRemoteDeviceName = "AppleTVIRReceiver";
 
 // the WWDC 07 Leopard Build is missing the constant
 #ifndef NSAppKitVersionNumber10_4
