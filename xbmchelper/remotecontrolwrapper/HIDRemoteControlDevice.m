@@ -328,17 +328,22 @@ static void QueueCallbackFunction(void* target,  IOReturn result, void* refcon, 
 	AbsoluteTime 	 zeroTime = {0,0};
 	NSMutableString* cookieString = [NSMutableString string];
 	SInt32			 sumOfValues = 0;
+  int key;
 	while (result == kIOReturnSuccess)
 	{
 		result = (*[remote queue])->getNextEvent([remote queue], &event, zeroTime, 0);		
 		if ( result != kIOReturnSuccess )
 			continue;
 		//printf("%d %d %d\n", event.elementCookie, event.value, event.longValue);		
-    printf("Raw: ");
+    	printf("Raw: ");
     int i;
     unsigned char* p_data = event.longValue;
+    if( event.longValueSize > 13 )
+      key = p_data[13];
+    
+      
     for( i = 0; i < event.longValueSize; ++i){
-      printf(" %i ", (int)*p_data);
+      printf("%i: %i ",i, (int)*p_data);
       ++p_data;
     }
     printf("\n");
@@ -347,6 +352,10 @@ static void QueueCallbackFunction(void* target,  IOReturn result, void* refcon, 
 			[cookieString appendString:[NSString stringWithFormat:@"%d_", event.elementCookie]];
 		}
 	}
+  if([cookieString isEqualToString:@"17_9_280_"]){
+    printf("Switching string to %i\n", key);
+    cookieString = [NSString stringWithFormat:@"%i", key];
+  }
 	[remote handleEventWithCookieString: cookieString sumOfValues: sumOfValues];
 	
 	[pool release];
