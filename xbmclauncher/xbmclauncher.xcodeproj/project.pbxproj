@@ -35,6 +35,7 @@
 		E47D14810ED57E56008DC279 /* XBMCController.m in Sources */ = {isa = PBXBuildFile; fileRef = E47D14740ED57E56008DC279 /* XBMCController.m */; };
 		E47D14820ED57E56008DC279 /* XBMCPreferencesController.m in Sources */ = {isa = PBXBuildFile; fileRef = E47D14760ED57E56008DC279 /* XBMCPreferencesController.m */; };
 		E47D14830ED57E56008DC279 /* XBMCUserDefaults.m in Sources */ = {isa = PBXBuildFile; fileRef = E47D14780ED57E56008DC279 /* XBMCUserDefaults.m */; };
+		E4880E7C0ED6FE5800D33142 /* setAutoUpdate.sh in Resources */ = {isa = PBXBuildFile; fileRef = E4880E7B0ED6FE5800D33142 /* setAutoUpdate.sh */; };
 		E489767F0E97B4370002B1EC /* compareMD5.sh in Resources */ = {isa = PBXBuildFile; fileRef = E489767E0E97B4370002B1EC /* compareMD5.sh */; };
 		E4AD19440ED5CB2E004BFCFB /* XBMCSimpleDownloader.m in Sources */ = {isa = PBXBuildFile; fileRef = E4AD19430ED5CB2E004BFCFB /* XBMCSimpleDownloader.m */; };
 		E4C9555B0E8199B300E6BAFE /* BackRow.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E4C9555A0E8199B300E6BAFE /* BackRow.framework */; };
@@ -88,6 +89,7 @@
 		E47D14760ED57E56008DC279 /* XBMCPreferencesController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XBMCPreferencesController.m; sourceTree = "<group>"; };
 		E47D14770ED57E56008DC279 /* XBMCUserDefaults.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XBMCUserDefaults.h; sourceTree = "<group>"; };
 		E47D14780ED57E56008DC279 /* XBMCUserDefaults.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XBMCUserDefaults.m; sourceTree = "<group>"; };
+		E4880E7B0ED6FE5800D33142 /* setAutoUpdate.sh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.sh; path = setAutoUpdate.sh; sourceTree = "<group>"; };
 		E489767E0E97B4370002B1EC /* compareMD5.sh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.sh; path = compareMD5.sh; sourceTree = "<group>"; };
 		E4AD19420ED5CB2E004BFCFB /* XBMCSimpleDownloader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XBMCSimpleDownloader.h; sourceTree = "<group>"; };
 		E4AD19430ED5CB2E004BFCFB /* XBMCSimpleDownloader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XBMCSimpleDownloader.m; sourceTree = "<group>"; };
@@ -148,6 +150,7 @@
 				089C167DFE841241C02AAC07 /* InfoPlist.strings */,
 				E4C96FCC0E89A3AA00E6BAFE /* LICENSE.txt */,
 				E4C96FCD0E89A3AA00E6BAFE /* README.txt */,
+				E4880E7B0ED6FE5800D33142 /* setAutoUpdate.sh */,
 			);
 			name = Resources;
 			sourceTree = "<group>";
@@ -305,6 +308,7 @@
 				E4C96FD10E89A3AA00E6BAFE /* README.txt in Resources */,
 				E489767F0E97B4370002B1EC /* compareMD5.sh in Resources */,
 				E4CCB4380EAB650B003EB90E /* Keymap.xml in Resources */,
+				E4880E7C0ED6FE5800D33142 /* setAutoUpdate.sh in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

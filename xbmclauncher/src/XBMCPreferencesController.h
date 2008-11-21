@@ -26,6 +26,10 @@
 	NSMutableArray* mp_items; //list items
 	
 }
++ (BOOL) autoUpdateEnabled;
++ (void) setAutoUpdate:(BOOL) f_enabled;
 
 - (void) recreateMenuList;
+
+
 @end
