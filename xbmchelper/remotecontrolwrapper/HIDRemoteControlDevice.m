@@ -333,9 +333,15 @@ static void QueueCallbackFunction(void* target,  IOReturn result, void* refcon, 
 		result = (*[remote queue])->getNextEvent([remote queue], &event, zeroTime, 0);		
 		if ( result != kIOReturnSuccess )
 			continue;
-	
-		printf("%d %d %d\n", event.elementCookie, event.value, event.longValue);		
-		
+		//printf("%d %d %d\n", event.elementCookie, event.value, event.longValue);		
+    printf("Raw: ");
+    int i;
+    unsigned char* p_data = event.longValue;
+    for( i = 0; i < event.longValueSize; ++i){
+      printf(" %i ", (int)*p_data);
+      ++p_data;
+    }
+    printf("\n");
 		if (((int)event.elementCookie)!=5) {
 			sumOfValues+=event.value;
 			[cookieString appendString:[NSString stringWithFormat:@"%d_", event.elementCookie]];
