@@ -275,7 +275,7 @@ cleanup:
 		[previousRemainingCookieString release], previousRemainingCookieString=nil;							
 	}*/
 	if (cookieString == nil || [cookieString length] == 0) return;
-		
+  NSLog(@"unprocessed cookiestring %@", cookieString);
 	NSNumber* buttonId = [[self cookieToButtonMapping] objectForKey: cookieString];
 	if (buttonId != nil) {
 		[self sendRemoteButtonEvent: [buttonId intValue] pressedDown: (sumOfValues>0)];
@@ -334,7 +334,7 @@ static void QueueCallbackFunction(void* target,  IOReturn result, void* refcon, 
 		if ( result != kIOReturnSuccess )
 			continue;
 	
-		//printf("%d %d %d\n", event.elementCookie, event.value, event.longValue);		
+		printf("%d %d %d\n", event.elementCookie, event.value, event.longValue);		
 		
 		if (((int)event.elementCookie)!=5) {
 			sumOfValues+=event.value;
