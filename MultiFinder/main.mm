@@ -61,6 +61,7 @@
 #include <time.h>
 
 #import <Foundation/Foundation.h>
+#import "atvxbmccommon.h"
 
 //--------------------------------------------------------------
 @interface ATVSettingsHelper
@@ -102,6 +103,112 @@
 } 
 @end 
 
+
+@interface AppKeeper : NSObject{
+  NSTask* mp_task;
+  NSString* mp_next_app_to_launch; //when the currently running app dies, this one is started next
+  BOOL m_app_needs_ir; //if true, launchApplication should also start our IR daemon;
+  NSString* mp_default_app; //app to launch in the beginning
+  BOOL m_default_app_needs_ir; //does default app need ir?
+}
+- (BOOL) launchApplication:(NSString*) f_app_path;
+- (void) startApplicationRequest:(NSNotification *)notification;
+@end
+
+
+@implementation AppKeeper
+
+- (id) init{
+ if( ![super init] )
+   return nil;
+  mp_next_app_to_launch = nil;
+  m_app_needs_ir = false;
+  mp_default_app = @"/System/Library/CoreServices/Finder.app/Contents/MacOS/Finder";
+  m_default_app_needs_ir = false;
+
+  //register cross-app-notification listeners
+  [[NSDistributedNotificationCenter defaultCenter] addObserver:self selector:@selector(startApplicationRequest:) name:MULTIFINDER_START_APPLICATION_NOTIFICATION object:nil];
+  //by default launch Finder
+  [self launchApplication:mp_default_app];
+  return self;
+}
+
+- (void) dealloc{
+  [[NSDistributedNotificationCenter defaultCenter] removeObserver:self name:MULTIFINDER_START_APPLICATION_NOTIFICATION object:nil];
+  [super dealloc];
+}
+
+- (void)checkTaskStatus:(NSNotification *)note
+{
+  NSAutoreleasePool* pool = [[NSAutoreleasePool alloc] init];
+  [[NSNotificationCenter defaultCenter] removeObserver:self name:NSTaskDidTerminateNotification object:mp_task];
+  NSLog(@"App status callback");
+  if( ! [mp_task isRunning] ){
+    int status = [[note object] terminationStatus];
+    NSLog(@"App exited with status %i", status);
+		[mp_task release];
+		mp_task = nil;
+    if( mp_next_app_to_launch ){
+      NSLog(@"Looks like killed by request. Starting app %@ with IR:%i", mp_next_app_to_launch, m_app_needs_ir);
+      [self launchApplication:mp_next_app_to_launch];
+    }
+    else {
+      NSLog(@"No app given. Starting default app %@ with IR:%i", mp_default_app, m_default_app_needs_ir);
+      m_app_needs_ir = m_default_app_needs_ir;
+      [self launchApplication:mp_default_app];    
+    }
+  }
+  [pool release];
+}
+
+- (BOOL) launchApplication:(NSString*) f_app_path {
+	mp_task = [[NSTask alloc] init];
+	@try {
+		[mp_task setLaunchPath: f_app_path];
+    [mp_task setCurrentDirectoryPath:@"/Applications"];
+		[mp_task launch];
+	} 
+	@catch (NSException* e) {
+    NSLog(@"Could not launch application %@", f_app_path);
+    return FALSE;
+	}
+	//wait a bit for task to start
+	NSDate *future = [NSDate dateWithTimeIntervalSinceNow: 0.1];
+	[NSThread sleepUntilDate:future];
+	
+	//attach our listener
+	[[NSNotificationCenter defaultCenter] addObserver:self
+																					 selector:@selector(checkTaskStatus:)
+																							 name:NSTaskDidTerminateNotification
+																						 object:mp_task];
+  if(m_app_needs_ir){
+    //TODO launch xbmchelper
+    NSLog(@"App requested IR. Implement me!");
+  }
+  //now reset the variables
+  [mp_next_app_to_launch release];
+  mp_next_app_to_launch = nil;
+  m_app_needs_ir = false;
+  return TRUE;
+}
+
+- (void) startApplicationRequest:(NSNotification *)notification{
+  NSAutoreleasePool* pool = [[NSAutoreleasePool alloc] init];
+  NSLog(@"Got an start application request");
+  NSDictionary* userInfo = [notification userInfo];
+  //set next app to launch
+  mp_next_app_to_launch = [[userInfo objectForKey:kApplicationPath] retain];
+  if( !mp_next_app_to_launch)
+    NSLog(@"Ouch something went wrong. Got a request to start an app, but no app was given!");
+  //does it need IR?
+  m_app_needs_ir = [[userInfo objectForKey:kApplicationNeedsIR] boolValue];
+  NSLog(@"Request for app %@ withRemote:%i", mp_next_app_to_launch, m_app_needs_ir);
+  //kill current app
+  [mp_task terminate];
+  [pool release];
+}
+@end
+
 //--------------------------------------------------------------
 //--------------------------------------------------------------
 int main(int argc, char *argv[])
@@ -119,6 +226,9 @@ int main(int argc, char *argv[])
 
   FeedWatchDog *feed_watchdog = [[FeedWatchDog alloc] init]; 
   [NSTimer scheduledTimerWithTimeInterval:58.0 target:feed_watchdog selector:@selector(bone:) userInfo:nil repeats:YES]; 
+
+  // setup our app listener which starts up Finder by default
+  AppKeeper* appkeeper = [[AppKeeper alloc] init];
 
   // make a run loop and go
   NSRunLoop *theRL = [NSRunLoop currentRunLoop]; 

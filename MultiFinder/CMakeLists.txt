@@ -5,23 +5,27 @@ PROJECT(MultiFinder)
 
 SET(MULTIFINDER_SRCS 
 	main.mm
+	../common/atvxbmccommon.h
+	../common/atvxbmccommon.m
 )
+INCLUDE_DIRECTORIES(../common)
 
 FIND_LIBRARY(FOUNDATION_LIBRARY Foundation)
 IF(NOT FOUNDATION_LIBRARY)
  MESSAGE(FATAL_ERROR "Ouch Foundation not found. Bailing out...")
 ENDIF(NOT FOUNDATION_LIBRARY)
-FIND_LIBRARY(APPLETV_LIBRARY AppleTV ${CMAKE_OSX_SYSROOT}/System/Library/PrivateFrameworks)
+FIND_LIBRARY(APPLETV_LIBRARY AppleTV ${CMAKE_OSX_SYSROOT}/System/Library/PrivateFrameworks ../)
 IF(NOT APPLETV_LIBRARY)
  MESSAGE(FATAL_ERROR "Ouch AppleTV not found. Bailing out...")
 ENDIF(NOT APPLETV_LIBRARY)
-FIND_LIBRARY(BACKROW_LIBRARY BackRow ${CMAKE_OSX_SYSROOT}/System/Library/PrivateFrameworks)
+FIND_LIBRARY(BACKROW_LIBRARY BackRow ${CMAKE_OSX_SYSROOT}/System/Library/PrivateFrameworks ../)
 IF(NOT BACKROW_LIBRARY)
  MESSAGE(FATAL_ERROR "Ouch BackRow not found. Bailing out...")
 ENDIF(NOT BACKROW_LIBRARY)
-FIND_LIBRARY(IPHOTOACESS_LIBRARY iPhotoAccess ${CMAKE_OSX_SYSROOT}/System/Library/PrivateFrameworks)
+FIND_LIBRARY(IPHOTOACESS_LIBRARY iPhotoAccess ${CMAKE_OSX_SYSROOT}/System/Library/PrivateFrameworks ../)
 IF(NOT IPHOTOACESS_LIBRARY)
  MESSAGE(FATAL_ERROR "Ouch iPhotoAccess not found. Bailing out...")
 ENDIF(NOT IPHOTOACESS_LIBRARY)
+
 add_executable(MultiFinder ${MULTIFINDER_SRCS})
 TARGET_LINK_LIBRARIES(MultiFinder ${FOUNDATION_LIBRARY} ${APPLETV_LIBRARY} ${BACKROW_LIBRARY} ${IPHOTOACESS_LIBRARY})
