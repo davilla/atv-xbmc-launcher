@@ -220,6 +220,9 @@ const double XBMC_CONTROLLER_EVENT_TIMEOUT= -0.5; //timeout for activation seque
 -(void) startAppAndAttachListener{
   PRINT_SIGNATURE();	
   NSAutoreleasePool* pool = [[NSAutoreleasePool alloc] init];
+  //Hide frontrow (this is only needed in 720/1080p)
+	[self disableRendering];
+   
 	//delete a launchAgent if it's there
 	[self deleteHelperLaunchAgent];
   
@@ -255,8 +258,6 @@ const double XBMC_CONTROLLER_EVENT_TIMEOUT= -0.5; //timeout for activation seque
                                              
   // Bring XBMC to the front to capture keyboard input
   [self setAppToFrontProcess];
-	//Hide frontrow (this is only needed in 720/1080p)
-	[self disableRendering];
   [pool release];
 }
 
