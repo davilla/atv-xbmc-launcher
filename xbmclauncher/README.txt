@@ -6,6 +6,11 @@ see http://atv-xbmc-launcher.googlecode.com for details
 
 ## Release Notes
 
+### 0.7
+- added universal mode support
+- added possibility to disable auto-update in settings
+- some fixes for atv 2.3 (still doesn't properly release screen on 720p/1080p)
+
 ### 0.6
 - fixed issue #8 (screensaver kick in breaks download of update)
 - fixed currentworkingdirectory which prevented xbmc's preflight script from running
