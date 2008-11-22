@@ -278,6 +278,7 @@ cleanup:
   NSLog(@"unprocessed cookiestring %@", cookieString);
 	NSNumber* buttonId = [[self cookieToButtonMapping] objectForKey: cookieString];
 	if (buttonId != nil) {
+    NSLog(@"buttonId != 0");
 		[self sendRemoteButtonEvent: [buttonId intValue] pressedDown: (sumOfValues>0)];
 	} else {
 		// let's see if a number of events are stored in the cookie string. this does
@@ -313,6 +314,14 @@ cleanup:
 
 @end
 
+typedef struct _ATV_IR_EVENT {
+  UInt32    time_ms32;
+  UInt32    time_ls32; // units of microsecond 
+  UInt32    unknown1;
+  UInt32    keycode;
+  UInt32    unknown2;
+} ATV_IR_EVENT;
+
 /*	Callback method for the device queue
 Will be called for any event of any type (cookie) to which we subscribe
 */
@@ -324,37 +333,66 @@ static void QueueCallbackFunction(void* target,  IOReturn result, void* refcon, 
 	NSAutoreleasePool* pool = [[NSAutoreleasePool alloc] init];
 	
 	HIDRemoteControlDevice* remote = (HIDRemoteControlDevice*)target;	
-	IOHIDEventStruct event;	
-	AbsoluteTime 	 zeroTime = {0,0};
-	NSMutableString* cookieString = [NSMutableString string];
-	SInt32			 sumOfValues = 0;
-  int key;
+	IOHIDEventStruct  event;	
+	AbsoluteTime      zeroTime = {0,0};
+	NSMutableString*  cookieString = [NSMutableString string];
+	SInt32            sumOfValues = 0;
+  UInt32            key_code;
+  
+  
 	while (result == kIOReturnSuccess)
 	{
 		result = (*[remote queue])->getNextEvent([remote queue], &event, zeroTime, 0);		
-		if ( result != kIOReturnSuccess )
+		if ( result != kIOReturnSuccess ) {
 			continue;
-		//printf("%d %d %d\n", event.elementCookie, event.value, event.longValue);		
-    	printf("Raw: ");
+    }
+
+    if (((int)event.elementCookie == 280) && (event.longValueSize == 20)) {
+      ATV_IR_EVENT *atv_ir_event = event.longValue;
+      printf("%8.8lX%8.8lX %8.8lX %8.8lX, %8.8lX\n", 
+        atv_ir_event->time_ms32, 
+        atv_ir_event->time_ls32, 
+        atv_ir_event->unknown1, 
+        atv_ir_event->keycode, 
+        atv_ir_event->unknown2);
+        
+      key_code = atv_ir_event->keycode;
+    }
+    /*
+    printf("Raw: ");
     int i;
+    unsigned char* event_data = event.longValue;
+    printf("%d %d %d\n", (int)event.elementCookie, (int)event.value, (int)event.longValueSize);		
+    for( i = 0; i < event.longValueSize; ++i) {
+      printf("%2.2X,", (int)*event_data);
+      ++event_data;
+    }
+    printf("\n");
+    */
+    
+    /*
     unsigned char* p_data = event.longValue;
     if( event.longValueSize > 13 )
-      key = p_data[13];
+      key_code = p_data[13];
     
-      
-    for( i = 0; i < event.longValueSize; ++i){
+    for( i = 0; i < event.longValueSize; ++i) {
       printf("%i: %i ",i, (int)*p_data);
       ++p_data;
     }
     printf("\n");
-		if (((int)event.elementCookie)!=5) {
+    */
+    
+    // FIXME
+    if (((int)event.elementCookie) !=5 ) {
 			sumOfValues+=event.value;
 			[cookieString appendString:[NSString stringWithFormat:@"%d_", event.elementCookie]];
 		}
 	}
-  if([cookieString isEqualToString:@"17_9_280_"]){
-    printf("Switching string to %i\n", key);
-    cookieString = [NSString stringWithFormat:@"%i", key];
+  if([cookieString isEqualToString:@"17_9_280_"]) {
+    //printf("Switching string to %i\n", key);
+    cookieString = [NSString stringWithFormat:@"%i", (key_code & 0x00007F00) >> 8 ];
+    // HACK see FIXME above
+    sumOfValues = 1;
   }
 	[remote handleEventWithCookieString: cookieString sumOfValues: sumOfValues];
 	

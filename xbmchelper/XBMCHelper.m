@@ -32,6 +32,7 @@
                    pressedDown: (BOOL) pressedDown 
                  remoteControl: (RemoteControl*) remoteControl 
 {
+    NSLog(@"Button %d pressed down %d", event, pressedDown);
   if(m_verbose)
     NSLog(@"Button %d pressed down %d", event, pressedDown);
   switch(event){
