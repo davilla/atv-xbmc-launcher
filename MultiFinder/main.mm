@@ -95,6 +95,8 @@
   BOOL m_app_needs_ir; //if true, launchApplication should also start our IR daemon;
   NSString* mp_default_app; //app to launch in the beginning
   BOOL m_default_app_needs_ir; //does default app need ir?
+  NSTask* mp_ir_helper;
+  NSString* mp_ir_helper_path;
 }
 - (BOOL) launchApplication:(NSString*) f_app_path;
 - (void) startApplicationRequest:(NSNotification *)notification;
@@ -112,6 +114,8 @@
   mp_default_app = @"/System/Library/CoreServices/Finder.app/Contents/MacOS/Finder";
   m_default_app_needs_ir = false;
 
+  mp_ir_helper_path = [[NSBundle bundleForClass:[self class]] pathForResource:@"xbmchelper" ofType:@""];
+  NSLog(@"App status callback %@", mp_ir_helper_path);
   //register cross-app-notification listeners
   [[NSDistributedNotificationCenter defaultCenter] addObserver:self selector:@selector(startApplicationRequest:) name:MULTIFINDER_START_APPLICATION_NOTIFICATION object:nil];
   //by default launch Finder
@@ -132,10 +136,17 @@
   [[NSNotificationCenter defaultCenter] removeObserver:self name:NSTaskDidTerminateNotification object:mp_task];
   NSLog(@"App status callback");
   if( ! [mp_task isRunning] ){
+    //kill helper and release task object
+    [mp_ir_helper terminate];
+    [mp_ir_helper release];
+    mp_ir_helper = nil;
+    
+    //print some status and release task object
     int status = [[note object] terminationStatus];
     NSLog(@"App exited with status %i", status);
 		[mp_task release];
 		mp_task = nil;
+    
     if( mp_next_app_to_launch ){
       NSLog(@"Looks like killed by request. Starting app %@ with IR:%i", mp_next_app_to_launch, m_app_needs_ir);
       [self launchApplication:mp_next_app_to_launch];
@@ -164,7 +175,6 @@
 	//wait a bit for task to start
 	NSDate *future = [NSDate dateWithTimeIntervalSinceNow: 0.1];
 	[NSThread sleepUntilDate:future];
-	
 	//attach our listener
 	[[NSNotificationCenter defaultCenter] addObserver:self
 																					 selector:@selector(checkTaskStatus:)
@@ -173,6 +183,10 @@
   if(m_app_needs_ir){
     //TODO launch xbmchelper
     NSLog(@"App requested IR. Implement me!");
+    NSArray* arg = [NSArray arrayWithObjects
+                    :@"-v",
+                    nil];
+    mp_ir_helper = [[NSTask launchedTaskWithLaunchPath:mp_ir_helper_path arguments: arg] retain];    
   }
   //now reset the variables
   [mp_next_app_to_launch release];
