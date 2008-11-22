@@ -75,22 +75,6 @@
 @end
 
 //--------------------------------------------------------------
-@interface GetCGStatus : NSObject 
-- (void) get_cg_staus:(NSTimer *)timer; 
-@end 
- 
-@implementation GetCGStatus 
-- (void) get_cg_staus:(NSTimer *)timer
-{ 
-  NSAutoreleasePool* pool = [[NSAutoreleasePool alloc] init];
-
-  NSLog(@"get cg_status...");
-
-  [pool release];
-} 
-@end 
- 
-//--------------------------------------------------------------
 @interface FeedWatchDog : NSObject 
 - (void) bone:(NSTimer *)timer; 
 @end 
@@ -104,7 +88,8 @@
 @end 
 
 
-@interface AppKeeper : NSObject{
+//--------------------------------------------------------------
+@interface AppKeeper : NSObject {
   NSTask* mp_task;
   NSString* mp_next_app_to_launch; //when the currently running app dies, this one is started next
   BOOL m_app_needs_ir; //if true, launchApplication should also start our IR daemon;
@@ -116,6 +101,7 @@
 @end
 
 
+//--------------------------------------------------------------
 @implementation AppKeeper
 
 - (id) init{
@@ -133,11 +119,13 @@
   return self;
 }
 
+//--------------------------------------------------------------
 - (void) dealloc{
   [[NSDistributedNotificationCenter defaultCenter] removeObserver:self name:MULTIFINDER_START_APPLICATION_NOTIFICATION object:nil];
   [super dealloc];
 }
 
+//--------------------------------------------------------------
 - (void)checkTaskStatus:(NSNotification *)note
 {
   NSAutoreleasePool* pool = [[NSAutoreleasePool alloc] init];
@@ -161,6 +149,7 @@
   [pool release];
 }
 
+//--------------------------------------------------------------
 - (BOOL) launchApplication:(NSString*) f_app_path {
 	mp_task = [[NSTask alloc] init];
 	@try {
@@ -192,7 +181,8 @@
   return TRUE;
 }
 
-- (void) startApplicationRequest:(NSNotification *)notification{
+//--------------------------------------------------------------
+- (void) startApplicationRequest:(NSNotification *)notification {
   NSAutoreleasePool* pool = [[NSAutoreleasePool alloc] init];
   NSLog(@"Got an start application request");
   NSDictionary* userInfo = [notification userInfo];
@@ -221,9 +211,6 @@ int main(int argc, char *argv[])
   [ATVHardwareUtility turnOnWhiteLED];
   
   // setup our NSTimers
-  GetCGStatus *cg_status = [[GetCGStatus alloc] init]; 
-  [NSTimer scheduledTimerWithTimeInterval:5.0 target:cg_status selector:@selector(get_cg_staus:) userInfo:nil repeats:YES]; 
-
   FeedWatchDog *feed_watchdog = [[FeedWatchDog alloc] init]; 
   [NSTimer scheduledTimerWithTimeInterval:58.0 target:feed_watchdog selector:@selector(bone:) userInfo:nil repeats:YES]; 
 
