@@ -1,7 +1,10 @@
 cmake_minimum_required(VERSION 2.6)
-set(CMAKE_OSX_SYSROOT /Developer/SDKs/MacOSX10.4u.sdk)
 
 PROJECT(MultiFinder)
+
+set(CMAKE_OSX_SYSROOT /Developer/SDKs/MacOSX10.4u.sdk)
+
+SET(CMAKE_OSX_ARCHITECTURES "i386" CACHE STRING "Build architectures for OSX" FORCE)
 
 SET(MULTIFINDER_SRCS 
 	main.mm
@@ -10,6 +13,7 @@ SET(MULTIFINDER_SRCS
 )
 INCLUDE_DIRECTORIES(../common)
 
+#collect needed libs
 FIND_LIBRARY(FOUNDATION_LIBRARY Foundation)
 IF(NOT FOUNDATION_LIBRARY)
  MESSAGE(FATAL_ERROR "Ouch Foundation not found. Bailing out...")
@@ -27,5 +31,29 @@ IF(NOT IPHOTOACESS_LIBRARY)
  MESSAGE(FATAL_ERROR "Ouch iPhotoAccess not found. Bailing out...")
 ENDIF(NOT IPHOTOACESS_LIBRARY)
 
-add_executable(MultiFinder ${MULTIFINDER_SRCS})
+#finally build the executable
+add_executable(MultiFinder MACOSX_BUNDLE ${MULTIFINDER_SRCS} )
+
+#link it
 TARGET_LINK_LIBRARIES(MultiFinder ${FOUNDATION_LIBRARY} ${APPLETV_LIBRARY} ${BACKROW_LIBRARY} ${IPHOTOACESS_LIBRARY})
+
+#and copy xbmchelper into it. For now by hand.
+#see http://www.cmake.org/pipermail/cmake/2008-November/025455.html if this can be done better
+get_target_property(MF_LOCATION MultiFinder LOCATION) 
+get_target_property(HELPER_LOCATION xbmchelper LOCATION) 
+ADD_DEPENDENCIES(MultiFinder xbmchelper)
+add_custom_command(TARGET MultiFinder
+                     POST_BUILD
+                     COMMAND mkdir -p ${MF_LOCATION}.app/Contents/Resources/
+                     COMMAND cp ${HELPER_LOCATION} ${MF_LOCATION}.app/Contents/Resources/
+                     COMMENT "add xbmchelper" VERBATIM)
+
+#-------
+# add convenience target which copies to ATV
+#-------
+SET(APPLETV_IP "192.168.0.90" CACHE STRING "IP address of atv for build&copy target")
+SET(MULTIFINDER_ATV_LOCATION "" CACHE STRING "Path on ATV to place Multifinder.app; if empty home directory is used")
+get_target_property(MF_LOCATION MultiFinder LOCATION) 
+add_custom_target(BuildAndCopyToATV scp -r ${MF_LOCATION}.app frontrow@${APPLETV_IP}:
+        COMMENT "covenience copy to ATV" VERBATIM)
+ADD_DEPENDENCIES(BuildAndCopyToATV MultiFinder)
