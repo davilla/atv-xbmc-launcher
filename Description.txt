@@ -1,4 +1,6 @@
-XBMC/BoxeeLauncher - 0.6
+XBMC/BoxeeLauncher - 0.8
+Features
+	universal-remote mode
+	enable/disable of ATV autoupdate
 Bufixes
-	disable screensaver during update downloads
-	fixed a path issue which prevented XBMC's preflight script from running
+	few ATV 2.3 compatibility issues fixed
