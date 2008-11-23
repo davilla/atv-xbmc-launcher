@@ -1,0 +1,24 @@
+ToDos:
+
+IR:
+- need to detect platform to switch cookies and IR-controller name
+- cookies need adoption (in AppleRemote.m)
+
+Features:
+-restart app that was running if it crashed:
+ - probably only 3 times
+ - use exit status of NSTask
+ - implement shutdown menu restart request of xbmc with that
+=> if XBMC crashes, it goes directly (and in a reasonable time) back to XBMC
+
+-finish xbmclauncher CMake project
+ - need to figure a way to build bundle (worst case by hand)
+=> enables a build all and copy to ATV testing cycle
+
+-add universalmode support to xbmchelper startup from multifinder
+ - need to grab info from distributed notification in AppKeeper
+
+-create plist for MultiFinder to read settings from
+  - e.g. which app to start by default.
+
+-add setting of timeout to univermode
