@@ -1,17 +1,10 @@
-cmake_minimum_required(VERSION 2.6)
-
 PROJECT(MultiFinder)
-
-set(CMAKE_OSX_SYSROOT /Developer/SDKs/MacOSX10.4u.sdk)
-
-SET(CMAKE_OSX_ARCHITECTURES "i386" CACHE STRING "Build architectures for OSX" FORCE)
 
 SET(MULTIFINDER_SRCS 
 	main.mm
 	../common/atvxbmccommon.h
 	../common/atvxbmccommon.m
 )
-INCLUDE_DIRECTORIES(../common)
 
 #collect needed libs
 FIND_LIBRARY(FOUNDATION_LIBRARY Foundation)
@@ -51,9 +44,9 @@ add_custom_command(TARGET MultiFinder
 #-------
 # add convenience target which copies to ATV
 #-------
-SET(APPLETV_IP "192.168.0.90" CACHE STRING "IP address of atv for build&copy target")
 SET(MULTIFINDER_ATV_LOCATION "" CACHE STRING "Path on ATV to place Multifinder.app; if empty home directory is used")
+#TODO: need to implement mv on ATV if Multifinder_ATV_LOCATION is given
 get_target_property(MF_LOCATION MultiFinder LOCATION) 
-add_custom_target(BuildAndCopyToATV scp -r ${MF_LOCATION}.app frontrow@${APPLETV_IP}:
+add_custom_target(MFBuildAndCopyToATV scp -r ${MF_LOCATION}.app frontrow@${APPLETV_IP}:
         COMMENT "covenience copy to ATV" VERBATIM)
-ADD_DEPENDENCIES(BuildAndCopyToATV MultiFinder)
+ADD_DEPENDENCIES(MFBuildAndCopyToATV MultiFinder)
