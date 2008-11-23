@@ -21,8 +21,9 @@
 // Also need this because there are two frameworks inside BackRow.framework
 // /System/Library/PrivateFrameworks/BackRow.framework
 
-// Build MultiFinder and place it -> /Users/frontrow/MultiFinder
-// sudo defaults write /Library/Preferences/com.apple.loginwindow Finder /Users/frontrow/MultiFinder
+// Build MultiFinder and place it -> /Users/frontrow/MultiFinder.app
+// alternative) set APPLETV_IP in cmake cache and use MGBuildAndCopyToATV target
+// sudo defaults write /Library/Preferences/com.apple.loginwindow Finder /Users/frontrow/MultiFinder.app
 //
 // To switch back to frontrow (FInder.app)
 // sudo defaults delete /Library/Preferences/com.apple.loginwindow Finder
