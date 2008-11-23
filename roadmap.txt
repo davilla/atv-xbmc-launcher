@@ -4,6 +4,10 @@ IR:
 - need to detect platform to switch cookies and IR-controller name
 - cookies need adoption (in AppleRemote.m)
 
+Safety first:
+- make sure that Frontrow gets launched if something goes wrong
+  - add level of indirection around launchApplication that tries to launch the specified app, if it goes wrong, launch finder
+
 Features:
 -restart app that was running if it crashed:
  - probably only 3 times
