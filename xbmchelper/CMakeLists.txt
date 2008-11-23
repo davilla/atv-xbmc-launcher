@@ -1,14 +1,11 @@
-cmake_minimum_required(VERSION 2.6)
-
 PROJECT(xbmchelper)
-set(CMAKE_OSX_SYSROOT /Developer/SDKs/MacOSX10.4u.sdk)
 
 SET(XBMCHELPER_SRCS 
 	main.mm
-	../xbmclauncher/src/remote/xbmcclientwrapper.h 
-	../xbmclauncher/src/remote/xbmcclientwrapper.mm 
-	../xbmclauncher/src/remote/xbmcclient.h
-	../xbmclauncher/src/helpers/XBMCDebugHelpers.h
+	xbmcclientwrapper.h 
+	xbmcclientwrapper.mm 
+	xbmcclient.h
+	../common/XBMCDebugHelpers.h
 	XBMCHelper.h
 	XBMCHelper.m
 	remotecontrolwrapper/AppleRemote.h

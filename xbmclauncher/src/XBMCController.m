@@ -21,13 +21,9 @@
 
 #import "XBMCController.h"
 #import <BackRow/BackRow.h>
-#import <BackRowCompilerShutup.h>
+#import "helpers/BackRowCompilerShutup.h"
 #import "XBMCDebugHelpers.h"
-#import "xbmcclientwrapper.h"
 #import "atvxbmccommon.h"
-//activation sequence for Controller events (events which are not sent to controlled app, but are used in this controller, e.g. to kill the app)
-const eATVClientEvent XBMC_CONTROLLER_EVENT_ACTIVATION_SEQUENCE[]={ATV_BUTTON_MENU, ATV_BUTTON_MENU, ATV_BUTTON_PLAY};
-const double XBMC_CONTROLLER_EVENT_TIMEOUT= -0.5; //timeout for activation sequence in seconds
 
 @class BRLayerController;
 

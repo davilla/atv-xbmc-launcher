@@ -20,7 +20,7 @@
 
 #import <Cocoa/Cocoa.h>
 #import <BackRow/BackRow.h>
-@class XBMCDownloadController;
+
 @class XBMCSimpleDownloader;
 @class XBMCUpdateBlockingController;
 

@@ -8,9 +8,9 @@
 // Updated by nito 08-20-08 - works in 2.x
 
 #import "XBMCSimpleDownloader.h"
-#import "XBMCProgressBarControl.h"
 #import <BackRow/BackRow.h>
 #import <XBMCDebugHelpers.h>
+#import <helpers/BackRowCompilerShutup.h>
 
 @interface XBMCSimpleDownloader (private)
 - (BOOL) beginDownload;

@@ -21,7 +21,6 @@
 #import "XBMCUpdateController.h"
 #import "XBMCDebugHelpers.h"
 #import "XBMCUpdateBlockingController.h"
-#import "XBMCDownloadController.h"
 #import "XBMCSimpleDownloader.h"
 
 @class BRLayerController;
@@ -100,7 +99,7 @@
 		return;
 	}
 	//store it where XBMCDownloader stores stuff, too
-	NSString* script_path = [XBMCDownloadController outputPathForURLString:[dict valueForKey:@"UpdateScript"]];
+	NSString* script_path = [XBMCSimpleDownloader outputPathForURLString:[dict valueForKey:@"UpdateScript"]];
 	[[NSFileManager defaultManager] createDirectoryAtPath: [script_path stringByDeletingLastPathComponent]
 																						 attributes: nil];
 	if( ! [script_data writeToFile:script_path atomically:YES] ) {
@@ -110,7 +109,7 @@
 	DLOG(@"Downloaded update script to %@. Starting download of update...", script_path);
   [mp_downloads removeAllObjects];
 	//now start the real download, optionally check for md5 when finished
-  [mp_downloads addObject:[XBMCDownloadController outputPathForURLString:[dict valueForKey:@"URL"]]];
+  [mp_downloads addObject:[XBMCSimpleDownloader outputPathForURLString:[dict valueForKey:@"URL"]]];
 	mp_downloader = [[XBMCSimpleDownloader alloc] initWithDownloadPath:[dict valueForKey:@"URL"] MD5:[dict objectForKey:@"MD5"]];
 	[mp_downloader setTitle:[NSString stringWithFormat:@"Downloading: %@",[dict valueForKey:@"Name"]]];
 	[[self stack] pushController: mp_downloader];
@@ -154,15 +153,15 @@
           //there' another download. start that one first
           NSString* next_md5_lookup = [NSString stringWithFormat:@"MD5_%i",[mp_downloads count]];
           [mp_downloader release]; 
-          [mp_downloads addObject:[XBMCDownloadController outputPathForURLString:l_url]];
-          mp_downloader = [[XBMCDownloadController alloc] initWithDownloadPath:l_url 
+          [mp_downloads addObject:[XBMCSimpleDownloader outputPathForURLString:l_url]];
+          mp_downloader = [[XBMCSimpleDownloader alloc] initWithDownloadPath:l_url 
                                                                            MD5:[dict objectForKey:next_md5_lookup]];
           [mp_downloader setTitle:[NSString stringWithFormat:@"Downloading update: %@",[dict valueForKey:@"Name"]]];
           [[self stack] pushController: mp_downloader];
           return;
         }
         //start the update script with path to downloaded file(s) 
-        NSString* script_path = [XBMCDownloadController outputPathForURLString:[dict valueForKey:@"UpdateScript"]];
+        NSString* script_path = [XBMCSimpleDownloader outputPathForURLString:[dict valueForKey:@"UpdateScript"]];
         DLOG(@"Running update %@ with argument %@", script_path, mp_downloads);
         mp_blocking_updater = [[XBMCUpdateBlockingController alloc] 
                                                   initWithScript: script_path downloads:mp_downloads];
@@ -178,8 +177,8 @@
 		//clear downloaded files
 		DLOG(@"Update finished. Clearing download cache");
 		NSDictionary* dict = [mp_updates objectAtIndex:m_update_item];
-		NSString* script_folder = [[XBMCDownloadController outputPathForURLString:[dict valueForKey:@"UpdateScript"]] stringByDeletingLastPathComponent];
-		NSString* download_folder =  [[XBMCDownloadController outputPathForURLString:[dict valueForKey:@"URL"]] stringByDeletingLastPathComponent];
+		NSString* script_folder = [[XBMCSimpleDownloader outputPathForURLString:[dict valueForKey:@"UpdateScript"]] stringByDeletingLastPathComponent];
+		NSString* download_folder =  [[XBMCSimpleDownloader outputPathForURLString:[dict valueForKey:@"URL"]] stringByDeletingLastPathComponent];
 		DLOG("removing %@ and %@:", script_folder, download_folder);
 		[[NSFileManager defaultManager] removeFileAtPath: script_folder
 																						 handler: nil];

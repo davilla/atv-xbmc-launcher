@@ -20,8 +20,8 @@
  */
 
 #import "XBMCAppliance.h"
-#import "XBMCDebugHelpers.h"
-#import "XBMCUpdateController.h"
+#import <XBMCDebugHelpers.h>
+#import <updater/XBMCUpdateController.h>
 #import "XBMCController.h"
 #import "XBMCPreferencesController.h"
 #import "XBMCUserDefaults.h"
