@@ -25,4 +25,7 @@ Features:
 -create plist for MultiFinder to read settings from
   - e.g. which app to start by default.
 
--add setting of timeout to univermode
+-add setting of timeout to universalmode
+
+-add download of needed from appletv to cmake
+
