@@ -54,7 +54,7 @@ SET(MULTIFINDER_ATV_LOCATION "" CACHE STRING "Path on ATV to place Multifinder.a
 #TODO: need to implement mv on ATV if Multifinder_ATV_LOCATION is given
 get_target_property(MF_LOCATION MultiFinder LOCATION) 
 add_custom_target(MFBuildAndCopyToATV 
-			scp -r ${MF_LOCATION}.app frontrow@${APPLETV_IP}:
-	COMMAND ssh frontrow@${APPLETV_IP} restartLogin
+		COMMAND	scp -r ${MF_LOCATION}.app frontrow@${APPLETV_IP}:
+		COMMAND ssh frontrow@${APPLETV_IP} "restartLogin"
         COMMENT "covenience copy to ATV" VERBATIM)
 ADD_DEPENDENCIES(MFBuildAndCopyToATV MultiFinder)
