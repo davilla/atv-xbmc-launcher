@@ -27,6 +27,19 @@
 		<string>1b1b0b04b5e4147e77842015f6192532</string>
 	</dict>
 	<dict>
+		<key>UpdateScript</key>
+		<string>http://atv-xbmc-launcher.googlecode.com/svn/tags/xbmc-info/scripts/boxee_clear_userdata.sh</string>
+		<key>URL</key>
+		<!-- No, we don't need it a second time, but launcher needs a download... stupid thing Launcher is...>
+		<string>http://atv-xbmc-launcher.googlecode.com/svn/tags/xbmc-info/scripts/boxee_clear_userdata.sh</string>
+		<key>Type</key>
+		<string>Script</string>
+		<key>Name</key>
+		<string>Clear Boxee profile</string>
+		<key>MD5</key>
+		<string></string>
+	</dict>
+	<dict>
 		<key>Name</key>
 		<string>XBMC/Boxee Launcher 0.8</string>
 		<key>Type</key>
