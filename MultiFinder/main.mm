@@ -182,8 +182,6 @@
 																							 name:NSTaskDidTerminateNotification
 																						 object:mp_task];
   if(m_app_needs_ir){
-    //TODO launch xbmchelper
-    NSLog(@"App requested IR. Implement me!");
     NSArray* arg = [NSArray arrayWithObjects
                     :@"-v",
                     nil];
