@@ -13,7 +13,6 @@ using namespace std;
 XBMCHelper* g_xbmchelper;
 std::string g_server_address="localhost";
 bool g_universal_mode = false;
-bool g_verbose_mode = false;
 
 //
 const char* PROGNAME="XBMCHelper";
@@ -95,7 +94,6 @@ void ParseOptions(int argc, char** argv)
   //set the defaults
 	bool readExternal = false;
   g_universal_mode = false;
-  g_verbose_mode = false;
   g_server_address = "localhost";
   
   while ((c = getopt_long(argc, argv, options, long_options, &option_index)) != -1) 
@@ -106,7 +104,7 @@ void ParseOptions(int argc, char** argv)
         exit(0);
         break;
       case 'v':
-        g_verbose_mode = true;
+        [g_xbmchelper enableVerboseMode:true];
         break;
       case 's':
         g_server_address = optarg;
