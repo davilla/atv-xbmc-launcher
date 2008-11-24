@@ -35,9 +35,56 @@
                    pressedDown: (BOOL) pressedDown 
                  remoteControl: (RemoteControl*) remoteControl 
 {
-  // NSLog(@"Button %d pressed down %d", event, pressedDown);
-  if(m_verbose)
-    NSLog(@"Button %d pressed down %d", event, pressedDown);
+  if(m_verbose){
+    NSString* pressed;
+    NSString* buttonName;
+    if (pressedDown) pressed = @"(pressed)"; else pressed = @"(released)";
+    
+    switch(event) {
+      case kRemoteButtonPlus:
+        buttonName = @"Volume up";			
+        break;
+      case kRemoteButtonMinus:
+        buttonName = @"Volume down";
+        break;			
+      case kRemoteButtonMenu:
+        buttonName = @"Menu";
+        break;			
+      case kRemoteButtonPlay:
+        buttonName = @"Play";
+        break;			
+      case kRemoteButtonRight:	
+        buttonName = @"Right";
+        break;			
+      case kRemoteButtonLeft:
+        buttonName = @"Left";
+        break;			
+      case kRemoteButtonRight_Hold:
+        buttonName = @"Right holding";	
+        break;	
+      case kRemoteButtonLeft_Hold:
+        buttonName = @"Left holding";		
+        break;			
+      case kRemoteButtonPlus_Hold:
+        buttonName = @"Volume up holding";	
+        break;				
+      case kRemoteButtonMinus_Hold:			
+        buttonName = @"Volume down holding";	
+        break;				
+      case kRemoteButtonPlay_Hold:
+        buttonName = @"Play (sleep mode)";
+        break;			
+      case kRemoteButtonMenu_Hold:
+        buttonName = @"Menu (long)";
+        break;
+      case kRemoteControl_Switched:
+        buttonName = @"Remote Control Switched";
+        break;
+      default:
+        break;
+    }
+    NSLog(@"%@ %@", pressed, buttonName);
+  }
   switch(event){
     case kRemoteButtonPlay:
       if(pressedDown) [mp_wrapper handleEvent:ATV_BUTTON_PLAY];
