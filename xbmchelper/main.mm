@@ -33,6 +33,8 @@ static struct option long_options[] = {
 };
 static const char *options = "hvt:us:";
 
+//----------------------------------------------------------------------------
+//----------------------------------------------------------------------------
 void usage(void)
 {
   printf("%s (version %s)\n", PROGNAME, PROGVERS);
@@ -45,6 +47,7 @@ void usage(void)
   printf("  -v, --verbose        prints lots of debugging information.\n");
 }
 
+//----------------------------------------------------------------------------
 void ReadConfig()
 {
 	// Compute filename.
@@ -85,6 +88,7 @@ void ReadConfig()
 	delete[] argv;
 }
 
+//----------------------------------------------------------------------------
 void ParseOptions(int argc, char** argv)
 {
   int c, option_index = 0;
@@ -128,6 +132,7 @@ void ParseOptions(int argc, char** argv)
 		ReadConfig();	
 }
 
+//----------------------------------------------------------------------------
 void Reconfigure(int nSignal)
 {
 	if (nSignal == SIGHUP){
@@ -139,6 +144,7 @@ void Reconfigure(int nSignal)
     exit(0);
 }
 
+//----------------------------------------------------------------------------
 int main (int argc,  char * argv[]) {
   NSAutoreleasePool* pool = [[NSAutoreleasePool alloc] init];
 

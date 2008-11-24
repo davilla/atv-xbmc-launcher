@@ -42,7 +42,8 @@
 	
 	BOOL fixSecureEventInputBug;
 	BOOL openInExclusiveMode;
-	BOOL processesBacklog;	
+	BOOL processesBacklog;
+  BOOL useOldHIDEvents;
 	
 	int supportedButtonEvents;
 }
@@ -60,5 +61,6 @@
 - (void) sendRemoteButtonEvent: (RemoteControlEventIdentifier) event pressedDown: (BOOL) pressedDown;
 
 + (BOOL) isRemoteAvailable;
++ (int) osxVersion;
 
 @end

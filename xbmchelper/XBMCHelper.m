@@ -9,6 +9,8 @@
 #import "XBMCHelper.h"
 #import "remotecontrolwrapper/AppleRemote.h"
 
+//----------------------------------------------------------------------------
+//----------------------------------------------------------------------------
 @implementation XBMCHelper
 - (id) init{
   if( ![super init] ){
@@ -28,11 +30,12 @@
   [super dealloc];
 }
 
+//----------------------------------------------------------------------------
 - (void) sendRemoteButtonEvent: (RemoteControlEventIdentifier) event 
                    pressedDown: (BOOL) pressedDown 
                  remoteControl: (RemoteControl*) remoteControl 
 {
-    NSLog(@"Button %d pressed down %d", event, pressedDown);
+  // NSLog(@"Button %d pressed down %d", event, pressedDown);
   if(m_verbose)
     NSLog(@"Button %d pressed down %d", event, pressedDown);
   switch(event){
@@ -84,17 +87,20 @@
   }
 }
 
+//----------------------------------------------------------------------------
 - (void) connectToServer:(NSString*) fp_server withUniversalMode:(bool) f_yes_no{
  if(mp_wrapper)
    [self disconnect];
   mp_wrapper = [[XBMCClientWrapper alloc] initWithUniversalMode:f_yes_no serverAddress:fp_server];
 }
 
+//----------------------------------------------------------------------------
 - (void) disconnect{
   [mp_wrapper release];
   mp_wrapper = nil;
 }
 
+//----------------------------------------------------------------------------
 - (void) enableVerboseMode:(bool) f_really{
   m_verbose = f_really;
 }

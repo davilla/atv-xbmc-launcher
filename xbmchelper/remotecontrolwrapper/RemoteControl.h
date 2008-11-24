@@ -42,6 +42,19 @@ extern NSString* kTargetApplicationIdentifier;
 #define EVENT_TO_HOLD_EVENT_OFFSET 6 
 
 @class RemoteControl;
+typedef enum _OSX_Vers {
+  kUnknown  = 0,
+	kOSX_10_5 = 1050,
+	kOSX_10_4 = 1040,
+	kATV_1_00 =  100,
+	kATV_1_10 =  101,
+	kATV_2_00 =  200,
+	kATV_2_01 =  201,
+	kATV_2_02 =  202,
+	kATV_2_10 =  210,
+	kATV_2_20 =  220,
+	kATV_2_30 =  230,
+} OSX_Vers;
 
 typedef enum _RemoteControlEventIdentifier {
 	// normal events

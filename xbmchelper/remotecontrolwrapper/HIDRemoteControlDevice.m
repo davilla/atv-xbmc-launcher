@@ -15,7 +15,7 @@
  * The above copyright notice and this permission notice shall be included
  * in all copies or substantial portions of the Software.
  *
- * THE SOFTWARE IS PROVIDED “AS IS”, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * THE SOFTWARE IS PROVIDED ‚ÄúAS IS‚Äù, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
  * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
  * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL 
  * THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
@@ -24,16 +24,28 @@
  * THE SOFTWARE.
  *
  *****************************************************************************/
+//----------------------------------------------------------------------------
 
 #import "HIDRemoteControlDevice.h"
 
 #import <mach/mach.h>
 #import <mach/mach_error.h>
+#import <sys/types.h>
+#import <sys/sysctl.h>
 #import <IOKit/IOKitLib.h>
 #import <IOKit/IOCFPlugIn.h>
 #import <IOKit/hid/IOHIDKeys.h>
 #import <Carbon/Carbon.h>
 
+typedef struct _ATV_IR_EVENT {
+  UInt32    time_ms32;
+  UInt32    time_ls32; // units of microsecond 
+  UInt32    unknown1;
+  UInt32    keycode;
+  UInt32    unknown2;
+} ATV_IR_EVENT;
+
+//----------------------------------------------------------------------------
 @interface HIDRemoteControlDevice (PrivateMethods) 
 - (NSDictionary*) cookieToButtonMapping;
 - (IOHIDQueueInterface**) queue;
@@ -42,21 +54,25 @@
 - (void) removeNotifcationObserver;
 - (void) remoteControlAvailable:(NSNotification *)notification;
 
+
 @end
 
 @interface HIDRemoteControlDevice (IOKitMethods) 
 + (io_object_t) findRemoteDevice;
 - (IOHIDDeviceInterface**) createInterfaceForDevice: (io_object_t) hidDevice;
 - (BOOL) initializeCookies;
-- (BOOL) openDevice;
+- (BOOL) openDevice: (BOOL) value;
 @end
 
+//----------------------------------------------------------------------------
+//----------------------------------------------------------------------------
 @implementation HIDRemoteControlDevice
 
 + (const char*) remoteControlDeviceName {
 	return "";
 }
 
+//----------------------------------------------------------------------------
 + (BOOL) isRemoteAvailable {	
 	io_object_t hidDevice = [self findRemoteDevice];
 	if (hidDevice != 0) {
@@ -67,6 +83,91 @@
 	}
 }
 
+//----------------------------------------------------------------------------
++ (int) osxVersion  {
+	// Runtime Version Check
+  int os_version = kOSX_10_5;
+  SInt32      MacVersion;
+  
+  Gestalt(gestaltSystemVersion, &MacVersion);
+  if (MacVersion < 0x1050) {
+    // OSX 10.4/AppleTV
+    size_t      len = 512;
+    char        hw_model[512] = "unknown";
+    
+    sysctlbyname("hw.model", &hw_model, &len, NULL, 0);
+
+    if ( strstr(hw_model,"AppleTV1,1") ) {
+        FILE *inpipe;
+        bool atv_version_found = false;
+        char linebuf[1000];
+
+        //Find the build version of the AppleTV OS
+        inpipe = popen("sw_vers -buildVersion", "r");
+        if (inpipe) {
+            //get output
+            if(fgets(linebuf, sizeof(linebuf) - 1, inpipe)) {
+                if( strstr(linebuf,"8N5107") ) {
+                    os_version = kATV_1_00;
+                    atv_version_found = true;
+                    NSLog(@"Using key code for AppletTV software version r1.0");
+                } else if( strstr(linebuf,"8N5239") )  {
+                    os_version = kATV_1_10;
+                    atv_version_found = true;
+                    NSLog(@"Using key code for AppletTV software version r1.1");
+                } else if ( strstr(linebuf,"8N5400") ) {
+                    os_version = kATV_2_00;
+                    atv_version_found = true;
+                    NSLog(@"Using key code for AppletTV software version r2.0");
+                } else if ( strstr(linebuf,"8N5455") ) {
+                    os_version = kATV_2_01;
+                    atv_version_found = true;
+                    NSLog(@"Using key code for AppletTV software version r2.01");
+                } else if ( strstr(linebuf,"8N5461") ) {
+                    os_version = kATV_2_02;
+                    atv_version_found = true;
+                    NSLog(@"Using key code for AppletTV software version r2.02");
+                    atv_version_found = true;
+                } else if( strstr(linebuf,"8N5519")) {
+                    os_version = kATV_2_10;
+                    atv_version_found = true;
+                    NSLog(@"Using key code for AppletTV software version r2.10");
+                    atv_version_found = true;
+                } else if( strstr(linebuf,"8N5622")) {
+                    os_version = kATV_2_20;
+                    atv_version_found = true;
+                    NSLog(@"Using key code for AppletTV software version r2.20");
+                    atv_version_found = true;
+                } else if( strstr(linebuf,"8N5722")) {
+                    os_version = kATV_2_30;
+                    atv_version_found = true;
+                    NSLog(@"Using key code for AppletTV software version r2.30");
+                }                    
+            }
+            pclose(inpipe); 
+        }
+        
+        if(!atv_version_found) {
+            // handle fallback or just exit
+            os_version = kATV_2_30;
+            NSLog(@"AppletTV software version could not be determined");
+            NSLog(@"Defaulting to using key code for AppleTV r2.3");
+        }
+      } else {
+        // OSX 10.4.x Tiger
+        os_version = kOSX_10_4;
+        NSLog(@"Using key code for OSX 10.4 Tiger");
+      }
+  } else {
+    os_version = kOSX_10_5;
+    // OSX 10.5.x Leopard
+    NSLog(@"Using key code for OSX OSX 10.5 Leopard");
+  }
+  
+  return (os_version);
+}
+
+//----------------------------------------------------------------------------
 - (id) initWithDelegate: (id) _remoteControlDelegate {	
 	if ([[self class] isRemoteAvailable] == NO) return nil;
 	
@@ -91,6 +192,7 @@
 	return self;
 }
 
+//----------------------------------------------------------------------------
 - (void) dealloc {
 	[self removeNotifcationObserver];
 	[self stopListening:self];
@@ -98,24 +200,31 @@
 	[super dealloc];
 }
 
+//----------------------------------------------------------------------------
 - (void) sendRemoteButtonEvent: (RemoteControlEventIdentifier) event pressedDown: (BOOL) pressedDown {
 	[delegate sendRemoteButtonEvent: event pressedDown: pressedDown remoteControl:self];
 }
 
+//----------------------------------------------------------------------------
 - (void) setCookieMappingInDictionary: (NSMutableDictionary*) cookieToButtonMapping {
 }
+
+//----------------------------------------------------------------------------
 - (int) remoteIdSwitchCookie {
 	return 0;
 }
 
+//----------------------------------------------------------------------------
 - (BOOL) sendsEventForButtonIdentifier: (RemoteControlEventIdentifier) identifier {
 	return (supportedButtonEvents & identifier) == identifier;
 }
 	
+//----------------------------------------------------------------------------
 - (BOOL) isListeningToRemote {
 	return (hidDeviceInterface != NULL && allCookies != NULL && queue != NULL);	
 }
 
+//----------------------------------------------------------------------------
 - (void) setListeningToRemote: (BOOL) value {
 	if (value == NO) {
 		[self stopListening:self];
@@ -124,20 +233,27 @@
 	}
 }
 
+//----------------------------------------------------------------------------
 - (BOOL) isOpenInExclusiveMode {
 	return openInExclusiveMode;
 }
+
+//----------------------------------------------------------------------------
 - (void) setOpenInExclusiveMode: (BOOL) value {
 	openInExclusiveMode = value;
 }
 
+//----------------------------------------------------------------------------
 - (BOOL) processesBacklog {
 	return processesBacklog;
 }
+
+//----------------------------------------------------------------------------
 - (void) setProcessesBacklog: (BOOL) value {
 	processesBacklog = value;
 }
 
+//----------------------------------------------------------------------------
 - (IBAction) startListening: (id) sender {	
 	if ([self isListeningToRemote]) return;
 	
@@ -174,7 +290,7 @@
 		goto error;
 	}
 
-	if ([self openDevice]==NO) {
+	if ([self openDevice:useOldHIDEvents]==NO) {
 		goto error;
 	}
 	// be KVO friendly
@@ -190,6 +306,7 @@ cleanup:
 	IOObjectRelease(hidDevice);	
 }
 
+//----------------------------------------------------------------------------
 - (IBAction) stopListening: (id) sender {
 	if ([self isListeningToRemote]==NO) return;
 	
@@ -241,17 +358,21 @@ cleanup:
 
 @end
 
+//----------------------------------------------------------------------------
+//----------------------------------------------------------------------------
 @implementation HIDRemoteControlDevice (PrivateMethods) 
 
 - (IOHIDQueueInterface**) queue {
 	return queue;
 }
 
+//----------------------------------------------------------------------------
 - (IOHIDDeviceInterface**) hidDeviceInterface {
 	return hidDeviceInterface;
 }
 
 
+//----------------------------------------------------------------------------
 - (NSDictionary*) cookieToButtonMapping {
 	return cookieToButtonMapping;
 }
@@ -267,6 +388,7 @@ cleanup:
 	return nil;
 }
 
+//----------------------------------------------------------------------------
 - (void) handleEventWithCookieString: (NSString*) cookieString sumOfValues: (SInt32) sumOfValues {
 	/*
 	if (previousRemainingCookieString) {
@@ -275,10 +397,10 @@ cleanup:
 		[previousRemainingCookieString release], previousRemainingCookieString=nil;							
 	}*/
 	if (cookieString == nil || [cookieString length] == 0) return;
-  NSLog(@"unprocessed cookiestring %@", cookieString);
+  //NSLog(@"unprocessed cookiestring %@", cookieString);
 	NSNumber* buttonId = [[self cookieToButtonMapping] objectForKey: cookieString];
 	if (buttonId != nil) {
-    NSLog(@"buttonId != 0");
+    //NSLog(@"buttonId != 0");
 		[self sendRemoteButtonEvent: [buttonId intValue] pressedDown: (sumOfValues>0)];
 	} else {
 		// let's see if a number of events are stored in the cookie string. this does
@@ -303,10 +425,12 @@ cleanup:
 	}
 }
 
+//----------------------------------------------------------------------------
 - (void) removeNotifcationObserver {
 	[[NSDistributedNotificationCenter defaultCenter] removeObserver:self name:FINISHED_USING_REMOTE_CONTROL_NOTIFICATION object:nil];
 }
 
+//----------------------------------------------------------------------------
 - (void) remoteControlAvailable:(NSNotification *)notification {
 	[self removeNotifcationObserver];
 	[self startListening: self];
@@ -314,20 +438,52 @@ cleanup:
 
 @end
 
-typedef struct _ATV_IR_EVENT {
-  UInt32    time_ms32;
-  UInt32    time_ls32; // units of microsecond 
-  UInt32    unknown1;
-  UInt32    keycode;
-  UInt32    unknown2;
-} ATV_IR_EVENT;
-
-/*	Callback method for the device queue
-Will be called for any event of any type (cookie) to which we subscribe
-*/
-static void QueueCallbackFunction(void* target,  IOReturn result, void* refcon, void* sender) {	
+//----------------------------------------------------------------------------
+// Callback method for the device queue (OSX 10.4/10.5 ATV 1.x/2.0 ->2.2)
+// Will be called for any event of any type (cookie) to which we subscribe
+static void QueueOldCallbackFunction(void* target,  IOReturn result, void* refcon, void* sender) {	
 	if (target < 0) {
-		NSLog(@"QueueCallbackFunction called with invalid target!");
+		NSLog(@"QueueOldCallbackFunction called with invalid target!");
+		return;
+	}
+	NSAutoreleasePool* pool = [[NSAutoreleasePool alloc] init];
+	
+	HIDRemoteControlDevice* remote = (HIDRemoteControlDevice*)target;	
+	IOHIDEventStruct  event;	
+	AbsoluteTime      zeroTime = {0,0};
+	NSMutableString*  cookieString = [NSMutableString string];
+	SInt32            sumOfValues = 0;
+  
+	while (result == kIOReturnSuccess)
+	{
+		result = (*[remote queue])->getNextEvent([remote queue], &event, zeroTime, 0);		
+		if ( result != kIOReturnSuccess ) {
+			continue;
+    }
+
+    printf("%d %d %d %d\n",
+      (int)event.elementCookie,
+      (int)event.value,
+      (int)event.longValueSize,		
+      (int)event.longValue);		
+
+    if (((int)event.elementCookie) != 5 ) {
+			sumOfValues += event.value;
+			[cookieString appendString:[NSString stringWithFormat:@"%d_", event.elementCookie]];
+		}
+	}
+
+	[remote handleEventWithCookieString: cookieString sumOfValues: sumOfValues];
+
+	[pool release];
+}
+
+//----------------------------------------------------------------------------
+// Callback method for the device queue ( ATV 2.3 )
+// Will be called for any event of any type (cookie) to which we subscribe
+static void QueueNewCallbackFunction(void* target,  IOReturn result, void* refcon, void* sender) {	
+	if (target < 0) {
+		NSLog(@"QueueNewCallbackFunction called with invalid target!");
 		return;
 	}
 	NSAutoreleasePool* pool = [[NSAutoreleasePool alloc] init];
@@ -399,6 +555,8 @@ static void QueueCallbackFunction(void* target,  IOReturn result, void* refcon, 
 	[pool release];
 }
 
+//----------------------------------------------------------------------------
+//----------------------------------------------------------------------------
 @implementation HIDRemoteControlDevice (IOKitMethods)
 
 - (IOHIDDeviceInterface**) createInterfaceForDevice: (io_object_t) hidDevice {
@@ -436,6 +594,7 @@ static void QueueCallbackFunction(void* target,  IOReturn result, void* refcon, 
 	return hidDeviceInterface;
 }
 
+//----------------------------------------------------------------------------
 - (BOOL) initializeCookies {
 	IOHIDDeviceInterface122** handle = (IOHIDDeviceInterface122**)hidDeviceInterface;
 	IOHIDElementCookie		cookie;
@@ -491,7 +650,8 @@ static void QueueCallbackFunction(void* target,  IOReturn result, void* refcon, 
 	return YES;
 }
 
-- (BOOL) openDevice {
+//----------------------------------------------------------------------------
+- (BOOL) openDevice: (BOOL) UseOldCallback {
 	HRESULT  result;
 	
 	IOHIDOptionsType openMode = kIOHIDOptionsTypeNone;
@@ -501,7 +661,9 @@ static void QueueCallbackFunction(void* target,  IOReturn result, void* refcon, 
 	if (ioReturnValue == KERN_SUCCESS) {		
 		queue = (*hidDeviceInterface)->allocQueue(hidDeviceInterface);
 		if (queue) {
-			result = (*queue)->create(queue, 0, 12);	//depth: maximum number of elements in queue before oldest elements in queue begin to be lost.
+      //depth: maximum number of elements in queue before oldest elements
+      // in queue begin to be lost.
+			result = (*queue)->create(queue, 0, 12);	
 
 			IOHIDElementCookie cookie;
 			NSEnumerator *allCookiesEnumerator = [allCookies objectEnumerator];
@@ -513,7 +675,11 @@ static void QueueCallbackFunction(void* target,  IOReturn result, void* refcon, 
 			// add callback for async events			
 			ioReturnValue = (*queue)->createAsyncEventSource(queue, &eventSource);			
 			if (ioReturnValue == KERN_SUCCESS) {
-				ioReturnValue = (*queue)->setEventCallout(queue,QueueCallbackFunction, self, NULL);
+        if (UseOldCallback) {
+          ioReturnValue = (*queue)->setEventCallout(queue, QueueOldCallbackFunction, self, NULL);
+        } else {
+          ioReturnValue = (*queue)->setEventCallout(queue, QueueNewCallbackFunction, self, NULL);
+        }
 				if (ioReturnValue == KERN_SUCCESS) {
 					CFRunLoopAddSource(CFRunLoopGetCurrent(), eventSource, kCFRunLoopDefaultMode);
 					
@@ -541,6 +707,7 @@ static void QueueCallbackFunction(void* target,  IOReturn result, void* refcon, 
 	return NO;				
 }
 
+//----------------------------------------------------------------------------
 + (io_object_t) findRemoteDevice {
 	CFMutableDictionaryRef hidMatchDictionary = NULL;
 	IOReturn ioReturnValue = kIOReturnSuccess;	
