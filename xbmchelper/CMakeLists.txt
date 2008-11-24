@@ -39,4 +39,15 @@ IF(NOT BACKROW_LIBRARY)
  MESSAGE(FATAL_ERROR "Ouch BackRow not found. Bailing out...")
 ENDIF(NOT BACKROW_LIBRARY)
 add_executable(xbmchelper ${XBMCHELPER_SRCS})
+SET_TARGET_PROPERTIES(xbmchelper PROPERTIES COMPILE_DEFINITIONS_DEBUG "${COMPILE_DEFINITIONS_DEBUG}")
 TARGET_LINK_LIBRARIES(xbmchelper ${FOUNDATION_LIBRARY} ${IOKIT_LIBRARY} ${COCOA_LIBRARY} ${CARBON_LIBRARY})
+
+#-------
+# add convenience target which copies to ATV
+SET(XBMCHELPER_ATV_LOCATION "" CACHE STRING "Path on ATV to place xbmchelper; if empty home directory is used")
+#TODO: need to implement mv on ATV if Multifinder_ATV_LOCATION is given
+get_target_property(HELPER_LOCATION xbmchelper LOCATION) 
+add_custom_target(HelperBuildAndCopyToATV 
+		COMMAND	scp ${HELPER_LOCATION} frontrow@${APPLETV_IP}:
+        COMMENT "covenience copy to ATV" VERBATIM)
+ADD_DEPENDENCIES(HelperBuildAndCopyToATV xbmchelper)
