@@ -5,7 +5,7 @@ SET(XBMCHELPER_SRCS
 	xbmcclientwrapper.h 
 	xbmcclientwrapper.mm 
 	xbmcclient.h
-	../common/XBMCDebugHelpers.h
+	XBMCDebugHelpers.h
 	XBMCHelper.h
 	XBMCHelper.m
 	remotecontrolwrapper/AppleRemote.h
