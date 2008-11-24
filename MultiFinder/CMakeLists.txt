@@ -43,10 +43,18 @@ add_custom_command(TARGET MultiFinder
 
 #-------
 # add convenience target which copies to ATV
+# needs following script in path:
+#
+##!/bin/bash
+##restart finder
+#kill `ps awwx | grep [l]oginwindow | awk '{print $1}'`
+#kill `ps awwx | grep [F]inder | awk '{print $1}'`
 #-------
 SET(MULTIFINDER_ATV_LOCATION "" CACHE STRING "Path on ATV to place Multifinder.app; if empty home directory is used")
 #TODO: need to implement mv on ATV if Multifinder_ATV_LOCATION is given
 get_target_property(MF_LOCATION MultiFinder LOCATION) 
-add_custom_target(MFBuildAndCopyToATV scp -r ${MF_LOCATION}.app frontrow@${APPLETV_IP}:
+add_custom_target(MFBuildAndCopyToATV 
+			scp -r ${MF_LOCATION}.app frontrow@${APPLETV_IP}:
+	COMMAND ssh frontrow@${APPLETV_IP} restartLogin
         COMMENT "covenience copy to ATV" VERBATIM)
 ADD_DEPENDENCIES(MFBuildAndCopyToATV MultiFinder)
