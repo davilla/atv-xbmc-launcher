@@ -30,8 +30,6 @@
 
 #import <mach/mach.h>
 #import <mach/mach_error.h>
-#import <sys/types.h>
-#import <sys/sysctl.h>
 #import <IOKit/IOKitLib.h>
 #import <IOKit/IOCFPlugIn.h>
 #import <IOKit/hid/IOHIDKeys.h>
@@ -53,15 +51,13 @@ typedef struct _ATV_IR_EVENT {
 - (void) handleEventWithCookieString: (NSString*) cookieString sumOfValues: (SInt32) sumOfValues; 
 - (void) removeNotifcationObserver;
 - (void) remoteControlAvailable:(NSNotification *)notification;
-
-
 @end
 
 @interface HIDRemoteControlDevice (IOKitMethods) 
 + (io_object_t) findRemoteDevice;
 - (IOHIDDeviceInterface**) createInterfaceForDevice: (io_object_t) hidDevice;
 - (BOOL) initializeCookies;
-- (BOOL) openDevice: (BOOL) value;
+- (BOOL) openDevice;
 @end
 
 //----------------------------------------------------------------------------
@@ -84,91 +80,9 @@ typedef struct _ATV_IR_EVENT {
 }
 
 //----------------------------------------------------------------------------
-+ (int) osxVersion  {
-	// Runtime Version Check
-  int os_version = kOSX_10_5;
-  SInt32      MacVersion;
-  
-  Gestalt(gestaltSystemVersion, &MacVersion);
-  if (MacVersion < 0x1050) {
-    // OSX 10.4/AppleTV
-    size_t      len = 512;
-    char        hw_model[512] = "unknown";
-    
-    sysctlbyname("hw.model", &hw_model, &len, NULL, 0);
-
-    if ( strstr(hw_model,"AppleTV1,1") ) {
-        FILE *inpipe;
-        bool atv_version_found = false;
-        char linebuf[1000];
-
-        //Find the build version of the AppleTV OS
-        inpipe = popen("sw_vers -buildVersion", "r");
-        if (inpipe) {
-            //get output
-            if(fgets(linebuf, sizeof(linebuf) - 1, inpipe)) {
-                if( strstr(linebuf,"8N5107") ) {
-                    os_version = kATV_1_00;
-                    atv_version_found = true;
-                    NSLog(@"Using key code for AppletTV software version r1.0");
-                } else if( strstr(linebuf,"8N5239") )  {
-                    os_version = kATV_1_10;
-                    atv_version_found = true;
-                    NSLog(@"Using key code for AppletTV software version r1.1");
-                } else if ( strstr(linebuf,"8N5400") ) {
-                    os_version = kATV_2_00;
-                    atv_version_found = true;
-                    NSLog(@"Using key code for AppletTV software version r2.0");
-                } else if ( strstr(linebuf,"8N5455") ) {
-                    os_version = kATV_2_01;
-                    atv_version_found = true;
-                    NSLog(@"Using key code for AppletTV software version r2.01");
-                } else if ( strstr(linebuf,"8N5461") ) {
-                    os_version = kATV_2_02;
-                    atv_version_found = true;
-                    NSLog(@"Using key code for AppletTV software version r2.02");
-                    atv_version_found = true;
-                } else if( strstr(linebuf,"8N5519")) {
-                    os_version = kATV_2_10;
-                    atv_version_found = true;
-                    NSLog(@"Using key code for AppletTV software version r2.10");
-                    atv_version_found = true;
-                } else if( strstr(linebuf,"8N5622")) {
-                    os_version = kATV_2_20;
-                    atv_version_found = true;
-                    NSLog(@"Using key code for AppletTV software version r2.20");
-                    atv_version_found = true;
-                } else if( strstr(linebuf,"8N5722")) {
-                    os_version = kATV_2_30;
-                    atv_version_found = true;
-                    NSLog(@"Using key code for AppletTV software version r2.30");
-                }                    
-            }
-            pclose(inpipe); 
-        }
-        
-        if(!atv_version_found) {
-            // handle fallback or just exit
-            os_version = kATV_2_30;
-            NSLog(@"AppletTV software version could not be determined");
-            NSLog(@"Defaulting to using key code for AppleTV r2.3");
-        }
-      } else {
-        // OSX 10.4.x Tiger
-        os_version = kOSX_10_4;
-        NSLog(@"Using key code for OSX 10.4 Tiger");
-      }
-  } else {
-    os_version = kOSX_10_5;
-    // OSX 10.5.x Leopard
-    NSLog(@"Using key code for OSX OSX 10.5 Leopard");
-  }
-  
-  return (os_version);
-}
-
-//----------------------------------------------------------------------------
 - (id) initWithDelegate: (id) _remoteControlDelegate {	
+  [self setupOSDefaults];
+
 	if ([[self class] isRemoteAvailable] == NO) return nil;
 	
 	if ( self = [super initWithDelegate: _remoteControlDelegate] ) {
@@ -203,6 +117,13 @@ typedef struct _ATV_IR_EVENT {
 //----------------------------------------------------------------------------
 - (void) sendRemoteButtonEvent: (RemoteControlEventIdentifier) event pressedDown: (BOOL) pressedDown {
 	[delegate sendRemoteButtonEvent: event pressedDown: pressedDown remoteControl:self];
+}
+
+//----------------------------------------------------------------------------
+- (void) setupOSDefaults  {
+  // default to real OSX box running 10.5
+  osxHardware = kOSXversion;
+  osxVersion = kOSX_10_5;
 }
 
 //----------------------------------------------------------------------------
@@ -290,7 +211,7 @@ typedef struct _ATV_IR_EVENT {
 		goto error;
 	}
 
-	if ([self openDevice:useOldHIDEvents]==NO) {
+	if ([self openDevice]==NO) {
 		goto error;
 	}
 	// be KVO friendly
@@ -441,9 +362,9 @@ cleanup:
 //----------------------------------------------------------------------------
 // Callback method for the device queue (OSX 10.4/10.5 ATV 1.x/2.0 ->2.2)
 // Will be called for any event of any type (cookie) to which we subscribe
-static void QueueOldCallbackFunction(void* target,  IOReturn result, void* refcon, void* sender) {	
+static void QueueCallbackFunction(void* target,  IOReturn result, void* refcon, void* sender) {	
 	if (target < 0) {
-		NSLog(@"QueueOldCallbackFunction called with invalid target!");
+		NSLog(@"QueueCallbackFunction called with invalid target!");
 		return;
 	}
 	NSAutoreleasePool* pool = [[NSAutoreleasePool alloc] init];
@@ -481,9 +402,9 @@ static void QueueOldCallbackFunction(void* target,  IOReturn result, void* refco
 //----------------------------------------------------------------------------
 // Callback method for the device queue ( ATV 2.3 )
 // Will be called for any event of any type (cookie) to which we subscribe
-static void QueueNewCallbackFunction(void* target,  IOReturn result, void* refcon, void* sender) {	
+static void QueueATV23CallbackFunction(void* target,  IOReturn result, void* refcon, void* sender) {	
 	if (target < 0) {
-		NSLog(@"QueueNewCallbackFunction called with invalid target!");
+		NSLog(@"QueueATV23CallbackFunction called with invalid target!");
 		return;
 	}
 	NSAutoreleasePool* pool = [[NSAutoreleasePool alloc] init];
@@ -651,7 +572,7 @@ static void QueueNewCallbackFunction(void* target,  IOReturn result, void* refco
 }
 
 //----------------------------------------------------------------------------
-- (BOOL) openDevice: (BOOL) UseOldCallback {
+- (BOOL) openDevice {
 	HRESULT  result;
 	
 	IOHIDOptionsType openMode = kIOHIDOptionsTypeNone;
@@ -675,10 +596,10 @@ static void QueueNewCallbackFunction(void* target,  IOReturn result, void* refco
 			// add callback for async events			
 			ioReturnValue = (*queue)->createAsyncEventSource(queue, &eventSource);			
 			if (ioReturnValue == KERN_SUCCESS) {
-        if (UseOldCallback) {
-          ioReturnValue = (*queue)->setEventCallout(queue, QueueOldCallbackFunction, self, NULL);
+        if ( (osxHardware == kATVversion) && (osxVersion > kATV_2_20) ) {
+          ioReturnValue = (*queue)->setEventCallout(queue, QueueATV23CallbackFunction, self, NULL);
         } else {
-          ioReturnValue = (*queue)->setEventCallout(queue, QueueNewCallbackFunction, self, NULL);
+          ioReturnValue = (*queue)->setEventCallout(queue, QueueCallbackFunction, self, NULL);
         }
 				if (ioReturnValue == KERN_SUCCESS) {
 					CFRunLoopAddSource(CFRunLoopGetCurrent(), eventSource, kCFRunLoopDefaultMode);

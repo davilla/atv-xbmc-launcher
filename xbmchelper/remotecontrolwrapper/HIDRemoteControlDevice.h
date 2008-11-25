@@ -36,14 +36,15 @@
 @interface HIDRemoteControlDevice : RemoteControl {
 	IOHIDDeviceInterface** hidDeviceInterface;
 	IOHIDQueueInterface**  queue;
-	NSMutableArray*		   allCookies;
+	NSMutableArray*        allCookies;
 	NSMutableDictionary*   cookieToButtonMapping;
 	CFRunLoopSourceRef	   eventSource;
 	
 	BOOL fixSecureEventInputBug;
 	BOOL openInExclusiveMode;
 	BOOL processesBacklog;
-  BOOL useOldHIDEvents;
+  int  osxHardware;
+  int  osxVersion;
 	
 	int supportedButtonEvents;
 }
@@ -60,7 +61,8 @@
 
 - (void) sendRemoteButtonEvent: (RemoteControlEventIdentifier) event pressedDown: (BOOL) pressedDown;
 
+- (void) setupOSDefaults;
+
 + (BOOL) isRemoteAvailable;
-+ (int) osxVersion;
 
 @end
