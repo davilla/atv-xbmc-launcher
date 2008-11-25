@@ -1,7 +1,7 @@
 PROJECT(xbmchelper)
 
 SET(XBMCHELPER_SRCS 
-	main.mm
+	xbmchelper.mm
 	xbmcclientwrapper.h 
 	xbmcclientwrapper.mm 
 	xbmcclient.h
