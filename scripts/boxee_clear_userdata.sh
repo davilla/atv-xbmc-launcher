@@ -1,5 +1,7 @@
 #!/bin/sh
 
-#clean up Boxee userdata folder
-rm -rf /Users/frontrow/Library/Application\ Support/BOXEE/UserData
+USERDATA="/Users/frontrow/Library/Application Support/BOXEE/UserData"
+
+echo "clean up Boxee userdata folder :" "$USERDATA"
+rm -rf "$USERDATA"
  
