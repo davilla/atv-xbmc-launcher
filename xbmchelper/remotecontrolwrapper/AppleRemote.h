@@ -32,6 +32,7 @@
 	The class is not thread safe
 */
 @interface AppleRemote : HIDRemoteControlDevice {		
+  RemoteControlEventIdentifier m_last_event;
 }
 
 @end

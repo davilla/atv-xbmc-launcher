@@ -9,11 +9,12 @@
 #import <Cocoa/Cocoa.h>
 #import "xbmcclientwrapper.h"
 
-@class AppleRemote;
+@class AppleRemote, MultiClickRemoteBehavior;
 
 @interface XBMCHelper : NSObject {
   AppleRemote* mp_remote_control;
   XBMCClientWrapper* mp_wrapper;
+  MultiClickRemoteBehavior* mp_remote_behavior;
   bool m_verbose;
 }
 

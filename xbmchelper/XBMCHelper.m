@@ -8,32 +8,43 @@
 
 #import "XBMCHelper.h"
 #import "remotecontrolwrapper/AppleRemote.h"
-
+#import "remotecontrolwrapper/MultiClickRemoteBehavior.h"
+#import <XBMCDebugHelpers.h>
 //----------------------------------------------------------------------------
 //----------------------------------------------------------------------------
 @implementation XBMCHelper
 - (id) init{
+  PRINT_SIGNATURE();
   if( ![super init] ){
     return nil;
   }
   mp_wrapper = nil;
+  
   // capture remote
-  mp_remote_control = [[AppleRemote alloc] initWithDelegate: self];
+  // 1. instantiate the desired behavior for the remote control device
+  mp_remote_behavior = [[MultiClickRemoteBehavior alloc] init];	
+  	
+  // 2. configure the behavior
+  [mp_remote_behavior setDelegate: self];
+  [mp_remote_behavior setClickCountingEnabled:false];
+  [mp_remote_behavior setSimulateHoldEvent:true];
+  mp_remote_control = [[AppleRemote alloc] initWithDelegate: mp_remote_behavior];
   [mp_remote_control startListening: self];
-
   return self;
 }
 
 - (void) dealloc{
+  PRINT_SIGNATURE();
   [mp_remote_control release];
+  [mp_remote_behavior release];
   [mp_wrapper release];
   [super dealloc];
 }
 
 //----------------------------------------------------------------------------
-- (void) sendRemoteButtonEvent: (RemoteControlEventIdentifier) event 
-                   pressedDown: (BOOL) pressedDown 
-                 remoteControl: (RemoteControl*) remoteControl 
+- (void) remoteButton: (RemoteControlEventIdentifier)event 
+          pressedDown: (BOOL) pressedDown 
+           clickCount: (unsigned int)clickCount
 {
   if(m_verbose){
     NSString* pressed;
@@ -127,7 +138,6 @@
       break;
     case kRemoteButtonMenu_Hold:
       if(pressedDown) [mp_wrapper handleEvent:ATV_BUTTON_MENU_H];
-      else NSLog(@"Hold released"); 
       break;    
     default:
       NSLog(@"Oha, remote button not recognized %i pressed/released %i", event, pressedDown);

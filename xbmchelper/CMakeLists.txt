@@ -14,6 +14,8 @@ SET(XBMCHELPER_SRCS
 	remotecontrolwrapper/HIDRemoteControlDevice.m
 	remotecontrolwrapper/RemoteControl.h
 	remotecontrolwrapper/RemoteControl.m
+	remotecontrolwrapper/MultiClickRemoteBehavior.h
+	remotecontrolwrapper/MultiClickRemoteBehavior.m
 	)
 
 INCLUDE_DIRECTORIES(../xbmclauncher/src/remote ../xbmclauncher/src/helpers)
