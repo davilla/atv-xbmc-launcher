@@ -28,16 +28,15 @@
 	</dict>
 	<dict>
 		<key>UpdateScript</key>
-		<string>http://atv-xbmc-launcher.googlecode.com/svn/tags/xbmc-info/scripts/boxee_clear_userdata.sh</string>
+		<string>http://atv-xbmc-launcher.googlecode.com/svn/tags/boxee-info/scripts/simplestartup.sh</string>
 		<key>URL</key>
-		<!-- No, we don't need it a second time, but launcher needs a download... stupid thing Launcher is... -->
 		<string>http://atv-xbmc-launcher.googlecode.com/svn/tags/xbmc-info/scripts/boxee_clear_userdata.sh</string>
 		<key>Type</key>
 		<string>Script</string>
 		<key>Name</key>
 		<string>Clear Boxee profile</string>
 		<key>MD5</key>
-		<string>b4db5faba4461e037ec8fe56aa7c512e</string>
+		<string>01f33a057e2e9c3d53a9b1d543dbb451</string>
 	</dict>
 	<dict>
 		<key>Name</key>
