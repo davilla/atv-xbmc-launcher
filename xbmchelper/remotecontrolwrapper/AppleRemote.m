@@ -171,28 +171,6 @@ const NSTimeInterval SEND_UP_DELAY_TIME_INTERVAL=0.1; // used on atv >= 2.3 wher
   return ret;
 }
 
-- (BOOL) needsButtonUpEvent: (RemoteControlEventIdentifier) event {
-  BOOL ret;
-  int os_version = [[self class] osxVersion];
-  switch (os_version) {
-    case kOSX_10_5:
-    case kOSX_10_4:
-    case kATV_1_00:
-    case kATV_1_10:
-    case kATV_2_00:
-    case kATV_2_01:
-    case kATV_2_02:
-    case kATV_2_10:
-    case kATV_2_20:
-    case kATV_2_30:
-      if (event == kRemoteButtonRight || event == kRemoteButtonLeft || event == kRemoteButtonPlay || event == kRemoteButtonMenu || event == kRemoteButtonPlay_Hold)
-      break;
-    default:
-      break;
-  }
-  return ret;
-}
-
 //----------------------------------------------------------------------------
 - (void) sendSimulatedUpEvent:(id) event {
   NSLog(@"Timer fired, sending up event type %i", [event intValue]);
