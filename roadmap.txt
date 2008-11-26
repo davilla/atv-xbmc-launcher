@@ -1,8 +1,5 @@
 ToDos:
 
-IR:
-- need to detect platform to switch cookies and IR-controller name
-
 Safety first:
 - make sure that Frontrow gets launched if something goes wrong
   - add level of indirection around launchApplication that tries to launch the specified app, if it goes wrong, launch finder
@@ -19,9 +16,6 @@ Features:
 -finish xbmclauncher CMake project
  - need to figure a way to build bundle (worst case by hand)
 => enables a build all and copy to ATV testing cycle
-
--add universalmode support to xbmchelper startup from multifinder
- - need to grab info from distributed notification in AppKeeper
 
 -create plist for MultiFinder to read settings from
   - e.g. which app to start by default.
