@@ -68,7 +68,7 @@ const NSTimeInterval SEND_UP_DELAY_TIME_INTERVAL=0.1; // used on atv >= 2.3 wher
         break;
     }
   }
-
+  
 	return ir_device_name;
 }
 
