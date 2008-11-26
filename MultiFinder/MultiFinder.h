@@ -7,13 +7,20 @@
 //
 
 #import <Cocoa/Cocoa.h>
+#import <atvxbmccommon.h>
+
+typedef enum{
+  MFAPP_IR_MODE_NONE = 0,
+  MFAPP_IR_MODE_NORMAL,
+  MFAPP_IR_MODE_UNIVERSAL
+} eMultiFinderAppIRMode;
 
 @interface MultiFinder : NSObject {
   NSTask* mp_task; //the application that is currently running
   NSString* mp_next_app_to_launch; //when the currently running app quits, this one is started next
-  BOOL m_app_needs_ir; //if true, launchApplication should also start our IR daemon for mp_next_app_to_launch
+  eMultiFinderAppIRMode m_next_app_ir_mode; //launchApplication uses this to start ir_helper and to determine options
   NSString* mp_default_app; //app to launch on startup
-  BOOL m_default_app_needs_ir; //does default app need ir?
+  eMultiFinderAppIRMode m_default_app_ir_mode; //what ir for default app?
   
   NSTask* mp_ir_helper;         // here ir_helper-task is stored if it's running
   NSString* mp_ir_helper_path;  // path to launch ir_helper from

@@ -5,7 +5,7 @@
 //
 
 #import "MultiFinder.h"
-#import "atvxbmccommon.h"
+
 //--------------------------------------------------------------
 @implementation MultiFinder
 
@@ -13,9 +13,9 @@
   if( ![super init] )
     return nil;
   mp_next_app_to_launch = nil;
-  m_app_needs_ir = false;
+  m_next_app_ir_mode = MFAPP_IR_MODE_NONE;
   mp_default_app = @"/System/Library/CoreServices/Finder.app/Contents/MacOS/Finder";
-  m_default_app_needs_ir = false;
+  m_default_app_ir_mode = MFAPP_IR_MODE_NONE;
   
   mp_ir_helper_path = [[NSBundle bundleForClass:[self class]] pathForResource:@"xbmchelper" ofType:@""];
   NSLog(@"App status callback %@", mp_ir_helper_path);
@@ -51,12 +51,12 @@
 		mp_task = nil;
     
     if( mp_next_app_to_launch ){
-      NSLog(@"Looks like killed by request. Starting app %@ with IR:%i", mp_next_app_to_launch, m_app_needs_ir);
+      NSLog(@"Looks like killed by request. Starting app %@ with IR:%i", mp_next_app_to_launch, m_next_app_ir_mode);
       [self launchApplication:mp_next_app_to_launch];
     }
     else {
-      NSLog(@"No app given. Starting default app %@ with IR:%i", mp_default_app, m_default_app_needs_ir);
-      m_app_needs_ir = m_default_app_needs_ir;
+      NSLog(@"No app given. Starting default app %@ with IR:%i", mp_default_app, m_default_app_ir_mode);
+      m_next_app_ir_mode = m_default_app_ir_mode;
       [self launchApplication:mp_default_app];    
     }
   }
@@ -83,16 +83,19 @@
 																					 selector:@selector(checkTaskStatus:)
 																							 name:NSTaskDidTerminateNotification
 																						 object:mp_task];
-  if(m_app_needs_ir){
-    NSArray* arg = [NSArray arrayWithObjects
-                    :@"-v",
-                    nil];
-    mp_ir_helper = [[NSTask launchedTaskWithLaunchPath:mp_ir_helper_path arguments: arg] retain];    
+  if(m_next_app_ir_mode != MFAPP_IR_MODE_NONE){
+    NSMutableArray* args = [NSMutableArray array];
+#ifdef DEBUG
+    [args addObject:@"-v"];
+#endif
+    if(m_next_app_ir_mode == MFAPP_IR_MODE_UNIVERSAL)
+      [args addObject:@"-u"];
+    mp_ir_helper = [[NSTask launchedTaskWithLaunchPath:mp_ir_helper_path arguments: args] retain];    
   }
   //now reset the variables
   [mp_next_app_to_launch release];
   mp_next_app_to_launch = nil;
-  m_app_needs_ir = false;
+  m_next_app_ir_mode = MFAPP_IR_MODE_NONE;
   return TRUE;
 }
 
@@ -106,8 +109,15 @@
   if( !mp_next_app_to_launch)
     NSLog(@"Ouch something went wrong. Got a request to start an app, but no app was given!");
   //does it need IR?
-  m_app_needs_ir = [[userInfo objectForKey:kApplicationNeedsIR] boolValue];
-  NSLog(@"Request for app %@ withRemote:%i", mp_next_app_to_launch, m_app_needs_ir);
+  if( [[userInfo objectForKey:kApplicationNeedsIR] boolValue] ){
+    if([userInfo objectForKey:kApplicationWantsUniversalIRMode] && [[userInfo objectForKey:kApplicationWantsUniversalIRMode] boolValue])
+      m_next_app_ir_mode = MFAPP_IR_MODE_UNIVERSAL;
+    else 
+      m_next_app_ir_mode = MFAPP_IR_MODE_NORMAL;
+  } else {
+    m_next_app_ir_mode = MFAPP_IR_MODE_NONE;
+  }
+  NSLog(@"Request for app %@ withRemote:%i", mp_next_app_to_launch, m_next_app_ir_mode);
   //kill current app
   [mp_task terminate];
   [pool release];
