@@ -174,9 +174,16 @@ const NSTimeInterval SEND_UP_DELAY_TIME_INTERVAL=0.2; // used on atv >= 2.3 wher
   return ret;
 }
 
+#ifdef DEBUG
+  //for now enable this in debug builds. 
+  #define EXTREME_SENDREMOTEBUTTON_EVENT_DEBUGGING 1
+#endif
+
 //----------------------------------------------------------------------------
 - (void) sendSimulatedUpEvent:(id) event {
+#ifdef EXTREME_SENDREMOTEBUTTON_EVENT_DEBUGGING
   NSLog(@"Timer fired, sending up event type %i", [event intValue]);
+#endif
   [super sendRemoteButtonEvent:[event intValue] pressedDown:NO];
   m_last_event = 0;
 }
@@ -187,19 +194,25 @@ const NSTimeInterval SEND_UP_DELAY_TIME_INTERVAL=0.2; // used on atv >= 2.3 wher
     // on atv >=2.3 ir handling is a bit broken. we get only non-press events, and those all the time.
     //what we do here is to hide all those repeated events and just fire an UP event when the button changes or specified time elapsed
     if(!m_last_event){
+#ifdef EXTREME_SENDREMOTEBUTTON_EVENT_DEBUGGING
       NSLog(@"First event of type %i", event);
+#endif
       [super sendRemoteButtonEvent:event pressedDown:YES];
 			[self performSelector:@selector(sendSimulatedUpEvent:) 
                  withObject:[NSNumber numberWithInt:event]
                  afterDelay:SEND_UP_DELAY_TIME_INTERVAL];      
     } else if( event != m_last_event){
-      NSLog(@"new event of type %i", event);
-      NSLog(@"sending old up first %i", event);
+#ifdef EXTREME_SENDREMOTEBUTTON_EVENT_DEBUGGING
+      NSLog(@"Events changed. New of type %i", event);
+      NSLog(@"Sending old up event first %i", m_last_event);
+#endif
       //new event, send old up first and then new
       [super sendRemoteButtonEvent:m_last_event pressedDown:NO];
       [super sendRemoteButtonEvent:event pressedDown:YES];
     } else {
-      NSLog(@"same event of type %i", event);
+#ifdef EXTREME_SENDREMOTEBUTTON_EVENT_DEBUGGING
+      NSLog(@"Again event of type %i. Resetting timer.", event);
+#endif
       //same event button press again cancel any old and schedule a new timer
       [[self class] cancelPreviousPerformRequestsWithTarget:self selector:@selector(sendSimulatedUpEvent:) object:[NSNumber numberWithInt:event]];
 			[self performSelector:@selector(sendSimulatedUpEvent:) 
