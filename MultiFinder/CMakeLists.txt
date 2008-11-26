@@ -1,7 +1,9 @@
 PROJECT(MultiFinder)
 
 SET(MULTIFINDER_SRCS 
-	multifinder.mm
+	multifinder_main.mm
+	MultiFinder.h
+	MultiFinder.m
 	../common/atvxbmccommon.h
 	../common/atvxbmccommon.m
 )
