@@ -2,11 +2,12 @@ ToDos:
 
 IR:
 - need to detect platform to switch cookies and IR-controller name
-- cookies need adoption (in AppleRemote.m)
 
 Safety first:
 - make sure that Frontrow gets launched if something goes wrong
   - add level of indirection around launchApplication that tries to launch the specified app, if it goes wrong, launch finder
+
+-add licence to files
 
 Features:
 -restart app that was running if it crashed:
@@ -28,4 +29,5 @@ Features:
 -add setting of timeout to universalmode
 
 -add download of needed from appletv to cmake
+
 
