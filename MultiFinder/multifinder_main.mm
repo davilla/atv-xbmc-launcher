@@ -97,7 +97,7 @@
   NSLog(@"here's a bone for watchdog");
   notify_post("com.apple.riptide.heartbeat");
 } 
-@end 
+@end
 
 //--------------------------------------------------------------
 //--------------------------------------------------------------
@@ -108,8 +108,8 @@ int main(int argc, char *argv[])
   
   // preamble (setup watchdog and default the LED to white)
   [[ATVSettingsHelper singleton] tellWatchdogWeAreUpAndRunning];
-  [[ATVSettingsHelper singleton] setLowPowerMode: NO];
-  [ATVHardwareUtility turnOnWhiteLED];
+  [[ATVHardwareUtility singleton] setLowPowerMode: NO];
+  [[ATVHardwareUtility singleton] turnOnWhiteLED];
   
   // setup our NSTimers
   FeedWatchDog *feed_watchdog = [[[FeedWatchDog alloc] init] autorelease]; 
