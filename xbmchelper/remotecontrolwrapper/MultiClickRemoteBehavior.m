@@ -92,14 +92,12 @@ const NSTimeInterval HOLD_RECOGNITION_TIME_INTERVAL=0.4;
 }
 
 - (void) sendSimulatedHoldEvent: (id) time {
-  NSLog(@"sendSimulatedHoldEvent %@", time);
 	BOOL startSimulateHold = NO;
 	RemoteControlEventIdentifier event = lastHoldEvent;
 	@synchronized(self) {
 		startSimulateHold = (lastHoldEvent>0 && lastHoldEventTime == [time doubleValue]);
 	}
 	if (startSimulateHold) {
-    NSLog(@"sendSimulatedHoldEvent in startSimulateHold");
 		lastEventSimulatedHold = YES;
 		event = (event << EVENT_TO_HOLD_EVENT_OFFSET);
 		[delegate remoteButton:event pressedDown: YES clickCount: 1];
@@ -136,9 +134,7 @@ const NSTimeInterval HOLD_RECOGNITION_TIME_INTERVAL=0.4;
 	BOOL clickCountingForEvent = ([self clickCountEnabledButtons] & event) == event;
 
 	if ([self simulatesHoldForButtonIdentifier: event remoteControl: remoteControl] && lastClickCountEvent==0) {
-    NSLog(@"k, we're simulating");//DD
 		if (pressedDown) {
-      NSLog(@"pressed down");//DD
 			// wait to see if it is a hold
 			lastHoldEvent = event;
 			lastHoldEventTime = [NSDate timeIntervalSinceReferenceDate];
@@ -147,7 +143,6 @@ const NSTimeInterval HOLD_RECOGNITION_TIME_INTERVAL=0.4;
 					   afterDelay:HOLD_RECOGNITION_TIME_INTERVAL];
 			return;
 		} else {
-      NSLog(@"not pressed down");//DD
 			if (lastEventSimulatedHold) {
 				// it was a hold
 				// send an event for "hold release"
