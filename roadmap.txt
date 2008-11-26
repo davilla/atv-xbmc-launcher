@@ -12,11 +12,11 @@ Safety first:
  
 - check that xbmchelper was started properly. if not, go into safe-mode (see safety first)
 
--add licence to files
+- add licence to files
 
--restart app that was running if it crashed:
-
-- add setting of timeout to universalmode
+- add setting to enable / disable multifinder in XBMCLauncher
+- create dmg cmake target for MultiFinder
+- create download of MultiFinder in xbmc-info-testing
 
 -create plist for MultiFinder to read settings from
   - default app (including IR Mode)
@@ -24,6 +24,8 @@ Safety first:
   - verbose setting?
   - relaunchCount
   - debugging value for disabling finder restart after app crashes
+
+- add setting of timeout to universalmode
 
 - add convenience target to cmake that sets build environment up
   - maybe create a script in trunk/scripts/setupBuildEnvironment.sh for all the work
