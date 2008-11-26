@@ -56,7 +56,7 @@ build:
 	
 release: build/$(DISTCONFIG)/XBMCLauncher.frappliance/Contents/MacOS/XBMCLauncher
 
-build/$(DISTCONFIG)/XBMCLauncher.frappliance/Contents/MacOS/XBMCLauncher: src/*.h src/*.m src/remote/*.h src/remote/*.mm src/updater/*.h src/updater/*.m src/helpers/*.h src/helpers/*.m
+build/$(DISTCONFIG)/XBMCLauncher.frappliance/Contents/MacOS/XBMCLauncher: src/*.h src/*.m src/updater/*.h src/updater/*.m src/helpers/*.h src/helpers/*.m
 	xcodebuild -configuration "$(DISTCONFIG)" clean $(EXTRA_OPTS)
 	xcodebuild -configuration "$(DISTCONFIG)" $(EXTRA_OPTS)
 
