@@ -41,7 +41,7 @@ void usage(void)
   printf("Usage: %s [OPTIONS...]\n\nOptions:\n", PROGNAME);
   printf("  -h, --help           print this help message and exit.\n");
   printf("  -s, --server <addr>  send events to the specified IP.\n");
-//TODO  printf("  -u, --universal      runs in Universal Remote mode.\n");
+  printf("  -u, --universal      runs in Universal Remote mode.\n");
 //TODO  printf("  -t, --timeout <ms>   timeout length for sequences (default: 500ms).\n");
   printf("  -v, --verbose        prints lots of debugging information.\n");
 }
