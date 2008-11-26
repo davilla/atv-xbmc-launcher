@@ -26,6 +26,7 @@
  *****************************************************************************/
 
 #import "AppleRemote.h"
+#import "osdetection.h"
 
 #import <mach/mach.h>
 #import <mach/mach_error.h>
@@ -43,99 +44,15 @@ const NSTimeInterval SEND_UP_DELAY_TIME_INTERVAL=0.1; // used on atv >= 2.3 wher
 @implementation AppleRemote
 
 //----------------------------------------------------------------------------
-- (void) setupOSDefaults  {
-	// Runtime Version Check
-  SInt32      MacVersion;
-  
-  Gestalt(gestaltSystemVersion, &MacVersion);
-  if (MacVersion < 0x1050) {
-    // OSX 10.4/AppleTV
-    size_t      len = 512;
-    char        hw_model[512] = "unknown";
-    
-    sysctlbyname("hw.model", &hw_model, &len, NULL, 0);
-
-    if ( strstr(hw_model,"AppleTV1,1") ) {
-      FILE        *inpipe;
-      bool        atv_version_found = false;
-    
-      osxHardware = kATVversion;
-      //Find the build version of the AppleTV OS
-      inpipe = popen("sw_vers -buildVersion", "r");
-      if (inpipe) {
-          char linebuf[1000];
-          //get output
-          if(fgets(linebuf, sizeof(linebuf) - 1, inpipe)) {
-              if( strstr(linebuf,"8N5107") ) {
-                  osxVersion = kATV_1_00;
-                  atv_version_found = true;
-                  NSLog(@"Found AppletTV software version r1.0");
-              } else if( strstr(linebuf,"8N5239") )  {
-                  osxVersion = kATV_1_10;
-                  atv_version_found = true;
-                  NSLog(@"Found AppletTV software version r1.1");
-              } else if ( strstr(linebuf,"8N5400") ) {
-                  osxVersion = kATV_2_00;
-                  atv_version_found = true;
-                  NSLog(@"Found AppletTV software version r2.0");
-              } else if ( strstr(linebuf,"8N5455") ) {
-                  osxVersion = kATV_2_01;
-                  atv_version_found = true;
-                  NSLog(@"Found AppletTV software version r2.01");
-              } else if ( strstr(linebuf,"8N5461") ) {
-                  osxVersion = kATV_2_02;
-                  atv_version_found = true;
-                  NSLog(@"Found AppletTV software version r2.02");
-                  atv_version_found = true;
-              } else if( strstr(linebuf,"8N5519")) {
-                  osxVersion = kATV_2_10;
-                  atv_version_found = true;
-                  NSLog(@"Found AppletTV software version r2.10");
-                  atv_version_found = true;
-              } else if( strstr(linebuf,"8N5622")) {
-                  osxVersion = kATV_2_20;
-                  atv_version_found = true;
-                  NSLog(@"Found AppletTV software version r2.20");
-                  atv_version_found = true;
-              } else if( strstr(linebuf,"8N5722")) {
-                  osxVersion = kATV_2_30;
-                  atv_version_found = true;
-                  NSLog(@"Found AppletTV software version r2.30");
-              }                    
-          }
-          pclose(inpipe); 
-      }
-      
-      if(!atv_version_found) {
-          // handle fallback or just exit
-          osxVersion = kATV_2_30;
-          NSLog(@"AppletTV software version could not be determined");
-          NSLog(@"Defaulting to AppleTV r2.3");
-      }
-    } else {
-      // OSX 10.4.x Tiger
-      osxHardware = kOSXversion;
-      osxVersion = kOSX_10_4;
-      NSLog(@"Found OSX 10.4 Tiger");
-    }
-  } else {
-    osxHardware = kOSXversion;
-    osxVersion = kOSX_10_5;
-    // OSX 10.5.x Leopard
-    NSLog(@"Found OSX 10.5 Leopard");
-  }
-}
-
-//----------------------------------------------------------------------------
 + (const char*) remoteControlDeviceName {
   const char* ir_device_name;
   
-  if (osxHardware == kOSXversion ) {
+  if (getHWVersion() == kOSXversion ) {
     // standard OSX box
     ir_device_name = AppleIRControllerName;
   } else {
     // AppleTV
-    switch (osxVersion) {
+    switch ( getOSVersion() ) {
       case kATV_1_00:
       case kATV_1_10:
       case kATV_2_00:
@@ -157,10 +74,12 @@ const NSTimeInterval SEND_UP_DELAY_TIME_INTERVAL=0.1; // used on atv >= 2.3 wher
 
 //----------------------------------------------------------------------------
 - (void) setCookieMappingInDictionary: (NSMutableDictionary*) _cookieToButtonMapping {
+  OS_Vers os_version;
 
-  if (osxHardware == kOSXversion ) {
+  os_version = getOSVersion();
+  if (getHWVersion() == kOSXversion ) {
     // standard OSX box
-    if (osxVersion == kOSX_10_4) {
+    if (os_version == kOSX_10_4) {
       // OSX 10.4.x
       [_cookieToButtonMapping setObject:[NSNumber numberWithInt:kRemoteButtonPlus]		forKey:@"14_12_11_6_"];
       [_cookieToButtonMapping setObject:[NSNumber numberWithInt:kRemoteButtonMinus]		forKey:@"14_13_11_6_"];		
@@ -190,7 +109,7 @@ const NSTimeInterval SEND_UP_DELAY_TIME_INTERVAL=0.1; // used on atv >= 2.3 wher
     }
   } else {
     // AppleTV
-    switch (osxVersion) {
+    switch (os_version) {
       case kATV_1_00:
       case kATV_1_10:
       case kATV_2_00:
@@ -234,8 +153,8 @@ const NSTimeInterval SEND_UP_DELAY_TIME_INTERVAL=0.1; // used on atv >= 2.3 wher
   //let multiclickremotebehaviour send hold buttons for us on atv >= 2.3
   BOOL ret = TRUE;
   
-  if (osxHardware == kATVversion ) {
-    switch (osxVersion) {
+  if (getHWVersion() == kATVversion ) {
+    switch ( getOSVersion() ) {
       case kATV_1_00:
       case kATV_1_10:
       case kATV_2_00:
@@ -264,7 +183,10 @@ const NSTimeInterval SEND_UP_DELAY_TIME_INTERVAL=0.1; // used on atv >= 2.3 wher
 
 //----------------------------------------------------------------------------
 - (void) sendRemoteButtonEvent: (RemoteControlEventIdentifier) event pressedDown: (BOOL) pressedDown {
-  if( osxVersion >= 230 && osxVersion < 1000 ){
+  OS_Vers   os_version;
+  
+  os_version = getOSVersion();
+  if( os_version >= 230 && os_version < 1000 ){
     // on atv >=2.3 ir handling is a bit broken. we get only non-press events, and those all the time.
     //what we do here is to hide all those repeated events and just fire an UP event when the button changes or specified time elapsed
     if(!m_last_event){

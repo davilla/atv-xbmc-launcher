@@ -8,6 +8,8 @@ SET(XBMCHELPER_SRCS
 	XBMCDebugHelpers.h
 	XBMCHelper.h
 	XBMCHelper.m
+	osdetection.h
+	osdetection.m
 	remotecontrolwrapper/AppleRemote.h
 	remotecontrolwrapper/AppleRemote.m
 	remotecontrolwrapper/HIDRemoteControlDevice.h

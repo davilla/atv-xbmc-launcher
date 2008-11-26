@@ -43,8 +43,6 @@
 	BOOL fixSecureEventInputBug;
 	BOOL openInExclusiveMode;
 	BOOL processesBacklog;
-  int  osxHardware;
-  int  osxVersion;
 	
 	int supportedButtonEvents;
 }
@@ -60,8 +58,6 @@
 - (void) setCookieMappingInDictionary: (NSMutableDictionary*) cookieToButtonMapping;
 
 - (void) sendRemoteButtonEvent: (RemoteControlEventIdentifier) event pressedDown: (BOOL) pressedDown;
-
-- (void) setupOSDefaults;
 
 + (BOOL) isRemoteAvailable;
 

@@ -34,6 +34,7 @@
 #import <IOKit/IOCFPlugIn.h>
 #import <IOKit/hid/IOHIDKeys.h>
 #import <Carbon/Carbon.h>
+#import "osdetection.h"
 
 typedef struct _ATV_IR_EVENT {
   UInt32    time_ms32;
@@ -81,8 +82,6 @@ typedef struct _ATV_IR_EVENT {
 
 //----------------------------------------------------------------------------
 - (id) initWithDelegate: (id) _remoteControlDelegate {	
-  [self setupOSDefaults];
-
 	if ([[self class] isRemoteAvailable] == NO) return nil;
 	
 	if ( self = [super initWithDelegate: _remoteControlDelegate] ) {
@@ -117,13 +116,6 @@ typedef struct _ATV_IR_EVENT {
 //----------------------------------------------------------------------------
 - (void) sendRemoteButtonEvent: (RemoteControlEventIdentifier) event pressedDown: (BOOL) pressedDown {
 	[delegate sendRemoteButtonEvent: event pressedDown: pressedDown remoteControl:self];
-}
-
-//----------------------------------------------------------------------------
-- (void) setupOSDefaults  {
-  // default to real OSX box running 10.5
-  osxHardware = kOSXversion;
-  osxVersion = kOSX_10_5;
 }
 
 //----------------------------------------------------------------------------
@@ -596,7 +588,7 @@ static void QueueATV23CallbackFunction(void* target,  IOReturn result, void* ref
 			// add callback for async events			
 			ioReturnValue = (*queue)->createAsyncEventSource(queue, &eventSource);			
 			if (ioReturnValue == KERN_SUCCESS) {
-        if ( (osxHardware == kATVversion) && (osxVersion > kATV_2_20) ) {
+        if ( (getHWVersion() == kATVversion) && (getOSVersion() > kATV_2_20) ) {
           ioReturnValue = (*queue)->setEventCallout(queue, QueueATV23CallbackFunction, self, NULL);
         } else {
           ioReturnValue = (*queue)->setEventCallout(queue, QueueCallbackFunction, self, NULL);
