@@ -83,7 +83,6 @@ typedef struct _ATV_IR_EVENT {
 //----------------------------------------------------------------------------
 - (id) initWithDelegate: (id) _remoteControlDelegate {	
 	if ([[self class] isRemoteAvailable] == NO) {
-    NSLog(@"initWithDelegate:isRemoteAvailable == NO");
     return nil;
 	}
 	if ( self = [super initWithDelegate: _remoteControlDelegate] ) {
@@ -196,7 +195,6 @@ typedef struct _ATV_IR_EVENT {
 	
 	io_object_t hidDevice = [[self class] findRemoteDevice];
 	if (hidDevice == 0) {
-    NSLog(@"startListening:hidDevice == 0");
     return;
 	}
   
@@ -217,7 +215,6 @@ typedef struct _ATV_IR_EVENT {
 	goto cleanup;
 	
 error:
-  NSLog(@"startListening:error");
 	[self stopListening:self];
 	DisableSecureEventInput();
 	
@@ -578,7 +575,6 @@ static void QueueATV23CallbackFunction(void* target,  IOReturn result, void* ref
 	IOReturn ioReturnValue = (*hidDeviceInterface)->open(hidDeviceInterface, openMode);	
 	
 	if (ioReturnValue == KERN_SUCCESS) {		
-		NSLog(@"IR device is OwNd");
 		queue = (*hidDeviceInterface)->allocQueue(hidDeviceInterface);
 		if (queue) {
       //depth: maximum number of elements in queue before oldest elements
@@ -596,10 +592,8 @@ static void QueueATV23CallbackFunction(void* target,  IOReturn result, void* ref
 			ioReturnValue = (*queue)->createAsyncEventSource(queue, &eventSource);			
 			if (ioReturnValue == KERN_SUCCESS) {
         if ( (getHWVersion() == kATVversion) && (getOSVersion() > kATV_2_20) ) {
-					NSLog(@"setEventCallout:QueueATV23CallbackFunction");
           ioReturnValue = (*queue)->setEventCallout(queue, QueueATV23CallbackFunction, self, NULL);
         } else {
-					NSLog(@"setEventCallout:QueueATV23CallbackFunction");
           ioReturnValue = (*queue)->setEventCallout(queue, QueueCallbackFunction, self, NULL);
         }
 				if (ioReturnValue == KERN_SUCCESS) {

@@ -62,6 +62,7 @@ const NSTimeInterval SEND_UP_DELAY_TIME_INTERVAL=0.1; // used on atv >= 2.3 wher
       case kATV_2_20:
         ir_device_name = AppleIRControllerName;
         break;
+        
       default:
       case kATV_2_30:
         ir_device_name = AppleTVIRReceiverName;
