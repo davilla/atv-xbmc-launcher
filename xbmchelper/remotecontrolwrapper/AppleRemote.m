@@ -38,7 +38,7 @@
 
 const char* AppleIRControllerName = "AppleIRController";
 const char* AppleTVIRReceiverName = "AppleTVIRReceiver";
-const NSTimeInterval SEND_UP_DELAY_TIME_INTERVAL=0.1; // used on atv >= 2.3 where we get no up event here
+const NSTimeInterval SEND_UP_DELAY_TIME_INTERVAL=0.2; // used on atv >= 2.3 where we get no up event here
 //----------------------------------------------------------------------------
 //----------------------------------------------------------------------------
 @implementation AppleRemote
@@ -171,7 +171,6 @@ const NSTimeInterval SEND_UP_DELAY_TIME_INTERVAL=0.1; // used on atv >= 2.3 wher
         }
     }
   }
-
   return ret;
 }
 
@@ -184,10 +183,7 @@ const NSTimeInterval SEND_UP_DELAY_TIME_INTERVAL=0.1; // used on atv >= 2.3 wher
 
 //----------------------------------------------------------------------------
 - (void) sendRemoteButtonEvent: (RemoteControlEventIdentifier) event pressedDown: (BOOL) pressedDown {
-  OS_Vers   os_version;
-  
-  os_version = getOSVersion();
-  if( os_version >= 230 && os_version < 1000 ){
+  if( getHWVersion() == kATVversion && getOSVersion() >= 230 ){
     // on atv >=2.3 ir handling is a bit broken. we get only non-press events, and those all the time.
     //what we do here is to hide all those repeated events and just fire an UP event when the button changes or specified time elapsed
     if(!m_last_event){
