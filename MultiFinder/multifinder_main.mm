@@ -67,13 +67,23 @@
 
 //--------------------------------------------------------------
 @interface ATVSettingsHelper
-+(id)singleton;
--(BOOL)tellWatchdogWeAreUpAndRunning;
++ (id)singleton;
+- (BOOL)tellWatchdogWeAreUpAndRunning;
 @end
 
 //--------------------------------------------------------------
 @interface ATVHardwareUtility
-+(void)turnOnWhiteLED;
++ (id)singleton;
++ (void)turnOnWhiteLED;
++ (void)turnOffWhiteLED;
++ (void)blinkWhiteLED;
++ (void)turnOnAmberLED;
++ (void)turnOffAmberLED;
++ (void)blinkAmberLED;
++ (void)flushDiskChanges;
++ (void)turnOnDriveAcceleration;
++ (void)turnOffDriveAcceleration;
++(void)setLowPowerMode:(BOOL)fp8;
 @end
 
 //--------------------------------------------------------------
@@ -98,6 +108,7 @@ int main(int argc, char *argv[])
   
   // preamble (setup watchdog and default the LED to white)
   [[ATVSettingsHelper singleton] tellWatchdogWeAreUpAndRunning];
+  [[ATVSettingsHelper singleton] setLowPowerMode: NO];
   [ATVHardwareUtility turnOnWhiteLED];
   
   // setup our NSTimers
