@@ -38,6 +38,7 @@
   [[NSDistributedNotificationCenter defaultCenter] addObserver:self selector:@selector(startApplicationRequest:) name:MULTIFINDER_START_APPLICATION_NOTIFICATION object:nil];
   
   //launch default app
+  NSLog(@"Starting default application %@ with IRMode: %i", mp_next_app_to_launch, m_next_app_ir_mode);
   [self launchApplication:mp_next_app_to_launch];
   return self;
 }
