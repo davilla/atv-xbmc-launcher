@@ -67,9 +67,11 @@ docs: $(README_DEST) $(LICENSE_DEST)
 	cp "$(README_SOURCE)" "$(LICENSE_SOURCE)" "build/$(DISTCONFIG)/"
 	
 $(README_DEST): $(README_SOURCE)
+	mkdir -p "$(README_DEST)"
 	cp $(README_SOURCE) $(README_DEST)
 	
 $(LICENSE_DEST): $(LICENSE_SOURCE)
+	mkdir -p "$(LICENSE_DEST)"
 	cp $(LICENSE_SOURCE) $(LICENSE_DEST)
 
 # Build the tarball for ATVLoader
