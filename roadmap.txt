@@ -18,8 +18,7 @@ Safety first:
 - create dmg cmake target for MultiFinder
 - create download of MultiFinder in xbmc-info-testing
 
--create plist for MultiFinder to read settings from
-  - default app (including IR Mode)
+-add to MultiFinder's plist:
   - IR timeout
   - verbose setting?
   - relaunchCount

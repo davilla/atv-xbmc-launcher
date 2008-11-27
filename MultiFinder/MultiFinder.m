@@ -8,14 +8,26 @@
 
 //--------------------------------------------------------------
 @implementation MultiFinder
++ (void) initialize{
+  NSMutableDictionary* defaultValues = [NSMutableDictionary dictionary];
+  //set the default app
+  [defaultValues setObject:@"/System/Library/CoreServices/Finder.app/Contents/MacOS/Finder" forKey:kMFDefaultApp];
+  //and it's IR mode
+  [defaultValues setObject:[NSNumber numberWithInt:MFAPP_IR_MODE_NONE] forKey:kMFDefaultAppIRMode];
+  //register the dictionary of defaults
+  [[NSUserDefaults standardUserDefaults] registerDefaults:defaultValues];
+  NSLog(@"registered defaults: %@", defaultValues);
+}
 
 - (id) init{
   if( ![super init] )
     return nil;
+
+  mp_default_app = [[NSUserDefaults standardUserDefaults] objectForKey:kMFDefaultApp];
+  m_default_app_ir_mode = [[NSUserDefaults standardUserDefaults] integerForKey:kMFDefaultAppIRMode];
+
   mp_next_app_to_launch = nil;
   m_next_app_ir_mode = MFAPP_IR_MODE_NONE;
-  mp_default_app = @"/System/Library/CoreServices/Finder.app/Contents/MacOS/Finder";
-  m_default_app_ir_mode = MFAPP_IR_MODE_NONE;
   
   mp_ir_helper_path = [[NSBundle bundleForClass:[self class]] pathForResource:@"xbmchelper" ofType:@""];
   NSLog(@"App status callback %@", mp_ir_helper_path);

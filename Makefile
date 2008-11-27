@@ -39,7 +39,7 @@ RUNBALL=$(DISTROOT)/$(PROJNAME)-$(VERSION).run
 default: testdist
 
 clean: 
-	rm -rf "$(DISTFOLDER)" xbmclauncher/dist/* "$(CMAKEBUILDFOLDER)" xbmclauncher/build/*
+	rm -rf "$(DISTROOT)" xbmclauncher/dist/* "$(CMAKEBUILDFOLDER)" xbmclauncher/build/*
 
 $(CMAKEBUILDFOLDER)/MultiFinder/$(DISTCONFIG)/MultiFinder.app:
 	mkdir -p "$(CMAKEBUILDFOLDER)"

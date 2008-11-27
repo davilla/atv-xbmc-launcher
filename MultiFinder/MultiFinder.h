@@ -9,6 +9,11 @@
 #import <Cocoa/Cocoa.h>
 #import <atvxbmccommon.h>
 
+
+//keys for preferences
+extern NSString* const kMFDefaultApp;
+extern NSString* const kMFDefaultAppIRMode;
+
 typedef enum{
   MFAPP_IR_MODE_NONE = 0,
   MFAPP_IR_MODE_NORMAL,
