@@ -25,7 +25,7 @@
 // alternative) set APPLETV_IP in cmake cache and use MGBuildAndCopyToATV target
 // sudo defaults write /Library/Preferences/com.apple.loginwindow Finder /Users/frontrow/MultiFinder.app
 //
-// To switch back to frontrow (FInder.app)
+// To switch back to frontrow (Finder.app)
 // sudo defaults delete /Library/Preferences/com.apple.loginwindow Finder
 //
 // If you want to see contents of com.apple.loginwindow.plist, it's a binary plist
