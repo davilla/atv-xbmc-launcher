@@ -18,7 +18,7 @@ Safety first:
 - create dmg cmake target for MultiFinder
 - create download of MultiFinder in xbmc-info-testing
 
--add to MultiFinder's plist:
+-add to MultiFinder's preferences:
   - IR timeout
   - verbose setting?
   - relaunchCount
