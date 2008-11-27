@@ -4,8 +4,11 @@ SET(MULTIFINDER_SRCS
 	multifinder_main.mm
 	MultiFinder.h
 	MultiFinder.m
+	Preferences.h
+	Preferences.m
 	../common/atvxbmccommon.h
 	../common/atvxbmccommon.m
+	../common/XBMCDebugHelpers.h
 )
 
 #collect needed libs

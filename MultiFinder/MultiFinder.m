@@ -5,10 +5,13 @@
 //
 
 #import "MultiFinder.h"
+#import "Preferences.h"
+#import <XBMCDebugHelpers.h>
 
 //--------------------------------------------------------------
 @implementation MultiFinder
 + (void) initialize{
+  PRINT_SIGNATURE();
   NSMutableDictionary* defaultValues = [NSMutableDictionary dictionary];
   //set the default app
   [defaultValues setObject:@"/System/Library/CoreServices/Finder.app/Contents/MacOS/Finder" forKey:kMFDefaultApp];
@@ -20,12 +23,12 @@
 }
 
 - (id) init{
+  PRINT_SIGNATURE();
   if( ![super init] )
     return nil;
-
-  mp_default_app = [[NSUserDefaults standardUserDefaults] objectForKey:kMFDefaultApp];
-  m_default_app_ir_mode = [[NSUserDefaults standardUserDefaults] integerForKey:kMFDefaultAppIRMode];
-
+  NSUserDefaults* defaults = [NSUserDefaults standardUserDefaults];
+  mp_default_app = [[defaults objectForKey:kMFDefaultApp] retain];
+  m_default_app_ir_mode = [defaults integerForKey:kMFDefaultAppIRMode] ;
   mp_next_app_to_launch = nil;
   m_next_app_ir_mode = MFAPP_IR_MODE_NONE;
   
@@ -41,6 +44,7 @@
 //--------------------------------------------------------------
 - (void) dealloc{
   [[NSDistributedNotificationCenter defaultCenter] removeObserver:self name:MULTIFINDER_START_APPLICATION_NOTIFICATION object:nil];
+  [mp_default_app release];
   [super dealloc];
 }
 
