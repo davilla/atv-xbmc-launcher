@@ -29,15 +29,16 @@
   NSUserDefaults* defaults = [NSUserDefaults standardUserDefaults];
   mp_default_app = [[defaults objectForKey:kMFDefaultApp] retain];
   m_default_app_ir_mode = [defaults integerForKey:kMFDefaultAppIRMode] ;
-  mp_next_app_to_launch = nil;
-  m_next_app_ir_mode = MFAPP_IR_MODE_NONE;
+  mp_next_app_to_launch = mp_default_app;
+  m_next_app_ir_mode = m_default_app_ir_mode;
   
   mp_ir_helper_path = [[NSBundle bundleForClass:[self class]] pathForResource:@"xbmchelper" ofType:@""];
   NSLog(@"App status callback %@", mp_ir_helper_path);
   //register cross-app-notification listeners
   [[NSDistributedNotificationCenter defaultCenter] addObserver:self selector:@selector(startApplicationRequest:) name:MULTIFINDER_START_APPLICATION_NOTIFICATION object:nil];
-  //by default launch Finder
-  [self launchApplication:mp_default_app];
+  
+  //launch default app
+  [self launchApplication:mp_next_app_to_launch];
   return self;
 }
 
