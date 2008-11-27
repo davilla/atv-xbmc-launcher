@@ -28,7 +28,10 @@ ENDIF(NOT IPHOTOACESS_LIBRARY)
 
 #finally build the executable
 add_executable(MultiFinder MACOSX_BUNDLE ${MULTIFINDER_SRCS} )
-SET_TARGET_PROPERTIES(MultiFinder PROPERTIES COMPILE_DEFINITIONS_DEBUG "${COMPILE_DEFINITIONS_DEBUG}")
+SET_TARGET_PROPERTIES(MultiFinder PROPERTIES 
+	COMPILE_DEFINITIONS_DEBUG "${COMPILE_DEFINITIONS_DEBUG}"
+    MACOSX_BUNDLE_GUI_IDENTIFIER "com.teamxbmc.multifinder"
+	)
 
 #link it
 TARGET_LINK_LIBRARIES(MultiFinder ${FOUNDATION_LIBRARY} ${APPLETV_LIBRARY} ${BACKROW_LIBRARY} ${IPHOTOACESS_LIBRARY})
@@ -58,6 +61,8 @@ SET(MULTIFINDER_ATV_LOCATION "" CACHE STRING "Path on ATV to place Multifinder.a
 get_target_property(MF_LOCATION MultiFinder LOCATION) 
 add_custom_target(MFBuildAndCopyToATV 
 		COMMAND	scp -r ${MF_LOCATION}.app frontrow@${APPLETV_IP}:
+		COMMAND ssh frontrow@${APPLETV_IP} "echo \"frontrow\" | sudo -S /bin/rm -rf /Applications/MultiFinder.app"
+		COMMAND ssh frontrow@${APPLETV_IP} "echo \"frontrow\" | sudo -S /bin/mv ~/MultiFinder.app /Applications"
 		COMMAND ssh frontrow@${APPLETV_IP} "restartLogin"
         COMMENT "covenience copy to ATV" VERBATIM)
 ADD_DEPENDENCIES(MFBuildAndCopyToATV MultiFinder)
