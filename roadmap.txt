@@ -12,6 +12,10 @@ Safety first:
  
 - check that xbmchelper was started properly. if not, go into safe-mode (see safety first)
 
+- sudo reboot sometimes comes to language selection
+
+- fix LED
+
 - add licence to files
 
 - add setting to enable / disable multifinder in XBMCLauncher
