@@ -85,10 +85,13 @@
                             [NSNumber numberWithBool: use_universal], kApplicationWantsUniversalIRMode, 
                             nil];
 	
-	[[NSDistributedNotificationCenter defaultCenter] postNotificationName:MULTIFINDER_START_APPLICATION_NOTIFICATION
-                                                                 object:nil
-                                                               userInfo:userInfo
-                                                     deliverImmediately:YES];	
+	[[NSDistributedNotificationCenter defaultCenter] 
+    postNotificationName: MULTIFINDER_START_APPLICATION_NOTIFICATION
+    object: nil
+    userInfo: userInfo
+    options:NSNotificationDeliverImmediately | NSNotificationPostToAllSessions];
+    //deliverImmediately: YES];	
+    
   BRAlertController* alert = [BRAlertController alertOfType:0 titled:nil
                                                 primaryText:[NSString stringWithFormat:@"Please wait for MultiLauncher to start app"]
                                               secondaryText:nil];
