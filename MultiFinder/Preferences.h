@@ -10,4 +10,5 @@
 
 extern NSString* const kMFDefaultApp;
 extern NSString* const kMFDefaultAppIRMode;
+extern NSString* const kMFAppLaunchMaxRetryCount;
 

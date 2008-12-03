@@ -1,13 +1,7 @@
 ToDos:
 
-Safety first:
-- make sure that Frontrow gets launched if something goes wrong
-  - add level of indirection around launchApplication that tries to launch the specified app, if it goes wrong, launch finder
-  - MultiFinder should try three times to launch an App, then default back to Finder.app. 
+use exit status of app to do advanced stuff
   - use exit status of NSTask
-  - Once defaulted back to Finder.app, then keep launching Finder.app even if it crashes. 
-  - Finder.app has it's own tracking and if it crashes enough, it will kick into a recovery boot. 
-  - add a way to disable the 3x crash for debugging the launched app
   - implement shutdown menu restart request of xbmc with that
  
 - check that xbmchelper was started properly. if not, go into safe-mode (see safety first)
@@ -25,8 +19,6 @@ Safety first:
 -add to MultiFinder's preferences:
   - IR timeout
   - verbose setting?
-  - relaunchCount
-  - debugging value for disabling finder restart after app crashes
 
 - add setting of timeout to universalmode
 
