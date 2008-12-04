@@ -20,8 +20,8 @@ if [ -e $DISKIMAGE ]; then
 
   # install xbmc app
   echo $PW | sudo -S hdiutil attach $DISKIMAGE 
-  echo $PW | sudo -S installer -pkg /Volumes/boxee-0.9.5.4497/boxee-0.9.5.4497.mpkg -target /
-  echo $PW | sudo -S hdiutil detach /Volumes/boxee-0.9.5.4497
+  echo $PW | sudo -S installer -pkg /Volumes/boxee-0.9.5/boxee-0.9.5.4497.mpkg -target /
+  echo $PW | sudo -S hdiutil detach /Volumes/boxee-0.9.5
 
   # handle any post-install items here
   echo $PW | sudo -S chown -R frontrow:frontrow "/Applications/Boxee.app"
