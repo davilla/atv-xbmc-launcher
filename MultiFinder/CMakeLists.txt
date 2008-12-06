@@ -49,6 +49,19 @@ add_custom_command(TARGET MultiFinder
                      COMMAND mkdir -p ${MF_LOCATION}.app/Contents/Resources/
                      COMMAND cp ${HELPER_LOCATION} ${MF_LOCATION}.app/Contents/Resources/
                      COMMENT "add xbmchelper" VERBATIM)
+#and copy SettingsHelper into it. For now by hand.
+#see http://www.cmake.org/pipermail/cmake/2008-November/025455.html if this can be done better
+get_target_property(SETTINGSHELPER_LOCATION SettingsHelper LOCATION) 
+ADD_DEPENDENCIES(MultiFinder SettingsHelper)
+add_custom_command(TARGET MultiFinder
+                     POST_BUILD
+                     COMMAND mkdir -p ${MF_LOCATION}.app/Contents/Resources/
+                     COMMAND cp ${SETTINGSHELPER_LOCATION} ${MF_LOCATION}.app/Contents/Resources/
+                     COMMENT "add SettingsHelper" VERBATIM)
+# TODO needs sudo
+#                     COMMAND chown root ${SETTINGSHELPER_LOCATION}
+#                     COMMAND chmod +s ${SETTINGSHELPER_LOCATION}
+
 
 #-------
 # add convenience target which copies to ATV

@@ -30,5 +30,8 @@ add_subdirectory(xbmchelper)
 #doesn't work with cmake yet :/
 #add_subdirectory(xbmclauncher)
 
+#SettingsHelper
+add_subdirectory(SettingsHelper)
+
 #Finder replacement
 add_subdirectory(MultiFinder)

@@ -65,56 +65,27 @@
 
 #import <MultiFinder.h>
 
-//--------------------------------------------------------------
-@interface ATVSettingsHelper
-+ (id)singleton;
-- (BOOL)tellWatchdogWeAreUpAndRunning;
-@end
-
-//--------------------------------------------------------------
-@interface ATVHardwareUtility
-+ (id)singleton;
-+ (void)turnOnWhiteLED;
-+ (void)turnOffWhiteLED;
-+ (void)blinkWhiteLED;
-+ (void)turnOnAmberLED;
-+ (void)turnOffAmberLED;
-+ (void)blinkAmberLED;
-+ (void)flushDiskChanges;
-+ (void)turnOnDriveAcceleration;
-+ (void)turnOffDriveAcceleration;
-+(void)setLowPowerMode:(BOOL)fp8;
-@end
-
-//--------------------------------------------------------------
-@interface FeedWatchDog : NSObject 
-- (void) bone:(NSTimer *)timer; 
-@end 
-
-@implementation FeedWatchDog 
-- (void) bone:(NSTimer *)timer
-{ 
-  NSLog(@"here's a bone for watchdog");
-  notify_post("com.apple.riptide.heartbeat");
-} 
-@end
-
-//--------------------------------------------------------------
-//--------------------------------------------------------------
 int main(int argc, char *argv[])
 {
   // notify apple tv framework stuff (2.1, 2.2, 2.3 only)
   NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
   
-  // preamble (setup watchdog and default the LED to white)
-  [[ATVSettingsHelper singleton] tellWatchdogWeAreUpAndRunning];
-  [[ATVHardwareUtility singleton] setLowPowerMode: NO];
-  [[ATVHardwareUtility singleton] turnOnWhiteLED];
+  //start settingsHelper
+  NSString* p_settings_helper_path = [[NSBundle bundleForClass:[MultiFinder class]] pathForResource:@"SettingsHelper" ofType:@""];
+  NSLog(@"%@",p_settings_helper_path);
+  NSTask* p_settings_helper = nil;
+  @try {
+    p_settings_helper = [NSTask launchedTaskWithLaunchPath:p_settings_helper_path arguments:[NSArray array]];
+  } @catch (NSException* e) {
+    [p_settings_helper release];
+    p_settings_helper = nil;
+  }  
+  if(!p_settings_helper){
+    NSLog(@"Ouch. Could not launch settingshelper");
+  } else {
+    NSLog(@"Settingshelper successfully launched");
+  }
   
-  // setup our NSTimers
-  FeedWatchDog *feed_watchdog = [[[FeedWatchDog alloc] init] autorelease]; 
-  [NSTimer scheduledTimerWithTimeInterval:58.0 target:feed_watchdog selector:@selector(bone:) userInfo:nil repeats:YES]; 
-
   // setup our app listener which starts up Finder by default
   MultiFinder* multifinder = [[MultiFinder alloc] init];
 
