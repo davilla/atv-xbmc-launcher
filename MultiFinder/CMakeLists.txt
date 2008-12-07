@@ -58,10 +58,6 @@ add_custom_command(TARGET MultiFinder
                      COMMAND mkdir -p ${MF_LOCATION}.app/Contents/Resources/
                      COMMAND cp ${SETTINGSHELPER_LOCATION} ${MF_LOCATION}.app/Contents/Resources/
                      COMMENT "add SettingsHelper" VERBATIM)
-# TODO needs sudo
-#                     COMMAND chown root ${SETTINGSHELPER_LOCATION}
-#                     COMMAND chmod +s ${SETTINGSHELPER_LOCATION}
-
 
 #-------
 # add convenience target which copies to ATV
@@ -79,6 +75,8 @@ add_custom_target(MFBuildAndCopyToATV
 		COMMAND	scp -r ${MF_LOCATION}.app frontrow@${APPLETV_IP}:
 		COMMAND ssh frontrow@${APPLETV_IP} "echo \"frontrow\" | sudo -S /bin/rm -rf /Applications/MultiFinder.app"
 		COMMAND ssh frontrow@${APPLETV_IP} "echo \"frontrow\" | sudo -S /bin/mv ~/MultiFinder.app /Applications"
+		COMMAND ssh frontrow@${APPLETV_IP} "echo \"frontrow\" | sudo -S /usr/sbin/chown root /Applications/MultiFinder.app/Contents/Resources/SettingsHelper"
+		COMMAND ssh frontrow@${APPLETV_IP} "echo \"frontrow\" | sudo -S /bin/chmod +s /Applications/MultiFinder.app/Contents/Resources/SettingsHelper"
 		COMMAND ssh frontrow@${APPLETV_IP} "restartLogin"
         COMMENT "covenience copy to ATV" VERBATIM)
 ADD_DEPENDENCIES(MFBuildAndCopyToATV MultiFinder)

@@ -85,7 +85,11 @@ int main(int argc, char *argv[])
   } else {
     NSLog(@"Settingshelper successfully launched");
   }
-  
+  //wait for settingshelper to be up and running
+  //otherwise xbmchelper may has already captured LED/IR and so we can't set LED 
+	NSDate *future = [NSDate dateWithTimeIntervalSinceNow: 0.2];
+	[NSThread sleepUntilDate:future];
+   
   // setup our app listener which starts up Finder by default
   MultiFinder* multifinder = [[MultiFinder alloc] init];
 
