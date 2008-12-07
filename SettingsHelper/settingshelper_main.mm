@@ -25,18 +25,7 @@
 +(void)setLowPowerMode:(BOOL)fp8;
 @end
 
-//--------------------------------------------------------------
-@interface FeedWatchDog : NSObject 
-- (void) bone:(NSTimer *)timer; 
-@end 
 
-@implementation FeedWatchDog 
-- (void) bone:(NSTimer *)timer
-{ 
-  NSLog(@"here's a bone for watchdog");
-  notify_post("com.apple.riptide.heartbeat");
-} 
-@end
 
 //--------------------------------------------------------------
 //--------------------------------------------------------------
@@ -55,14 +44,11 @@ int main(int argc, char *argv[])
   [ATVHardwareUtility setLowPowerMode: NO];
   [ATVHardwareUtility turnOnWhiteLED];
   
-  // setup our NSTimers
-  FeedWatchDog *feed_watchdog = [[[FeedWatchDog alloc] init] autorelease]; 
-  [NSTimer scheduledTimerWithTimeInterval:58.0 target:feed_watchdog selector:@selector(bone:) userInfo:nil repeats:YES]; 
-
-  // make a run loop and go
+  //run the loop so stuff gets processed
   NSRunLoop *theRL = [NSRunLoop currentRunLoop]; 
-  while ([theRL runMode:NSDefaultRunLoopMode beforeDate:[NSDate distantFuture]]) ; 
-    
+  int i=10;
+  while(--i) [theRL runMode:NSDefaultRunLoopMode beforeDate:[NSDate dateWithTimeIntervalSinceNow:0.1]]; 
+
   [pool release];
   return EXIT_SUCCESS; 
 }

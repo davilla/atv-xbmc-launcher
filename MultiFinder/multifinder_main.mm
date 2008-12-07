@@ -65,12 +65,27 @@
 
 #import <MultiFinder.h>
 
+//--------------------------------------------------------------
+@interface FeedWatchDog : NSObject 
+- (void) bone:(NSTimer *)timer; 
+@end 
+
+//--------------------------------------------------------------
+@implementation FeedWatchDog 
+- (void) bone:(NSTimer *)timer
+{ 
+  NSLog(@"here's a bone for watchdog");
+  notify_post("com.apple.riptide.heartbeat");
+} 
+@end
+
+//--------------------------------------------------------------
 int main(int argc, char *argv[])
 {
   // notify apple tv framework stuff (2.1, 2.2, 2.3 only)
   NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
   
-  //start settingsHelper
+  //start settingsHelper and wait for finish
   NSString* p_settings_helper_path = [[NSBundle bundleForClass:[MultiFinder class]] pathForResource:@"SettingsHelper" ofType:@""];
   NSLog(@"%@",p_settings_helper_path);
   NSTask* p_settings_helper = nil;
@@ -85,11 +100,12 @@ int main(int argc, char *argv[])
   } else {
     NSLog(@"Settingshelper successfully launched");
   }
-  //wait for settingshelper to be up and running
-  //otherwise xbmchelper may has already captured LED/IR and so we can't set LED 
-	NSDate *future = [NSDate dateWithTimeIntervalSinceNow: 0.2];
-	[NSThread sleepUntilDate:future];
-   
+  [p_settings_helper waitUntilExit];
+  
+  // setup our NSTimers
+  FeedWatchDog *feed_watchdog = [[[FeedWatchDog alloc] init] autorelease]; 
+  [NSTimer scheduledTimerWithTimeInterval:58.0 target:feed_watchdog selector:@selector(bone:) userInfo:nil repeats:YES]; 
+    
   // setup our app listener which starts up Finder by default
   MultiFinder* multifinder = [[MultiFinder alloc] init];
 
