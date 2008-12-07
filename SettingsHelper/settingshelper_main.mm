@@ -46,15 +46,14 @@ int main(int argc, char *argv[])
   NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
   
   // preamble (setup watchdog and default the LED to white)
+  //NSLog(@"%@", [ATVSettingsHelper singleton]); 
+  //TODO: check this! singleton returns nil, so the method isn't called
+  // why does it?
   [[ATVSettingsHelper singleton] tellWatchdogWeAreUpAndRunning];
-  [[ATVHardwareUtility singleton] setLowPowerMode: NO];
+    
   NSLog(@"Setting white LED to ON");
-  NSLog(@"%@", [ATVHardwareUtility singleton]);
-   NSLog(@"%@", [ATVSettingsHelper singleton]); 
-
-  [[ATVHardwareUtility singleton] turnOnWhiteLED];
-  [[ATVHardwareUtility singleton] blinkWhiteLED];
-  
+  [ATVHardwareUtility setLowPowerMode: NO];
+  [ATVHardwareUtility turnOnWhiteLED];
   
   // setup our NSTimers
   FeedWatchDog *feed_watchdog = [[[FeedWatchDog alloc] init] autorelease]; 

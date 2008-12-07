@@ -6,8 +6,6 @@ use exit status of app to do advanced stuff
   
 - sudo reboot sometimes comes to language selection
 
-- fix LED
-
 - add licence to files
 
 - add setting to enable / disable multifinder in XBMCLauncher
