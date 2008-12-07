@@ -98,6 +98,9 @@ class  XBMCClientWrapperImpl{
 public:
   XBMCClientWrapperImpl(bool f_universal_mode, const std::string& fcr_address = "localhost");
   ~XBMCClientWrapperImpl();
+  void setUniversalModeTimeout(double f_timeout){
+    m_sequence_timeout = f_timeout;
+  }
   void handleEvent(eATVClientEvent f_event);   
 };
 
@@ -298,6 +301,10 @@ void XBMCClientWrapperImpl::populateSequenceMap(){
 		return nil; 
 	mp_impl = new XBMCClientWrapperImpl(f_yes_no, [fp_server UTF8String]);
 	return self;
+}
+
+- (void) setUniversalModeTimeout:(double) f_timeout{
+  mp_impl->setUniversalModeTimeout(f_timeout);
 }
 
 - (void)dealloc{

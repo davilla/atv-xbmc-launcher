@@ -159,6 +159,11 @@
 }
 
 //----------------------------------------------------------------------------
+- (void) setUniversalModeTimeout:(double) f_timeout{
+  [mp_wrapper setUniversalModeTimeout:f_timeout];
+}
+
+//----------------------------------------------------------------------------
 - (void) disconnect{
   [mp_wrapper release];
   mp_wrapper = nil;

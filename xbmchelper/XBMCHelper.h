@@ -21,5 +21,6 @@
 - (void) enableVerboseMode:(bool) f_really;
 
 - (void) connectToServer:(NSString*) fp_server withUniversalMode:(bool) f_yes_no;
+- (void) setUniversalModeTimeout:(double) f_timeout;
 - (void) disconnect;
 @end

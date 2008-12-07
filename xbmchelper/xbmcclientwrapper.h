@@ -42,6 +42,8 @@ typedef enum{
 	struct XBMCClientWrapperImpl* mp_impl;
 }
 - (id) initWithUniversalMode:(bool) f_yes_no serverAddress:(NSString*) fp_server;
+- (void) setUniversalModeTimeout:(double) f_timeout;
+
 -(void) handleEvent:(eATVClientEvent) f_event;
 
 @end
