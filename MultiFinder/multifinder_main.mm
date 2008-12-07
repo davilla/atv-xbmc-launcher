@@ -65,6 +65,8 @@
 
 #import <MultiFinder.h>
 
+bool g_terminate = false;
+
 //--------------------------------------------------------------
 @interface FeedWatchDog : NSObject 
 - (void) bone:(NSTimer *)timer; 
@@ -79,9 +81,18 @@
 } 
 @end
 
+void signal_handler(int sig) {
+  printf("Caught signal. Exiting...\n");
+  g_terminate = true;
+}
+
 //--------------------------------------------------------------
 int main(int argc, char *argv[])
 {
+  signal(SIGQUIT, signal_handler);
+  signal(SIGTERM, signal_handler);
+  signal(SIGINT, signal_handler);
+  
   // notify apple tv framework stuff (2.1, 2.2, 2.3 only)
   NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
   
@@ -111,7 +122,7 @@ int main(int argc, char *argv[])
 
   // make a run loop and go
   NSRunLoop *theRL = [NSRunLoop currentRunLoop]; 
-  while ([theRL runMode:NSDefaultRunLoopMode beforeDate:[NSDate distantFuture]]) ; 
+  while (!g_terminate && [theRL runMode:NSDefaultRunLoopMode beforeDate:[NSDate dateWithTimeIntervalSinceNow:0.5]]) ; 
   
   // we never get here but this silences a compiler warning
   [multifinder release];
