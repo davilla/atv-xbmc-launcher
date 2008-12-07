@@ -3,9 +3,7 @@ ToDos:
 use exit status of app to do advanced stuff
   - use exit status of NSTask
   - implement shutdown menu restart request of xbmc with that
- 
-- check that xbmchelper was started properly. if not, go into safe-mode (see safety first)
-
+  
 - sudo reboot sometimes comes to language selection
 
 - fix LED
@@ -13,7 +11,7 @@ use exit status of app to do advanced stuff
 - add licence to files
 
 - add setting to enable / disable multifinder in XBMCLauncher
-- create dmg cmake target for MultiFinder
+
 - create download of MultiFinder in xbmc-info-testing
 
 -add to MultiFinder's preferences:
