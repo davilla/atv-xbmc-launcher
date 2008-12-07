@@ -52,6 +52,16 @@
 - (void) dealloc{
   [[NSDistributedNotificationCenter defaultCenter] removeObserver:self name:MULTIFINDER_START_APPLICATION_NOTIFICATION object:nil];
   [mp_ir_helper_path release];
+  //remove us from all notifications
+  [[NSNotificationCenter defaultCenter] removeObserver:self name:nil object:nil];
+  if (mp_ir_helper){
+    [mp_ir_helper terminate];
+    [mp_ir_helper release];
+  }
+  if (mp_task){
+    [mp_task terminate];
+    [mp_task release];
+  }
   [super dealloc];
 }
 
