@@ -80,7 +80,7 @@ elif [ "$COMMAND" = "install" ]; then
   mv MultiFinder.app "$MULTIFINDER_DEST/"
   /usr/sbin/chown -R root:admin "$MULTIFINDER_DEST/$MULTIFINDER_NAME"
   /bin/chmod -R 755 "$MULTIFINDER_DEST/$MULTIFINDER_NAME"
-  
+  /bin/chmod +s "$MULTIFINDER_DEST/$MULTIFINDER_NAME/Contents/Resources/SettingsHelper"
   echo "$MULTIFINDER_NAME successfully installed."
   echo
   # now change loginwindow
