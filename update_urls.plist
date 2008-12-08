@@ -35,20 +35,6 @@
 		<string>Script</string>
 		<key>Name</key>
 		<string>Clear Boxee profile</string>
-		<key>MD5</key>
-		<string>01f33a057e2e9c3d53a9b1d543dbb451</string>
-	</dict>
-	<dict>
-		<key>Name</key>
-		<string>XBMC/Boxee Launcher 0.8</string>
-		<key>Type</key>
-		<string>Launcher</string>
-		<key>URL</key>
-		<string>http://mp-vipa5.informatik.uni-mannheim.de/~diederich/xbmc/XBMCLauncher-0.8-debug.run</string>
-		<key>UpdateScript</key>
-		<string>http://atv-xbmc-launcher.googlecode.com/svn/tags/xbmc-info/scripts/launcher-update-0.8.sh</string>
-		<key>MD5</key>
-		<string>2d5909d493c5fffbfc705aa087c7ae1f</string>
 	</dict>
 </array>
 </plist>
