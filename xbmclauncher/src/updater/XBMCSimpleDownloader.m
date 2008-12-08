@@ -109,7 +109,10 @@
 		return nil;
   
 	mp_urlstr = [fp_path retain];
-	mp_md5 = [fp_md5 retain];
+  if(fp_md5)
+    mp_md5 = [fp_md5 retain];
+  else
+    mp_md5 = nil;
   
   [self setSecondaryText:[NSString stringWithFormat:@"Downloading from %@", mp_urlstr]];
 	// work out our desired output path
