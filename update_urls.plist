@@ -28,7 +28,7 @@
 	</dict>
 	<dict>
 		<key>UpdateScript</key>
-		<string>http://atv-xbmc-launcher.googlecode.com/svn/tags/boxee-info/scripts/simplestartup.sh</string>
+		<string>http://atv-xbmc-launcher.googlecode.com/svn/tags/xbmc-info/scripts/simplestartup.sh</string>
 		<key>URL</key>
 		<string>http://atv-xbmc-launcher.googlecode.com/svn/tags/xbmc-info/scripts/boxee_clear_userdata.sh</string>
 		<key>Type</key>
