@@ -50,6 +50,7 @@
 
 //--------------------------------------------------------------
 - (void) dealloc{
+  PRINT_SIGNATURE();
   [[NSDistributedNotificationCenter defaultCenter] removeObserver:self name:MULTIFINDER_START_APPLICATION_NOTIFICATION object:nil];
   [mp_ir_helper_path release];
   //remove us from all notifications
@@ -97,9 +98,11 @@
           //TODO: need to set mp_next_app_to_launch before switching back to current state
           //[self switchStateTo:m_state];
           DLOG(@"App wants to be restarted. Implement me!");
+          [self switchStateTo:MF_STATE_DEFAULT_APP];
           break;
         default:
           ELOG(@"App exited with status: %i", status);
+          [self switchStateTo:MF_STATE_DEFAULT_APP];
       }
     } else {
       [self switchStateTo:MF_STATE_DEFAULT_APP];
