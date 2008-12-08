@@ -92,7 +92,7 @@ void atv_hw_init(void) {
     [p_settings_helper release];
     p_settings_helper = nil;
   }  
-  if(!p_settings_helper){
+  if(!p_settings_helper) {
     NSLog(@"Ouch. Could not launch settingshelper");
   } else {
     NSLog(@"Settingshelper successfully launched");
