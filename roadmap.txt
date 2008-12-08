@@ -4,8 +4,6 @@ use exit status of app to do advanced stuff
   - use exit status of NSTask
   - implement shutdown menu restart request of xbmc with that
   
-- sudo reboot sometimes comes to language selection
-
 - add licence to files
 
 - add setting to enable / disable multifinder in XBMCLauncher
