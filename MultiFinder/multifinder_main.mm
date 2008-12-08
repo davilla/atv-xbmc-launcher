@@ -21,9 +21,9 @@
 // Also need this because there are two frameworks inside BackRow.framework
 // /System/Library/PrivateFrameworks/BackRow.framework
 
-// Build MultiFinder and place it -> /Users/frontrow/MultiFinder.app
+// Build MultiFinder and place it -> /Applications/MultiFinder.app
 // alternative) set APPLETV_IP in cmake cache and use MGBuildAndCopyToATV target
-// sudo defaults write /Library/Preferences/com.apple.loginwindow Finder /Users/frontrow/MultiFinder.app
+// sudo defaults write /Library/Preferences/com.apple.loginwindow Finder /Applications/MultiFinder.app
 //
 // To switch back to frontrow (Finder.app)
 // sudo defaults delete /Library/Preferences/com.apple.loginwindow Finder
@@ -32,22 +32,13 @@
 // ./plutil -convert xml1 -o ./com.apple.loginwindow.plist /Library/Preferences/com.apple.loginwindow.plist
 // more com.apple.loginwindow.plist
 //
-// Right now manual switching only, to do the switch
-// sudo kill `ps awwx | grep [l]oginwindow | awk '{print $1}'`
 //
-// Launch XBMC
-// open /Applications/XBMC.app
+// To powerup and launch directly into XBMC.app.
+// defaults write com.teamxbmc.multifinder DefaultApplicationIRMode -int 1
+// defaults write com.teamxbmc.multifinder DefaultApplication "/Applications/XBMC.app/Contents/MacOS/XBMC"
 //
-// Exit XBMC
-// sudo kill `ps awwx | grep [X]BMC | awk '{print $1}'`
-//
-//
-// Launch Frontrow (Finder.app)
-// open /System/Library/CoreServices/Finder.app
-//
-// Exit Frontrow
-// sudo kill `ps awwx | grep [F]inder | awk '{print $1}'`
-//
+// To revert
+// rm ~/Library/Preferences/com.teamxbmc.multifinder
 //
 // kudos to Eric Steil III for the initial feeding the watchdog
 //
@@ -65,7 +56,7 @@
 
 #import <MultiFinder.h>
 
-bool g_terminate = false;
+volatile bool g_terminate = false;
 
 //--------------------------------------------------------------
 @interface FeedWatchDog : NSObject 
@@ -76,26 +67,21 @@ bool g_terminate = false;
 @implementation FeedWatchDog 
 - (void) bone:(NSTimer *)timer
 { 
-  NSLog(@"here's a bone for watchdog");
+  //NSLog(@"here's a bone for watchdog");
   notify_post("com.apple.riptide.heartbeat");
 } 
 @end
 
+//--------------------------------------------------------------
 void signal_handler(int sig) {
   printf("Caught signal. Exiting...\n");
   g_terminate = true;
 }
 
 //--------------------------------------------------------------
-int main(int argc, char *argv[])
-{
-  signal(SIGQUIT, signal_handler);
-  signal(SIGTERM, signal_handler);
-  signal(SIGINT, signal_handler);
-  
-  // notify apple tv framework stuff (2.1, 2.2, 2.3 only)
+void atv_hw_init(void) {
   NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
-  
+
   //start settingsHelper and wait for finish
   NSString* p_settings_helper_path = [[NSBundle bundleForClass:[MultiFinder class]] pathForResource:@"SettingsHelper" ofType:@""];
   NSLog(@"%@",p_settings_helper_path);
@@ -113,6 +99,23 @@ int main(int argc, char *argv[])
   }
   [p_settings_helper waitUntilExit];
   
+  [pool release];
+}
+
+//--------------------------------------------------------------
+//--------------------------------------------------------------
+int main(int argc, char *argv[])
+{
+  signal(SIGQUIT, signal_handler);
+  signal(SIGTERM, signal_handler);
+  signal(SIGINT, signal_handler);
+  
+  // notify apple tv framework stuff (2.1, 2.2, 2.3 only)
+  NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
+  
+  // setup hardware
+  atv_hw_init();
+  
   // setup our NSTimers
   FeedWatchDog *feed_watchdog = [[[FeedWatchDog alloc] init] autorelease]; 
   [NSTimer scheduledTimerWithTimeInterval:58.0 target:feed_watchdog selector:@selector(bone:) userInfo:nil repeats:YES]; 
@@ -124,7 +127,7 @@ int main(int argc, char *argv[])
   NSRunLoop *theRL = [NSRunLoop currentRunLoop]; 
   while (!g_terminate && [theRL runMode:NSDefaultRunLoopMode beforeDate:[NSDate dateWithTimeIntervalSinceNow:0.5]]) ; 
   
-  // we never get here but this silences a compiler warning
+  // someone killed up so die gracefully
   [multifinder release];
   
   [pool release];
