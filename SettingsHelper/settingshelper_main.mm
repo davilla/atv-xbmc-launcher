@@ -22,23 +22,51 @@
 + (void)flushDiskChanges;
 + (void)turnOnDriveAcceleration;
 + (void)turnOffDriveAcceleration;
-+(void)setLowPowerMode:(BOOL)fp8;
++ (void)setLowPowerMode:(BOOL)fp8;
 @end
-
-
 
 //--------------------------------------------------------------
 //--------------------------------------------------------------
 int main(int argc, char *argv[])
 {
-  // notify apple tv framework stuff (2.1, 2.2, 2.3 only)
   NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
   
-  // preamble (setup watchdog and default the LED to white)
-  //NSLog(@"%@", [ATVSettingsHelper singleton]); 
-  //TODO: check this! singleton returns nil, so the method isn't called
-  // why does it?
-  [[ATVSettingsHelper singleton] tellWatchdogWeAreUpAndRunning];
+  // tellWatchdogWeAreUpAndRunning which resets the boot count
+  // Since Finder.app is not running yet (or might not be running)
+  // we need to manually load AppleTV.frameworka and find ATVSettingsHelper.
+  // Refs to pre r1.1 is included just in case we ever want to run under r1.0.
+  NSBundle *appleTVFramework = [NSBundle bundleWithPath:@"/System/Library/PrivateFrameworks/AppleTV.framework"];
+  if(appleTVFramework) {
+    NSLog(@"Running on Apple TV 1.1+");
+    [appleTVFramework load];
+  } else {
+    appleTVFramework = [NSBundle bundleWithPath:@"/System/Library/PrivateFrameworks/BackRow.framework"];
+    if(appleTVFramework) {
+      NSLog(@"Running on Apple TV 1.0");
+      [appleTVFramework load];
+    }
+  }
+
+  if(appleTVFramework) {
+    id settingsHelper = nil;
+    Class cls = nil;
+    if(cls = NSClassFromString(@"ATVSettingsHelper")) {
+      settingsHelper = [cls sharedInstance];
+    } else if(cls = NSClassFromString(@"BRSettingsHelper")) {
+      settingsHelper = [cls sharedInstance];
+    } else {
+      fprintf(stderr, "Can't find ATVSettingsHelper or BRSettingsHelper class, aborting.\n");
+    }
+    
+    if(settingsHelper) {
+      NSLog(@"tellWatchdogWeAreUpAndRunning");
+      [settingsHelper tellWatchdogWeAreUpAndRunning];
+    } else {
+      fprintf(stderr, "Instance of settings helper class not found?!\n");
+    }
+  } else {
+    fprintf(stderr, "Unable to load Apple TV frameworks.\n");
+  }
     
   NSLog(@"Setting white LED to ON");
   [ATVHardwareUtility setLowPowerMode: NO];
@@ -50,6 +78,7 @@ int main(int argc, char *argv[])
   while(--i) [theRL runMode:NSDefaultRunLoopMode beforeDate:[NSDate dateWithTimeIntervalSinceNow:0.1]]; 
 
   [pool release];
+  
   return EXIT_SUCCESS; 
 }
 
