@@ -21,6 +21,11 @@
 #import <Cocoa/Cocoa.h>
 #import <BackRow/BackRow.h>
 
+typedef enum {
+	APPLICATION = 0,
+	UPDATER = 1
+} eControllerType;
+
 @interface XBMCAppliance : BRBaseAppliance {
 	
 }

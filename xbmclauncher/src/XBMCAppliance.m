@@ -29,10 +29,6 @@
 //enable this one to get notifications to BRDisplayManger logged
 #define BRDISPLAY_MANAGER_OBSERVATION 1
 
-typedef enum {
-	APPLICATION = 0,
-	UPDATER = 1
-} eControllerType;
 
 @implementation XBMCAppliance
 
