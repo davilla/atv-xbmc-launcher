@@ -12,6 +12,7 @@
   - (void) switchStateTo:(eMFState) f_state;
   - (BOOL) launchApplication;
   - (void) startApplicationRequest:(NSNotification *)notification;
+  - (void) changeDefaultApplicationRequest:(NSNotification *)notification;
 @end
 
 
@@ -28,7 +29,6 @@
 
   //register the dictionary of defaults
   [[NSUserDefaults standardUserDefaults] registerDefaults:defaultValues];
-  ILOG(@"registered defaults: %@", defaultValues);
 }
 
 //--------------------------------------------------------------
@@ -42,6 +42,7 @@
   
   //register cross-app-notification listeners
   [[NSDistributedNotificationCenter defaultCenter] addObserver:self selector:@selector(startApplicationRequest:) name:MULTIFINDER_START_APPLICATION_NOTIFICATION object:nil];
+  [[NSDistributedNotificationCenter defaultCenter] addObserver:self selector:@selector(changeDefaultApplicationRequest:) name:MULTIFINDER_CHANGE_DEFAULT_APPLICATION_NOTIFICATION object:nil];
   
   //switch to unitialized state
   [self switchStateTo:MF_STATE_UNINITIALIZED];
@@ -51,7 +52,7 @@
 //--------------------------------------------------------------
 - (void) dealloc{
   PRINT_SIGNATURE();
-  [[NSDistributedNotificationCenter defaultCenter] removeObserver:self name:MULTIFINDER_START_APPLICATION_NOTIFICATION object:nil];
+  [[NSDistributedNotificationCenter defaultCenter] removeObserver:self name:nil object:nil];
   [mp_ir_helper_path release];
   //remove us from all notifications
   [[NSNotificationCenter defaultCenter] removeObserver:self name:nil object:nil];
@@ -189,6 +190,34 @@
   }
   DLOG(@"Got an start application request for app %@ withRemote:%i", mp_next_app_to_launch, m_next_app_ir_mode);
   [self switchStateTo:MF_STATE_USER_APP];
+  [pool release];
+}
+
+//--------------------------------------------------------------
+- (void) changeDefaultApplicationRequest:(NSNotification *)notification{
+  NSAutoreleasePool* pool = [[NSAutoreleasePool alloc] init];
+  NSDictionary* userInfo = [notification userInfo];
+  NSString* default_app = nil;
+  eMultiFinderAppIRMode ir_mode = 0;
+  //change default application
+  default_app = [userInfo objectForKey:kApplicationPath];
+  if( !default_app)
+    ELOG(@"Ouch something went wrong. Got a request to change default app, but no app was given!");
+  //does it need IR?
+  if( [[userInfo objectForKey:kApplicationNeedsIR] boolValue] ){
+    if([userInfo objectForKey:kApplicationWantsUniversalIRMode] && [[userInfo objectForKey:kApplicationWantsUniversalIRMode] boolValue])
+      ir_mode = MFAPP_IR_MODE_UNIVERSAL;
+    else 
+      ir_mode = MFAPP_IR_MODE_NORMAL;
+  } else {
+    ir_mode = MFAPP_IR_MODE_NONE;
+  }
+  DLOG(@"Got an change default application request for app %@ withRemote:%i", default_app, ir_mode);
+  //change default app
+  NSUserDefaults* defaults = [NSUserDefaults standardUserDefaults];
+  [defaults setValue:default_app forKey:kMFDefaultApp];
+  [defaults setValue:[NSNumber numberWithInt:ir_mode] forKey:kMFDefaultAppIRMode];
+  [defaults synchronize];
   [pool release];
 }
 

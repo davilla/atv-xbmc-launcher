@@ -14,12 +14,6 @@
 extern NSString* const kMFDefaultApp;
 extern NSString* const kMFDefaultAppIRMode;
 
-typedef enum{
-  MFAPP_IR_MODE_NONE = 0,
-  MFAPP_IR_MODE_NORMAL,
-  MFAPP_IR_MODE_UNIVERSAL
-} eMultiFinderAppIRMode;
-
 //typedef for MultiFinder's FSM states
 typedef enum{
   MF_STATE_UNINITIALIZED = 0,
