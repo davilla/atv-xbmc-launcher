@@ -100,6 +100,9 @@ static OSStatus CarbonEventHandler(EventHandlerCallRef,EventRef, void *);
   PRINT_SIGNATURE();
   if( mp_task && ![mp_task isRunning] ){
     [[NSNotificationCenter defaultCenter] removeObserver:self name:NSTaskDidTerminateNotification object:mp_task];
+    //remove it from whitelist if it's there
+    [mp_white_list removeObject:[mp_task launchPath]];
+    
     //kill helper and release task object
     [mp_ir_helper terminate];
     [mp_ir_helper release];
