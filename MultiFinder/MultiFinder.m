@@ -8,11 +8,17 @@
 #import "Preferences.h"
 #import <XBMCDebugHelpers.h>
 
+//forward declaration of application watchers callback
+static OSStatus CarbonEventHandler(EventHandlerCallRef,EventRef, void *);
+
 @interface MultiFinder (private) 
   - (void) switchStateTo:(eMFState) f_state;
   - (BOOL) launchApplication;
   - (void) startApplicationRequest:(NSNotification *)notification;
   - (void) changeDefaultApplicationRequest:(NSNotification *)notification;
+  
+  - (bool) isApplicationBlacklisted:(NSString*) fp_app_name;  //takes an application name, e.g. "Finder", "XBMC"
+  - (bool) decreaseExecutableWhitelistCount:(NSString*) fp_executable_path; //decreases the whitelist count and returns true if exe was whitelisted 
 @end
 
 
@@ -43,6 +49,22 @@
   //register cross-app-notification listeners
   [[NSDistributedNotificationCenter defaultCenter] addObserver:self selector:@selector(startApplicationRequest:) name:MULTIFINDER_START_APPLICATION_NOTIFICATION object:nil];
   [[NSDistributedNotificationCenter defaultCenter] addObserver:self selector:@selector(changeDefaultApplicationRequest:) name:MULTIFINDER_CHANGE_DEFAULT_APPLICATION_NOTIFICATION object:nil];
+
+  //setup black- and whitelist
+  mp_black_list = [[NSArray alloc] initWithObjects:@"Finder", nil];
+  mp_white_list = [[NSMutableArray alloc] init];
+  
+  //register carbon event handler to prevent additional finders etc from launching
+  static const EventTypeSpec kEvents[] = { { kEventClassApplication, kEventAppLaunched } };
+  
+  (void) InstallEventHandler(
+                               GetApplicationEventTarget(),
+                               (EventHandlerUPP) CarbonEventHandler,
+                               GetEventTypeCount(kEvents),
+                               kEvents,
+                               self,
+                               &m_carbonEventsRef
+                               );
   
   //switch to unitialized state
   [self switchStateTo:MF_STATE_UNINITIALIZED];
@@ -53,6 +75,10 @@
 - (void) dealloc{
   PRINT_SIGNATURE();
   [[NSDistributedNotificationCenter defaultCenter] removeObserver:self name:nil object:nil];
+  RemoveEventHandler(m_carbonEventsRef);
+  [mp_black_list release];
+  [mp_white_list release];
+  
   [mp_ir_helper_path release];
   //remove us from all notifications
   [[NSNotificationCenter defaultCenter] removeObserver:self name:nil object:nil];
@@ -132,6 +158,9 @@
     mp_task = nil;
     return FALSE;
 	}
+  //add this executable to the whitelist so it doesn't get killed 
+  [mp_white_list addObject:[mp_task launchPath]];
+  
 	//wait a bit for task to start
 	NSDate *future = [NSDate dateWithTimeIntervalSinceNow: 0.1];
 	[NSThread sleepUntilDate:future];
@@ -299,4 +328,64 @@
     } //case MF_STATE_USER_APP
   }
 }
+
+//--------------------------------------------------------------
+- (bool) isApplicationBlacklisted:(NSString*) fp_app_name {
+  DLOG(@"searching for \"%@\" in blacklist %@", fp_app_name, mp_black_list);
+  return [mp_black_list containsObject:fp_app_name];
+}
+
+//--------------------------------------------------------------
+- (bool) decreaseExecutableWhitelistCount:(NSString*) fp_executable_path{
+  DLOG(@"searching for \"%@\" in whitelist %@", fp_executable_path, mp_white_list);
+  bool ret = false;
+  if([mp_white_list containsObject:fp_executable_path]){
+    [mp_white_list removeObject:fp_executable_path];
+    ret = true;
+  }
+  return ret;
+}
+
+//--------------------------------------------------------------
+static OSStatus CarbonEventHandler(
+                                   EventHandlerCallRef inHandlerCallRef, 
+                                   EventRef            inEvent, 
+                                   void *              inUserData
+)
+{
+  ProcessSerialNumber psn;
+  MultiFinder* instance = (MultiFinder*)inUserData;
+  (void) GetEventParameter(
+                           inEvent, 
+                           kEventParamProcessID, 
+                           typeProcessSerialNumber, 
+                           NULL, 
+                           sizeof(psn), 
+                           NULL, 
+                           &psn
+                           );
+  switch ( GetEventKind(inEvent) ) {
+    case kEventAppLaunched:
+    {
+      NSDictionary *dict =  (NSDictionary*)ProcessInformationCopyDictionary ( &psn , kProcessDictionaryIncludeAllInformationMask);
+      NSString* launched_app_name = [dict objectForKey:(NSString*)kCFBundleNameKey];
+      if( [instance isApplicationBlacklisted:launched_app_name] ){
+        NSString* launched_app_executable = [dict objectForKey:(NSString*)kCFBundleExecutableKey];
+        if([ instance decreaseExecutableWhitelistCount:launched_app_executable]){
+          DLOG(@"Executable %@ whitelisted.", launched_app_executable);
+        } else {
+          ILOG(@"Executable %@  not whitelisted. Killing application.", launched_app_executable);
+          if( KillProcess (&psn) != noErr)
+            ELOG(@"Failed to kill application!");
+        }
+      }
+      [dict release];
+      break;
+    }
+    default:
+      ELOG(@"CarbonEventHandler:: Unknown event!");
+  }
+  return noErr;
+}
+
 @end

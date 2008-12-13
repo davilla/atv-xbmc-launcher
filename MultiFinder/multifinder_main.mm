@@ -53,10 +53,7 @@
 #include <time.h>
 
 #import <Foundation/Foundation.h>
-
 #import <MultiFinder.h>
-
-volatile bool g_terminate = false;
 
 //--------------------------------------------------------------
 @interface FeedWatchDog : NSObject 
@@ -75,7 +72,7 @@ volatile bool g_terminate = false;
 //--------------------------------------------------------------
 void signal_handler(int sig) {
   printf("Caught signal. Exiting...\n");
-  g_terminate = true;
+  [NSApp terminate:nil];
 }
 
 //--------------------------------------------------------------
@@ -113,6 +110,10 @@ int main(int argc, char *argv[])
   // notify apple tv framework stuff (2.1, 2.2, 2.3 only)
   NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
   
+  //create a connection to window server
+  //at least one way to get informed of NSWorkspace notifications of app-launches
+  [NSApplication sharedApplication];
+
   // setup hardware
   atv_hw_init();
   
@@ -124,8 +125,7 @@ int main(int argc, char *argv[])
   MultiFinder* multifinder = [[MultiFinder alloc] init];
 
   // make a run loop and go
-  NSRunLoop *theRL = [NSRunLoop currentRunLoop]; 
-  while (!g_terminate && [theRL runMode:NSDefaultRunLoopMode beforeDate:[NSDate dateWithTimeIntervalSinceNow:0.5]]) ; 
+  [NSApp run];
   
   // someone killed up so die gracefully
   [multifinder release];

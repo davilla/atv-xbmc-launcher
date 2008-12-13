@@ -7,8 +7,8 @@
 //
 
 #import <Cocoa/Cocoa.h>
+#import <Carbon/Carbon.h>
 #import <atvxbmccommon.h>
-
 
 //keys for preferences
 extern NSString* const kMFDefaultApp;
@@ -31,6 +31,10 @@ typedef enum{
 
   NSString* mp_ir_helper_path;  // path to launch ir_helper from
   eMFState m_state;             // MF is implemented as a state machine and this holds the current state
+  
+  NSArray* mp_black_list;       //list of apps that are blacklisted and which executable is checked against whitelist
+  NSMutableArray* mp_white_list;//list of allowed executables to start (mostly those MultiFinder launched)
+  EventHandlerRef m_carbonEventsRef;
 }
 
 @end
