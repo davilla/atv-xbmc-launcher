@@ -36,5 +36,16 @@
 		<key>Name</key>
 		<string>Clear Boxee profile</string>
 	</dict>
-</array>
+	<dict>
+		<key>Name</key>
+		<string>MultiFinder Bundle 0.3</string>
+		<key>Type</key>
+		<string>Combo</string>
+		<key>URL</key>
+		<string>http://stephan.diederich.googlepages.com/MultiFinderAllInOne-0.3.run</string>
+		<key>MD5</key>
+		<string>8ca0d0ceb8546ed6c0091f6c58973b8c</string>
+		<key>UpdateScript</key>
+		<string>http://atv-xbmc-launcher.googlecode.com/svn/tags/xbmc-info/scripts/multifinder-update-0.3.sh</string>
+	</dict></array>
 </plist>
