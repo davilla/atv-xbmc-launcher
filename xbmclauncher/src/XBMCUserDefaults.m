@@ -11,6 +11,7 @@
 #import "XBMCUserDefaults.h"
 
 NSString* const XBMC_USE_UNIVERSAL_REMOTE = @"UseXBMCsUniversalRemote";
+NSString* const XBMC_EXPERT_MODE = @"XBMCExpertMode";
 
 @implementation XBMCUserDefaults
 

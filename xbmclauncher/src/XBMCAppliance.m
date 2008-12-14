@@ -43,7 +43,8 @@
 	//create default settings
 	NSMutableDictionary* defaultValues = [NSMutableDictionary dictionary];
 	[defaultValues setValue:[NSNumber numberWithBool:YES] forKey:XBMC_USE_UNIVERSAL_REMOTE];
-	
+  [defaultValues setValue:[NSNumber numberWithBool:NO] forKey:XBMC_EXPERT_MODE];
+  
 	//register dictionary defaults
 	[[XBMCUserDefaults defaults] registerDefaults:defaultValues];
 }

@@ -13,6 +13,7 @@
 //define keys for lookup in preferences
 
 extern NSString* const XBMC_USE_UNIVERSAL_REMOTE; //use Launcher in universal mode
+extern NSString* const XBMC_EXPERT_MODE; //show additional settings
 
 @interface XBMCUserDefaults : NSUserDefaults {
 	NSString * _applicationID;

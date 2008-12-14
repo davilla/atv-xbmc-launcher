@@ -207,10 +207,12 @@
   [item setTitle:@"ATV autoupdate enabled"];
   [item setRightJustifiedText:[XBMCPreferencesController autoUpdateEnabled] ? @"Yes": @"No"];
   [mp_items addObject:item];
-  item = [BRTextMenuItemLayer menuItem];
-  [item setTitle:@"Toggle MFDefaultApp"];
-  [item setRightJustifiedText:@""];
-  [mp_items addObject:item];
+  if( [[XBMCUserDefaults defaults] boolForKey:XBMC_EXPERT_MODE] ){
+    item = [BRTextMenuItemLayer menuItem];
+    [item setTitle:@"Toggle MFDefaultApp"];
+    [item setRightJustifiedText:@""];
+    [mp_items addObject:item];
+  }
 }
 
 - (void) recreateAppList{
