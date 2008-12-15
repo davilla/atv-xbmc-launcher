@@ -38,8 +38,6 @@
 		E4C96FD00E89A3AA00E6BAFE /* LICENSE.txt in Resources */ = {isa = PBXBuildFile; fileRef = E4C96FCC0E89A3AA00E6BAFE /* LICENSE.txt */; };
 		E4C96FD10E89A3AA00E6BAFE /* README.txt in Resources */ = {isa = PBXBuildFile; fileRef = E4C96FCD0E89A3AA00E6BAFE /* README.txt */; };
 		E4C9727A0E7C15D800B33973 /* AppKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E4C972790E7C15D800B33973 /* AppKit.framework */; };
-		E4C974BA0E7DAF7100B33973 /* killxbmchelper.sh in Resources */ = {isa = PBXBuildFile; fileRef = E4C974B90E7DAF7100B33973 /* killxbmchelper.sh */; };
-		E4CCB4380EAB650B003EB90E /* Keymap.xml in Resources */ = {isa = PBXBuildFile; fileRef = E4CCB4370EAB650B003EB90E /* Keymap.xml */; };
 		E4E3E48D0ED9DD20004DD694 /* atvxbmccommon.m in Sources */ = {isa = PBXBuildFile; fileRef = E4E3E4880ED9DD20004DD694 /* atvxbmccommon.m */; };
 /* End PBXBuildFile section */
 
@@ -88,8 +86,6 @@
 		E4C96FCE0E89A3AA00E6BAFE /* install.sh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.sh; name = install.sh; path = tools/install.sh; sourceTree = "<group>"; };
 		E4C9701A0E89ABB000E6BAFE /* xcodeversion */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.sh; name = xcodeversion; path = tools/xcodeversion; sourceTree = "<group>"; };
 		E4C972790E7C15D800B33973 /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = System/Library/Frameworks/AppKit.framework; sourceTree = SDKROOT; };
-		E4C974B90E7DAF7100B33973 /* killxbmchelper.sh */ = {isa = PBXFileReference; explicitFileType = text.script.sh; fileEncoding = 4; path = killxbmchelper.sh; sourceTree = "<group>"; };
-		E4CCB4370EAB650B003EB90E /* Keymap.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = Keymap.xml; sourceTree = "<group>"; };
 		E4E3E4870ED9DD20004DD694 /* atvxbmccommon.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = atvxbmccommon.h; sourceTree = "<group>"; };
 		E4E3E4880ED9DD20004DD694 /* atvxbmccommon.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = atvxbmccommon.m; sourceTree = "<group>"; };
 		E4E3E4890ED9DD20004DD694 /* XBMCDebugHelpers.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XBMCDebugHelpers.h; sourceTree = "<group>"; };
@@ -134,9 +130,7 @@
 		089C167CFE841241C02AAC07 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
-				E4CCB4370EAB650B003EB90E /* Keymap.xml */,
 				E489767E0E97B4370002B1EC /* compareMD5.sh */,
-				E4C974B90E7DAF7100B33973 /* killxbmchelper.sh */,
 				8D5B49B7048680CD000E48DA /* Info.plist */,
 				089C167DFE841241C02AAC07 /* InfoPlist.strings */,
 				E4C96FCC0E89A3AA00E6BAFE /* LICENSE.txt */,
@@ -289,11 +283,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				8D5B49B0048680CD000E48DA /* InfoPlist.strings in Resources */,
-				E4C974BA0E7DAF7100B33973 /* killxbmchelper.sh in Resources */,
 				E4C96FD00E89A3AA00E6BAFE /* LICENSE.txt in Resources */,
 				E4C96FD10E89A3AA00E6BAFE /* README.txt in Resources */,
 				E489767F0E97B4370002B1EC /* compareMD5.sh in Resources */,
-				E4CCB4380EAB650B003EB90E /* Keymap.xml in Resources */,
 				E4880E7C0ED6FE5800D33142 /* setAutoUpdate.sh in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
