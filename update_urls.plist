@@ -42,10 +42,11 @@
 		<key>Type</key>
 		<string>Combo</string>
 		<key>URL</key>
-		<string>http://stephan.diederich.googlepages.com/MultiFinderAllInOne-0.3.run</string>
+		<string>http://mp-vipa-server1/~diederich/xbmc/MultiFinderAllInOne-0.3.run</string>
 		<key>MD5</key>
-		<string>e40762c9dab11d84755b7bec5deeb2ca</string>
+		<string>52219d0b7126a08c9b337d5a0c4fe789</string>
 		<key>UpdateScript</key>
 		<string>http://atv-xbmc-launcher.googlecode.com/svn/tags/xbmc-info/scripts/multifinder-update-0.3.sh</string>
-	</dict></array>
+	</dict>
+	</array>
 </plist>
