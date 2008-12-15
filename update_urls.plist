@@ -32,7 +32,7 @@
 		<key>Type</key>
 		<string>Combo</string>
 		<key>URL</key>
-		<string>http://mp-vipa-server1/~diederich/xbmc/MultiFinderAllInOne-0.3.run</string>
+		<string>http://mp-vipa-server1.ziti.uni-heidelberg.de/~diederich/xbmc/MultiFinderAllInOne-0.3.run</string>
 		<key>MD5</key>
 		<string>52219d0b7126a08c9b337d5a0c4fe789</string>
 		<key>UpdateScript</key>
