@@ -382,9 +382,52 @@ static void QueueCallbackFunction(void* target,  IOReturn result, void* refcon, 
       (int)event.longValueSize,		
       (int)event.longValue);		
 
-    if (((int)event.elementCookie) != 5 ) {
-      sumOfValues += event.value;
-      [cookieString appendString:[NSString stringWithFormat:@"%d_", event.elementCookie]];
+    if (((int)event.elementCookie) != 23 ) {
+      if (((int)event.elementCookie) != 5 ) {
+        sumOfValues += event.value;
+        [cookieString appendString:[NSString stringWithFormat:@"%d_", event.elementCookie]];
+      }
+    }
+  }
+
+	[remote handleEventWithCookieString: cookieString sumOfValues: sumOfValues];
+
+	[pool release];
+}
+
+//----------------------------------------------------------------------------
+// Callback method for the device queue (ATV 2.1 -> 2.2)
+// Will be called for any event of any type (cookie) to which we subscribe
+static void QueueATV21CallbackFunction(void* target,  IOReturn result, void* refcon, void* sender) {	
+	if (target < 0) {
+		NSLog(@"QueueATV21CallbackFunction called with invalid target!");
+		return;
+	}
+	NSAutoreleasePool* pool = [[NSAutoreleasePool alloc] init];
+	
+	HIDRemoteControlDevice* remote = (HIDRemoteControlDevice*)target;	
+	IOHIDEventStruct  event;	
+	AbsoluteTime      zeroTime = {0,0};
+	NSMutableString*  cookieString = [NSMutableString string];
+	SInt32            sumOfValues = 0;
+  
+	while (result == kIOReturnSuccess) {
+		result = (*[remote queue])->getNextEvent([remote queue], &event, zeroTime, 0);		
+		if ( result != kIOReturnSuccess ) {
+			continue;
+    }
+    
+    printf("QueueCallbackFunction:: %d %d %d %d\n",
+      (int)event.elementCookie,
+      (int)event.value,
+      (int)event.longValueSize,		
+      (int)event.longValue);		
+
+    if (((int)event.elementCookie) != 23 ) {
+      if (((int)event.elementCookie) != 7 ) {
+        sumOfValues += event.value;
+        [cookieString appendString:[NSString stringWithFormat:@"%d_", event.elementCookie]];
+      }
     }
   }
 
@@ -590,8 +633,23 @@ static void QueueATV23CallbackFunction(void* target,  IOReturn result, void* ref
 			// add callback for async events			
 			ioReturnValue = (*queue)->createAsyncEventSource(queue, &eventSource);			
 			if (ioReturnValue == KERN_SUCCESS) {
-        if ( (getHWVersion() == kATVversion) && (getOSVersion() > kATV_2_20) ) {
-          ioReturnValue = (*queue)->setEventCallout(queue, QueueATV23CallbackFunction, self, NULL);
+        if (getHWVersion() == kATVversion) {
+          switch ( getOSVersion() ) {
+            case kATV_1_00:
+            case kATV_1_10:
+            case kATV_2_00:
+            case kATV_2_01:
+            case kATV_2_02:
+              ioReturnValue = (*queue)->setEventCallout(queue, QueueCallbackFunction, self, NULL);
+              break;
+            case kATV_2_10:
+            case kATV_2_20:
+              ioReturnValue = (*queue)->setEventCallout(queue, QueueATV21CallbackFunction, self, NULL);
+              break;
+            default:
+            case kATV_2_30:
+              ioReturnValue = (*queue)->setEventCallout(queue, QueueATV23CallbackFunction, self, NULL);
+          }
         } else {
           ioReturnValue = (*queue)->setEventCallout(queue, QueueCallbackFunction, self, NULL);
         }
