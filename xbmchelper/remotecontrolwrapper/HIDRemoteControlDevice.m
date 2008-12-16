@@ -370,8 +370,7 @@ static void QueueCallbackFunction(void* target,  IOReturn result, void* refcon, 
 	NSMutableString*  cookieString = [NSMutableString string];
 	SInt32            sumOfValues = 0;
   
-	while (result == kIOReturnSuccess)
-	{
+	while (result == kIOReturnSuccess) {
 		result = (*[remote queue])->getNextEvent([remote queue], &event, zeroTime, 0);		
 		if ( result != kIOReturnSuccess ) {
 			continue;
@@ -384,10 +383,10 @@ static void QueueCallbackFunction(void* target,  IOReturn result, void* refcon, 
       (int)event.longValue);		
 
     if (((int)event.elementCookie) != 5 ) {
-			sumOfValues += event.value;
-			[cookieString appendString:[NSString stringWithFormat:@"%d_", event.elementCookie]];
-		}
-	}
+      sumOfValues += event.value;
+      [cookieString appendString:[NSString stringWithFormat:@"%d_", event.elementCookie]];
+    }
+  }
 
 	[remote handleEventWithCookieString: cookieString sumOfValues: sumOfValues];
 

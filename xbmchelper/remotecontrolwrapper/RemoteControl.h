@@ -45,23 +45,23 @@ extern NSString* kTargetApplicationIdentifier;
 
 typedef enum _RemoteControlEventIdentifier {
 	// normal events
-	kRemoteButtonPlus				=1<<1,
-	kRemoteButtonMinus				=1<<2,
-	kRemoteButtonMenu				=1<<3,
-	kRemoteButtonPlay				=1<<4,
-	kRemoteButtonRight				=1<<5,
-	kRemoteButtonLeft				=1<<6,
+	kRemoteButtonPlus         =1<<1,
+	kRemoteButtonMinus        =1<<2,
+	kRemoteButtonMenu         =1<<3,
+	kRemoteButtonPlay         =1<<4,
+	kRemoteButtonRight        =1<<5,
+	kRemoteButtonLeft         =1<<6,
 	
 	// hold events
-	kRemoteButtonPlus_Hold			=1<<7,
-	kRemoteButtonMinus_Hold			=1<<8,	
-	kRemoteButtonMenu_Hold			=1<<9,	
-	kRemoteButtonPlay_Hold			=1<<10,	
-	kRemoteButtonRight_Hold			=1<<11,
-	kRemoteButtonLeft_Hold			=1<<12,
+	kRemoteButtonPlus_Hold    =1<<7,
+	kRemoteButtonMinus_Hold   =1<<8,	
+	kRemoteButtonMenu_Hold    =1<<9,	
+	kRemoteButtonPlay_Hold    =1<<10,	
+	kRemoteButtonRight_Hold   =1<<11,
+	kRemoteButtonLeft_Hold    =1<<12,
 	
 	// special events (not supported by all devices)	
-	kRemoteControl_Switched			=1<<13,
+	kRemoteControl_Switched   =1<<13,
 } RemoteControlEventIdentifier;
 
 @interface NSObject(RemoteControlDelegate)
