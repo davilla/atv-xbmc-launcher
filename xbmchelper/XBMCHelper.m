@@ -29,6 +29,7 @@
   [mp_remote_behavior setClickCountingEnabled:false];
   [mp_remote_behavior setSimulateHoldEvent:true];
   mp_remote_control = [[AppleRemote alloc] initWithDelegate: mp_remote_behavior];
+  [mp_remote_control setProcessesBacklog:true];
   if( ! mp_remote_control ){
     NSException* myException = [NSException
                                 exceptionWithName:@"AppleRemoteInitExecption"
