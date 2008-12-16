@@ -50,15 +50,15 @@
 	</dict>
 	<dict>
 		<key>Name</key>
-		<string>MultiFinder Bundle 0.3</string>
+		<string>MultiFinder Bundle 0.4</string>
 		<key>Type</key>
 		<string>Combo</string>
 		<key>URL</key>
-		<string>http://atv-xbmc-launcher.googlecode.com/files/MultiFinderAllInOne-0.3.run</string>
+		<string>http://mp-vipa-server1.ziti.uni-heidelberg.de/~diederich/xbmc/MultiFinderAllInOne-0.4.run</string>
 		<key>MD5</key>
-		<string>52219d0b7126a08c9b337d5a0c4fe789</string>
+		<string>97fbdbb0d2526da81da9803d86f9d693</string>
 		<key>UpdateScript</key>
-		<string>http://atv-xbmc-launcher.googlecode.com/svn/tags/xbmc-info/scripts/multifinder-update-0.3.sh</string>
+		<string>http://atv-xbmc-launcher.googlecode.com/svn/tags/xbmc-info/scripts/multifinder-update-0.4.sh</string>
 	</dict>
 	</array>
 </plist>
