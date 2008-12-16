@@ -16,15 +16,15 @@
 	</dict>
 	<dict>
 		<key>UpdateScript</key>
-		<string>http://atv-xbmc-launcher.googlecode.com/svn/tags/boxee-info/scripts/alpha-0.9.5.4497_update.sh</string>
+		<string>http://atv-xbmc-launcher.googlecode.com/svn/tags/boxee-info/scripts/alpha-0.9.6.4578_update.sh</string>
 		<key>URL</key>
-		<string>http://dl.boxee.tv/boxee-0.9.5.4497.dmg</string>
+		<string>http://dl.boxee.tv/boxee-0.9.6.4578.dmg</string>
 		<key>Type</key>
 		<string>Application</string>
 		<key>Name</key>
-		<string>Boxee alpha 0.9.5.4497</string>
+		<string>Boxee alpha 0.9.6.4578</string>
 		<key>MD5</key>
-		<string>6d85c41ad89912cfff3270df1c1d5815</string>
+		<string>f8b479e199f9375b54183e7cf35099c8</string>
 	</dict>
 	<dict>
 		<key>Name</key>
