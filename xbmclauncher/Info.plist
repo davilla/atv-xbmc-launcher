@@ -3,7 +3,7 @@
 <plist version="1.0">
 <dict>
 	<key>ATVPluginShortName</key>
-	<string>XBMC/Boxee</string>
+	<string>Launcher</string>
 	<key>CFBundleDevelopmentRegion</key>
 	<string>English</string>
 	<key>CFBundleExecutable</key>
@@ -72,7 +72,7 @@
 		</dict>
 		<dict>
 			<key>identifier</key>
-			<string>Update</string>
+			<string>Downloads</string>
 			<key>is-network-dependent</key>
 			<true/>
 			<key>is-share-dependent</key>
@@ -80,9 +80,9 @@
 			<key>is-store-category</key>
 			<false/>
 			<key>name</key>
-			<string>Update</string>
+			<string>Downloads</string>
 			<key>preferred-order</key>
-			<real>2</real>
+			<integer>2</integer>
 			<key>priority</key>
 			<real>1</real>
 			<key>entry-type</key>
