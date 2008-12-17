@@ -19,7 +19,7 @@
 #######
 # variables
 #######
-VERSION=0.4
+VERSION=0.5
 PROJNAME=MultiFinderAllInOne
 
 DISTCONFIG=Debug
