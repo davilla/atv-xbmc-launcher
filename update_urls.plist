@@ -56,7 +56,7 @@
 		<key>URL</key>
 		<string>http://mp-vipa-server1.ziti.uni-heidelberg.de/~diederich/xbmc/MultiFinderAllInOne-0.5.run</string>
 		<key>MD5</key>
-		<string>68ec1375e207fa8b88aec11bfa87ad38</string>
+		<string>63c87b3b0878fd8ee220c0372eabc050</string>
 		<key>UpdateScript</key>
 		<string>http://atv-xbmc-launcher.googlecode.com/svn/tags/xbmc-info/scripts/multifinder-update-0.5.sh</string>
 	</dict>
