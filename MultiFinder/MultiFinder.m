@@ -118,21 +118,20 @@ static OSStatus CarbonEventHandler(EventHandlerCallRef,EventRef, void *);
     if(m_state == MF_STATE_DEFAULT_APP || m_state == MF_STATE_USER_APP){
       switch(status){
         case 0:
-          [self switchStateTo:MF_STATE_DEFAULT_APP];
+          //by default launch finder on app exit
+          [self switchStateTo:MF_STATE_SAFE_MODE];
           break;
         case 66:
           DLOG(@"App wants us to restart ATV. Don't do this for now, but start Finder");
           [self switchStateTo:MF_STATE_SAFE_MODE];
           break;
         case 65:
-          //TODO: need to set mp_next_app_to_launch before switching back to current state
-          //[self switchStateTo:m_state];
-          DLOG(@"App wants to be restarted. Implement me!");
-          [self switchStateTo:MF_STATE_DEFAULT_APP];
+          DLOG(@"App wants to be restarted. Don't do this for now, but start Finder");
+          [self switchStateTo:MF_STATE_SAFE_MODE];
           break;
         default:
           ELOG(@"App exited with status: %i", status);
-          [self switchStateTo:MF_STATE_DEFAULT_APP];
+          [self switchStateTo:MF_STATE_SAFE_MODE];
       }
     } else {
       [self switchStateTo:MF_STATE_DEFAULT_APP];
