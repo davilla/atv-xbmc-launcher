@@ -131,7 +131,7 @@ static OSStatus CarbonEventHandler(EventHandlerCallRef,EventRef, void *);
           break;
         default:
           ELOG(@"App exited with status: %i", status);
-          [self switchStateTo:MF_STATE_SAFE_MODE];
+          [self switchStateTo:MF_STATE_DEFAULT_APP];
       }
     } else {
       [self switchStateTo:MF_STATE_DEFAULT_APP];
