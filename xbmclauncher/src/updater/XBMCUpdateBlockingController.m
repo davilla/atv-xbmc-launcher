@@ -41,7 +41,7 @@
 {
 	PRINT_SIGNATURE();
 	[mp_update_task launch];
-	[super wasPushed];
+	[super controlWasActivated];
 }
 
 - (void)updateFinished:(NSNotification *)note
