@@ -69,7 +69,7 @@
 {
 	PRINT_SIGNATURE();
 	//while the update is running, don't do anything
-	if( [mp_update_task isRunning] )
+	if( mp_update_task &&  [mp_update_task isRunning] )
 		return YES;
 	else
 		return [super brEventAction:event];
