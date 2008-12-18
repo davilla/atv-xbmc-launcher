@@ -40,6 +40,11 @@
 // To revert
 // rm ~/Library/Preferences/com.teamxbmc.multifinder
 //
+//
+// doing
+// defaults write com.teamxbmc.xbmclauncher XBMCExpertMode 1
+// enables the MFDefaultApp setting so the above can be done in Launcher
+//
 // kudos to Eric Steil III for the initial feeding the watchdog
 //
 #include <stdio.h>

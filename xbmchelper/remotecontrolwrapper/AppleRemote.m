@@ -36,6 +36,10 @@
 #import <IOKit/IOCFPlugIn.h>
 #import <IOKit/hid/IOHIDKeys.h>
 
+//
+// defaults read com.apple.driver.AppleIRController.plist
+// {UIDFilter = 74; }
+
 const char* AppleIRControllerName = "AppleIRController";
 const char* AppleTVIRReceiverName = "AppleTVIRReceiver";
 const NSTimeInterval SEND_UP_DELAY_TIME_INTERVAL=0.2; // used on atv >= 2.3 where we get no up event here
