@@ -111,7 +111,7 @@ GNU General Public License for more details.\
 You should have received a copy of the GNU General Public License\
 along with this program. If not, see <http://www.gnu.org/licenses/>.";
 	return [BRAlertController alertOfType:0 titled:@"About" 
-                            primaryText:[NSString stringWithFormat:@"XBMCLauncher %@", version]
+                            primaryText:[NSString stringWithFormat:@"Launcher %@", version]
 													secondaryText:[NSString stringWithFormat:@"Contributors: Scott Davilla / Stephan Diederich Copyright 2008 Team-XBMC\nsee http://atv-xbmc-launcher.googlecode.com or www.xbmc.org for details\n%@",licence_string
 																				 ]];
 	

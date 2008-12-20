@@ -122,7 +122,7 @@
 }
 
 - (void) wasPushed {	
-	[super setListTitle: @"XBMCLauncher"];
+	[super setListTitle: @"Launcher"];
 	[super setPrimaryInfoText:@"Settings"];
 	[self recreateMenuList];
   [self recreateAppList];
@@ -204,12 +204,12 @@
   [item setRightJustifiedText:[[XBMCUserDefaults defaults] boolForKey:XBMC_USE_UNIVERSAL_REMOTE] ? @"Yes": @"No"];
   [mp_items addObject:item];
 	item = [BRTextMenuItemLayer menuItem];
-  [item setTitle:@"ATV autoupdate enabled"];
+  [item setTitle:@"ATV OS Update enabled"];
   [item setRightJustifiedText:[XBMCPreferencesController autoUpdateEnabled] ? @"Yes": @"No"];
   [mp_items addObject:item];
   if( [[XBMCUserDefaults defaults] boolForKey:XBMC_EXPERT_MODE] ){
     item = [BRTextMenuItemLayer menuItem];
-    [item setTitle:@"Toggle MFDefaultApp"];
+    [item setTitle:@"Toggle Boot App"];
     [item setRightJustifiedText:@""];
     [mp_items addObject:item];
   }

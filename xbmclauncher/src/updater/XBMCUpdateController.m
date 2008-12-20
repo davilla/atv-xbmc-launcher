@@ -55,7 +55,7 @@
 }
 
 - (void) wasPushed {	
-	[super setListTitle: @"XBMC/Boxee Launcher"];
+	[super setListTitle: @"Launcher"];
 	[super setPrimaryInfoText: @"Downloads"];
 	[super setSecondaryInfoText: @"Available Downloads:"];
 	NSString *error;
