@@ -128,7 +128,7 @@ int main(int argc, char *argv[])
   [NSTimer scheduledTimerWithTimeInterval:58.0 target:feed_watchdog selector:@selector(bone:) userInfo:nil repeats:YES]; 
     
   // setup our app listener which starts up Finder by default
-  MultiFinder* multifinder = [[[MultiFinder alloc] init] autorelease];
+  [[[MultiFinder alloc] init] autorelease];
 
   // make a run loop and go
   [NSApp run];
