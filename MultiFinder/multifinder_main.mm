@@ -76,8 +76,10 @@
 
 //--------------------------------------------------------------
 void signal_handler(int sig) {
+  NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
   printf("Caught signal. Exiting...\n");
   [NSApp terminate:nil];
+  [pool release];
 }
 
 //--------------------------------------------------------------
@@ -91,7 +93,6 @@ void atv_hw_init(void) {
   @try {
     p_settings_helper = [NSTask launchedTaskWithLaunchPath:p_settings_helper_path arguments:[NSArray array]];
   } @catch (NSException* e) {
-    [p_settings_helper release];
     p_settings_helper = nil;
   }  
   if(!p_settings_helper) {
@@ -127,14 +128,11 @@ int main(int argc, char *argv[])
   [NSTimer scheduledTimerWithTimeInterval:58.0 target:feed_watchdog selector:@selector(bone:) userInfo:nil repeats:YES]; 
     
   // setup our app listener which starts up Finder by default
-  MultiFinder* multifinder = [[MultiFinder alloc] init];
+  MultiFinder* multifinder = [[[MultiFinder alloc] init] autorelease];
 
   // make a run loop and go
   [NSApp run];
-  
-  // someone killed up so die gracefully
-  [multifinder release];
-  
+    
   [pool release];
   return EXIT_SUCCESS; 
 }
