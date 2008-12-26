@@ -19,8 +19,10 @@
 #######
 # variables
 #######
-VERSION=0.5
-PROJNAME=MultiFinderAllInOne
+#version is taken from xbmclauncher's xcodeproject-file so we have only one version 
+#for the whole xbmclauncher / MultiFinder / ... / suite.
+VERSION=$(shell cd xbmclauncher && tools/xcodeversion version -terse && cd ..)
+PROJNAME=Launcher
 
 DISTCONFIG=Debug
 EXTRA_OPTS= 
