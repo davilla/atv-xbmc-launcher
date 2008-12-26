@@ -6,11 +6,11 @@
 		<key>UpdateScript</key>
 		<string>http://atv-xbmc-launcher.googlecode.com/svn/tags/xbmc-info/scripts/xbmc-8.10.bf1_update.sh</string>
 		<key>URL</key>
-		<string>http://downloads.sourceforge.net/xbmc/XBMC_for_Mac-8.10bf1.dmg</string>
+		<string>http://xbmc.org:8080/XBMC_for_Mac-8.10bf1.dmg</string>
 		<key>Type</key>
 		<string>Application</string>
 		<key>MD5</key>
-		<string>7aa0420a02c6a778541dead2e883b532</string>
+		<string>4b3625954e81e7dbeaca2d4fac2f3bb2</string>
 		<key>Name</key>
 		<string>XBMC Atlantis (bf1)</string>
 	</dict>
@@ -50,15 +50,15 @@
 	</dict>
 	<dict>
 		<key>Name</key>
-		<string>MultiFinder Bundle 0.5</string>
+		<string>Launcher 2.1</string>
 		<key>Type</key>
 		<string>Combo</string>
 		<key>URL</key>
-		<string>http://mp-vipa-server1.ziti.uni-heidelberg.de/~diederich/xbmc/MultiFinderAllInOne-0.5.run</string>
+		<string>http://mp-vipa-server1.ziti.uni-heidelberg.de/~diederich/xbmc/Launcher-2.1.run</string>
 		<key>MD5</key>
-		<string>ef7da4caf298d8c49e3b6043a0484df2</string>
+		<string>01af5db1eb3cf0035a6a60da663d7559</string>
 		<key>UpdateScript</key>
-		<string>http://atv-xbmc-launcher.googlecode.com/svn/tags/xbmc-info/scripts/multifinder-update-0.5.sh</string>
+		<string>http://atv-xbmc-launcher.googlecode.com/svn/tags/xbmc-info/scripts/launcher-update-2.1.sh</string>
 	</dict>
 	</array>
 </plist>
