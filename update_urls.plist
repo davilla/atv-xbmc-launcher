@@ -28,15 +28,15 @@
 	</dict>
 	<dict>
 		<key>Name</key>
-		<string>XBMC/Boxee Launcher 0.8</string>
+		<string>Launcher 2.1</string>
 		<key>Type</key>
-		<string>Launcher</string>
+		<string>Combo</string>
 		<key>URL</key>
-		<string>http://atv-xbmc-launcher.googlecode.com/files/XBMCLauncher-0.8-debug.run</string>
+		<string>http://atv-xbmc-launcher.googlecode.com/files/Launcher-2.1.run</string>
 		<key>MD5</key>
-		<string>2d5909d493c5fffbfc705aa087c7ae1f</string>
+		<string>b428124e03f6e1694ae2a117263a6d4e</string>
 		<key>UpdateScript</key>
-		<string>http://atv-xbmc-launcher.googlecode.com/svn/tags/xbmc-info/scripts/launcher-update-0.8.sh</string>
+		<string>http://atv-xbmc-launcher.googlecode.com/svn/tags/xbmc-info/scripts/launcher-update-2.1.sh</string>
 	</dict>
 </array>
 </plist>
