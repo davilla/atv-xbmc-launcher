@@ -15,7 +15,7 @@
  * The above copyright notice and this permission notice shall be included
  * in all copies or substantial portions of the Software.
  *
- * THE SOFTWARE IS PROVIDED ‚ÄúAS IS‚Äù, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * THE SOFTWARE IS PROVIDED ‚AS IS, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
  * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
  * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL 
  * THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
@@ -375,13 +375,13 @@ static void QueueCallbackFunction(void* target,  IOReturn result, void* refcon, 
 		if ( result != kIOReturnSuccess ) {
 			continue;
     }
-    
+    /*
     printf("QueueCallbackFunction:: %d %d %d %d\n",
       (int)event.elementCookie,
       (int)event.value,
       (int)event.longValueSize,		
       (int)event.longValue);		
-
+    */
     if (((int)event.elementCookie) != 23 ) {
       if (((int)event.elementCookie) != 5 ) {
         sumOfValues += event.value;
@@ -416,13 +416,13 @@ static void QueueATV21CallbackFunction(void* target,  IOReturn result, void* ref
 		if ( result != kIOReturnSuccess ) {
 			continue;
     }
-    
+    /*
     printf("QueueCallbackFunction:: %d %d %d %d\n",
       (int)event.elementCookie,
       (int)event.value,
       (int)event.longValueSize,		
       (int)event.longValue);		
-
+    */
     if (((int)event.elementCookie) != 23 ) {
       if (((int)event.elementCookie) != 7 ) {
         sumOfValues += event.value;
@@ -463,14 +463,16 @@ static void QueueATV23CallbackFunction(void* target,  IOReturn result, void* ref
 
     if (((int)event.elementCookie == 280) && (event.longValueSize == 20)) {
       ATV_IR_EVENT *atv_ir_event = event.longValue;
+      key_code = atv_ir_event->keycode;
+      
+      /*
       printf("%8.8lX%8.8lX %8.8lX %8.8lX, %8.8lX\n", 
         atv_ir_event->time_ms32, 
         atv_ir_event->time_ls32, 
         atv_ir_event->unknown1, 
         atv_ir_event->keycode, 
         atv_ir_event->unknown2);
-        
-      key_code = atv_ir_event->keycode;
+      */
     }
     /*
     printf("Raw: ");
