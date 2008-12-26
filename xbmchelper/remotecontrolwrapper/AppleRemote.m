@@ -37,8 +37,12 @@
 #import <IOKit/hid/IOHIDKeys.h>
 
 //
-// defaults read com.apple.driver.AppleIRController.plist
+// defaults read com.apple.driver.AppleIRController
 // {UIDFilter = 74; }
+
+//
+// defaults read /mnt/Scratch/Users/frontrow/Library/Application\ Support/Front\ Row/OtherRemotes/ActiveRemotes
+
 
 const char* AppleIRControllerName = "AppleIRController";
 const char* AppleTVIRReceiverName = "AppleTVIRReceiver";
