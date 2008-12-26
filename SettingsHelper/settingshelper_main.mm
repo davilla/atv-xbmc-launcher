@@ -8,6 +8,7 @@
 @interface ATVSettingsHelper
 + (id)singleton;
 - (BOOL)tellWatchdogWeAreUpAndRunning;
+- (BOOL)setLowPowerMode:(BOOL)fp8;
 @end
 
 //--------------------------------------------------------------
@@ -22,7 +23,7 @@
 + (void)flushDiskChanges;
 + (void)turnOnDriveAcceleration;
 + (void)turnOffDriveAcceleration;
-+ (void)setLowPowerMode:(BOOL)fp8;
++ (void)setLowPowerMode:(BOOL)fp8; //only on >=r2.3
 @end
 
 //--------------------------------------------------------------
@@ -61,6 +62,8 @@ int main(int argc, char *argv[])
     if(settingsHelper) {
       NSLog(@"tellWatchdogWeAreUpAndRunning");
       [settingsHelper tellWatchdogWeAreUpAndRunning];
+      NSLog(@"disableLowPowerMode");
+      [settingsHelper setLowPowerMode:NO];
     } else {
       fprintf(stderr, "Instance of settings helper class not found?!\n");
     }
@@ -69,7 +72,6 @@ int main(int argc, char *argv[])
   }
     
   NSLog(@"Setting white LED to ON");
-  [ATVHardwareUtility setLowPowerMode: NO];
   [ATVHardwareUtility turnOnWhiteLED];
   
   //run the loop so stuff gets processed
