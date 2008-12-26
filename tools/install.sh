@@ -75,8 +75,9 @@ elif [ "$COMMAND" = "install" ]; then
   /usr/bin/ditto -k -x --rsrc "$SRCDIR/@ARCHIVE_NAME@" . || die "Unable to extract $SRCDIR/@ARCHIVE_NAME@"
   echo "== Installing $LAUNCHER_NAME"  
   echo "n" | ./*.run || die "Unable to install $LAUNCHER_NAME"
-
+  echo ""
   echo "== Installing $MULTIFINDER_NAME"  
+  rm -rf "$MULTIFINDER_DEST/$MULTIFINDER_NAME"
   mv MultiFinder.app "$MULTIFINDER_DEST/"
   /usr/sbin/chown -R root:admin "$MULTIFINDER_DEST/$MULTIFINDER_NAME"
   /bin/chmod -R 755 "$MULTIFINDER_DEST/$MULTIFINDER_NAME"
