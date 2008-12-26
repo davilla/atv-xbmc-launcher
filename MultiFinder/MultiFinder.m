@@ -51,7 +51,7 @@ static OSStatus CarbonEventHandler(EventHandlerCallRef,EventRef, void *);
   [[NSDistributedNotificationCenter defaultCenter] addObserver:self selector:@selector(changeDefaultApplicationRequest:) name:MULTIFINDER_CHANGE_DEFAULT_APPLICATION_NOTIFICATION object:nil];
 
   //setup black- and whitelist
-  mp_black_list = [[NSArray alloc] initWithObjects:@"Finder", nil];
+  mp_black_list = [[NSArray alloc] initWithObjects:@"Finder", @"boxeeservice", nil];
   mp_white_list = [[NSMutableArray alloc] init];
   
   //register carbon event handler to prevent additional finders etc from launching
