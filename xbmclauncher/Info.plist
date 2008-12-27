@@ -43,10 +43,12 @@
 			<integer>0</integer>
 			<key>apppath</key>
 			<string>/Applications/XBMC.app/Contents/MacOS/XBMC</string>
-			<key>helperpath</key>
-			<string>/Applications/XBMC.app/Contents/Resources/XBMC/XBMCHelper</string>
 			<key>LaunchAgentFileName</key>
 			<string>org.xbmc.helper.plist</string>
+			<key>arguments</key>
+			<array>
+				<string>-fs</string>
+			</array>
 		</dict>
 		<dict>
 			<key>identifier</key>

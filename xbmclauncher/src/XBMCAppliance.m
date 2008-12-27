@@ -132,10 +132,10 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.";
 		//there can be more than one xbmc entry in the list, e.g. to test developer version etc.
 		//so read the path of current and pass to controller
 		NSString* appPath = [obj valueForKey:@"apppath"];
-		NSString* helperPath = [obj valueForKey:@"helperpath"];
+		NSArray* arguments = [obj valueForKey:@"arguments"];
 		NSString* launch_agent_file_name = [obj valueForKey:@"LaunchAgentFileName"];
 		return [[[XBMCController alloc] initWithAppPath:appPath 
-																				 helperPath:helperPath 
+                                          arguments:arguments
 																 lauchAgentFileName:launch_agent_file_name 
 						 ] autorelease];
 	} 

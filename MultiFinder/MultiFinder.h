@@ -10,10 +10,6 @@
 #import <Carbon/Carbon.h>
 #import <atvxbmccommon.h>
 
-//keys for preferences
-extern NSString* const kMFDefaultApp;
-extern NSString* const kMFDefaultAppIRMode;
-
 //typedef for MultiFinder's FSM states
 typedef enum{
   MF_STATE_UNINITIALIZED = 0,
@@ -27,6 +23,7 @@ typedef enum{
   NSTask* mp_ir_helper; // here ir_helper-task is stored if it's running
     
   NSString* mp_next_app_to_launch;          // launchApplication consumes this (and releases it)
+  NSArray* mp_next_app_arguments;           // launchApplication consumes this (and releases it)
   eMultiFinderAppIRMode m_next_app_ir_mode; // launchApplication uses this to start ir_helper and to determine options
 
   NSString* mp_ir_helper_path;  // path to launch ir_helper from

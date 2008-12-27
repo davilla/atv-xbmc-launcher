@@ -9,6 +9,7 @@
 #import <MultiFinder.h>
 
 extern NSString* const kMFDefaultApp;
+extern NSString* const kMFDefaultAppArguments;
 extern NSString* const kMFDefaultAppIRMode;
 extern NSString* const kMFAppLaunchMaxRetryCount;
 

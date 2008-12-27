@@ -41,11 +41,12 @@
 	return nil;
 }
 
-- (id) initWithAppPath:(NSString*) f_app_path helperPath:(NSString*) f_helper_path lauchAgentFileName:(NSString*) f_lauch_agent_file_name {
+- (id) initWithAppPath:(NSString*) f_app_path arguments:(NSArray*) f_args lauchAgentFileName:(NSString*) f_lauch_agent_file_name {
 	PRINT_SIGNATURE();
 	if ( ![super init] )
 		return ( nil );
 	mp_app_path = [f_app_path retain];
+  mp_args = [f_args retain];
 	mp_launch_agent_file_name = [f_lauch_agent_file_name retain];
 	return self;
 }
@@ -54,6 +55,7 @@
 {
 	PRINT_SIGNATURE();
 	[mp_app_path release];
+  [mp_args release];
 	[mp_launch_agent_file_name release];
 	[super dealloc];
 }
@@ -81,6 +83,7 @@
   //just send a notification to MultiFinder and let it do the rest
 	NSDictionary* userInfo = [NSDictionary dictionaryWithObjectsAndKeys: 
                             mp_app_path, kApplicationPath,
+                            mp_args, kApplicationArguments,
                             [NSNumber numberWithBool: TRUE], kApplicationNeedsIR, 
                             [NSNumber numberWithBool: use_universal], kApplicationWantsUniversalIRMode, 
                             nil];

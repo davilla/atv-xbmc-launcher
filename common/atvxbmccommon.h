@@ -5,6 +5,7 @@
 extern NSString* MULTIFINDER_START_APPLICATION_NOTIFICATION;
 extern NSString* MULTIFINDER_CHANGE_DEFAULT_APPLICATION_NOTIFICATION;
 extern NSString* kApplicationPath;
+extern NSString* kApplicationArguments;
 extern NSString* kApplicationNeedsIR;
 extern NSString* kApplicationWantsUniversalIRMode;
 

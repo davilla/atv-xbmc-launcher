@@ -151,6 +151,8 @@ static OSStatus CarbonEventHandler(EventHandlerCallRef,EventRef, void *);
 	mp_task = [[NSTask alloc] init];
 	@try {
 		[mp_task setLaunchPath: mp_next_app_to_launch];
+    if(mp_next_app_arguments)
+      [mp_task setArguments: mp_next_app_arguments];
     [mp_task setCurrentDirectoryPath:@"/Applications"];
 		[mp_task launch];
 	} 
@@ -198,6 +200,8 @@ static OSStatus CarbonEventHandler(EventHandlerCallRef,EventRef, void *);
   //now reset the variables
   [mp_next_app_to_launch release];
   mp_next_app_to_launch = nil;
+  [mp_next_app_arguments release];
+  mp_next_app_arguments = nil;
   m_next_app_ir_mode = MFAPP_IR_MODE_NONE;
   return TRUE;
 }
@@ -208,6 +212,7 @@ static OSStatus CarbonEventHandler(EventHandlerCallRef,EventRef, void *);
   NSDictionary* userInfo = [notification userInfo];
   //set next app to launch
   mp_next_app_to_launch = [[userInfo objectForKey:kApplicationPath] retain];
+  mp_next_app_arguments = [[userInfo objectForKey:kApplicationArguments] retain];
   if( !mp_next_app_to_launch)
     ELOG(@"Ouch something went wrong. Got a request to start an app, but no app was given!");
   //does it need IR?
@@ -228,10 +233,13 @@ static OSStatus CarbonEventHandler(EventHandlerCallRef,EventRef, void *);
 - (void) changeDefaultApplicationRequest:(NSNotification *)notification{
   NSAutoreleasePool* pool = [[NSAutoreleasePool alloc] init];
   NSDictionary* userInfo = [notification userInfo];
-  NSString* default_app = nil;
+  NSString* default_app;
+  NSArray* default_app_args;
   eMultiFinderAppIRMode ir_mode = 0;
+  
   //change default application
   default_app = [userInfo objectForKey:kApplicationPath];
+  default_app_args = [userInfo objectForKey:kApplicationArguments];
   if( !default_app)
     ELOG(@"Ouch something went wrong. Got a request to change default app, but no app was given!");
   //does it need IR?
@@ -247,6 +255,7 @@ static OSStatus CarbonEventHandler(EventHandlerCallRef,EventRef, void *);
   //change default app
   NSUserDefaults* defaults = [NSUserDefaults standardUserDefaults];
   [defaults setValue:default_app forKey:kMFDefaultApp];
+  [defaults setValue:default_app_args forKey:kMFDefaultAppArguments];
   [defaults setValue:[NSNumber numberWithInt:ir_mode] forKey:kMFDefaultAppIRMode];
   [defaults synchronize];
   [pool release];

@@ -16,11 +16,13 @@
 @interface LauncherApplicationEntry : NSObject {
 	NSString* mp_identifier;
 	NSString* mp_app_path;
+  NSArray* mp_app_args;
   eMultiFinderAppIRMode m_ir_mode;
 }
 + (id) finderEntry;
-- (id) initWithIdentifier:(NSString*) fp_identifier path:(NSString*) fp_path irMode:(eMultiFinderAppIRMode) f_ir_mode;
+- (id) initWithIdentifier:(NSString*) fp_identifier path:(NSString*) fp_path args:(NSArray*) fp_app_args irMode:(eMultiFinderAppIRMode) f_ir_mode;
 - (NSString*) appPath;
+- (NSArray*) appArgs;
 - (NSString*) identifier;
 - (eMultiFinderAppIRMode) irMode;
 
@@ -33,17 +35,18 @@
   return nil;
 };
 
-- (id) initWithIdentifier:(NSString*) fp_identifier path:(NSString*) fp_path irMode:(eMultiFinderAppIRMode) f_ir_mode{
+- (id) initWithIdentifier:(NSString*) fp_identifier path:(NSString*) fp_path args:(NSArray*) fp_app_args irMode:(eMultiFinderAppIRMode) f_ir_mode{
   if(![super init])
     return nil;
   mp_identifier = [fp_identifier retain];
   mp_app_path = [fp_path retain];
+  mp_app_args = [fp_app_args retain];
   m_ir_mode = f_ir_mode;
   return self;
 }
 
 + (id) finderEntry{
-  return [[[LauncherApplicationEntry alloc]initWithIdentifier:@"Finder" path:@"/System/Library/CoreServices/Finder.app/Contents/MacOS/Finder" irMode:MFAPP_IR_MODE_NONE] autorelease];
+  return [[[LauncherApplicationEntry alloc]initWithIdentifier:@"Finder" path:@"/System/Library/CoreServices/Finder.app/Contents/MacOS/Finder" args:nil irMode:MFAPP_IR_MODE_NONE] autorelease];
 }
 
 - (NSString*) identifier{
@@ -54,12 +57,17 @@
   return mp_app_path;
 }
 
+- (NSArray*) appArgs{
+  return mp_app_args;
+}
+
 - (eMultiFinderAppIRMode) irMode{
   return m_ir_mode;
 }
 
 -(void) dealloc{
   [mp_app_path release];
+  [mp_app_args release];
   [mp_identifier release];
   [super dealloc];
 }  
@@ -167,6 +175,7 @@
       //send a notification to MultiFinder to request default app change
       NSDictionary* userInfo = [NSDictionary dictionaryWithObjectsAndKeys: 
                                 [entry appPath], kApplicationPath,
+                                [entry appArgs], kApplicationArguments,
                                 [NSNumber numberWithBool: [entry irMode] ? TRUE:FALSE], kApplicationNeedsIR, 
                                 [NSNumber numberWithBool: ([entry irMode] == MFAPP_IR_MODE_UNIVERSAL)? TRUE:FALSE], kApplicationWantsUniversalIRMode, 
                                 nil];
@@ -180,7 +189,7 @@
       [[self stack] pushController:[BRAlertController alertOfType:0 
                                                            titled:@"Changed MultiFinder's default app to:" 
                                                       primaryText:[entry identifier] 
-                                                      secondaryText:[NSString stringWithFormat:@"LaunchPath: %@ IRMode: %i", [entry appPath], [entry irMode]]
+                                                      secondaryText:[NSString stringWithFormat:@"Arguments: %@ \nLaunchPath: %@ IRMode: %i", [entry appArgs], [entry appPath], [entry irMode]]
                                     ]];
       break;
     }
@@ -234,11 +243,13 @@
       //so read info of current app
       NSString* identifier = [obj objectForKey:@"identifier"];
       NSString* appPath = [obj objectForKey:@"apppath"];
+      NSArray* appArgs = [obj objectForKey:@"arguments"];
       //just use current setting of ir_mode
       eMultiFinderAppIRMode ir_mode = [[XBMCUserDefaults defaults] boolForKey:XBMC_USE_UNIVERSAL_REMOTE] ? MFAPP_IR_MODE_UNIVERSAL: MFAPP_IR_MODE_NORMAL;
       LauncherApplicationEntry* entry = [[LauncherApplicationEntry alloc] 
                                          initWithIdentifier: identifier
                                          path: appPath
+                                         args: appArgs
                                          irMode: ir_mode];
       [mp_apps addObject:entry];
       [entry release];
