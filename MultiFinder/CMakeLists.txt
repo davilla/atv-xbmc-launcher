@@ -69,11 +69,10 @@ add_custom_command(TARGET MultiFinder
 
 #-------
 # add convenience target which copies to ATV
-# needs following script in path:
+# needs following script in path named restartFinder:
 #
 ##!/bin/bash
 ##restart finder
-#kill `ps awwx | grep [l]oginwindow | awk '{print $1}'`
 #kill `ps awwx | grep [F]inder | awk '{print $1}'`
 #-------
 SET(MULTIFINDER_ATV_LOCATION "" CACHE STRING "Path on ATV to place Multifinder.app; if empty home directory is used")
@@ -85,6 +84,6 @@ add_custom_target(MFBuildAndCopyToATV
 		COMMAND ssh frontrow@${APPLETV_IP} "echo \"frontrow\" | sudo -S /bin/mv ~/MultiFinder.app /Applications"
 		COMMAND ssh frontrow@${APPLETV_IP} "echo \"frontrow\" | sudo -S /usr/sbin/chown root /Applications/MultiFinder.app/Contents/Resources/SettingsHelper"
 		COMMAND ssh frontrow@${APPLETV_IP} "echo \"frontrow\" | sudo -S /bin/chmod +s /Applications/MultiFinder.app/Contents/Resources/SettingsHelper"
-		COMMAND ssh frontrow@${APPLETV_IP} "restartLogin"
+		COMMAND ssh frontrow@${APPLETV_IP} "restartFinder"
         COMMENT "covenience copy to ATV" VERBATIM)
 ADD_DEPENDENCIES(MFBuildAndCopyToATV MultiFinder)
