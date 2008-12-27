@@ -302,6 +302,7 @@ static OSStatus CarbonEventHandler(EventHandlerCallRef,EventRef, void *);
       //get needed stuff for app launching
       NSUserDefaults* defaults = [NSUserDefaults standardUserDefaults];
       mp_next_app_to_launch = [[defaults objectForKey:kMFDefaultApp] retain];
+      mp_next_app_arguments = [[defaults objectForKey:kMFDefaultAppArguments] retain];
       m_next_app_ir_mode = [defaults integerForKey:kMFDefaultAppIRMode] ;
       const int MAX_RETRIES = [defaults integerForKey:kMFAppLaunchMaxRetryCount];
       
