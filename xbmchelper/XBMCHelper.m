@@ -94,7 +94,7 @@
         buttonName = @"Play (sleep mode)";
         break;			
       case kRemoteButtonMenu_Hold:
-        buttonName = @"Menu (long)";
+        buttonName = @"Menu holding";
         break;
       case kRemoteControl_Switched:
         buttonName = @"Remote Control Switched";

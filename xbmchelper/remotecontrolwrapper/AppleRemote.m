@@ -142,13 +142,13 @@ const NSTimeInterval SEND_UP_DELAY_TIME_INTERVAL=0.2; // used on atv >= 2.3 wher
         // ATV 1.x, 2.1 -> 2.2
         [_cookieToButtonMapping setObject:[NSNumber numberWithInt:kRemoteButtonPlus]		forKey:@"15_13_12_"];
         [_cookieToButtonMapping setObject:[NSNumber numberWithInt:kRemoteButtonMinus]		forKey:@"15_14_12_"];		
-        [_cookieToButtonMapping setObject:[NSNumber numberWithInt:kRemoteButtonMenu]		forKey:@"15_8_"];			
-        [_cookieToButtonMapping setObject:[NSNumber numberWithInt:kRemoteButtonPlay]		forKey:@"15_9_"];
-        [_cookieToButtonMapping setObject:[NSNumber numberWithInt:kRemoteButtonRight]		forKey:@"15_10_"];
-        [_cookieToButtonMapping setObject:[NSNumber numberWithInt:kRemoteButtonLeft]		forKey:@"15_11_"];
+        [_cookieToButtonMapping setObject:[NSNumber numberWithInt:kRemoteButtonMenu]		forKey:@"15_8_15_8_"];			
+        [_cookieToButtonMapping setObject:[NSNumber numberWithInt:kRemoteButtonPlay]		forKey:@"15_9_15_9_"];
+        [_cookieToButtonMapping setObject:[NSNumber numberWithInt:kRemoteButtonRight]		forKey:@"15_10_15_10_"];
+        [_cookieToButtonMapping setObject:[NSNumber numberWithInt:kRemoteButtonLeft]		forKey:@"15_11_15_11_"];
         [_cookieToButtonMapping setObject:[NSNumber numberWithInt:kRemoteButtonRight_Hold]	forKey:@"15_5_3_"];
         [_cookieToButtonMapping setObject:[NSNumber numberWithInt:kRemoteButtonLeft_Hold]	forKey:@"15_4_3_"];
-        [_cookieToButtonMapping setObject:[NSNumber numberWithInt:kRemoteButtonMenu_Hold]	forKey:@"15_6_"];
+        [_cookieToButtonMapping setObject:[NSNumber numberWithInt:kRemoteButtonMenu_Hold]	forKey:@"15_6_15_6_"];
         [_cookieToButtonMapping setObject:[NSNumber numberWithInt:kRemoteButtonPlay_Hold]	forKey:@"19_15_19_15_"];
         [_cookieToButtonMapping setObject:[NSNumber numberWithInt:kRemoteControl_Switched]	forKey:@"19_"];	
         break;
@@ -211,36 +211,85 @@ const NSTimeInterval SEND_UP_DELAY_TIME_INTERVAL=0.2; // used on atv >= 2.3 wher
 
 //----------------------------------------------------------------------------
 - (void) sendRemoteButtonEvent: (RemoteControlEventIdentifier) event pressedDown: (BOOL) pressedDown {
-  if( getHWVersion() == kATVversion && getOSVersion() >= 230 ){
-    // on atv >=2.3 ir handling is a bit broken. we get only non-press events, and those all the time.
-    //what we do here is to hide all those repeated events and just fire an UP event when the button changes or specified time elapsed
-    if(!m_last_event){
-#ifdef EXTREME_SENDREMOTEBUTTON_EVENT_DEBUGGING
-      NSLog(@"First event of type %i", event);
-#endif
-      [super sendRemoteButtonEvent:event pressedDown:YES];
-			[self performSelector:@selector(sendSimulatedUpEvent:) 
-                 withObject:[NSNumber numberWithInt:event]
-                 afterDelay:SEND_UP_DELAY_TIME_INTERVAL];      
-    } else if( event != m_last_event){
-#ifdef EXTREME_SENDREMOTEBUTTON_EVENT_DEBUGGING
-      NSLog(@"Events changed. New of type %i", event);
-      NSLog(@"Sending old up event first %i", m_last_event);
-#endif
-      //new event, send old up first and then new
-      [super sendRemoteButtonEvent:m_last_event pressedDown:NO];
-      [super sendRemoteButtonEvent:event pressedDown:YES];
-    } else {
-#ifdef EXTREME_SENDREMOTEBUTTON_EVENT_DEBUGGING
-      NSLog(@"Again event of type %i. Resetting timer.", event);
-#endif
-      //same event button press again cancel any old and schedule a new timer
-      [[self class] cancelPreviousPerformRequestsWithTarget:self selector:@selector(sendSimulatedUpEvent:) object:[NSNumber numberWithInt:event]];
-			[self performSelector:@selector(sendSimulatedUpEvent:) 
-                 withObject:[NSNumber numberWithInt:event]
-                 afterDelay:SEND_UP_DELAY_TIME_INTERVAL];
+  if( getHWVersion() == kATVversion) {
+    switch( getOSVersion() ) {
+      case kATV_1_00:
+      case kATV_1_10:
+      case kATV_2_00:
+      case kATV_2_01:
+      case kATV_2_02:
+        {
+          if (pressedDown == NO && event == kRemoteButtonMenu_Hold) {
+            // There is no seperate event for pressed down on menu hold. We are simulating that event here
+            [super sendRemoteButtonEvent:event pressedDown:YES];
+          }
+          [super sendRemoteButtonEvent:event pressedDown:pressedDown];
+          
+          if (pressedDown && 
+            (event == kRemoteButtonRight || 
+             event == kRemoteButtonLeft || 
+             event == kRemoteButtonPlay || 
+             event == kRemoteButtonMenu || 
+             event == kRemoteButtonPlay_Hold)) {
+            // There is no seperate event when the button is being released. We are simulating that event here
+            [super sendRemoteButtonEvent:event pressedDown:NO];
+          }
+        }
+        break;
+      
+      case kATV_2_10:
+      case kATV_2_20:
+        {
+          [super sendRemoteButtonEvent:event pressedDown:pressedDown];
+          
+          if (pressedDown && 
+            (event == kRemoteButtonRight || 
+             event == kRemoteButtonLeft || 
+             event == kRemoteButtonPlay || 
+             event == kRemoteButtonMenu || 
+             event == kRemoteButtonMenu_Hold || 
+             event == kRemoteButtonPlay_Hold)) {
+            // There is no seperate event when the button is being released. We are simulating that event here
+            [super sendRemoteButtonEvent:event pressedDown:NO];
+          }
+        }
+        break;
+
+      case kATV_2_30:
+      default:
+        {
+          // on atv >=2.3 ir handling is a bit broken. we get only non-press events, and those all the time.
+          //what we do here is to hide all those repeated events and just fire an UP event when the button changes or specified time elapsed
+          if(!m_last_event){
+            #ifdef EXTREME_SENDREMOTEBUTTON_EVENT_DEBUGGING
+              NSLog(@"First event of type %i", event);
+            #endif
+            [super sendRemoteButtonEvent:event pressedDown:YES];
+            [self performSelector:@selector(sendSimulatedUpEvent:) 
+                       withObject:[NSNumber numberWithInt:event]
+                       afterDelay:SEND_UP_DELAY_TIME_INTERVAL];      
+          } else if( event != m_last_event){
+            #ifdef EXTREME_SENDREMOTEBUTTON_EVENT_DEBUGGING
+              NSLog(@"Events changed. New of type %i", event);
+              NSLog(@"Sending old up event first %i", m_last_event);
+            #endif
+            //new event, send old up first and then new
+            [super sendRemoteButtonEvent:m_last_event pressedDown:NO];
+            [super sendRemoteButtonEvent:event pressedDown:YES];
+          } else {
+            #ifdef EXTREME_SENDREMOTEBUTTON_EVENT_DEBUGGING
+              NSLog(@"Again event of type %i. Resetting timer.", event);
+            #endif
+            //same event button press again cancel any old and schedule a new timer
+            [[self class] cancelPreviousPerformRequestsWithTarget:self selector:@selector(sendSimulatedUpEvent:) object:[NSNumber numberWithInt:event]];
+            [self performSelector:@selector(sendSimulatedUpEvent:) 
+                       withObject:[NSNumber numberWithInt:event]
+                       afterDelay:SEND_UP_DELAY_TIME_INTERVAL];
+          }
+          m_last_event = event;
+        }
+        break;
     }
-    m_last_event = event;    
   } else {
     if (pressedDown == NO && event == kRemoteButtonMenu_Hold) {
       // There is no seperate event for pressed down on menu hold. We are simulating that event here
@@ -248,7 +297,12 @@ const NSTimeInterval SEND_UP_DELAY_TIME_INTERVAL=0.2; // used on atv >= 2.3 wher
     }		
     [super sendRemoteButtonEvent:event pressedDown:pressedDown];
     
-    if (pressedDown && (event == kRemoteButtonRight || event == kRemoteButtonLeft || event == kRemoteButtonPlay || event == kRemoteButtonMenu || event == kRemoteButtonPlay_Hold)) {
+    if (pressedDown && 
+      (event == kRemoteButtonRight || 
+       event == kRemoteButtonLeft || 
+       event == kRemoteButtonPlay || 
+       event == kRemoteButtonMenu || 
+       event == kRemoteButtonPlay_Hold)) {
       // There is no seperate event when the button is being released. We are simulating that event here
       [super sendRemoteButtonEvent:event pressedDown:NO];
     }
