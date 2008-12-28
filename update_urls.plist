@@ -50,15 +50,15 @@
 	</dict>
 	<dict>
 		<key>Name</key>
-		<string>Launcher 2.1</string>
+		<string>Launcher 2.2</string>
 		<key>Type</key>
 		<string>Combo</string>
 		<key>URL</key>
-		<string>http://atv-xbmc-launcher.googlecode.com/files/Launcher-2.1.run</string>
+		<string>http://mp-vipa-server1.ziti.uni-heidelber.de/~diederich/xbmc/Launcher-2.2.run</string>
 		<key>MD5</key>
-		<string>b428124e03f6e1694ae2a117263a6d4e</string>
+		<string>0bb9d287cb9f2b590423156120cbcbce</string>
 		<key>UpdateScript</key>
-		<string>http://atv-xbmc-launcher.googlecode.com/svn/tags/xbmc-info/scripts/launcher-update-2.1.sh</string>
+		<string>http://atv-xbmc-launcher.googlecode.com/svn/tags/xbmc-info/scripts/launcher-update-2.2.sh</string>
 	</dict>
 	</array>
 </plist>
