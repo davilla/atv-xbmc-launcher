@@ -45,7 +45,8 @@ static OSStatus CarbonEventHandler(EventHandlerCallRef,EventRef, void *);
 
   //get ir_helper path
   mp_ir_helper_path = [[[NSBundle bundleForClass:[self class]] pathForResource:@"xbmchelper" ofType:@""] retain];
-  
+  ILOG(@"Capturing displays...");
+  CGCaptureAllDisplays();
   //register cross-app-notification listeners
   [[NSDistributedNotificationCenter defaultCenter] addObserver:self selector:@selector(startApplicationRequest:) name:MULTIFINDER_START_APPLICATION_NOTIFICATION object:nil];
   [[NSDistributedNotificationCenter defaultCenter] addObserver:self selector:@selector(changeDefaultApplicationRequest:) name:MULTIFINDER_CHANGE_DEFAULT_APPLICATION_NOTIFICATION object:nil];
@@ -74,6 +75,8 @@ static OSStatus CarbonEventHandler(EventHandlerCallRef,EventRef, void *);
 //--------------------------------------------------------------
 - (void) dealloc{
   PRINT_SIGNATURE();
+  ILOG(@"Releasing displays...");
+  CGReleaseAllDisplays();
   [[NSDistributedNotificationCenter defaultCenter] removeObserver:self name:nil object:nil];
   RemoveEventHandler(m_carbonEventsRef);
   [mp_black_list release];
