@@ -60,6 +60,8 @@
 #import <Foundation/Foundation.h>
 #import <MultiFinder.h>
 
+MultiFinder* g_mf;
+
 //--------------------------------------------------------------
 @interface FeedWatchDog : NSObject 
 - (void) bone:(NSTimer *)timer; 
@@ -77,7 +79,10 @@
 //--------------------------------------------------------------
 void signal_handler(int sig) {
   NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
-  printf("Caught signal. Exiting...\n");
+  printf("Caught signal %i. Exiting...\n", sig);
+  //let MF unregister all it's stuff before app closes
+  [g_mf release];
+  g_mf = nil;
   [NSApp terminate:nil];
   [pool release];
 }
@@ -112,9 +117,10 @@ int main(int argc, char *argv[])
   signal(SIGQUIT, signal_handler);
   signal(SIGTERM, signal_handler);
   signal(SIGINT, signal_handler);
+  signal(SIGTSTP, signal_handler);
   
   // notify apple tv framework stuff (2.1, 2.2, 2.3 only)
-  NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
+//  NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
   
   //create a connection to window server
   //at least one way to get informed of NSWorkspace notifications of app-launches
@@ -128,12 +134,15 @@ int main(int argc, char *argv[])
   [NSTimer scheduledTimerWithTimeInterval:58.0 target:feed_watchdog selector:@selector(bone:) userInfo:nil repeats:YES]; 
     
   // setup our app listener which starts up Finder by default
-  [[[MultiFinder alloc] init] autorelease];
+  g_mf = [[MultiFinder alloc] init];
 
   // make a run loop and go
   [NSApp run];
+  
+  //can we get here, too?
+  [g_mf release];
     
-  [pool release];
+ // [pool release];
   return EXIT_SUCCESS; 
 }
 
