@@ -24,6 +24,7 @@ static OSStatus CarbonEventHandler(EventHandlerCallRef,EventRef, void *);
 @interface MultiFinder (NSAppDelegates)
 - (NSApplicationTerminateReply)applicationShouldTerminate:(NSApplication *)sender;
 - (void)applicationWillTerminate:(NSNotification *)aNotification;
+- (void)applicationDidFinishLaunching:(NSNotification *)notification;
 @end
 
 
@@ -34,10 +35,12 @@ static OSStatus CarbonEventHandler(EventHandlerCallRef,EventRef, void *);
   return NSTerminateNow;
 }
 
+- (void)applicationDidFinishLaunching:(NSNotification *)notification{
+  PRINT_SIGNATURE();
+}
+
 - (void)applicationWillTerminate:(NSNotification *)aNotification{
   PRINT_SIGNATURE();
-  ILOG(@"Releasing displays...");
-  CGReleaseAllDisplays();
   [[NSDistributedNotificationCenter defaultCenter] removeObserver:self name:nil object:nil];
   RemoveEventHandler(m_carbonEventsRef);
   [mp_black_list release];
@@ -78,8 +81,7 @@ static OSStatus CarbonEventHandler(EventHandlerCallRef,EventRef, void *);
 
   //get ir_helper path
   mp_ir_helper_path = [[[NSBundle bundleForClass:[self class]] pathForResource:@"xbmchelper" ofType:@""] retain];
-//  ILOG(@"Capturing displays...");
-//  CGCaptureAllDisplays();
+
   //register cross-app-notification listeners
   [[NSDistributedNotificationCenter defaultCenter] addObserver:self selector:@selector(startApplicationRequest:) name:MULTIFINDER_START_APPLICATION_NOTIFICATION object:nil];
   [[NSDistributedNotificationCenter defaultCenter] addObserver:self selector:@selector(changeDefaultApplicationRequest:) name:MULTIFINDER_CHANGE_DEFAULT_APPLICATION_NOTIFICATION object:nil];
