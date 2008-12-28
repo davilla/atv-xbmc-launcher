@@ -251,11 +251,14 @@ static OSStatus CarbonEventHandler(EventHandlerCallRef,EventRef, void *);
   } else {
     ir_mode = MFAPP_IR_MODE_NONE;
   }
-  DLOG(@"Got an change default application request for app %@ withRemote:%i", default_app, ir_mode);
+  DLOG(@"Got an change default application request for app %@ with args %@ withRemote:%i", default_app, default_app_args, ir_mode);
   //change default app
   NSUserDefaults* defaults = [NSUserDefaults standardUserDefaults];
   [defaults setValue:default_app forKey:kMFDefaultApp];
-  [defaults setValue:default_app_args forKey:kMFDefaultAppArguments];
+  if(default_app_args)
+    [defaults setValue:default_app_args forKey:kMFDefaultAppArguments];
+  else
+    [defaults removeObjectForKey:kMFDefaultAppArguments];
   [defaults setValue:[NSNumber numberWithInt:ir_mode] forKey:kMFDefaultAppIRMode];
   [defaults synchronize];
   [pool release];

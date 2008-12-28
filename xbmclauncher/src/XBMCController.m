@@ -81,12 +81,14 @@
   PRINT_SIGNATURE();	
   bool use_universal = [[XBMCUserDefaults defaults] boolForKey:XBMC_USE_UNIVERSAL_REMOTE];
   //just send a notification to MultiFinder and let it do the rest
-	NSDictionary* userInfo = [NSDictionary dictionaryWithObjectsAndKeys: 
+	NSMutableDictionary* userInfo = [NSMutableDictionary dictionaryWithObjectsAndKeys: 
                             mp_app_path, kApplicationPath,
-                            mp_args, kApplicationArguments,
                             [NSNumber numberWithBool: TRUE], kApplicationNeedsIR, 
                             [NSNumber numberWithBool: use_universal], kApplicationWantsUniversalIRMode, 
                             nil];
+  if(mp_args){
+    [userInfo setObject:mp_args forKey:kApplicationArguments];
+  }
 	
 	[[NSDistributedNotificationCenter defaultCenter] 
     postNotificationName: MULTIFINDER_START_APPLICATION_NOTIFICATION

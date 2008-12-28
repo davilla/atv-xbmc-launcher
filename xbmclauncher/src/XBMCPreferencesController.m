@@ -173,13 +173,14 @@
         m_selected_app = 0;
       }
       //send a notification to MultiFinder to request default app change
-      NSDictionary* userInfo = [NSDictionary dictionaryWithObjectsAndKeys: 
+      NSMutableDictionary* userInfo = [NSMutableDictionary dictionaryWithObjectsAndKeys: 
                                 [entry appPath], kApplicationPath,
-                                [entry appArgs], kApplicationArguments,
                                 [NSNumber numberWithBool: [entry irMode] ? TRUE:FALSE], kApplicationNeedsIR, 
                                 [NSNumber numberWithBool: ([entry irMode] == MFAPP_IR_MODE_UNIVERSAL)? TRUE:FALSE], kApplicationWantsUniversalIRMode, 
                                 nil];
-      
+      if([entry appArgs]){
+        [userInfo setObject:[entry appArgs] forKey:kApplicationArguments];
+      }
       [[NSDistributedNotificationCenter defaultCenter] 
        postNotificationName: MULTIFINDER_CHANGE_DEFAULT_APPLICATION_NOTIFICATION
        object: nil
