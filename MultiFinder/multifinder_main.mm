@@ -60,8 +60,6 @@
 #import <Foundation/Foundation.h>
 #import <MultiFinder.h>
 
-MultiFinder* g_mf;
-
 //--------------------------------------------------------------
 @interface FeedWatchDog : NSObject 
 - (void) bone:(NSTimer *)timer; 
@@ -80,9 +78,6 @@ MultiFinder* g_mf;
 void signal_handler(int sig) {
   NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
   printf("Caught signal %i. Exiting...\n", sig);
-  //let MF unregister all it's stuff before app closes
-  [g_mf release];
-  g_mf = nil;
   [NSApp terminate:nil];
   [pool release];
 }
@@ -134,13 +129,13 @@ int main(int argc, char *argv[])
   [NSTimer scheduledTimerWithTimeInterval:58.0 target:feed_watchdog selector:@selector(bone:) userInfo:nil repeats:YES]; 
     
   // setup our app listener which starts up Finder by default
-  g_mf = [[MultiFinder alloc] init];
-
+  MultiFinder* mf = [[MultiFinder alloc] init];
+  [NSApp setDelegate: mf];
   // make a run loop and go
   [NSApp run];
   
   //can we get here, too?
-  [g_mf release];
+  [mf release];
     
   [pool release];
   return EXIT_SUCCESS; 
