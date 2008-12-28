@@ -31,8 +31,6 @@ echo $PW | sudo -S defaults delete /Library/Preferences/com.apple.loginwindow Fi
   echo $PW | sudo -S /sbin/mount -ur /
  fi
 
- # restart loginwindow
- kill `ps awwx | grep [l]oginwindow | awk '{print $1}'`
- kill `ps awwx | grep [F]inder | grep -v multifinder_downgrade | awk '{print $1}'`
- 
+ # restart appletv
+ sudo reboot 
  exit 0
