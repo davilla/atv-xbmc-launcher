@@ -6,10 +6,6 @@ use exit status of app to do advanced stuff
   
 - add licence to files
 
-- add setting to enable / disable multifinder in XBMCLauncher
-
-- create download of MultiFinder in xbmc-info-testing
-
 -add to MultiFinder's preferences:
   - IR timeout
   - verbose setting?

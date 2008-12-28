@@ -6,6 +6,24 @@ see http://atv-xbmc-launcher.googlecode.com for details
 
 ## Release Notes
 
+### 2.2
+- fixed IR issues with ATV's < r2.3
+- added optional arguments for applications to launch
+- fixed HDMI disconnect issues for XBMC
+
+### 2.1
+- switched to MultiFinder for application switching
+- fixes blackscreen issues on launching
+- unified versioning. Launcher's version is used for MF, xbmchelper,...
+- added "Toggle Boot App" in settings (enable XBMCExpertMode in Launcher's plist)
+- renamed update to download
+- renamed XBMC/BoxeeLauncher to Launcher
+
+### 0.8
+- fixes for ATV 2.3 (launching XBMC does only work ~50% of the time)
+- addded universal mode support
+- enable/disable auto-update in settings
+
 ### 0.6
 - fixed issue #8 (screensaver kick in breaks download of update)
 - fixed currentworkingdirectory which prevented xbmc's preflight script from running
