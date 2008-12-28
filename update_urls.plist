@@ -56,7 +56,7 @@
 		<key>URL</key>
 		<string>http://mp-vipa-server1.ziti.uni-heidelberg.de/~diederich/xbmc/Launcher-2.2.run</string>
 		<key>MD5</key>
-		<string>a9f061cb13aff1e92c663c56e8cfb445</string>
+		<string>8e93e20409dc5612aa0a839a063a3c1d</string>
 		<key>UpdateScript</key>
 		<string>http://atv-xbmc-launcher.googlecode.com/svn/tags/xbmc-info/scripts/launcher-update-2.2.sh</string>
 	</dict>
