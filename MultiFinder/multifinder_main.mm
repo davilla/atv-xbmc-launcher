@@ -120,7 +120,7 @@ int main(int argc, char *argv[])
   signal(SIGTSTP, signal_handler);
   
   // notify apple tv framework stuff (2.1, 2.2, 2.3 only)
-//  NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
+  NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
   
   //create a connection to window server
   //at least one way to get informed of NSWorkspace notifications of app-launches
@@ -142,7 +142,7 @@ int main(int argc, char *argv[])
   //can we get here, too?
   [g_mf release];
     
- // [pool release];
+  [pool release];
   return EXIT_SUCCESS; 
 }
 
