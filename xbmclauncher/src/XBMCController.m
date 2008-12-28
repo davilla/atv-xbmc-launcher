@@ -98,7 +98,7 @@
     //deliverImmediately: YES];	
     
   BRAlertController* alert = [BRAlertController alertOfType:0 titled:nil
-                                                primaryText:[NSString stringWithFormat:@"Please wait for MultiLauncher to start app"]
+                                                primaryText:[NSString stringWithFormat:@"Please wait for MultiFinder to launch app"]
                                               secondaryText:nil];
   [[self stack] swapController:alert];
 }
