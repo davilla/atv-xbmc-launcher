@@ -33,7 +33,8 @@ if [ -e $INSTALLER ]; then
   echo $PW | sudo -S /sbin/mount -ur /
  fi
 
- # restart Finder
+ # restart loginwindow
+ kill `ps awwx | grep [l]oginwindow | awk '{print $1}'`
  kill `ps awwx | grep [F]inder | grep -v multifinder-update | awk '{print $1}'`
  
  exit 0
