@@ -109,10 +109,10 @@ void atv_hw_init(void) {
 //--------------------------------------------------------------
 int main(int argc, char *argv[])
 {
-  signal(SIGQUIT, signal_handler);
-  signal(SIGTERM, signal_handler);
-  signal(SIGINT, signal_handler);
-  signal(SIGTSTP, signal_handler);
+  //signal(SIGQUIT, signal_handler);
+  //signal(SIGTERM, signal_handler);
+  //signal(SIGINT, signal_handler);
+  //signal(SIGTSTP, signal_handler);
   
   // notify apple tv framework stuff (2.1, 2.2, 2.3 only)
   NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
