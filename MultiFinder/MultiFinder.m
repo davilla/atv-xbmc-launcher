@@ -21,47 +21,7 @@ static OSStatus CarbonEventHandler(EventHandlerCallRef,EventRef, void *);
   - (bool) decreaseExecutableWhitelistCount:(NSString*) fp_executable_path; //decreases the whitelist count and returns true if exe was whitelisted 
 @end
 
-@interface MultiFinder (NSAppDelegates)
-- (NSApplicationTerminateReply)applicationShouldTerminate:(NSApplication *)sender;
-- (void)applicationWillTerminate:(NSNotification *)aNotification;
-- (void)applicationDidFinishLaunching:(NSNotification *)notification;
-@end
-
-
 @implementation MultiFinder
-
-- (NSApplicationTerminateReply)applicationShouldTerminate:(NSApplication *)sender {
-  PRINT_SIGNATURE();
-  return NSTerminateNow;
-}
-
-- (void)applicationDidFinishLaunching:(NSNotification *)notification{
-  PRINT_SIGNATURE();
-}
-
-- (void)applicationWillTerminate:(NSNotification *)aNotification{
-  PRINT_SIGNATURE();
-  
-  ILOG(@"Releasing displays...");		
-  CGReleaseAllDisplays();
-  
-  [[NSDistributedNotificationCenter defaultCenter] removeObserver:self name:nil object:nil];
-  RemoveEventHandler(m_carbonEventsRef);
-  [mp_black_list release];
-  [mp_white_list release];
-  
-  [mp_ir_helper_path release];
-  //remove us from all notifications
-  [[NSNotificationCenter defaultCenter] removeObserver:self name:nil object:nil];
-  if (mp_ir_helper){
-    [mp_ir_helper terminate];
-    [mp_ir_helper release];
-  }
-  if (mp_task){
-    [mp_task terminate];
-    [mp_task release];
-  }
-}
 
 + (void) initialize{
   PRINT_SIGNATURE();
@@ -106,7 +66,7 @@ static OSStatus CarbonEventHandler(EventHandlerCallRef,EventRef, void *);
                                GetEventTypeCount(kEvents),
                                kEvents,
                                self,
-                               &m_carbonEventsRef
+                               NULL
                                );
   
   //switch to unitialized state
@@ -117,6 +77,26 @@ static OSStatus CarbonEventHandler(EventHandlerCallRef,EventRef, void *);
 //--------------------------------------------------------------
 - (void) dealloc{
   PRINT_SIGNATURE();
+  ILOG(@"Releasing displays...");		
+  CGReleaseAllDisplays();
+  
+  [[NSDistributedNotificationCenter defaultCenter] removeObserver:self name:nil object:nil];
+  [mp_black_list release];
+  [mp_white_list release];
+  
+  [mp_ir_helper_path release];
+  //remove us from all notifications
+  [[NSNotificationCenter defaultCenter] removeObserver:self name:nil object:nil];
+  if (mp_ir_helper){
+    [mp_ir_helper terminate];
+    [mp_ir_helper release];
+    mp_ir_helper = nil;
+  }
+  if (mp_task){
+    [mp_task terminate];
+    [mp_task release];
+    mp_task = nil;
+  }
   [super dealloc];
 }
 

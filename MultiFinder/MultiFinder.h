@@ -31,7 +31,6 @@ typedef enum{
   
   NSArray* mp_black_list;       //list of apps that are blacklisted and which executable is checked against whitelist
   NSMutableArray* mp_white_list;//list of allowed executables to start (mostly those MultiFinder launched)
-  EventHandlerRef m_carbonEventsRef;
 }
 
 @end

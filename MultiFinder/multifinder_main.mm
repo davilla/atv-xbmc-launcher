@@ -78,7 +78,8 @@
 void signal_handler(int sig) {
   NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
   printf("Caught signal %i. Exiting...\n", sig);
-  [NSApp terminate:nil];
+//  [NSApp terminate:nil];
+  QuitApplicationEventLoop();
   [pool release];
 }
 
@@ -109,18 +110,14 @@ void atv_hw_init(void) {
 //--------------------------------------------------------------
 int main(int argc, char *argv[])
 {
-  //signal(SIGQUIT, signal_handler);
-  //signal(SIGTERM, signal_handler);
-  //signal(SIGINT, signal_handler);
-  //signal(SIGTSTP, signal_handler);
+  signal(SIGQUIT, signal_handler);
+  signal(SIGTERM, signal_handler);
+  signal(SIGINT, signal_handler);
+  signal(SIGTSTP, signal_handler);
   
   // notify apple tv framework stuff (2.1, 2.2, 2.3 only)
   NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
   
-  //create a connection to window server
-  //at least one way to get informed of NSWorkspace notifications of app-launches
-  [NSApplication sharedApplication];
-
   // setup hardware
   atv_hw_init();
   
@@ -129,11 +126,11 @@ int main(int argc, char *argv[])
   [NSTimer scheduledTimerWithTimeInterval:58.0 target:feed_watchdog selector:@selector(bone:) userInfo:nil repeats:YES]; 
     
   // setup our app listener which starts up Finder by default
-  MultiFinder* mf = [[MultiFinder alloc] init];
-  [NSApp setDelegate: mf];
-  // make a run loop and go
-  [NSApp run];
-  
+  MultiFinder* mf;
+  mf = [[MultiFinder alloc] init];
+
+  RunApplicationEventLoop();
+
   //can we get here, too?
   [mf release];
     
