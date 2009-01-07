@@ -21,6 +21,7 @@ typedef enum{
 @interface MultiFinder : NSObject {
   NSTask* mp_task;      // the application that is currently running
   NSTask* mp_ir_helper; // here ir_helper-task is stored if it's running
+  BOOL m_displays_captured;
     
   NSString* mp_next_app_to_launch;          // launchApplication consumes this (and releases it)
   NSArray* mp_next_app_arguments;           // launchApplication consumes this (and releases it)
