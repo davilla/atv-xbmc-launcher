@@ -108,7 +108,7 @@ static OSStatus CarbonEventHandler(EventHandlerCallRef,EventRef, void *);
 - (void) checkTaskStatus:(NSNotification *) note {
     NSAutoreleasePool* pool = [[NSAutoreleasePool alloc] init];
     PRINT_SIGNATURE();
-    if ( mp_task && ![mp_task isRunning] ) {
+    if ( mp_task && ![mp_task isRunning] ) {   
         [[NSNotificationCenter defaultCenter] removeObserver:self name:NSTaskDidTerminateNotification object:mp_task];
         //remove it from whitelist if it's there
         [mp_white_list removeObject:[mp_task launchPath]];
@@ -158,6 +158,11 @@ static OSStatus CarbonEventHandler(EventHandlerCallRef,EventRef, void *);
     if (!mp_next_app_to_launch) {
         ELOG(@"launchApplication called without setting mp_next_app_to_launch first");
         return FALSE;
+    }
+    if (![mp_next_app_to_launch isEqualToString:@"/System/Library/CoreServices/Finder.app/Contents/MacOS/Finder"]) {
+        ILOG(@"Capturing displays...");
+        CGCaptureAllDisplays();
+        m_displays_captured = true;
     }
     mp_task = [[NSTask alloc] init];
     @try {
@@ -305,12 +310,11 @@ static OSStatus CarbonEventHandler(EventHandlerCallRef,EventRef, void *);
             [mp_ir_helper terminate];
             [mp_ir_helper release];
             mp_ir_helper = nil;
-
             if (m_displays_captured) {
                 ILOG(@"Releasing displays...");		
                 CGReleaseAllDisplays();
                 m_displays_captured = false;
-            }
+            }     
         break;
     }
     //switch state
@@ -341,12 +345,6 @@ static OSStatus CarbonEventHandler(EventHandlerCallRef,EventRef, void *);
             mp_next_app_arguments = [[defaults objectForKey:kMFDefaultAppArguments] retain];
             m_next_app_ir_mode = [defaults integerForKey:kMFDefaultAppIRMode] ;
             const int MAX_RETRIES = [defaults integerForKey:kMFAppLaunchMaxRetryCount];
-          
-            if (mp_next_app_to_launch != @"/System/Library/CoreServices/Finder.app/Contents/MacOS/Finder") {
-                ILOG(@"Capturing displays...");
-                CGCaptureAllDisplays();
-                m_displays_captured = true;
-            }
 
             //try to launch the app
             for (retry_count = 0; retry_count < MAX_RETRIES; ++retry_count) {
@@ -370,12 +368,6 @@ static OSStatus CarbonEventHandler(EventHandlerCallRef,EventRef, void *);
             const int MAX_RETRIES = [defaults integerForKey:kMFAppLaunchMaxRetryCount];
             //try to launch user application
             assert(mp_next_app_to_launch);
-            
-            if (mp_next_app_to_launch != @"/System/Library/CoreServices/Finder.app/Contents/MacOS/Finder") {
-                ILOG(@"Capturing displays...");
-                CGCaptureAllDisplays();
-                m_displays_captured = true;
-            }
 
             for (retry_count = 0; retry_count < MAX_RETRIES; ++retry_count) {
                 success = [self launchApplication];
