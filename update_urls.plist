@@ -44,7 +44,7 @@
 		<key>URL</key>
 		<string>http://mp-vipa-server1.ziti.uni-heidelberg.de/~diederich/xbmc/Launcher-0.9-debug.run</string>
 		<key>MD5</key>
-		<string>0aab1d60aab5b66ebd440de4dee8d842</string>
+		<string>b57db160c3a28be0041be2ab6e778ce8</string>
 		<key>UpdateScript</key>
 		<string>http://atv-xbmc-launcher.googlecode.com/svn/tags/xbmc-info/scripts/launcher-update-0.9.sh</string>
 	</dict>
@@ -52,9 +52,9 @@
 		<key>UpdateScript</key>
 		<string>http://atv-xbmc-launcher.googlecode.com/svn/tags/xbmc-info/scripts/multifinder_downgrade.sh</string>
 		<key>URL</key>
-		<string>http://atv-xbmc-launcher.googlecode.com/files/XBMCLauncher-0.8-debug.run</string>
+		<string>http://mp-vipa-server1.ziti.uni-heidelberg.de/~diederich/xbmc/Launcher-0.9-debug.run</string>
 		<key>MD5</key>
-		<string>2d5909d493c5fffbfc705aa087c7ae1f</string>		
+		<string>b57db160c3a28be0041be2ab6e778ce8</string>		
 		<key>Type</key>
 		<string>Downgrade</string>
 		<key>Name</key>
