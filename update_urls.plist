@@ -42,9 +42,9 @@
 		<key>UpdateScript</key>
 		<string>http://atv-xbmc-launcher.googlecode.com/svn/tags/xbmc-info/scripts/multifinder_downgrade.sh</string>
 		<key>URL</key>
-		<string>http://atv-xbmc-launcher.googlecode.com/files/XBMCLauncher-0.8-debug.run</string>
+		<string>http://atv-xbmc-launcher.googlecode.com/files/Launcher-0.9-debug.run</string>
 		<key>MD5</key>
-		<string>2d5909d493c5fffbfc705aa087c7ae1f</string>		
+		<string>480edcf8d9fcd7754bace2502cf928e0</string>		
 		<key>Type</key>
 		<string>Downgrade</string>
 		<key>Name</key>
