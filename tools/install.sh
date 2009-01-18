@@ -1,6 +1,6 @@
 #!/bin/bash
 #
-# Installer script for MultiFinder @VERSION@ via Makeself.
+# Installer script for XBMCLauncher @VERSION@ via Makeself.
 # original version written for ATVFiles by ericIII from atvfiles.googlecode.com
 
 SRCDIR="$PWD"
@@ -10,8 +10,6 @@ PREFIX="${2:-}"
 LAUNCHER_DEST="${PREFIX}/System/Library/CoreServices/Finder.app/Contents/PlugIns"
 LAUNCHER_NAME="XBMCLauncher.frappliance"
 ARCHIVE_NAME="@ARCHIVE_NAME@"
-MULTIFINDER_NAME="MultiFinder.app"
-MULTIFINDER_DEST="/Applications"
 
 die() {
   echo $*
@@ -37,69 +35,69 @@ if mount | grep ' on / '  | grep -q 'read-only'; then
 fi
 
 if [ "$COMMAND" = "uninstall" ]; then
-  echo "== Resetting loginwindow to Finder"
-  sudo defaults delete /Library/Preferences/com.apple.loginwindow Finder
   echo "== Removing $LAUNCHER_NAME"
-  /bin/rm -rf "$LAUNCHER_DEST/$LAUNCHER_NAME" || echo "Unable to uninstall $LAUNCHER_NAME"
+  /bin/rm -rf "$LAUNCHER_DEST/$LAUNCHER_NAME" || die "Unable to uninstall $LAUNCHER_NAME"
 
   echo "$LAUNCHER_NAME successfully uninstalled."
-  echo "== Removing $MULTIFINDER_NAME"
-  /bin/rm -rf "$MULTIFINDER_DEST/$MULTIFINDER_NAME" || die "Unable to uninstall $MULTIFINDER_NAME"
-  
-  echo "$MULTIFINDER_NAME successfully uninstalled."
   echo
-  if [ "$PREFIX" = "" ]; then
-    echo "Loginwindow must be restarted in order to complete the installation."
-    echo
-    echo -n "Would you like to do this now? (Y/n) "
-    read -e restartfinder
-    if [[ "$restartfinder" == "" || "$restartfinder" == "Y" || "$restartfinder" == "y" ]]; then
-      echo
-      echo "== Restarting loginwindow"
-	  kill `ps awwx | grep [l]oginwindow | awk '{print $1}'`
-      kill `ps awx | grep [F]inder | awk '{print $1}'`
-    fi
-  fi
+  echo "Finder must be restarted in order to complete the installation."
 elif [ "$COMMAND" = "help" ]; then
   echo "Usage: $0 [action] [prefix]"
   echo
-  echo "Install $MULTIFINDER_NAME @VERSION@ package, optionally to a prefix"
+  echo "Install $LAUNCHER_NAME @VERSION@, optionally to a prefix"
   echo
   echo "Where action is:"
-  echo "  install       Install $MULTIFINDER_NAME"
-  echo "  uninstall     Uninstall $MULTIFINDER_NAME"
+  echo "  install       Install $LAUNCHER_NAME"
+  echo "  uninstall     Uninstall $LAUNCHER_NAME"
   echo
   echo "prefix is the root to a mounted install.  If specified, install will be automated"
   echo "and will not restart Finder."
 elif [ "$COMMAND" = "install" ]; then
-  /usr/bin/ditto -k -x --rsrc "$SRCDIR/@ARCHIVE_NAME@" . || die "Unable to extract $SRCDIR/@ARCHIVE_NAME@"
-  echo "== Installing $LAUNCHER_NAME"  
-  echo "n" | ./*.run || die "Unable to install $LAUNCHER_NAME"
-  echo ""
-  echo "== Installing $MULTIFINDER_NAME"  
-  rm -rf "$MULTIFINDER_DEST/$MULTIFINDER_NAME"
-  mv MultiFinder.app "$MULTIFINDER_DEST/"
-  /usr/sbin/chown -R root:admin "$MULTIFINDER_DEST/$MULTIFINDER_NAME"
-  /bin/chmod -R 755 "$MULTIFINDER_DEST/$MULTIFINDER_NAME"
-  /bin/chmod +s "$MULTIFINDER_DEST/$MULTIFINDER_NAME/Contents/Resources/SettingsHelper"
-  echo "$MULTIFINDER_NAME successfully installed."
+  
+  # move old frappliance existing out of way
+  if [ -d "$LAUNCHER_DEST/$LAUNCHER_NAME" ]; then
+    echo "== Removing old $LAUNCHER_NAME"
+    /bin/rm -rf "$LAUNCHER_DEST/$LAUNCHER_NAME" || die "Unable to remove old $LAUNCHER_NAME"
+  fi
+
+  echo "== Extracting $LAUNCHER_NAME"
+  /usr/bin/ditto -k -x --rsrc "$SRCDIR/@ARCHIVE_NAME@" "$LAUNCHER_DEST" || die "Unable to install $LAUNCHER_NAME"
+  /usr/sbin/chown -R root:wheel "$LAUNCHER_DEST/$LAUNCHER_NAME"
+  /bin/chmod -R 755 "$LAUNCHER_DEST/$LAUNCHER_NAME"
+  
+  echo "$LAUNCHER_NAME successfully installed."
   echo
-  # now change loginwindow
-  echo "== Setting loginwindow to MultiFinder"
-  sudo defaults write /Library/Preferences/com.apple.loginwindow Finder /Applications/MultiFinder.app
+
   # Prompt to restart finder
   if [ "$PREFIX" = "" ]; then
-    echo "Loginwindow must be restarted in order to complete the installation."
+    echo "Finder must be restarted in order to complete the installation."
     echo
     echo -n "Would you like to do this now? (Y/n) "
     read -e restartfinder
     if [[ "$restartfinder" == "" || "$restartfinder" == "Y" || "$restartfinder" == "y" ]]; then
       echo
-      echo "== Restarting loginwindow"
-	  kill `ps awwx | grep [l]oginwindow | awk '{print $1}'`
+      echo "== Restarting Finder"
+
       kill `ps awx | grep [F]inder | awk '{print $1}'`
     fi
   fi # prefix empty
+elif [ "$COMMAND" = "installrestart" ]; then
+  
+  # move old frappliance existing out of way
+  if [ -d "$LAUNCHER_DEST/$LAUNCHER_NAME" ]; then
+    echo "== Removing old $LAUNCHER_NAME"
+    /bin/rm -rf "$LAUNCHER_DEST/$LAUNCHER_NAME" || die "Unable to remove old $LAUNCHER_NAME"
+  fi
+
+  echo "== Extracting $LAUNCHER_NAME"
+  /usr/bin/ditto -k -x --rsrc "$SRCDIR/@ARCHIVE_NAME@" "$LAUNCHER_DEST" || die "Unable to install $LAUNCHER_NAME"
+  /usr/sbin/chown -R root:wheel "$LAUNCHER_DEST/$LAUNCHER_NAME"
+  /bin/chmod -R 755 "$LAUNCHER_DEST/$LAUNCHER_NAME"
+  
+  echo "$LAUNCHER_NAME successfully installed."
+  echo
+
+	kill `ps awx | grep [F]inder | awk '{print $1}'`
 fi
 
 # remount root as we found it

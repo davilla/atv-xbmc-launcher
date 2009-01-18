@@ -1,7 +1,7 @@
 # Makefile
 #
-# Copyright (C) 2008 Team-XBMC
-# based on version from  Eric Steil III for ATVFiles
+# Copyright (C) 2007 Eric Steil III
+# shrinked for XBMCLauncher by Stephan Diederich
 # 
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -16,54 +16,88 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#######
-# variables
-#######
-#version is taken from xbmclauncher's xcodeproject-file so we have only one version 
-#for the whole xbmclauncher / MultiFinder / ... / suite.
-VERSION=$(shell cd xbmclauncher && tools/xcodeversion version -terse && cd ..)
+REVISION=$(shell agvtool vers -terse)
+VERSION=$(shell tools/xcodeversion version -terse)
 PROJNAME=Launcher
 
-DISTCONFIG=Debug
-EXTRA_OPTS= 
-CMAKEBUILDFOLDER=build-cmake
 DISTROOT=dist
 TMPROOT=$(DISTROOT)/tmp
+DISTCONFIG=Release
+
+# tarball archive settings
 TARDIR=$(PROJNAME)-$(VERSION)
+TARBALL=$(DISTROOT)/$(PROJNAME)-$(VERSION).tar.gz
 
 # sfx archive settings
 RUNARCHIVENAME=$(PROJNAME)-$(VERSION).zip
 RUNBALL=$(DISTROOT)/$(PROJNAME)-$(VERSION).run
-#######
-# targets
-#######
 
-default: testdist
+TEST_VERSION_SUFFIX_DATE=$(shell date +"%y.%m.%d.%H%M")
+TEST_VERSION_SUFFIX=-TEST-$(TEST_VERSION_SUFFIX_DATE)
+TEST_VERSION=$(VERSION)$(TEST_VERSION_SUFFIX)
 
-clean: 
-	rm -rf "$(DISTROOT)" xbmclauncher/dist/* "$(CMAKEBUILDFOLDER)" xbmclauncher/build/*
+EXTRA_OPTS=
 
-$(CMAKEBUILDFOLDER)/MultiFinder/$(DISTCONFIG)/MultiFinder.app:
-	mkdir -p "$(CMAKEBUILDFOLDER)"
-	cd "$(CMAKEBUILDFOLDER)" && cmake .. -GXcode 
-	cd "$(CMAKEBUILDFOLDER)" && xcodebuild -configuration "$(DISTCONFIG)" clean $(EXTRA_OPTS) 
-	cd "$(CMAKEBUILDFOLDER)" && xcodebuild -configuration "$(DISTCONFIG)" -target MultiFinder $(EXTRA_OPTS)
+# doc settings
+README_SOURCE=README.txt
+README_DEST=dist/README.txt
+LICENSE_SOURCE=LICENSE.txt
+LICENSE_DEST=dist/LICENSE.txt
 
-dist-debug-XBMCLauncher:
-	cd xbmclauncher && $(MAKE) dist-debug
+default: build
 
-dist-sfx: $(CMAKEBUILDFOLDER)/MultiFinder/$(DISTCONFIG)/MultiFinder.app
-	@echo "BUILDING SFX DISTRIBUTION FOR $(PROJNAME) $(VERSION) ($(REVISION))"
+strings: English.lproj/Localizable.strings
+	
+English.lproj/Localizable.strings: *.m
+	genstrings -s BRLocalizedString -o English.lproj *.m
+		
+build:
+	xcodebuild -configuration Debug
+	
+release: build/$(DISTCONFIG)/XBMCLauncher.frappliance/Contents/MacOS/XBMCLauncher
+
+build/$(DISTCONFIG)/XBMCLauncher.frappliance/Contents/MacOS/XBMCLauncher: src/*.h src/*.m src/remote/*.h src/remote/*.mm src/updater/*.h src/updater/*.m src/helpers/*.h src/helpers/*.m
+	xcodebuild -configuration "$(DISTCONFIG)" clean $(EXTRA_OPTS)
+	xcodebuild -configuration "$(DISTCONFIG)" $(EXTRA_OPTS)
+
+	rm -rf "build/$(DISTCONFIG)/XBMCLauncher.frappliance.dSYM"
+
+docs: $(README_DEST) $(LICENSE_DEST)
+	mkdir -p "build/$(DISTCONFIG)/"
+	cp "$(README_SOURCE)" "$(LICENSE_SOURCE)" "build/$(DISTCONFIG)/"
+	
+$(README_DEST): $(README_SOURCE)
+	cp $(README_SOURCE) $(README_DEST)
+	
+$(LICENSE_DEST): $(LICENSE_SOURCE)
+	cp $(LICENSE_SOURCE) $(LICENSE_DEST)
+
+# Build the tarball for ATVLoader
+dist-tarball: docs release 
+	@echo "BUILDING DISTRIBUTION FOR XBMCLauncher $(VERSION) ($(REVISION))"
+	
+	# build tarball
+	mkdir -p "$(TMPROOT)/$(TARDIR)"
+	rm -f "$(TARBALL)"
+	
+	# copy contents to tmproot
+	ditto "build/$(DISTCONFIG)/" "$(TMPROOT)/$(TARDIR)"
+	
+	tar -C "$(TMPROOT)" -czf "$(PWD)/$(TARBALL)" "$(TARDIR)"
+	rm -rf "$(TMPROOT)"
+	
+# Build the self-extracting archive
+dist-sfx: docs release
+	@echo "BUILDING SFX DISTRIBUTION FOR XBMCLauncher $(VERSION) ($(REVISION))"
 	
 	mkdir -p "$(TMPROOT)/ARCTEMP/$(TARDIR)"
 	mkdir -p "$(TMPROOT)/$(TARDIR)"
 	rm -f "$(RUNBALL)"
 	
-	#copy multifinder
-	ditto "$(CMAKEBUILDFOLDER)/MultiFinder/$(DISTCONFIG)/" "$(TMPROOT)/ARCTEMP/$(TARDIR)"
-	#copy xbmclauncher don't know the name, so just use .run for now
-	cp xbmclauncher/dist/*.run "$(TMPROOT)/ARCTEMP/$(TARDIR)"
-		
+	ditto "build/$(DISTCONFIG)/" "$(TMPROOT)/ARCTEMP/$(TARDIR)"
+	mv "$(TMPROOT)/ARCTEMP/$(TARDIR)/README.txt" "$(TMPROOT)/$(TARDIR)/README.txt"
+	mv "$(TMPROOT)/ARCTEMP/$(TARDIR)/LICENSE.txt" "$(TMPROOT)/$(TARDIR)/LICENSE.txt"
+	
 	# build the archive of this
 	ditto -c -k --rsrc "$(TMPROOT)/ARCTEMP/$(TARDIR)" "$(TMPROOT)/$(TARDIR)/$(RUNARCHIVENAME)"
 	rm -rf "$(TMPROOT)/$(TARDIR)/ARCTEMP"
@@ -78,8 +112,21 @@ dist-sfx: $(CMAKEBUILDFOLDER)/MultiFinder/$(DISTCONFIG)/MultiFinder.app
 	makeself.sh --nocrc --nocomp --nox11 "$(TMPROOT)/$(TARDIR)" "$(RUNBALL)" "$(PROJNAME) $(VERSION)" "./install.sh"
 		
 	rm -rf "$(TMPROOT)"
-
-dist-debug: clean dist-debug-XBMCLauncher dist-sfx
-	$(MAKE) dist DISTCONFIG=Debug EXTRA_OPTS="RELEASE_SUFFIX=\"-debug\"" VERSION="$(VERSION)-debug"
 		
-.PHONY: default clean buildMultiFinder buildXBMCLauncher build dist release dist-tarball testdist testrel dist-sfx
+dist: dist-tarball dist-sfx
+	
+dist-debug:
+	$(MAKE) dist DISTCONFIG=Debug EXTRA_OPTS="RELEASE_SUFFIX=\"-debug\"" VERSION="$(VERSION)-debug"
+	
+fulldist: dist dist-debug
+
+testrel:
+	echo "Building release nightly"
+	$(MAKE) dist VERSION="$(TEST_VERSION)" EXTRA_OPTS="RELEASE_SUFFIX=\"$(TEST_VERSION_SUFFIX)\""
+	
+testdist:
+	echo "Building debug distribution $(TEST_VERSION)"
+	$(MAKE) dist DISTCONFIG=Debug VERSION="$(TEST_VERSION)" EXTRA_OPTS="RELEASE_SUFFIX=\"$(TEST_VERSION_SUFFIX)\""
+	
+.PHONY: default build dist release dist-tarball testdist testrel dist-sfx
+
