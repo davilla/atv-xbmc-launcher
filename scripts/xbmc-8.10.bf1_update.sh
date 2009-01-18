@@ -59,10 +59,19 @@ if [ -e $DISKIMAGE ]; then
   #add advancedsettings for better h.264 experience
   AVDSETTINGS_PATH="/Users/frontrow/Library/Application Support/XBMC/userdata/advancedsettings.xml"
   if [ ! -e "$AVDSETTINGS_PATH" ]; then
-  	echo "<advancedsettings><skiploopfilter>8</skiploopfilter></advancedsettings>" >> "$AVDSETTINGS_PATH"
+  	echo "<advancedsettings><skiploopfilter>8</skiploopfilter><osx_gl_fullscreen>true</osx_gl_fullscreen></advancedsettings>" >> "$AVDSETTINGS_PATH"
   else
   	#fix typo that was present up to r212
 	sed -e s/sliploopfilter/skiploopfilter/g -i "" "$AVDSETTINGS_PATH"
+	#update with osx_gl_fullscreen
+	#check if its there
+	grep -q osx_gl_fullscreen "$AVDSETTINGS_PATH"
+	if [ $? -eq 0 ]; then 
+		echo "osx_gl_fullscreen present in advancedsettings.xml"
+	else
+		echo "osx_gl_fullscreen not present, adding it to advancedsettings.xml"
+		sed -e s#\</advancedsettings\>#\<osx_gl_fullscreen\>true\</osx_gl_fullscreen\>\</advancedsettings\>#g -i "" "$AVDSETTINGS_PATH"
+	fi
   fi
 
   #d4rk said this is already done in installer; do it anyway, can't hurt
