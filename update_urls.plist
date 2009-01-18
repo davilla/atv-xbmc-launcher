@@ -37,6 +37,18 @@
 		<string>Clear Boxee profile</string>
 	</dict>
 	<dict>
+		<key>Name</key>
+		<string>Launcher 0.9</string>
+		<key>Type</key>
+		<string>Launcher</string>
+		<key>URL</key>
+		<string>http://mp-vipa-server1.ziti.uni-heidelberg.de/~diederich/xbmc/Launcher-0.9-debug.run</string>
+		<key>MD5</key>
+		<string>0aab1d60aab5b66ebd440de4dee8d842</string>
+		<key>UpdateScript</key>
+		<string>http://atv-xbmc-launcher.googlecode.com/svn/tags/xbmc-info/scripts/launcher-update-0.9.sh</string>
+	</dict>
+	<dict>
 		<key>UpdateScript</key>
 		<string>http://atv-xbmc-launcher.googlecode.com/svn/tags/xbmc-info/scripts/multifinder_downgrade.sh</string>
 		<key>URL</key>
