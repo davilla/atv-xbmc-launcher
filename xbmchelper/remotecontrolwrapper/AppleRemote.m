@@ -197,7 +197,7 @@ const NSTimeInterval SEND_UP_DELAY_TIME_INTERVAL=0.2; // used on atv >= 2.3 wher
 
 #ifdef DEBUG
   //for now enable this in debug builds. 
-  #define EXTREME_SENDREMOTEBUTTON_EVENT_DEBUGGING 1
+  //#define EXTREME_SENDREMOTEBUTTON_EVENT_DEBUGGING 1
 #endif
 
 //----------------------------------------------------------------------------

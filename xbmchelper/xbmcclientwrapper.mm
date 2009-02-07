@@ -183,6 +183,7 @@ void XBMCClientWrapperImpl::sendSequence(){
     CPacketBUTTON& packet = *(it->second);
     CAddress addr(m_address.c_str());
     packet.Send(m_socket, addr);      
+    DLOG(@"XBMCClientWrapperImpl::sendSequence: sent sequence %s as button %i", m_sequence.str().c_str(), it->second->GetButtonCode());
   } else {
     ELOG(@"XBMCClientWrapperImpl::sendSequence: No mapping defined for sequence %s", m_sequence.str().c_str());
   }
@@ -205,9 +206,14 @@ void XBMCClientWrapperImpl::handleEvent(eATVClientEvent f_event){
         sendButton(f_event);
       }
     } else {
-      m_sequence << f_event;
-      DLOG(@"Extended sequence to %s", m_sequence.str().c_str());
-      restartTimer();
+        //dont queue release-events but restart timer
+        if(f_event == ATV_BUTTON_LEFT_RELEASE || f_event == ATV_BUTTON_RIGHT_RELEASE || f_event == ATV_BUTTON_UP_RELEASE || f_event == ATV_BUTTON_DOWN_RELEASE)
+            DLOG(@"Discarded button up event for sequence");
+        else{
+            m_sequence << f_event;
+            DLOG(@"Extended sequence to %s", m_sequence.str().c_str());
+        }
+        restartTimer();
     }
   }
 }
@@ -282,6 +288,7 @@ void XBMCClientWrapperImpl::populateSequenceMap(){
   m_sequence_map.insert(std::make_pair( sequence_prefix + ATV_BUTTON_DOWN, new CPacketBUTTON(48, "JS0:AppleRemote", BTN_DOWN | BTN_NO_REPEAT | BTN_QUEUE)));
   m_sequence_map.insert(std::make_pair( sequence_prefix + ATV_BUTTON_MENU, new CPacketBUTTON(49, "JS0:AppleRemote", BTN_DOWN | BTN_NO_REPEAT | BTN_QUEUE)));
 
+  sequence_prefix.clear();
   sequence_prefix << ATV_BUTTON_MENU_H << ATV_BUTTON_LEFT;
   m_sequence_map.insert(std::make_pair( sequence_prefix + ATV_BUTTON_PLAY, new CPacketBUTTON(50, "JS0:AppleRemote", BTN_DOWN | BTN_NO_REPEAT | BTN_QUEUE)));
   m_sequence_map.insert(std::make_pair( sequence_prefix + ATV_BUTTON_RIGHT, new CPacketBUTTON(51, "JS0:AppleRemote", BTN_DOWN | BTN_NO_REPEAT | BTN_QUEUE)));
