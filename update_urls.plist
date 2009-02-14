@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<array>
+	<dict>
+		<key>UpdateScript</key>
+		<string>http://atv-xbmc-launcher.googlecode.com/svn/tags/xbmc-info/scripts/xbmc-8.10_update.sh</string>
+		<key>URL</key>
+		<string>http://downloads.sourceforge.net/xbmc/XBMC_for_Mac-8.10bf1.dmg</string>
+		<key>Type</key>
+		<string>Application</string>
+		<key>MD5</key>
+		<string>7aa0420a02c6a778541dead2e883b532</string>
+		<key>Name</key>
+		<string>XBMC Atlantis (bf1)</string>
+	</dict>
+    <dict>
+    	<key>UpdateScript</key>
+        <string>http://atv-xbmc-launcher.googlecode.com/svn/tags/boxee-info/scripts/alpha-0.9.7.4825_update.sh</string>
+        <key>URL</key>
+        <string>http://dl.boxee.tv/boxee-0.9.7.4825-atv.dmg</string>
+        <key>Type</key>
+        <string>Application</string>
+        <key>Name</key>
+        <string>Boxee alpha 0.9.7.4825</string>
+        <key>MD5</key>
+        <string>f370d0849e576514a7fd128b851964b5</string>
+    </dict>
+	<dict>
+		<key>Name</key>
+		<string>Launcher 3.0beta1</string>
+		<key>Type</key>
+		<string>Combo</string>
+		<key>URL</key>
+		<string>http://notthereyet</string>
+		<key>MD5</key>
+		<string></string>
+		<key>UpdateScript</key>
+		<string>http://atv-xbmc-launcher.googlecode.com/svn/tags/ul-info/scripts/launcher-update-3.0.sh</string>
+	</dict>
+	</array>
+</plist>
