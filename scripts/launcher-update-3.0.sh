@@ -25,6 +25,7 @@ if [ -e $INSTALLER ]; then
  #by default MultiFinder is now deactivated
  #reset default finder (MF installation sets it)
  echo $PW | sudo -S defaults delete /Library/Preferences/com.apple.loginwindow Finder
+ echo "Resetted loginwindow"
  
  #remove the download
  rm $INSTALLER 
