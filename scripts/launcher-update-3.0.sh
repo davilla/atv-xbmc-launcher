@@ -17,14 +17,15 @@ if [ -e $INSTALLER ]; then
 
  #delete boxeelauncher 0.1 if present
  echo $PW | sudo -S rm -rf /System/Library/CoreServices/Finder.app/Contents/PlugIns/BoxeeLauncher.frappliance
- 
- #reset default finder
-echo $PW | sudo -S defaults delete /Library/Preferences/com.apple.loginwindow Finder
- 
+  
  #install MultiFinder/Launcher combo
  echo $PW | sudo -S chmod +x $INSTALLER
  echo $PW | sudo -S $INSTALLER -- install /
-  
+
+ #by default MultiFinder is now deactivated
+ #reset default finder (MF installation sets it)
+ echo $PW | sudo -S defaults delete /Library/Preferences/com.apple.loginwindow Finder
+ 
  #remove the download
  rm $INSTALLER 
 
