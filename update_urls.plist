@@ -32,9 +32,9 @@
 		<key>Type</key>
 		<string>Combo</string>
 		<key>URL</key>
-		<string>http://notthereyet</string>
+		<string>http://mp-vipa-server1.ziti.uni-heidelberg.de/~diederich/xbmc/Launcher-3.0beta1.run</string>
 		<key>MD5</key>
-		<string></string>
+		<string>fb410bf02ce3b66b30b642c201ab905e</string>
 		<key>UpdateScript</key>
 		<string>http://atv-xbmc-launcher.googlecode.com/svn/tags/ul-info/scripts/launcher-update-3.0.sh</string>
 	</dict>
