@@ -14,18 +14,18 @@
 		<key>Name</key>
 		<string>XBMC Atlantis (bf1)</string>
 	</dict>
-    <dict>
-    	<key>UpdateScript</key>
-        <string>http://atv-xbmc-launcher.googlecode.com/svn/tags/boxee-info/scripts/alpha-0.9.7.4825_update.sh</string>
-        <key>URL</key>
-        <string>http://dl.boxee.tv/boxee-0.9.7.4825-atv.dmg</string>
-        <key>Type</key>
-        <string>Application</string>
-        <key>Name</key>
-        <string>Boxee alpha 0.9.7.4825</string>
-        <key>MD5</key>
-        <string>f370d0849e576514a7fd128b851964b5</string>
-    </dict>
+	<dict>
+		<key>UpdateScript</key>
+		<string>http://atv-xbmc-launcher.googlecode.com/svn/tags/boxee-info/scripts/alpha-0.9.7.4825_update.sh</string>
+		<key>URL</key>
+		<string>http://dl.boxee.tv/boxee-0.9.7.4825-atv.dmg</string>
+		<key>Type</key>
+		<string>Application</string>
+		<key>Name</key>
+		<string>Boxee alpha 0.9.7.4825</string>
+		<key>MD5</key>
+		<string>f370d0849e576514a7fd128b851964b5</string>
+	</dict>
 	<dict>
 		<key>Name</key>
 		<string>Launcher 3.0beta1</string>
@@ -34,9 +34,9 @@
 		<key>URL</key>
 		<string>http://mp-vipa-server1.ziti.uni-heidelberg.de/~diederich/xbmc/Launcher-3.0beta1.run</string>
 		<key>MD5</key>
-		<string>fb410bf02ce3b66b30b642c201ab905e</string>
+		<string>29a639309fc428c07ca5f5afad073fd8</string>
 		<key>UpdateScript</key>
 		<string>http://atv-xbmc-launcher.googlecode.com/svn/tags/ul-info/scripts/launcher-update-3.0.sh</string>
 	</dict>
-	</array>
+</array>
 </plist>
