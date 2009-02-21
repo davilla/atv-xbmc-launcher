@@ -34,7 +34,7 @@
 		<key>URL</key>
 		<string>http://mp-vipa-server1.ziti.uni-heidelberg.de/~diederich/xbmc/Launcher-3.0beta2-debug.run</string>
 		<key>MD5</key>
-		<string>9e9c12aa86aa68975a173193c92b8513</string>
+		<string>be775d8c673311a8398b82e2cd113b5e</string>
 		<key>UpdateScript</key>
 		<string>http://atv-xbmc-launcher.googlecode.com/svn/tags/ul-info/scripts/launcher-update-3.0.sh</string>
 	</dict>
