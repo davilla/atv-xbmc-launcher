@@ -32,9 +32,9 @@
 		<key>Type</key>
 		<string>Combo</string>
 		<key>URL</key>
-		<string>http://mp-vipa-server1.ziti.uni-heidelberg.de/~diederich/xbmc/Launcher-3.0beta1.run</string>
+		<string>http://mp-vipa-server1.ziti.uni-heidelberg.de/~diederich/xbmc/Launcher-3.0beta2.run</string>
 		<key>MD5</key>
-		<string>29a639309fc428c07ca5f5afad073fd8</string>
+		<string>9e9c12aa86aa68975a173193c92b8513</string>
 		<key>UpdateScript</key>
 		<string>http://atv-xbmc-launcher.googlecode.com/svn/tags/ul-info/scripts/launcher-update-3.0.sh</string>
 	</dict>
