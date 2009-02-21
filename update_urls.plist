@@ -28,11 +28,11 @@
 	</dict>
 	<dict>
 		<key>Name</key>
-		<string>Launcher 3.0beta1</string>
+		<string>Launcher 3.0beta2</string>
 		<key>Type</key>
 		<string>Combo</string>
 		<key>URL</key>
-		<string>http://mp-vipa-server1.ziti.uni-heidelberg.de/~diederich/xbmc/Launcher-3.0beta2.run</string>
+		<string>http://mp-vipa-server1.ziti.uni-heidelberg.de/~diederich/xbmc/Launcher-3.0beta2-debug.run</string>
 		<key>MD5</key>
 		<string>9e9c12aa86aa68975a173193c92b8513</string>
 		<key>UpdateScript</key>
