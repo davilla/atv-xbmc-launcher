@@ -1,0 +1,959 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 42;
+	objects = {
+
+/* Begin PBXAggregateTarget section */
+		E4BD48FF0F506530002E0C87 /* LauncherBuild'n'CopyToATV */ = {
+			isa = PBXAggregateTarget;
+			buildConfigurationList = E4BD49090F506573002E0C87 /* Build configuration list for PBXAggregateTarget "LauncherBuild'n'CopyToATV" */;
+			buildPhases = (
+				E4BD48FE0F506530002E0C87 /* ShellScript */,
+			);
+			dependencies = (
+				E4BD49030F50653C002E0C87 /* PBXTargetDependency */,
+			);
+			name = "LauncherBuild'n'CopyToATV";
+			productName = "LauncherBuild'n'CopyToATV";
+		};
+/* End PBXAggregateTarget section */
+
+/* Begin PBXBuildFile section */
+		E43F32FD0F5025DE00376502 /* settingshelper_main.mm in Sources */ = {isa = PBXBuildFile; fileRef = E43F32FC0F5025DE00376502 /* settingshelper_main.mm */; };
+		E43F36780F50278F00376502 /* AppleTV.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E43F36770F50278F00376502 /* AppleTV.framework */; };
+		E43F36A50F5027E800376502 /* MultiFinder.m in Sources */ = {isa = PBXBuildFile; fileRef = E43F36A00F5027E800376502 /* MultiFinder.m */; };
+		E43F36A60F5027E800376502 /* multifinder_main.mm in Sources */ = {isa = PBXBuildFile; fileRef = E43F36A10F5027E800376502 /* multifinder_main.mm */; };
+		E43F36A70F5027E800376502 /* Preferences.m in Sources */ = {isa = PBXBuildFile; fileRef = E43F36A30F5027E800376502 /* Preferences.m */; };
+		E43F36F50F502A8200376502 /* Carbon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E43F36F40F502A8200376502 /* Carbon.framework */; };
+		E43F37040F502AB400376502 /* atvxbmccommon.m in Sources */ = {isa = PBXBuildFile; fileRef = E43F36FC0F502AA400376502 /* atvxbmccommon.m */; };
+		E43F37180F502AF000376502 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E43F37170F502AF000376502 /* Foundation.framework */; };
+		E4BD45390F506147002E0C87 /* MultiFinder.app in Resources */ = {isa = PBXBuildFile; fileRef = E43F367D0F5027B000376502 /* MultiFinder.app */; };
+		E4BD454A0F506229002E0C87 /* setAutoUpdate.sh in Resources */ = {isa = PBXBuildFile; fileRef = E4BD45470F506229002E0C87 /* setAutoUpdate.sh */; };
+		E4BD454B0F506229002E0C87 /* setMultiFinderMode.sh in Resources */ = {isa = PBXBuildFile; fileRef = E4BD45480F506229002E0C87 /* setMultiFinderMode.sh */; };
+		E4BD454C0F506229002E0C87 /* compareMD5.sh in Resources */ = {isa = PBXBuildFile; fileRef = E4BD45490F506229002E0C87 /* compareMD5.sh */; };
+		E4BD455C0F506277002E0C87 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = E4BD45590F506277002E0C87 /* InfoPlist.strings */; };
+		E4BD457B0F5062B7002E0C87 /* DebugController.m in Sources */ = {isa = PBXBuildFile; fileRef = E4BD45690F5062B7002E0C87 /* DebugController.m */; };
+		E4BD457C0F5062B7002E0C87 /* XBMCSimpleDownloader.m in Sources */ = {isa = PBXBuildFile; fileRef = E4BD456C0F5062B7002E0C87 /* XBMCSimpleDownloader.m */; };
+		E4BD457D0F5062B7002E0C87 /* XBMCUpdateBlockingController.m in Sources */ = {isa = PBXBuildFile; fileRef = E4BD456E0F5062B7002E0C87 /* XBMCUpdateBlockingController.m */; };
+		E4BD457E0F5062B7002E0C87 /* XBMCUpdateController.m in Sources */ = {isa = PBXBuildFile; fileRef = E4BD45700F5062B7002E0C87 /* XBMCUpdateController.m */; };
+		E4BD457F0F5062B7002E0C87 /* XBMCAppliance.m in Sources */ = {isa = PBXBuildFile; fileRef = E4BD45720F5062B7002E0C87 /* XBMCAppliance.m */; };
+		E4BD45800F5062B7002E0C87 /* XBMCMFController.m in Sources */ = {isa = PBXBuildFile; fileRef = E4BD45740F5062B7002E0C87 /* XBMCMFController.m */; };
+		E4BD45810F5062B7002E0C87 /* XBMCPreferencesController.m in Sources */ = {isa = PBXBuildFile; fileRef = E4BD45760F5062B7002E0C87 /* XBMCPreferencesController.m */; };
+		E4BD45820F5062B7002E0C87 /* XBMCPureController.m in Sources */ = {isa = PBXBuildFile; fileRef = E4BD45780F5062B7002E0C87 /* XBMCPureController.m */; };
+		E4BD45830F5062B7002E0C87 /* XBMCUserDefaults.m in Sources */ = {isa = PBXBuildFile; fileRef = E4BD457A0F5062B7002E0C87 /* XBMCUserDefaults.m */; };
+		E4BD45A80F5063EB002E0C87 /* BackRow.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E4BD45A70F5063EB002E0C87 /* BackRow.framework */; };
+		E4BD48DD0F506406002E0C87 /* atvxbmccommon.m in Sources */ = {isa = PBXBuildFile; fileRef = E43F36FC0F502AA400376502 /* atvxbmccommon.m */; };
+		E4BD48DE0F506406002E0C87 /* osdetection.m in Sources */ = {isa = PBXBuildFile; fileRef = E43F36FE0F502AA400376502 /* osdetection.m */; };
+		E4BD48DF0F506406002E0C87 /* xbmcclientwrapper.mm in Sources */ = {isa = PBXBuildFile; fileRef = E43F37010F502AA400376502 /* xbmcclientwrapper.mm */; };
+		E4C4D8890F505AEF00A9E06E /* xbmcclientwrapper.mm in Sources */ = {isa = PBXBuildFile; fileRef = E43F37010F502AA400376502 /* xbmcclientwrapper.mm */; };
+		E4C4D8930F505B7400A9E06E /* osdetection.m in Sources */ = {isa = PBXBuildFile; fileRef = E43F36FE0F502AA400376502 /* osdetection.m */; };
+		E4C4D8950F505B8800A9E06E /* Carbon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E43F36F40F502A8200376502 /* Carbon.framework */; };
+		E4DC9A530F50532100FE98C7 /* SettingsHelper in Resources */ = {isa = PBXBuildFile; fileRef = E43F32F20F5025CD00376502 /* SettingsHelper */; };
+		E4DC9A6E0F50550800FE98C7 /* AppleRemote.m in Sources */ = {isa = PBXBuildFile; fileRef = E4DC9A640F50550800FE98C7 /* AppleRemote.m */; };
+		E4DC9A6F0F50550800FE98C7 /* HIDRemoteControlDevice.m in Sources */ = {isa = PBXBuildFile; fileRef = E4DC9A660F50550800FE98C7 /* HIDRemoteControlDevice.m */; };
+		E4DC9A700F50550800FE98C7 /* MultiClickRemoteBehavior.m in Sources */ = {isa = PBXBuildFile; fileRef = E4DC9A680F50550800FE98C7 /* MultiClickRemoteBehavior.m */; };
+		E4DC9A710F50550800FE98C7 /* RemoteControl.m in Sources */ = {isa = PBXBuildFile; fileRef = E4DC9A6A0F50550800FE98C7 /* RemoteControl.m */; };
+		E4DC9A720F50550800FE98C7 /* XBMCHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = E4DC9A6C0F50550800FE98C7 /* XBMCHelper.m */; };
+		E4DC9A730F50550800FE98C7 /* xbmchelper_main.mm in Sources */ = {isa = PBXBuildFile; fileRef = E4DC9A6D0F50550800FE98C7 /* xbmchelper_main.mm */; };
+		E4DC9A780F50558200FE98C7 /* xbmchelper in Resources */ = {isa = PBXBuildFile; fileRef = E4DC9A580F5054D800FE98C7 /* xbmchelper */; };
+		E4DC9A850F50565300FE98C7 /* IOKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E4DC9A840F50565300FE98C7 /* IOKit.framework */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		E419C0BF0F502C0C0058F7F2 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = E43F32DE0F5025A500376502 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = E43F32F10F5025CD00376502;
+			remoteInfo = SettingsHelper;
+		};
+		E4BD49020F50653C002E0C87 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = E43F32DE0F5025A500376502 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = E4C4D8CC0F505EA700A9E06E /* Launcher */;
+			remoteInfo = Launcher;
+		};
+		E4BD49100F506699002E0C87 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = E43F32DE0F5025A500376502 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = E43F367C0F5027B000376502 /* MultiFinder */;
+			remoteInfo = MultiFinder;
+		};
+		E4DC9A760F50557D00FE98C7 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = E43F32DE0F5025A500376502 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = E4DC9A570F5054D800FE98C7;
+			remoteInfo = xbmchelper;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		E43F32F20F5025CD00376502 /* SettingsHelper */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = SettingsHelper; sourceTree = BUILT_PRODUCTS_DIR; };
+		E43F32FC0F5025DE00376502 /* settingshelper_main.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = settingshelper_main.mm; sourceTree = "<group>"; };
+		E43F36770F50278F00376502 /* AppleTV.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppleTV.framework; path = external/AppleTV.framework; sourceTree = SOURCE_ROOT; };
+		E43F367D0F5027B000376502 /* MultiFinder.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MultiFinder.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		E43F369F0F5027E800376502 /* MultiFinder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MultiFinder.h; sourceTree = "<group>"; };
+		E43F36A00F5027E800376502 /* MultiFinder.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MultiFinder.m; sourceTree = "<group>"; };
+		E43F36A10F5027E800376502 /* multifinder_main.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = multifinder_main.mm; sourceTree = "<group>"; };
+		E43F36A20F5027E800376502 /* Preferences.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Preferences.h; sourceTree = "<group>"; };
+		E43F36A30F5027E800376502 /* Preferences.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Preferences.m; sourceTree = "<group>"; };
+		E43F36B80F5028F100376502 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		E43F36F40F502A8200376502 /* Carbon.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Carbon.framework; path = System/Library/Frameworks/Carbon.framework; sourceTree = SDKROOT; };
+		E43F36FB0F502AA400376502 /* atvxbmccommon.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = atvxbmccommon.h; sourceTree = "<group>"; };
+		E43F36FC0F502AA400376502 /* atvxbmccommon.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = atvxbmccommon.m; sourceTree = "<group>"; };
+		E43F36FD0F502AA400376502 /* osdetection.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = osdetection.h; sourceTree = "<group>"; };
+		E43F36FE0F502AA400376502 /* osdetection.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = osdetection.m; sourceTree = "<group>"; };
+		E43F36FF0F502AA400376502 /* xbmcclient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = xbmcclient.h; sourceTree = "<group>"; };
+		E43F37000F502AA400376502 /* xbmcclientwrapper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = xbmcclientwrapper.h; sourceTree = "<group>"; };
+		E43F37010F502AA400376502 /* xbmcclientwrapper.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = xbmcclientwrapper.mm; sourceTree = "<group>"; };
+		E43F37020F502AA400376502 /* XBMCDebugHelpers.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XBMCDebugHelpers.h; sourceTree = "<group>"; };
+		E43F37170F502AF000376502 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
+		E4BD45470F506229002E0C87 /* setAutoUpdate.sh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.sh; name = setAutoUpdate.sh; path = Launcher/setAutoUpdate.sh; sourceTree = "<group>"; };
+		E4BD45480F506229002E0C87 /* setMultiFinderMode.sh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.sh; name = setMultiFinderMode.sh; path = Launcher/setMultiFinderMode.sh; sourceTree = "<group>"; };
+		E4BD45490F506229002E0C87 /* compareMD5.sh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.sh; name = compareMD5.sh; path = Launcher/compareMD5.sh; sourceTree = "<group>"; };
+		E4BD455A0F506277002E0C87 /* English */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; name = English; path = InfoPlist.strings; sourceTree = "<group>"; };
+		E4BD455B0F506277002E0C87 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = Launcher/Info.plist; sourceTree = "<group>"; };
+		E4BD45670F5062B7002E0C87 /* BackRowCompilerShutup.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BackRowCompilerShutup.h; sourceTree = "<group>"; };
+		E4BD45680F5062B7002E0C87 /* DebugController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DebugController.h; sourceTree = "<group>"; };
+		E4BD45690F5062B7002E0C87 /* DebugController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DebugController.m; sourceTree = "<group>"; };
+		E4BD456B0F5062B7002E0C87 /* XBMCSimpleDownloader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XBMCSimpleDownloader.h; sourceTree = "<group>"; };
+		E4BD456C0F5062B7002E0C87 /* XBMCSimpleDownloader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XBMCSimpleDownloader.m; sourceTree = "<group>"; };
+		E4BD456D0F5062B7002E0C87 /* XBMCUpdateBlockingController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XBMCUpdateBlockingController.h; sourceTree = "<group>"; };
+		E4BD456E0F5062B7002E0C87 /* XBMCUpdateBlockingController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XBMCUpdateBlockingController.m; sourceTree = "<group>"; };
+		E4BD456F0F5062B7002E0C87 /* XBMCUpdateController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XBMCUpdateController.h; sourceTree = "<group>"; };
+		E4BD45700F5062B7002E0C87 /* XBMCUpdateController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XBMCUpdateController.m; sourceTree = "<group>"; };
+		E4BD45710F5062B7002E0C87 /* XBMCAppliance.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XBMCAppliance.h; sourceTree = "<group>"; };
+		E4BD45720F5062B7002E0C87 /* XBMCAppliance.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XBMCAppliance.m; sourceTree = "<group>"; };
+		E4BD45730F5062B7002E0C87 /* XBMCMFController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XBMCMFController.h; sourceTree = "<group>"; };
+		E4BD45740F5062B7002E0C87 /* XBMCMFController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XBMCMFController.m; sourceTree = "<group>"; };
+		E4BD45750F5062B7002E0C87 /* XBMCPreferencesController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XBMCPreferencesController.h; sourceTree = "<group>"; };
+		E4BD45760F5062B7002E0C87 /* XBMCPreferencesController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XBMCPreferencesController.m; sourceTree = "<group>"; };
+		E4BD45770F5062B7002E0C87 /* XBMCPureController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XBMCPureController.h; sourceTree = "<group>"; };
+		E4BD45780F5062B7002E0C87 /* XBMCPureController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XBMCPureController.m; sourceTree = "<group>"; };
+		E4BD45790F5062B7002E0C87 /* XBMCUserDefaults.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XBMCUserDefaults.h; sourceTree = "<group>"; };
+		E4BD457A0F5062B7002E0C87 /* XBMCUserDefaults.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XBMCUserDefaults.m; sourceTree = "<group>"; };
+		E4BD45A70F5063EB002E0C87 /* BackRow.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = BackRow.framework; path = external/BackRow.framework; sourceTree = SOURCE_ROOT; };
+		E4BD491A0F5069E9002E0C87 /* install.sh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.sh; name = install.sh; path = tools/install.sh; sourceTree = "<group>"; };
+		E4BD491B0F5069E9002E0C87 /* xcodeversion */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.sh; name = xcodeversion; path = tools/xcodeversion; sourceTree = "<group>"; };
+		E4BD491C0F5069F9002E0C87 /* Makefile */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.make; path = Makefile; sourceTree = "<group>"; };
+		E4C4D8CD0F505EA700A9E06E /* XBMCLauncher.frappliance */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = XBMCLauncher.frappliance; sourceTree = BUILT_PRODUCTS_DIR; };
+		E4DC9A580F5054D800FE98C7 /* xbmchelper */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = xbmchelper; sourceTree = BUILT_PRODUCTS_DIR; };
+		E4DC9A630F50550800FE98C7 /* AppleRemote.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppleRemote.h; sourceTree = "<group>"; };
+		E4DC9A640F50550800FE98C7 /* AppleRemote.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AppleRemote.m; sourceTree = "<group>"; };
+		E4DC9A650F50550800FE98C7 /* HIDRemoteControlDevice.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HIDRemoteControlDevice.h; sourceTree = "<group>"; };
+		E4DC9A660F50550800FE98C7 /* HIDRemoteControlDevice.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HIDRemoteControlDevice.m; sourceTree = "<group>"; };
+		E4DC9A670F50550800FE98C7 /* MultiClickRemoteBehavior.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MultiClickRemoteBehavior.h; sourceTree = "<group>"; };
+		E4DC9A680F50550800FE98C7 /* MultiClickRemoteBehavior.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MultiClickRemoteBehavior.m; sourceTree = "<group>"; };
+		E4DC9A690F50550800FE98C7 /* RemoteControl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RemoteControl.h; sourceTree = "<group>"; };
+		E4DC9A6A0F50550800FE98C7 /* RemoteControl.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RemoteControl.m; sourceTree = "<group>"; };
+		E4DC9A6B0F50550800FE98C7 /* XBMCHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XBMCHelper.h; sourceTree = "<group>"; };
+		E4DC9A6C0F50550800FE98C7 /* XBMCHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XBMCHelper.m; sourceTree = "<group>"; };
+		E4DC9A6D0F50550800FE98C7 /* xbmchelper_main.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = xbmchelper_main.mm; sourceTree = "<group>"; };
+		E4DC9A840F50565300FE98C7 /* IOKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = IOKit.framework; path = System/Library/Frameworks/IOKit.framework; sourceTree = SDKROOT; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		E43F32F00F5025CD00376502 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				E43F36780F50278F00376502 /* AppleTV.framework in Frameworks */,
+				E43F37180F502AF000376502 /* Foundation.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		E43F367B0F5027B000376502 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				E43F36F50F502A8200376502 /* Carbon.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		E4C4D8CB0F505EA700A9E06E /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				E4BD45A80F5063EB002E0C87 /* BackRow.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		E4DC9A560F5054D800FE98C7 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				E4C4D8950F505B8800A9E06E /* Carbon.framework in Frameworks */,
+				E4DC9A850F50565300FE98C7 /* IOKit.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		E43F32DC0F5025A500376502 = {
+			isa = PBXGroup;
+			children = (
+				E43F36FA0F502AA400376502 /* common */,
+				E4DC9A600F50550800FE98C7 /* xbmchelper */,
+				E43F369D0F5027E800376502 /* MultiFinder */,
+				E43F32FA0F5025DE00376502 /* SettingsHelper */,
+				E4BD45440F506206002E0C87 /* Launcher */,
+				E43F32F30F5025CD00376502 /* Products */,
+				E4BD45560F50623D002E0C87 /* deployment */,
+				E43F36770F50278F00376502 /* AppleTV.framework */,
+				E4BD45A70F5063EB002E0C87 /* BackRow.framework */,
+				E43F36F40F502A8200376502 /* Carbon.framework */,
+				E43F37170F502AF000376502 /* Foundation.framework */,
+				E4DC9A840F50565300FE98C7 /* IOKit.framework */,
+			);
+			sourceTree = "<group>";
+		};
+		E43F32F30F5025CD00376502 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				E43F32F20F5025CD00376502 /* SettingsHelper */,
+				E43F367D0F5027B000376502 /* MultiFinder.app */,
+				E4DC9A580F5054D800FE98C7 /* xbmchelper */,
+				E4C4D8CD0F505EA700A9E06E /* XBMCLauncher.frappliance */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		E43F32FA0F5025DE00376502 /* SettingsHelper */ = {
+			isa = PBXGroup;
+			children = (
+				E43F32FC0F5025DE00376502 /* settingshelper_main.mm */,
+			);
+			path = SettingsHelper;
+			sourceTree = "<group>";
+		};
+		E43F369D0F5027E800376502 /* MultiFinder */ = {
+			isa = PBXGroup;
+			children = (
+				E43F36B80F5028F100376502 /* Info.plist */,
+				E43F369F0F5027E800376502 /* MultiFinder.h */,
+				E43F36A00F5027E800376502 /* MultiFinder.m */,
+				E43F36A10F5027E800376502 /* multifinder_main.mm */,
+				E43F36A20F5027E800376502 /* Preferences.h */,
+				E43F36A30F5027E800376502 /* Preferences.m */,
+			);
+			path = MultiFinder;
+			sourceTree = "<group>";
+		};
+		E43F36FA0F502AA400376502 /* common */ = {
+			isa = PBXGroup;
+			children = (
+				E43F36FB0F502AA400376502 /* atvxbmccommon.h */,
+				E43F36FC0F502AA400376502 /* atvxbmccommon.m */,
+				E43F36FD0F502AA400376502 /* osdetection.h */,
+				E43F36FE0F502AA400376502 /* osdetection.m */,
+				E43F36FF0F502AA400376502 /* xbmcclient.h */,
+				E43F37000F502AA400376502 /* xbmcclientwrapper.h */,
+				E43F37010F502AA400376502 /* xbmcclientwrapper.mm */,
+				E43F37020F502AA400376502 /* XBMCDebugHelpers.h */,
+			);
+			path = common;
+			sourceTree = "<group>";
+		};
+		E4BD45440F506206002E0C87 /* Launcher */ = {
+			isa = PBXGroup;
+			children = (
+				E4BD45650F5062B7002E0C87 /* src */,
+				E4BD45570F506253002E0C87 /* Resources */,
+			);
+			name = Launcher;
+			sourceTree = "<group>";
+		};
+		E4BD45560F50623D002E0C87 /* deployment */ = {
+			isa = PBXGroup;
+			children = (
+				E4BD491C0F5069F9002E0C87 /* Makefile */,
+				E4BD491A0F5069E9002E0C87 /* install.sh */,
+				E4BD491B0F5069E9002E0C87 /* xcodeversion */,
+			);
+			name = deployment;
+			sourceTree = "<group>";
+		};
+		E4BD45570F506253002E0C87 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				E4BD45580F506277002E0C87 /* English.lproj */,
+				E4BD455B0F506277002E0C87 /* Info.plist */,
+				E4BD45470F506229002E0C87 /* setAutoUpdate.sh */,
+				E4BD45480F506229002E0C87 /* setMultiFinderMode.sh */,
+				E4BD45490F506229002E0C87 /* compareMD5.sh */,
+			);
+			name = Resources;
+			sourceTree = "<group>";
+		};
+		E4BD45580F506277002E0C87 /* English.lproj */ = {
+			isa = PBXGroup;
+			children = (
+				E4BD45590F506277002E0C87 /* InfoPlist.strings */,
+			);
+			name = English.lproj;
+			path = Launcher/English.lproj;
+			sourceTree = "<group>";
+		};
+		E4BD45650F5062B7002E0C87 /* src */ = {
+			isa = PBXGroup;
+			children = (
+				E4BD45660F5062B7002E0C87 /* helpers */,
+				E4BD456A0F5062B7002E0C87 /* updater */,
+				E4BD45710F5062B7002E0C87 /* XBMCAppliance.h */,
+				E4BD45720F5062B7002E0C87 /* XBMCAppliance.m */,
+				E4BD45730F5062B7002E0C87 /* XBMCMFController.h */,
+				E4BD45740F5062B7002E0C87 /* XBMCMFController.m */,
+				E4BD45750F5062B7002E0C87 /* XBMCPreferencesController.h */,
+				E4BD45760F5062B7002E0C87 /* XBMCPreferencesController.m */,
+				E4BD45770F5062B7002E0C87 /* XBMCPureController.h */,
+				E4BD45780F5062B7002E0C87 /* XBMCPureController.m */,
+				E4BD45790F5062B7002E0C87 /* XBMCUserDefaults.h */,
+				E4BD457A0F5062B7002E0C87 /* XBMCUserDefaults.m */,
+			);
+			name = src;
+			path = Launcher/src;
+			sourceTree = "<group>";
+		};
+		E4BD45660F5062B7002E0C87 /* helpers */ = {
+			isa = PBXGroup;
+			children = (
+				E4BD45670F5062B7002E0C87 /* BackRowCompilerShutup.h */,
+				E4BD45680F5062B7002E0C87 /* DebugController.h */,
+				E4BD45690F5062B7002E0C87 /* DebugController.m */,
+			);
+			path = helpers;
+			sourceTree = "<group>";
+		};
+		E4BD456A0F5062B7002E0C87 /* updater */ = {
+			isa = PBXGroup;
+			children = (
+				E4BD456B0F5062B7002E0C87 /* XBMCSimpleDownloader.h */,
+				E4BD456C0F5062B7002E0C87 /* XBMCSimpleDownloader.m */,
+				E4BD456D0F5062B7002E0C87 /* XBMCUpdateBlockingController.h */,
+				E4BD456E0F5062B7002E0C87 /* XBMCUpdateBlockingController.m */,
+				E4BD456F0F5062B7002E0C87 /* XBMCUpdateController.h */,
+				E4BD45700F5062B7002E0C87 /* XBMCUpdateController.m */,
+			);
+			path = updater;
+			sourceTree = "<group>";
+		};
+		E4DC9A600F50550800FE98C7 /* xbmchelper */ = {
+			isa = PBXGroup;
+			children = (
+				E4DC9A620F50550800FE98C7 /* remotecontrolwrapper */,
+				E4DC9A6B0F50550800FE98C7 /* XBMCHelper.h */,
+				E4DC9A6C0F50550800FE98C7 /* XBMCHelper.m */,
+				E4DC9A6D0F50550800FE98C7 /* xbmchelper_main.mm */,
+			);
+			path = xbmchelper;
+			sourceTree = "<group>";
+		};
+		E4DC9A620F50550800FE98C7 /* remotecontrolwrapper */ = {
+			isa = PBXGroup;
+			children = (
+				E4DC9A630F50550800FE98C7 /* AppleRemote.h */,
+				E4DC9A640F50550800FE98C7 /* AppleRemote.m */,
+				E4DC9A650F50550800FE98C7 /* HIDRemoteControlDevice.h */,
+				E4DC9A660F50550800FE98C7 /* HIDRemoteControlDevice.m */,
+				E4DC9A670F50550800FE98C7 /* MultiClickRemoteBehavior.h */,
+				E4DC9A680F50550800FE98C7 /* MultiClickRemoteBehavior.m */,
+				E4DC9A690F50550800FE98C7 /* RemoteControl.h */,
+				E4DC9A6A0F50550800FE98C7 /* RemoteControl.m */,
+			);
+			path = remotecontrolwrapper;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		E43F32F10F5025CD00376502 /* SettingsHelper */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = E43F32F70F5025CE00376502 /* Build configuration list for PBXNativeTarget "SettingsHelper" */;
+			buildPhases = (
+				E43F32EF0F5025CD00376502 /* Sources */,
+				E43F32F00F5025CD00376502 /* Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = SettingsHelper;
+			productName = SettingsHelper;
+			productReference = E43F32F20F5025CD00376502 /* SettingsHelper */;
+			productType = "com.apple.product-type.tool";
+		};
+		E43F367C0F5027B000376502 /* MultiFinder */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = E43F36820F5027B200376502 /* Build configuration list for PBXNativeTarget "MultiFinder" */;
+			buildPhases = (
+				E43F36790F5027B000376502 /* Resources */,
+				E43F367A0F5027B000376502 /* Sources */,
+				E43F367B0F5027B000376502 /* Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				E4DC9A770F50557D00FE98C7 /* PBXTargetDependency */,
+				E419C0C00F502C0C0058F7F2 /* PBXTargetDependency */,
+			);
+			name = MultiFinder;
+			productName = MultiFinder;
+			productReference = E43F367D0F5027B000376502 /* MultiFinder.app */;
+			productType = "com.apple.product-type.application";
+		};
+		E4C4D8CC0F505EA700A9E06E /* XBMCLauncher */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = E4C4D8D20F505EA800A9E06E /* Build configuration list for PBXNativeTarget "XBMCLauncher" */;
+			buildPhases = (
+				E4C4D8C90F505EA700A9E06E /* Resources */,
+				E4C4D8CA0F505EA700A9E06E /* Sources */,
+				E4C4D8CB0F505EA700A9E06E /* Frameworks */,
+				E4BD48FB0F50647F002E0C87 /* ShellScript */,
+				E4BD48FD0F506497002E0C87 /* ShellScript */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				E4BD49110F506699002E0C87 /* PBXTargetDependency */,
+			);
+			name = XBMCLauncher;
+			productName = Launcher;
+			productReference = E4C4D8CD0F505EA700A9E06E /* XBMCLauncher.frappliance */;
+			productType = "com.apple.product-type.bundle";
+		};
+		E4DC9A570F5054D800FE98C7 /* xbmchelper */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = E4DC9A5F0F5054E100FE98C7 /* Build configuration list for PBXNativeTarget "xbmchelper" */;
+			buildPhases = (
+				E4DC9A550F5054D800FE98C7 /* Sources */,
+				E4DC9A560F5054D800FE98C7 /* Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = xbmchelper;
+			productName = xbmchelper;
+			productReference = E4DC9A580F5054D800FE98C7 /* xbmchelper */;
+			productType = "com.apple.product-type.tool";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		E43F32DE0F5025A500376502 /* Project object */ = {
+			isa = PBXProject;
+			buildConfigurationList = E43F32E10F5025A500376502 /* Build configuration list for PBXProject "atv-xbmc-tools" */;
+			compatibilityVersion = "Xcode 2.4";
+			hasScannedForEncodings = 0;
+			mainGroup = E43F32DC0F5025A500376502;
+			productRefGroup = E43F32F30F5025CD00376502 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				E43F32F10F5025CD00376502 /* SettingsHelper */,
+				E43F367C0F5027B000376502 /* MultiFinder */,
+				E4DC9A570F5054D800FE98C7 /* xbmchelper */,
+				E4C4D8CC0F505EA700A9E06E /* XBMCLauncher */,
+				E4BD48FF0F506530002E0C87 /* LauncherBuild'n'CopyToATV */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		E43F36790F5027B000376502 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				E4DC9A780F50558200FE98C7 /* xbmchelper in Resources */,
+				E4DC9A530F50532100FE98C7 /* SettingsHelper in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		E4C4D8C90F505EA700A9E06E /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				E4BD45390F506147002E0C87 /* MultiFinder.app in Resources */,
+				E4BD454A0F506229002E0C87 /* setAutoUpdate.sh in Resources */,
+				E4BD454B0F506229002E0C87 /* setMultiFinderMode.sh in Resources */,
+				E4BD454C0F506229002E0C87 /* compareMD5.sh in Resources */,
+				E4BD455C0F506277002E0C87 /* InfoPlist.strings in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		E4BD48FB0F50647F002E0C87 /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "";
+		};
+		E4BD48FD0F506497002E0C87 /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"$(TARGET_BUILD_DIR)/XBMCLauncher.frappliance",
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "";
+		};
+		E4BD48FE0F506530002E0C87 /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"$(TARGET_BUILD_DIR)/XBMCLauncher.frappliance",
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "APPLETV_IP=192.168.0.90\nscp -r $TARGET_BUILD_DIR/XBMCLauncher.frappliance frontrow@$APPLETV_IP:\nssh frontrow@$APPLETV_IP \"echo frontrow | sudo -S /bin/rm -rf /System/Library/CoreServices/Finder.app/Contents/PlugIns/XBMCLauncher.frappliance\"\nssh frontrow@$APPLETV_IP \"echo frontrow | sudo -S /bin/mv /Users/frontrow/XBMCLauncher.frappliance /System/Library/CoreServices/Finder.app/Contents/PlugIns/\"\nssh frontrow@$APPLETV_IP restartFinder\nexit 0";
+		};
+/* End PBXShellScriptBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		E43F32EF0F5025CD00376502 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				E43F32FD0F5025DE00376502 /* settingshelper_main.mm in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		E43F367A0F5027B000376502 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				E43F37040F502AB400376502 /* atvxbmccommon.m in Sources */,
+				E43F36A50F5027E800376502 /* MultiFinder.m in Sources */,
+				E43F36A60F5027E800376502 /* multifinder_main.mm in Sources */,
+				E43F36A70F5027E800376502 /* Preferences.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		E4C4D8CA0F505EA700A9E06E /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				E4BD48DD0F506406002E0C87 /* atvxbmccommon.m in Sources */,
+				E4BD48DE0F506406002E0C87 /* osdetection.m in Sources */,
+				E4BD48DF0F506406002E0C87 /* xbmcclientwrapper.mm in Sources */,
+				E4BD457B0F5062B7002E0C87 /* DebugController.m in Sources */,
+				E4BD457C0F5062B7002E0C87 /* XBMCSimpleDownloader.m in Sources */,
+				E4BD457D0F5062B7002E0C87 /* XBMCUpdateBlockingController.m in Sources */,
+				E4BD457E0F5062B7002E0C87 /* XBMCUpdateController.m in Sources */,
+				E4BD457F0F5062B7002E0C87 /* XBMCAppliance.m in Sources */,
+				E4BD45800F5062B7002E0C87 /* XBMCMFController.m in Sources */,
+				E4BD45810F5062B7002E0C87 /* XBMCPreferencesController.m in Sources */,
+				E4BD45820F5062B7002E0C87 /* XBMCPureController.m in Sources */,
+				E4BD45830F5062B7002E0C87 /* XBMCUserDefaults.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		E4DC9A550F5054D800FE98C7 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				E4DC9A6E0F50550800FE98C7 /* AppleRemote.m in Sources */,
+				E4C4D8930F505B7400A9E06E /* osdetection.m in Sources */,
+				E4DC9A6F0F50550800FE98C7 /* HIDRemoteControlDevice.m in Sources */,
+				E4DC9A700F50550800FE98C7 /* MultiClickRemoteBehavior.m in Sources */,
+				E4DC9A710F50550800FE98C7 /* RemoteControl.m in Sources */,
+				E4C4D8890F505AEF00A9E06E /* xbmcclientwrapper.mm in Sources */,
+				E4DC9A720F50550800FE98C7 /* XBMCHelper.m in Sources */,
+				E4DC9A730F50550800FE98C7 /* xbmchelper_main.mm in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		E419C0C00F502C0C0058F7F2 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = E43F32F10F5025CD00376502 /* SettingsHelper */;
+			targetProxy = E419C0BF0F502C0C0058F7F2 /* PBXContainerItemProxy */;
+		};
+		E4BD49030F50653C002E0C87 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = E4C4D8CC0F505EA700A9E06E /* XBMCLauncher */;
+			targetProxy = E4BD49020F50653C002E0C87 /* PBXContainerItemProxy */;
+		};
+		E4BD49110F506699002E0C87 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = E43F367C0F5027B000376502 /* MultiFinder */;
+			targetProxy = E4BD49100F506699002E0C87 /* PBXContainerItemProxy */;
+		};
+		E4DC9A770F50557D00FE98C7 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = E4DC9A570F5054D800FE98C7 /* xbmchelper */;
+			targetProxy = E4DC9A760F50557D00FE98C7 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		E4BD45590F506277002E0C87 /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				E4BD455A0F506277002E0C87 /* English */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		E43F32DF0F5025A500376502 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COPY_PHASE_STRIP = NO;
+			};
+			name = Debug;
+		};
+		E43F32E00F5025A500376502 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COPY_PHASE_STRIP = YES;
+			};
+			name = Release;
+		};
+		E43F32F50F5025CE00376502 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				COPY_PHASE_STRIP = NO;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(FRAMEWORK_SEARCH_PATHS_QUOTED_FOR_TARGET_1)",
+					"$(FRAMEWORK_SEARCH_PATHS_QUOTED_FOR_TARGET_2)",
+				);
+				FRAMEWORK_SEARCH_PATHS_QUOTED_FOR_TARGET_1 = "\"$(SRCROOT)/external\"";
+				FRAMEWORK_SEARCH_PATHS_QUOTED_FOR_TARGET_2 = "\"$(SRCROOT)/external\"";
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_ENABLE_FIX_AND_CONTINUE = YES;
+				GCC_MODEL_TUNING = G5;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = DEBUG;
+				INSTALL_PATH = /usr/local/bin;
+				MACOSX_DEPLOYMENT_TARGET = 10.4;
+				PREBINDING = NO;
+				PRODUCT_NAME = SettingsHelper;
+				SDKROOT = /Developer/SDKs/MacOSX10.4u.sdk;
+			};
+			name = Debug;
+		};
+		E43F32F60F5025CE00376502 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				COPY_PHASE_STRIP = YES;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(FRAMEWORK_SEARCH_PATHS_QUOTED_FOR_TARGET_1)",
+					"$(FRAMEWORK_SEARCH_PATHS_QUOTED_FOR_TARGET_2)",
+				);
+				FRAMEWORK_SEARCH_PATHS_QUOTED_FOR_TARGET_1 = "\"$(SRCROOT)/external\"";
+				FRAMEWORK_SEARCH_PATHS_QUOTED_FOR_TARGET_2 = "\"$(SRCROOT)/external\"";
+				GCC_ENABLE_FIX_AND_CONTINUE = NO;
+				GCC_MODEL_TUNING = G5;
+				INSTALL_PATH = /usr/local/bin;
+				MACOSX_DEPLOYMENT_TARGET = 10.4;
+				PREBINDING = NO;
+				PRODUCT_NAME = SettingsHelper;
+				SDKROOT = /Developer/SDKs/MacOSX10.4u.sdk;
+				ZERO_LINK = NO;
+			};
+			name = Release;
+		};
+		E43F36800F5027B200376502 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(NATIVE_ARCH)";
+				COPY_PHASE_STRIP = NO;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_ENABLE_FIX_AND_CONTINUE = YES;
+				GCC_MODEL_TUNING = G5;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "$(SYSTEM_LIBRARY_DIR)/Frameworks/AppKit.framework/Headers/AppKit.h";
+				GCC_PREPROCESSOR_DEFINITIONS = DEBUG;
+				HEADER_SEARCH_PATHS = (
+					.,
+					MultiFinder,
+				);
+				INFOPLIST_FILE = MultiFinder/Info.plist;
+				INSTALL_PATH = "$(HOME)/Applications";
+				MACOSX_DEPLOYMENT_TARGET = 10.4;
+				OTHER_LDFLAGS = (
+					"-framework",
+					Foundation,
+					"-framework",
+					AppKit,
+				);
+				PREBINDING = NO;
+				PRODUCT_NAME = MultiFinder;
+				SDKROOT = /Developer/SDKs/MacOSX10.4u.sdk;
+			};
+			name = Debug;
+		};
+		E43F36810F5027B200376502 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(NATIVE_ARCH)";
+				COPY_PHASE_STRIP = YES;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				GCC_ENABLE_FIX_AND_CONTINUE = NO;
+				GCC_MODEL_TUNING = G5;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "$(SYSTEM_LIBRARY_DIR)/Frameworks/AppKit.framework/Headers/AppKit.h";
+				HEADER_SEARCH_PATHS = (
+					.,
+					MultiFinder,
+				);
+				INFOPLIST_FILE = MultiFinder/Info.plist;
+				INSTALL_PATH = "$(HOME)/Applications";
+				MACOSX_DEPLOYMENT_TARGET = 10.4;
+				OTHER_LDFLAGS = (
+					"-framework",
+					Foundation,
+					"-framework",
+					AppKit,
+				);
+				PREBINDING = NO;
+				PRODUCT_NAME = MultiFinder;
+				SDKROOT = /Developer/SDKs/MacOSX10.4u.sdk;
+				ZERO_LINK = NO;
+			};
+			name = Release;
+		};
+		E4BD49000F506530002E0C87 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COPY_PHASE_STRIP = NO;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				PRODUCT_NAME = "LauncherBuild'n'CopyToATV";
+			};
+			name = Debug;
+		};
+		E4BD49010F506530002E0C87 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COPY_PHASE_STRIP = YES;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				GCC_ENABLE_FIX_AND_CONTINUE = NO;
+				PRODUCT_NAME = "LauncherBuild'n'CopyToATV";
+				ZERO_LINK = NO;
+			};
+			name = Release;
+		};
+		E4C4D8CF0F505EA700A9E06E /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				APP_VERSION = 3.0beta2;
+				COPY_PHASE_STRIP = NO;
+				FRAMEWORK_SEARCH_PATHS = (
+					external,
+					"$(FRAMEWORK_SEARCH_PATHS_QUOTED_FOR_TARGET_1)",
+				);
+				FRAMEWORK_SEARCH_PATHS_QUOTED_FOR_TARGET_1 = "\"$(SRCROOT)/external\"";
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_ENABLE_FIX_AND_CONTINUE = YES;
+				GCC_MODEL_TUNING = G5;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "$(SYSTEM_LIBRARY_DIR)/Frameworks/AppKit.framework/Headers/AppKit.h";
+				GCC_PREPROCESSOR_DEFINITIONS = DEBUG;
+				HEADER_SEARCH_PATHS = (
+					Launcher/src,
+					.,
+				);
+				INFOPLIST_FILE = Launcher/Info.plist;
+				INSTALL_PATH = "$(HOME)/Library/Bundles";
+				OTHER_LDFLAGS = (
+					"-framework",
+					Foundation,
+					"-framework",
+					AppKit,
+				);
+				PREBINDING = NO;
+				PRODUCT_NAME = XBMCLauncher;
+				SDKROOT = /Developer/SDKs/MacOSX10.4u.sdk;
+				WRAPPER_EXTENSION = frappliance;
+			};
+			name = Debug;
+		};
+		E4C4D8D00F505EA700A9E06E /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				APP_VERSION = 3.0beta2;
+				COPY_PHASE_STRIP = YES;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				FRAMEWORK_SEARCH_PATHS = (
+					external,
+					"$(FRAMEWORK_SEARCH_PATHS_QUOTED_FOR_TARGET_1)",
+				);
+				FRAMEWORK_SEARCH_PATHS_QUOTED_FOR_TARGET_1 = "\"$(SRCROOT)/external\"";
+				GCC_ENABLE_FIX_AND_CONTINUE = NO;
+				GCC_MODEL_TUNING = G5;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "$(SYSTEM_LIBRARY_DIR)/Frameworks/AppKit.framework/Headers/AppKit.h";
+				HEADER_SEARCH_PATHS = (
+					Launcher/src,
+					.,
+				);
+				INFOPLIST_FILE = Launcher/Info.plist;
+				INSTALL_PATH = "$(HOME)/Library/Bundles";
+				OTHER_LDFLAGS = (
+					"-framework",
+					Foundation,
+					"-framework",
+					AppKit,
+				);
+				PREBINDING = NO;
+				PRODUCT_NAME = XBMCLauncher;
+				SDKROOT = /Developer/SDKs/MacOSX10.4u.sdk;
+				WRAPPER_EXTENSION = frappliance;
+				ZERO_LINK = NO;
+			};
+			name = Release;
+		};
+		E4DC9A5A0F5054D900FE98C7 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				COPY_PHASE_STRIP = NO;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_ENABLE_FIX_AND_CONTINUE = YES;
+				GCC_MODEL_TUNING = G5;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "$(SYSTEM_LIBRARY_DIR)/Frameworks/AppKit.framework/Headers/AppKit.h";
+				GCC_PREPROCESSOR_DEFINITIONS = DEBUG;
+				HEADER_SEARCH_PATHS = .;
+				INSTALL_PATH = /usr/local/bin;
+				OTHER_LDFLAGS = (
+					"-framework",
+					Foundation,
+					"-framework",
+					AppKit,
+				);
+				PREBINDING = NO;
+				PRODUCT_NAME = xbmchelper;
+				SDKROOT = /Developer/SDKs/MacOSX10.4u.sdk;
+			};
+			name = Debug;
+		};
+		E4DC9A5B0F5054D900FE98C7 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				COPY_PHASE_STRIP = YES;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				GCC_ENABLE_FIX_AND_CONTINUE = NO;
+				GCC_MODEL_TUNING = G5;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "$(SYSTEM_LIBRARY_DIR)/Frameworks/AppKit.framework/Headers/AppKit.h";
+				HEADER_SEARCH_PATHS = .;
+				INSTALL_PATH = /usr/local/bin;
+				OTHER_LDFLAGS = (
+					"-framework",
+					Foundation,
+					"-framework",
+					AppKit,
+				);
+				PREBINDING = NO;
+				PRODUCT_NAME = xbmchelper;
+				SDKROOT = /Developer/SDKs/MacOSX10.4u.sdk;
+				ZERO_LINK = NO;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		E43F32E10F5025A500376502 /* Build configuration list for PBXProject "atv-xbmc-tools" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				E43F32DF0F5025A500376502 /* Debug */,
+				E43F32E00F5025A500376502 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		E43F32F70F5025CE00376502 /* Build configuration list for PBXNativeTarget "SettingsHelper" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				E43F32F50F5025CE00376502 /* Debug */,
+				E43F32F60F5025CE00376502 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		E43F36820F5027B200376502 /* Build configuration list for PBXNativeTarget "MultiFinder" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				E43F36800F5027B200376502 /* Debug */,
+				E43F36810F5027B200376502 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		E4BD49090F506573002E0C87 /* Build configuration list for PBXAggregateTarget "LauncherBuild'n'CopyToATV" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				E4BD49000F506530002E0C87 /* Debug */,
+				E4BD49010F506530002E0C87 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		E4C4D8D20F505EA800A9E06E /* Build configuration list for PBXNativeTarget "XBMCLauncher" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				E4C4D8CF0F505EA700A9E06E /* Debug */,
+				E4C4D8D00F505EA700A9E06E /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		E4DC9A5F0F5054E100FE98C7 /* Build configuration list for PBXNativeTarget "xbmchelper" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				E4DC9A5A0F5054D900FE98C7 /* Debug */,
+				E4DC9A5B0F5054D900FE98C7 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = E43F32DE0F5025A500376502 /* Project object */;
+}

@@ -1,0 +1,26 @@
+ToDos:
+
+use exit status of app to do advanced stuff
+  - use exit status of NSTask
+  - implement shutdown menu restart request of xbmc with that
+  
+- add licence to files
+
+-add to MultiFinder's preferences:
+  - IR timeout
+  - verbose setting?
+
+- add setting of timeout to universalmode
+
+- add convenience target to cmake that sets build environment up
+  - maybe create a script in trunk/scripts/setupBuildEnvironment.sh for all the work
+  - create a target in CMake to run that script with configured parameters (e.g. APPLETV_IP)
+  - create external dir in trunk/
+  - scp frameworks from ATV to trunk/external
+  - download BRHeaders from http://alanquatermain.net/brdevkit/
+  - copy Quartz stuff to trunk/external and patch it
+  - match CMakeLists.txt  
+
+-finish xbmclauncher CMake project
+ - need to figure a way to build bundle (worst case by hand)
+=> enables a build all and copy to ATV testing cycle
