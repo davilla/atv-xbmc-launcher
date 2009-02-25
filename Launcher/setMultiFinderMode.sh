@@ -6,9 +6,9 @@
 # Created by Stephan Diederich on 02/2009.
 # Copyright 2009 University Heidelberg. All rights reserved.
 PASSWD=frontrow
+E_MISSING_MF=3
 
-MULTIFINDER_SOURCE=/System/Library/CoreServices/Finder.app/Contents/Plugins/XBMCLauncher.frappliance/Contents/Resources/MultiFinder.app
-MULTIFINDER_TARGET=/Applications/MultiFinder.app
+MULTIFINDER=/System/Library/CoreServices/Finder.app/Contents/Plugins/XBMCLauncher.frappliance/Contents/Resources/MultiFinder.app
 case $1 in
 OFF)
   #should we delete MultiFinder.app here?
@@ -22,24 +22,13 @@ OFF)
 ON)
   # do some sanity checks here.
   # does MultiFinder.app exist
-  if [ ! -d "$MULTIFINDER_SOURCE" ]; then
-   echo "MultiFinder.app not found in $MULTIFINDER_SOURCE. Bailing out..."
-   exit 1
-  fi
-  #remove old one
-  echo "Removing old $MULTIFINDER_TARGET (if present)"
-  echo $PASSWD | sudo -S rm -r "$MULTIFINDER_TARGET"
-  # copy it
-  echo "Copying new from from $MULTIFINDER_SOURCE to $MULTIFINDER_TARGET"
-  echo $PASSWD | sudo -S sh -c "/bin/cp -r \"$MULTIFINDER_SOURCE\" \"$MULTIFINDER_TARGET\""
-  echo $PASSWD | sudo -S chown -R root:admin "$MULTIFINDER_SOURCE"
-  if [ ! -d "$MULTIFINDER_TARGET" ]; then
-   echo "Copying failed. MultiFinder.app not found in $MULTIFINDER_TARGET. Bailing out..."
-   exit 2
+  if [ ! -d "$MULTIFINDER" ]; then
+   echo "MultiFinder.app not found in $MULTIFINDER. Bailing out..."
+   exit $E_MISSING_MF
   fi
   #set as default app on boot
-  echo "Setting loginwindow to $MULTIFINDER_TARGET" 
-  echo $PASSWD | sudo -S sh -c "/usr/bin/defaults write /Library/Preferences/com.apple.loginwindow Finder $MULTIFINDER_TARGET"
+  echo "Setting loginwindow to $MULTIFINDER" 
+  echo $PASSWD | sudo -S sh -c "/usr/bin/defaults write /Library/Preferences/com.apple.loginwindow Finder $MULTIFINDER"
   # restart loginwindow
   echo "Restarting loginwindow" 
   kill `ps awwx | grep [l]oginwindow | awk '{print $1}'`
@@ -47,7 +36,7 @@ ON)
   ;;
 *)
   echo "USAGE: setMultiFinderMode.sh {ON|OFF}"
-  echo "ON: enables MultiFinder by copying from XBMCLauncher.frappliance and exchanging Finder in loginwindow's plist"
+  echo "ON: enables MultiFinder by setting loginwindow to $MULTIFINDER"
   echo "OFF: deletes 'Finder' key in loginwindow's plist"
   ;;
 esac
