@@ -8,6 +8,7 @@ extern NSString* kApplicationPath;
 extern NSString* kApplicationArguments;
 extern NSString* kApplicationNeedsIR;
 extern NSString* kApplicationWantsUniversalIRMode;
+extern NSString* FINDER_PATH; //path to Finder's executable used throughout this project
 
 typedef enum{
   MFAPP_IR_MODE_NONE = 0,

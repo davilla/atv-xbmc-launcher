@@ -74,14 +74,14 @@
 			isa = PBXContainerItemProxy;
 			containerPortal = E43F32DE0F5025A500376502 /* Project object */;
 			proxyType = 1;
-			remoteGlobalIDString = E4C4D8CC0F505EA700A9E06E /* Launcher */;
+			remoteGlobalIDString = E4C4D8CC0F505EA700A9E06E;
 			remoteInfo = Launcher;
 		};
 		E4BD49100F506699002E0C87 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = E43F32DE0F5025A500376502 /* Project object */;
 			proxyType = 1;
-			remoteGlobalIDString = E43F367C0F5027B000376502 /* MultiFinder */;
+			remoteGlobalIDString = E43F367C0F5027B000376502;
 			remoteInfo = MultiFinder;
 		};
 		E4DC9A760F50557D00FE98C7 /* PBXContainerItemProxy */ = {

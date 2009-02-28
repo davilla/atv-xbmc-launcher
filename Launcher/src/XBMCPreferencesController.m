@@ -47,7 +47,7 @@
 }
 
 + (id) finderEntry{
-    return [[[LauncherApplicationEntry alloc]initWithIdentifier:@"Finder" path:@"/System/Library/CoreServices/Finder.app/Contents/MacOS/Finder" args:nil irMode:MFAPP_IR_MODE_NONE] autorelease];
+    return [[[LauncherApplicationEntry alloc]initWithIdentifier:@"Finder" path:FINDER_PATH args:nil irMode:MFAPP_IR_MODE_NONE] autorelease];
 }
 
 - (NSString*) identifier{

@@ -84,29 +84,6 @@ void signal_handler(int sig) {
 }
 
 //--------------------------------------------------------------
-void atv_hw_init(void) {
-    NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
-    
-    //start settingsHelper and wait for finish
-    NSString* p_settings_helper_path = [[NSBundle bundleForClass:[MultiFinder class]] pathForResource:@"SettingsHelper" ofType:@""];
-    NSLog(@"%@",p_settings_helper_path);
-    NSTask* p_settings_helper = nil;
-    @try {
-        p_settings_helper = [NSTask launchedTaskWithLaunchPath:p_settings_helper_path arguments:[NSArray array]];
-    } @catch (NSException* e) {
-        p_settings_helper = nil;
-    }  
-    if(!p_settings_helper) {
-        NSLog(@"Ouch. Could not launch settingshelper");
-    } else {
-        NSLog(@"Settingshelper successfully launched");
-    }
-    [p_settings_helper waitUntilExit];
-    
-    [pool release];
-}
-
-//--------------------------------------------------------------
 //--------------------------------------------------------------
 int main(int argc, char *argv[])
 {
@@ -117,10 +94,7 @@ int main(int argc, char *argv[])
     
     // notify apple tv framework stuff (2.1, 2.2, 2.3 only)
     NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
-    
-    // setup hardware
-    atv_hw_init();
-    
+        
     // setup our NSTimers
     FeedWatchDog *feed_watchdog = [[[FeedWatchDog alloc] init] autorelease]; 
     [NSTimer scheduledTimerWithTimeInterval:58.0 target:feed_watchdog selector:@selector(bone:) userInfo:nil repeats:YES]; 

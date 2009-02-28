@@ -12,6 +12,28 @@
 static OSStatus CarbonEventHandler(EventHandlerCallRef,EventRef, void *);
 
 //--------------------------------------------------------------
+void atv_hw_init(void) {
+    NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
+    
+    //start settingsHelper and wait for finish
+    NSString* p_settings_helper_path = [[NSBundle bundleForClass:[MultiFinder class]] pathForResource:@"SettingsHelper" ofType:@""];
+    NSTask* p_settings_helper = nil;
+    @try {
+        p_settings_helper = [NSTask launchedTaskWithLaunchPath:p_settings_helper_path arguments:[NSArray array]];
+    } @catch (NSException* e) {
+        p_settings_helper = nil;
+    }  
+    if(!p_settings_helper) {
+        NSLog(@"Ouch. Could not launch settingshelper");
+    } else {
+        NSLog(@"Settingshelper successfully launched");
+    }
+    [p_settings_helper waitUntilExit];
+    
+    [pool release];
+}
+
+//--------------------------------------------------------------
 @interface MultiFinder (private) 
 - (void) switchStateTo:(eMFState) f_state;
 - (BOOL) launchApplication;
@@ -28,7 +50,7 @@ static OSStatus CarbonEventHandler(EventHandlerCallRef,EventRef, void *);
     PRINT_SIGNATURE();
     NSMutableDictionary* defaultValues = [NSMutableDictionary dictionary];
     //set the default app
-    [defaultValues setObject:@"/System/Library/CoreServices/Finder.app/Contents/MacOS/Finder" forKey:kMFDefaultApp];
+    [defaultValues setObject:FINDER_PATH forKey:kMFDefaultApp];
     //and it's IR mode
     [defaultValues setObject:[NSNumber numberWithInt:MFAPP_IR_MODE_NONE] forKey:kMFDefaultAppIRMode];
     //maximum app startup retry count
@@ -36,6 +58,13 @@ static OSStatus CarbonEventHandler(EventHandlerCallRef,EventRef, void *);
 
     //register the dictionary of defaults
     [[NSUserDefaults standardUserDefaults] registerDefaults:defaultValues];
+    
+    NSUserDefaults* defaults = [NSUserDefaults standardUserDefaults];
+    if(! [[defaults objectForKey:kMFDefaultApp] isEqualTo: FINDER_PATH ]){
+        // Finder.app won't now, so instead we do it's stuff 
+        // setup hardware
+        atv_hw_init();
+    }
 }
 
 //--------------------------------------------------------------
@@ -159,7 +188,7 @@ static OSStatus CarbonEventHandler(EventHandlerCallRef,EventRef, void *);
         ELOG(@"launchApplication called without setting mp_next_app_to_launch first");
         return FALSE;
     }
-    if (![mp_next_app_to_launch isEqualToString:@"/System/Library/CoreServices/Finder.app/Contents/MacOS/Finder"]) {
+    if (![mp_next_app_to_launch isEqualToString:FINDER_PATH]) {
         ILOG(@"Capturing displays...");
         CGCaptureAllDisplays();
         m_displays_captured = true;
@@ -329,7 +358,7 @@ static OSStatus CarbonEventHandler(EventHandlerCallRef,EventRef, void *);
         case MF_STATE_SAFE_MODE:
         {
             //try forever to launch finder 
-            mp_next_app_to_launch = @"/System/Library/CoreServices/Finder.app/Contents/MacOS/Finder";
+            mp_next_app_to_launch = FINDER_PATH;
             m_next_app_ir_mode = MFAPP_IR_MODE_NONE;
             while (![self launchApplication]) {}
         }

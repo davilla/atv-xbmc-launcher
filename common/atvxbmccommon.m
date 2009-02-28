@@ -6,4 +6,4 @@ NSString* kApplicationPath = @"ApplicationPath";
 NSString* kApplicationArguments = @"ApplicationArguments";
 NSString* kApplicationNeedsIR = @"ApplicationNeedsIR";
 NSString* kApplicationWantsUniversalIRMode = @"ApplicationWantUniversalIRMode";
-
+NSString* FINDER_PATH=@"/System/Library/CoreServices/Finder.app/Contents/MacOS/Finder";
