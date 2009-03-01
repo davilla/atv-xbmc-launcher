@@ -85,10 +85,11 @@ const double XBMC_CONTROLLER_EVENT_TIMEOUT= -0.5; //timeout for activation seque
 - (void) enableRendering{
     PRINT_SIGNATURE();  
     if(getOSVersion() < 230){
-        [[NSNotificationCenter defaultCenter] postNotificationName:@"BRDisplayManagerResumeRenderingNotification"
-                                                            object:[BRDisplayManager sharedInstance]];
         [[NSNotificationCenter defaultCenter] postNotificationName:@"BRDisplayManagerDisplayOnline"
                                                             object:[BRDisplayManager sharedInstance]];
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"BRDisplayManagerResumeRenderingNotification"
+                                                            object:[BRDisplayManager sharedInstance]];
+        [[BRDisplayManager sharedInstance] captureAllDisplays];
     } else {
         [[BRDisplayManagerCore sharedInstance] _setNewDisplay:kCGDirectMainDisplay];
         [[BRDisplayManagerCore sharedInstance] captureAllDisplays];
@@ -100,6 +101,7 @@ const double XBMC_CONTROLLER_EVENT_TIMEOUT= -0.5; //timeout for activation seque
     if(getOSVersion() < 230) {
         [[NSNotificationCenter defaultCenter] postNotificationName:@"BRDisplayManagerDisplayOffline"
                                                             object:[BRDisplayManager sharedInstance]];
+        [[BRDisplayManager sharedInstance] releaseAllDisplays];
         [[NSNotificationCenter defaultCenter] postNotificationName:@"BRDisplayManagerStopRenderingNotification"
                                                             object:[BRDisplayManager sharedInstance]];
                                                             
