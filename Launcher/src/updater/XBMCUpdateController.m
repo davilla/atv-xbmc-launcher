@@ -141,6 +141,7 @@
                                                ]];
                 [mp_downloader release];
                 mp_downloader = nil;
+                [super controlWasActivated];
                 return;
             } else {     
                 NSDictionary* dict = [mp_updates objectAtIndex:m_update_item];
@@ -153,11 +154,13 @@
                     //there' another download. start that one first
                     NSString* next_md5_lookup = [NSString stringWithFormat:@"MD5_%i",[mp_downloads count]];
                     [mp_downloader release]; 
+                    mp_downloader = nil;
                     [mp_downloads addObject:[XBMCSimpleDownloader outputPathForURLString:l_url]];
                     mp_downloader = [[XBMCSimpleDownloader alloc] initWithDownloadPath:l_url 
                                                                                    MD5:[dict objectForKey:next_md5_lookup]];
                     [mp_downloader setTitle:[NSString stringWithFormat:@"Downloading update: %@",[dict valueForKey:@"Name"]]];
                     [[self stack] pushController: mp_downloader];
+                    [super controlWasActivated];
                     return;
                 }
                 //start the update script with path to downloaded file(s) 
