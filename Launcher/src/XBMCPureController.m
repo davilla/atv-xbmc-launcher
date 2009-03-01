@@ -104,7 +104,7 @@ const double XBMC_CONTROLLER_EVENT_TIMEOUT= -0.5; //timeout for activation seque
         [[BRDisplayManager sharedInstance] releaseAllDisplays];
         [[NSNotificationCenter defaultCenter] postNotificationName:@"BRDisplayManagerStopRenderingNotification"
                                                             object:[BRDisplayManager sharedInstance]];
-                                                            
+        
     } else {
         [[BRDisplayManagerCore sharedInstance] _setNewDisplay:kCGNullDirectDisplay];
         [[BRDisplayManagerCore sharedInstance] releaseAllDisplays];
@@ -112,32 +112,32 @@ const double XBMC_CONTROLLER_EVENT_TIMEOUT= -0.5; //timeout for activation seque
 }
 
 - (void) setAppToFrontProcess{
-  PRINT_SIGNATURE();
-  assert(mp_task);
-  ProcessSerialNumber psn;
-  OSErr err;
-  
-  // loop until we find the process
-  DLOG(@"Waiting to get process...");
-  while([mp_task isRunning] && procNotFound == (err = GetProcessForPID([mp_task processIdentifier], &psn))) {
-    // wait...
-    [NSThread sleepUntilDate:[NSDate dateWithTimeIntervalSinceNow:0.5]];
-  }
-  
-  if(err) {
-    ELOG(@"Error getting PSN: %d", err);
-  } else {
-    DLOG(@"Waiting for process to be visible");
-    // wait for it to be visible
-    while([mp_task isRunning] && !IsProcessVisible(&psn)) {
-      // do nothing!
-      [NSThread sleepUntilDate:[NSDate dateWithTimeIntervalSinceNow:0.5]];
+    PRINT_SIGNATURE();
+    assert(mp_task);
+    ProcessSerialNumber psn;
+    OSErr err;
+    
+    // loop until we find the process
+    DLOG(@"Waiting to get process...");
+    while([mp_task isRunning] && procNotFound == (err = GetProcessForPID([mp_task processIdentifier], &psn))) {
+        // wait...
+        [NSThread sleepUntilDate:[NSDate dateWithTimeIntervalSinceNow:0.5]];
     }
-    if( [mp_task isRunning] ){
-      DLOG(@"Process is visible, making it front");
-      SetFrontProcess(&psn);
-    }
-  }  
+    
+    if(err) {
+        ELOG(@"Error getting PSN: %d", err);
+    } else {
+        DLOG(@"Waiting for process to be visible");
+        // wait for it to be visible
+        while([mp_task isRunning] && !IsProcessVisible(&psn)) {
+            // do nothing!
+            [NSThread sleepUntilDate:[NSDate dateWithTimeIntervalSinceNow:0.5]];
+        }
+        if( [mp_task isRunning] ){
+            DLOG(@"Process is visible, making it front");
+            SetFrontProcess(&psn);
+        }
+    }  
 }
 
 - (id) init
@@ -218,58 +218,58 @@ const double XBMC_CONTROLLER_EVENT_TIMEOUT= -0.5; //timeout for activation seque
 		//try to kill XBMCHelper (it does not hurt if it's not running, but definately helps if it still is
 		[self killHelperApp:nil];
 		// use exit status to decide what to do
-    switch(status){
-      case 0:
-        [[self stack] popController];
-        break;
-      case 66:
-        DLOG(@"XBMC wants us to restart ATV. Don't do this for now");
-        [[self stack] popController];
-        break;
-      case 65:
-        DLOG(@"XBMC wants to be restarted. Do that");
-        [self startAppAndAttachListener];
-        break;
-      default:
-      {
-        BRAlertController* alert = [BRAlertController alertOfType:0 titled:nil
-                                                      primaryText:[NSString stringWithFormat:@"Error: XBMC/Boxee exited with status: %i",status]
-                                                    secondaryText:@"Hit menu to return"];
-        [[self stack] swapController:alert];        
-      }
-    }
+        switch(status){
+            case 0:
+                [[self stack] popController];
+                break;
+            case 66:
+                DLOG(@"XBMC wants us to restart ATV. Don't do this for now");
+                [[self stack] popController];
+                break;
+            case 65:
+                DLOG(@"XBMC wants to be restarted. Do that");
+                [self startAppAndAttachListener];
+                break;
+            default:
+            {
+                BRAlertController* alert = [BRAlertController alertOfType:0 titled:nil
+                                                              primaryText:[NSString stringWithFormat:@"Error: XBMC/Boxee exited with status: %i",status]
+                                                            secondaryText:@"Hit menu to return"];
+                [[self stack] swapController:alert];        
+            }
+        }
 	} else {
 		//Task is still running. How come?!
 		ELOG(@"Task still running. This is definately a bug :/");
 	}
-  [pool release];
+    [pool release];
 } 
 
 -(void) startAppAndAttachListener{
-  PRINT_SIGNATURE();	
-  NSAutoreleasePool* pool = [[NSAutoreleasePool alloc] init];
-  //Hide frontrow (this is only needed in 720/1080p)
+    PRINT_SIGNATURE();	
+    NSAutoreleasePool* pool = [[NSAutoreleasePool alloc] init];
+    //Hide frontrow (this is only needed in 720/1080p)
 	[self disableRendering];
-   
+    
 	//delete a launchAgent if it's there
 	[self deleteHelperLaunchAgent];
-  
+    
 	//start xbmc
 	mp_task = [[NSTask alloc] init];
 	@try {
 		[mp_task setLaunchPath: mp_app_path];
-    [mp_task setCurrentDirectoryPath:@"/Applications"];
+        [mp_task setCurrentDirectoryPath:@"/Applications"];
 		[mp_task launch];
 	} 
 	@catch (NSException* e) {
 		// Show frontrow menu 
 		[self enableRendering];
 		BRAlertController* alert = [BRAlertController alertOfType:0 titled:nil
-																									primaryText:[NSString stringWithFormat:@"Error: Cannot launch XBMC/Boxee from path:"]
-																								secondaryText:mp_app_path];
+                                                      primaryText:[NSString stringWithFormat:@"Error: Cannot launch XBMC/Boxee from path:"]
+                                                    secondaryText:mp_app_path];
 		[[self stack] swapController:alert];
-    [pool release];
-    return;
+        [pool release];
+        return;
 	}
 	m_xbmc_running = YES;
 	//reenable screensaver
@@ -280,20 +280,20 @@ const double XBMC_CONTROLLER_EVENT_TIMEOUT= -0.5; //timeout for activation seque
 	
 	//attach our listener
 	[[NSNotificationCenter defaultCenter] addObserver:self
-																					 selector:@selector(checkTaskStatus:)
-																							 name:NSTaskDidTerminateNotification
-																						 object:mp_task];
-                                             
-  // Bring XBMC to the front to capture keyboard input
-  [self setAppToFrontProcess];
-  [pool release];
+                                             selector:@selector(checkTaskStatus:)
+                                                 name:NSTaskDidTerminateNotification
+                                               object:mp_task];
+    
+    // Bring XBMC to the front to capture keyboard input
+    [self setAppToFrontProcess];
+    [pool release];
 }
 
 - (void) wasPushed{
 	PRINT_SIGNATURE();
 	[super wasPushed];
-  //We've just been put on screen, the user can see this controller's content now	
-  [self startAppAndAttachListener];
+    //We've just been put on screen, the user can see this controller's content now	
+    [self startAppAndAttachListener];
 }
 
 - (void) wasPopped
@@ -314,119 +314,119 @@ const double XBMC_CONTROLLER_EVENT_TIMEOUT= -0.5; //timeout for activation seque
 }
 
 -(void) handleControllerEvent:(eATVClientEvent) f_event{
-  PRINT_SIGNATURE();
-  switch (f_event){
-    case ATV_BUTTON_PLAY:
-      if([mp_task isRunning])
-        [mp_task terminate];
-      break;
-    default:
-      DLOG(@"Unknown controller event: %i", f_event);
-  }
+    PRINT_SIGNATURE();
+    switch (f_event){
+        case ATV_BUTTON_PLAY:
+            if([mp_task isRunning])
+                [mp_task terminate];
+            break;
+        default:
+            DLOG(@"Unknown controller event: %i", f_event);
+    }
 }
 
 -(BOOL) isControllerEvent:(eATVClientEvent) f_event{
-  switch(m_controller_event_state){
-    case CONTROLLER_EVENT_START_STATE:
-      if(f_event == XBMC_CONTROLLER_EVENT_ACTIVATION_SEQUENCE[0]){
-        [mp_controller_event_timestamp release];
-        mp_controller_event_timestamp = [[NSDate dateWithTimeIntervalSinceNow:0.] retain];
-        m_controller_event_state = CONTROLLER_EVENT_STATE_1;
-      }
-      break;
-    case CONTROLLER_EVENT_STATE_1:
-      if(f_event == XBMC_CONTROLLER_EVENT_ACTIVATION_SEQUENCE[1] && [mp_controller_event_timestamp timeIntervalSinceNow] > XBMC_CONTROLLER_EVENT_TIMEOUT){
-        [mp_controller_event_timestamp release];
-        mp_controller_event_timestamp = [[NSDate dateWithTimeIntervalSinceNow:0.] retain];
-        m_controller_event_state = CONTROLLER_EVENT_STATE_2;
-      } else if(f_event == XBMC_CONTROLLER_EVENT_ACTIVATION_SEQUENCE[0]){
-        [mp_controller_event_timestamp release];
-        mp_controller_event_timestamp = [[NSDate dateWithTimeIntervalSinceNow:0.] retain];
-        m_controller_event_state = CONTROLLER_EVENT_STATE_1;
-      }
-      else
-        m_controller_event_state = CONTROLLER_EVENT_START_STATE;
-      break;
-    case CONTROLLER_EVENT_STATE_2:
-      if(f_event == XBMC_CONTROLLER_EVENT_ACTIVATION_SEQUENCE[2] && [mp_controller_event_timestamp timeIntervalSinceNow] > XBMC_CONTROLLER_EVENT_TIMEOUT){
-        ILOG(@"Recognized controller event. Next button press goes to XBMCController");
-        m_controller_event_state = CONTROLLER_EVENT_STATE_3;
-      }
-      else if(f_event == XBMC_CONTROLLER_EVENT_ACTIVATION_SEQUENCE[0]){
-        [mp_controller_event_timestamp release];
-        mp_controller_event_timestamp = [[NSDate dateWithTimeIntervalSinceNow:0.] retain];
-        m_controller_event_state = CONTROLLER_EVENT_STATE_1;
-      } 
-      else
-        m_controller_event_state = CONTROLLER_EVENT_START_STATE;
-      break;
-    case CONTROLLER_EVENT_STATE_3:
-        m_controller_event_state = CONTROLLER_EVENT_START_STATE;
-        return true;
-    default:
-      ELOG(@"Something went wrong in controller event state machine. Resetting it...");
-      m_controller_event_state = CONTROLLER_EVENT_START_STATE;
-  }
-  return false;
+    switch(m_controller_event_state){
+        case CONTROLLER_EVENT_START_STATE:
+            if(f_event == XBMC_CONTROLLER_EVENT_ACTIVATION_SEQUENCE[0]){
+                [mp_controller_event_timestamp release];
+                mp_controller_event_timestamp = [[NSDate dateWithTimeIntervalSinceNow:0.] retain];
+                m_controller_event_state = CONTROLLER_EVENT_STATE_1;
+            }
+            break;
+        case CONTROLLER_EVENT_STATE_1:
+            if(f_event == XBMC_CONTROLLER_EVENT_ACTIVATION_SEQUENCE[1] && [mp_controller_event_timestamp timeIntervalSinceNow] > XBMC_CONTROLLER_EVENT_TIMEOUT){
+                [mp_controller_event_timestamp release];
+                mp_controller_event_timestamp = [[NSDate dateWithTimeIntervalSinceNow:0.] retain];
+                m_controller_event_state = CONTROLLER_EVENT_STATE_2;
+            } else if(f_event == XBMC_CONTROLLER_EVENT_ACTIVATION_SEQUENCE[0]){
+                [mp_controller_event_timestamp release];
+                mp_controller_event_timestamp = [[NSDate dateWithTimeIntervalSinceNow:0.] retain];
+                m_controller_event_state = CONTROLLER_EVENT_STATE_1;
+            }
+            else
+                m_controller_event_state = CONTROLLER_EVENT_START_STATE;
+            break;
+        case CONTROLLER_EVENT_STATE_2:
+            if(f_event == XBMC_CONTROLLER_EVENT_ACTIVATION_SEQUENCE[2] && [mp_controller_event_timestamp timeIntervalSinceNow] > XBMC_CONTROLLER_EVENT_TIMEOUT){
+                ILOG(@"Recognized controller event. Next button press goes to XBMCController");
+                m_controller_event_state = CONTROLLER_EVENT_STATE_3;
+            }
+            else if(f_event == XBMC_CONTROLLER_EVENT_ACTIVATION_SEQUENCE[0]){
+                [mp_controller_event_timestamp release];
+                mp_controller_event_timestamp = [[NSDate dateWithTimeIntervalSinceNow:0.] retain];
+                m_controller_event_state = CONTROLLER_EVENT_STATE_1;
+            } 
+            else
+                m_controller_event_state = CONTROLLER_EVENT_START_STATE;
+            break;
+        case CONTROLLER_EVENT_STATE_3:
+            m_controller_event_state = CONTROLLER_EVENT_START_STATE;
+            return true;
+        default:
+            ELOG(@"Something went wrong in controller event state machine. Resetting it...");
+            m_controller_event_state = CONTROLLER_EVENT_START_STATE;
+    }
+    return false;
 }
 
 + (eATVClientEvent) ATVClientEventFromBREvent:(BREvent*) f_event
 {
-  unsigned int hashVal = (uint32_t)([f_event page] << 16 | [f_event usage]);
-  DLOG(@"XBMCController: Button press hashVal = %i; event value %i", hashVal, [f_event value]);
-  switch (hashVal)
-  {
-    case 65676:  // tap up
-      if([f_event value] == 1)
-        return ATV_BUTTON_UP;
-      else
-        return ATV_BUTTON_UP_RELEASE;
-    case 65677:  // tap down
-      if([f_event value] == 1)
-        return ATV_BUTTON_DOWN;
-      else
-        return ATV_BUTTON_DOWN_RELEASE;
-    case 65675:  // tap left
-      if([f_event value] == 1)
-        return ATV_BUTTON_LEFT;
-      else
-        return ATV_BUTTON_LEFT_RELEASE;
-    case 786612: // hold left (THIS EVENT IS ONLY PRESENT ON ATV <= 2.1)
-      return ATV_BUTTON_LEFT_H;
-    case 65674:  // tap right
-      if([f_event value] == 1)
-        return ATV_BUTTON_RIGHT;
-      else
-        return ATV_BUTTON_RIGHT_RELEASE;
-    case 786611: // hold right (THIS EVENT IS ONLY PRESENT ON ATV <= 2.1)
-      return ATV_BUTTON_RIGHT_H;
-    case 65673:  // tap play
-      return ATV_BUTTON_PLAY;
-    case 65668:  // hold play  (THIS EVENT IS ONLY PRESENT ON ATV >= 2.2)
-      return ATV_BUTTON_PLAY_H;
-    case 65670:  // menu
-      return ATV_BUTTON_MENU;
-    case 786496: // hold menu
-      return ATV_BUTTON_MENU_H;
-    default:
-      ELOG(@"XBMCController: Unknown button press hashVal = %i",hashVal);
-      return ATV_INVALID_BUTTON;
-  }
+    unsigned int hashVal = (uint32_t)([f_event page] << 16 | [f_event usage]);
+    DLOG(@"XBMCController: Button press hashVal = %i; event value %i", hashVal, [f_event value]);
+    switch (hashVal)
+    {
+        case 65676:  // tap up
+            if([f_event value] == 1)
+                return ATV_BUTTON_UP;
+            else
+                return ATV_BUTTON_UP_RELEASE;
+        case 65677:  // tap down
+            if([f_event value] == 1)
+                return ATV_BUTTON_DOWN;
+            else
+                return ATV_BUTTON_DOWN_RELEASE;
+        case 65675:  // tap left
+            if([f_event value] == 1)
+                return ATV_BUTTON_LEFT;
+            else
+                return ATV_BUTTON_LEFT_RELEASE;
+        case 786612: // hold left (THIS EVENT IS ONLY PRESENT ON ATV <= 2.1)
+            return ATV_BUTTON_LEFT_H;
+        case 65674:  // tap right
+            if([f_event value] == 1)
+                return ATV_BUTTON_RIGHT;
+            else
+                return ATV_BUTTON_RIGHT_RELEASE;
+        case 786611: // hold right (THIS EVENT IS ONLY PRESENT ON ATV <= 2.1)
+            return ATV_BUTTON_RIGHT_H;
+        case 65673:  // tap play
+            return ATV_BUTTON_PLAY;
+        case 65668:  // hold play  (THIS EVENT IS ONLY PRESENT ON ATV >= 2.2)
+            return ATV_BUTTON_PLAY_H;
+        case 65670:  // menu
+            return ATV_BUTTON_MENU;
+        case 786496: // hold menu
+            return ATV_BUTTON_MENU_H;
+        default:
+            ELOG(@"XBMCController: Unknown button press hashVal = %i",hashVal);
+            return ATV_INVALID_BUTTON;
+    }
 }
 
 - (BOOL)brEventAction:(BREvent *)event
 {
 	if( m_xbmc_running ){
-    eATVClientEvent xbmcclient_event = [[self class] ATVClientEventFromBREvent:event];
-    if( xbmcclient_event == ATV_INVALID_BUTTON ){
-      return NO;
-    } else if( [self isControllerEvent:xbmcclient_event] ){
-      [self handleControllerEvent:xbmcclient_event];
-      return TRUE;
-    } else {
-      [mp_xbmclient handleEvent:xbmcclient_event];
-      return TRUE;
-    }
+        eATVClientEvent xbmcclient_event = [[self class] ATVClientEventFromBREvent:event];
+        if( xbmcclient_event == ATV_INVALID_BUTTON ){
+            return NO;
+        } else if( [self isControllerEvent:xbmcclient_event] ){
+            [self handleControllerEvent:xbmcclient_event];
+            return TRUE;
+        } else {
+            [mp_xbmclient handleEvent:xbmcclient_event];
+            return TRUE;
+        }
 	} else {
 		DLOG(@"XBMC not running. IR event goes upstairs");
 		return [super brEventAction:event];
@@ -434,17 +434,17 @@ const double XBMC_CONTROLLER_EVENT_TIMEOUT= -0.5; //timeout for activation seque
 }
 
 - (void) killHelperApp:(NSTimer*) f_timer{
-  PRINT_SIGNATURE();
-  NSAutoreleasePool* pool = [[NSAutoreleasePool alloc] init];
-  DLOG(@"Trying to kill: %@", [mp_helper_path lastPathComponent]); 
+    PRINT_SIGNATURE();
+    NSAutoreleasePool* pool = [[NSAutoreleasePool alloc] init];
+    DLOG(@"Trying to kill: %@", [mp_helper_path lastPathComponent]); 
 	//TODO for now we use a script as I don't know how to kill a Task with OSX API. any hints are pretty welcome!
 	NSString* killer_path = [[NSBundle bundleForClass:[self class]] pathForResource:@"killxbmchelper" ofType:@"sh"];
 	NSTask* killer = [NSTask launchedTaskWithLaunchPath:@"/bin/bash" arguments: [NSArray arrayWithObjects
-																																							 :killer_path,
-																																							 [mp_helper_path lastPathComponent],
-																																							 nil]];
+                                                                                 :killer_path,
+                                                                                 [mp_helper_path lastPathComponent],
+                                                                                 nil]];
 	[killer waitUntilExit];
-  [pool release];
+    [pool release];
 }
 
 - (void) setupHelperSwatter{
@@ -455,7 +455,7 @@ const double XBMC_CONTROLLER_EVENT_TIMEOUT= -0.5; //timeout for activation seque
 }
 
 - (void) disableSwatterIfActive{
-  PRINT_SIGNATURE();
+    PRINT_SIGNATURE();
 	if(mp_swatter_timer){
 		[mp_swatter_timer invalidate];
 		[mp_swatter_timer release];
@@ -465,32 +465,32 @@ const double XBMC_CONTROLLER_EVENT_TIMEOUT= -0.5; //timeout for activation seque
 
 - (BOOL) deleteHelperLaunchAgent
 {
-  PRINT_SIGNATURE();
-  NSAutoreleasePool* pool = [[NSAutoreleasePool alloc] init];
-  bool ret;
-  if(mp_launch_agent_file_name) {
-    NSArray* lib_array = NSSearchPathForDirectoriesInDomains(NSLibraryDirectory, NSUserDomainMask, TRUE);
-    if([lib_array count] != 1){
-      ELOG("Bah, something went wrong trying to find users Library directory");
-      ret = FALSE;
+    PRINT_SIGNATURE();
+    NSAutoreleasePool* pool = [[NSAutoreleasePool alloc] init];
+    bool ret;
+    if(mp_launch_agent_file_name) {
+        NSArray* lib_array = NSSearchPathForDirectoriesInDomains(NSLibraryDirectory, NSUserDomainMask, TRUE);
+        if([lib_array count] != 1){
+            ELOG("Bah, something went wrong trying to find users Library directory");
+            ret = FALSE;
+        }
+        NSString * launch_agent_file_path = [[lib_array objectAtIndex:0] stringByAppendingString:@"/LaunchAgents/"];
+        launch_agent_file_path = [launch_agent_file_path stringByAppendingString:mp_launch_agent_file_name];
+        DLOG(@"trying to delete LaunchAgent file at %@", launch_agent_file_path);
+        if([[NSFileManager defaultManager] removeFileAtPath:launch_agent_file_path handler:nil]){
+            ILOG(@"Deleted LaunchAgent file at %@", launch_agent_file_path);
+            ret = TRUE;
+        } else{
+            DLOG(@"Failed to delete LaunchAgent file at %@", launch_agent_file_path);
+            ret = FALSE;
+        }
+    } else {
+        //no file given, just do nothing
+        DLOG("No mp_launch_agent_file_name - don't try to delete it");
+        ret = TRUE;
     }
-    NSString * launch_agent_file_path = [[lib_array objectAtIndex:0] stringByAppendingString:@"/LaunchAgents/"];
-    launch_agent_file_path = [launch_agent_file_path stringByAppendingString:mp_launch_agent_file_name];
-    DLOG(@"trying to delete LaunchAgent file at %@", launch_agent_file_path);
-    if([[NSFileManager defaultManager] removeFileAtPath:launch_agent_file_path handler:nil]){
-      ILOG(@"Deleted LaunchAgent file at %@", launch_agent_file_path);
-      ret = TRUE;
-    } else{
-      DLOG(@"Failed to delete LaunchAgent file at %@", launch_agent_file_path);
-      ret = FALSE;
-    }
-  } else {
-    //no file given, just do nothing
-    DLOG("No mp_launch_agent_file_name - don't try to delete it");
-    ret = TRUE;
-  }
-  [pool release];
-  return ret;
+    [pool release];
+    return ret;
 }
 
 @end
