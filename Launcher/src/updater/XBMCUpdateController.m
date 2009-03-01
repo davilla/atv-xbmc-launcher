@@ -39,9 +39,9 @@
 	if( ! [super init])
 		return nil;
 	mp_url = [fp_url retain];
-  mp_downloads = [[NSMutableArray alloc] init];
-  mp_downloader = nil;
-  mp_blocking_updater = nil;
+    mp_downloads = [[NSMutableArray alloc] init];
+    mp_downloader = nil;
+    mp_blocking_updater = nil;
 	return self;
 }
 
@@ -50,7 +50,7 @@
 	[mp_url release];
 	[mp_updates release];
 	[mp_items release]; 
-  [mp_downloads release]; 
+    [mp_downloads release]; 
 	[super dealloc];
 }
 
@@ -62,15 +62,15 @@
 	NSPropertyListFormat format;
 	NSData* plistdata = [NSData dataWithContentsOfURL: mp_url];
 	mp_updates = [[NSPropertyListSerialization propertyListFromData:plistdata
-																								 mutabilityOption:NSPropertyListImmutable
-																													 format:&format
-																								 errorDescription:&error] retain];
+                                                   mutabilityOption:NSPropertyListImmutable
+                                                             format:&format
+                                                   errorDescription:&error] retain];
 	if(!mp_updates)
 	{
-    NSLog(error);
-    [error release];
+        NSLog(error);
+        [error release];
 		[[self stack] swapController: [BRAlertController alertOfType:0 titled:nil primaryText:@"Update URLs not found or corrupt!" 
-																									 secondaryText:[NSString stringWithFormat:@" %@", mp_url]]];
+                                                       secondaryText:[NSString stringWithFormat:@" %@", mp_url]]];
 	} 
 	mp_items = [[NSMutableArray alloc] initWithObjects:nil]; 
 	unsigned int i;
@@ -101,15 +101,15 @@
 	//store it where XBMCDownloader stores stuff, too
 	NSString* script_path = [XBMCSimpleDownloader outputPathForURLString:[dict valueForKey:@"UpdateScript"]];
 	[[NSFileManager defaultManager] createDirectoryAtPath: [script_path stringByDeletingLastPathComponent]
-																						 attributes: nil];
+                                               attributes: nil];
 	if( ! [script_data writeToFile:script_path atomically:YES] ) {
 		ELOG(@"Could not save update script to %@", script_path);
 		return;
 	}
 	DLOG(@"Downloaded update script to %@. Starting download of update...", script_path);
-  [mp_downloads removeAllObjects];
+    [mp_downloads removeAllObjects];
 	//now start the real download, optionally check for md5 when finished
-  [mp_downloads addObject:[XBMCSimpleDownloader outputPathForURLString:[dict valueForKey:@"URL"]]];
+    [mp_downloads addObject:[XBMCSimpleDownloader outputPathForURLString:[dict valueForKey:@"URL"]]];
 	mp_downloader = [[XBMCSimpleDownloader alloc] initWithDownloadPath:[dict valueForKey:@"URL"] MD5:[dict objectForKey:@"MD5"]];
 	[mp_downloader setTitle:[NSString stringWithFormat:@"Downloading: %@",[dict valueForKey:@"Name"]]];
 	[[self stack] pushController: mp_downloader];
@@ -127,46 +127,46 @@
 - (id)titleForRow:(long)row					{	return [[mp_items objectAtIndex:row] title]; }
 
 - (void)controlWasActivated{
-  PRINT_SIGNATURE();
-
+    PRINT_SIGNATURE();
+    
 	//if the download controller popped us check if download was properly finished
 	if(mp_downloader){
 		if ( [mp_downloader downloadComplete] ){
-      DLOG(@"Download finished");
-      if ( [ mp_downloader MD5SumMismatch] ){
-        [[self stack] pushController: [BRAlertController alertOfType:0 
-                                                              titled:@"Error" 
-                                                         primaryText:@"MD5 sums don't match. Please try to redownload."
-                                                       secondaryText:@"If this message still appears after redownload, updates have changed.This should be corrected automatically in a few hours, if not please file an issue at http://atv-xbmc-launcher.googlecode.com. Thanks!" 
-                                       ]];
-        [mp_downloader release];
-        mp_downloader = nil;
-        return;
-      } else {     
-        NSDictionary* dict = [mp_updates objectAtIndex:m_update_item];
-        //check if there is another download we want to start
-        NSString* next_url_lookup = [NSString stringWithFormat:@"URL_%i",[mp_downloads count]];
-        DLOG(@"checking for next URL with %@", next_url_lookup);
-        NSString* l_url = [dict valueForKey:next_url_lookup];
-        if(l_url){
-          DLOG(@"found new url: %@", l_url);
-          //there' another download. start that one first
-          NSString* next_md5_lookup = [NSString stringWithFormat:@"MD5_%i",[mp_downloads count]];
-          [mp_downloader release]; 
-          [mp_downloads addObject:[XBMCSimpleDownloader outputPathForURLString:l_url]];
-          mp_downloader = [[XBMCSimpleDownloader alloc] initWithDownloadPath:l_url 
-                                                                           MD5:[dict objectForKey:next_md5_lookup]];
-          [mp_downloader setTitle:[NSString stringWithFormat:@"Downloading update: %@",[dict valueForKey:@"Name"]]];
-          [[self stack] pushController: mp_downloader];
-          return;
-        }
-        //start the update script with path to downloaded file(s) 
-        NSString* script_path = [XBMCSimpleDownloader outputPathForURLString:[dict valueForKey:@"UpdateScript"]];
-        DLOG(@"Running update %@ with argument %@", script_path, mp_downloads);
-        mp_blocking_updater = [[XBMCUpdateBlockingController alloc] 
-                                                  initWithScript: script_path downloads:mp_downloads];
-        [[self stack] pushController: mp_blocking_updater];
-      }
+            DLOG(@"Download finished");
+            if ( [ mp_downloader MD5SumMismatch] ){
+                [[self stack] pushController: [BRAlertController alertOfType:0 
+                                                                      titled:@"Error" 
+                                                                 primaryText:@"MD5 sums don't match. Please try to redownload."
+                                                               secondaryText:@"If this message still appears after redownload, updates have changed.This should be corrected automatically in a few hours, if not please file an issue at http://atv-xbmc-launcher.googlecode.com. Thanks!" 
+                                               ]];
+                [mp_downloader release];
+                mp_downloader = nil;
+                return;
+            } else {     
+                NSDictionary* dict = [mp_updates objectAtIndex:m_update_item];
+                //check if there is another download we want to start
+                NSString* next_url_lookup = [NSString stringWithFormat:@"URL_%i",[mp_downloads count]];
+                DLOG(@"checking for next URL with %@", next_url_lookup);
+                NSString* l_url = [dict valueForKey:next_url_lookup];
+                if(l_url){
+                    DLOG(@"found new url: %@", l_url);
+                    //there' another download. start that one first
+                    NSString* next_md5_lookup = [NSString stringWithFormat:@"MD5_%i",[mp_downloads count]];
+                    [mp_downloader release]; 
+                    [mp_downloads addObject:[XBMCSimpleDownloader outputPathForURLString:l_url]];
+                    mp_downloader = [[XBMCSimpleDownloader alloc] initWithDownloadPath:l_url 
+                                                                                   MD5:[dict objectForKey:next_md5_lookup]];
+                    [mp_downloader setTitle:[NSString stringWithFormat:@"Downloading update: %@",[dict valueForKey:@"Name"]]];
+                    [[self stack] pushController: mp_downloader];
+                    return;
+                }
+                //start the update script with path to downloaded file(s) 
+                NSString* script_path = [XBMCSimpleDownloader outputPathForURLString:[dict valueForKey:@"UpdateScript"]];
+                DLOG(@"Running update %@ with argument %@", script_path, mp_downloads);
+                mp_blocking_updater = [[XBMCUpdateBlockingController alloc] 
+                                       initWithScript: script_path downloads:mp_downloads];
+                [[self stack] pushController: mp_blocking_updater];
+            }
 		}else {
 			DLOG(@"Download not yet completed");
 		}
@@ -181,25 +181,25 @@
 		NSString* download_folder =  [[XBMCSimpleDownloader outputPathForURLString:[dict valueForKey:@"URL"]] stringByDeletingLastPathComponent];
 		DLOG("removing %@ and %@:", script_folder, download_folder);
 		[[NSFileManager defaultManager] removeFileAtPath: script_folder
-																						 handler: nil];
+                                                 handler: nil];
 		[[NSFileManager defaultManager] removeFileAtPath: download_folder
-																						 handler: nil];
-    [mp_blocking_updater release];
-    mp_blocking_updater = nil;
+                                                 handler: nil];
+        [mp_blocking_updater release];
+        mp_blocking_updater = nil;
 	} else {
-    DLOG(@"We were just activated, nothing todo yet");
-  }
-  [super controlWasActivated];
+        DLOG(@"We were just activated, nothing todo yet");
+    }
+    [super controlWasActivated];
 }
 
 - (void)controlWasDeactivated{
-  PRINT_SIGNATURE();
+    PRINT_SIGNATURE();
     [super controlWasDeactivated];
 }
 
 - (void) wasPopped{
-  PRINT_SIGNATURE();
-  [super wasPopped];
+    PRINT_SIGNATURE();
+    [super wasPopped];
 }
 
 @end
