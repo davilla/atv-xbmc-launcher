@@ -530,7 +530,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "APPLETV_IP=192.168.0.90\nscp -r $TARGET_BUILD_DIR/XBMCLauncher.frappliance frontrow@$APPLETV_IP:\nssh frontrow@$APPLETV_IP \"echo frontrow | sudo -S /bin/rm -rf /System/Library/CoreServices/Finder.app/Contents/PlugIns/XBMCLauncher.frappliance\"\nssh frontrow@$APPLETV_IP \"echo frontrow | sudo -S /bin/mv /Users/frontrow/XBMCLauncher.frappliance /System/Library/CoreServices/Finder.app/Contents/PlugIns/\"\nssh frontrow@$APPLETV_IP restartFinder\nexit 0";
+			shellScript = "APPLETV_IP=192.168.0.193\nscp -r $TARGET_BUILD_DIR/XBMCLauncher.frappliance frontrow@$APPLETV_IP:\nssh frontrow@$APPLETV_IP \"echo frontrow | sudo -S /bin/rm -rf /System/Library/CoreServices/Finder.app/Contents/PlugIns/XBMCLauncher.frappliance\"\nssh frontrow@$APPLETV_IP \"echo frontrow | sudo -S /bin/mv /Users/frontrow/XBMCLauncher.frappliance /System/Library/CoreServices/Finder.app/Contents/PlugIns/\"\nssh frontrow@$APPLETV_IP restartFinder\nexit 0";
 		};
 /* End PBXShellScriptBuildPhase section */
 
@@ -776,7 +776,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				APP_VERSION = 3.0beta2;
+				APP_VERSION = 3.0beta3;
 				COPY_PHASE_STRIP = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					external,
@@ -813,7 +813,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				APP_VERSION = 3.0beta2;
+				APP_VERSION = 3.0beta3;
 				COPY_PHASE_STRIP = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				FRAMEWORK_SEARCH_PATHS = (
