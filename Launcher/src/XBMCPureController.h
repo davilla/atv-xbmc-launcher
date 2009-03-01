@@ -48,7 +48,7 @@ typedef enum {
 }
 
 - (id) initWithAppPath:(NSString*) f_app_path   //path to app to launch
-             arguments:(NSArray*) f_args        //arguments for that app
+             arguments:(NSArray*) f_args        //arguments for that app (nil if none)
             helperPath:(NSString*) f_helper_path //binary to look for to kill
     lauchAgentFileName:(NSString*) f_lauch_agent_file_name; //launchagent filename to delete if it exists
 @end

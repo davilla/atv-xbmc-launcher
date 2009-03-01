@@ -259,7 +259,8 @@ const double XBMC_CONTROLLER_EVENT_TIMEOUT= -0.5; //timeout for activation seque
 	@try {
         [mp_task setLaunchPath: mp_app_path];
         [mp_task setCurrentDirectoryPath:@"/Applications"];
-        [mp_task setArguments:mp_args];
+        if(mp_args) //optional argument
+            [mp_task setArguments:mp_args];
         [mp_task launch];
 	} 
 	@catch (NSException* e) {
