@@ -1,4 +1,4 @@
-XBMC/BoxeeLauncher - 0.8
+XBMC/BoxeeLauncher - 0.9
 Features
 	universal-remote mode
 	enable/disable of ATV autoupdate
