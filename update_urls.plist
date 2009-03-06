@@ -26,6 +26,18 @@
                 <key>MD5</key>
                 <string>f370d0849e576514a7fd128b851964b5</string>
         </dict>
+        <dict>
+                <key>UpdateScript</key>
+                <string>http://atv-xbmc-launcher.googlecode.com/svn/tags/boxee-info/scripts/alpha-0.9.9.5324_update.sh</string>
+                <key>URL</key>
+                <string>http://dl.boxee.tv/boxee-0.9.9.5324.dmg</string>
+                <key>Type</key>
+                <string>Application</string>
+                <key>Name</key>
+                <string>boxee (0.9.9.5324 - in testing)</string>
+                <key>MD5</key>
+                <string>72e2fbdeee53a40e8935098361d25269</string>
+        </dict>
 	<dict>
 		<key>Name</key>
 		<string>Launcher 2.3</string>
