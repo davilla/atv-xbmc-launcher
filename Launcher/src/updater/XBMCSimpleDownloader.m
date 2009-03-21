@@ -276,10 +276,11 @@ decideDestinationWithSuggestedFilename: (NSString *) filename
 	
 //	NSLog( @"Got %u bytes, %lld total of %i", length, _gotLength, _totalLength );
 
-  if(_totalLength)
-    [self setPrimaryText:[NSString stringWithFormat:@"%1.2f/100", _gotLength/(_totalLength*1.f)*100.]];
+  if(_totalLength){
+    [self setPrimaryText:[NSString stringWithFormat:@"%1.2f of %1.1fMB", _gotLength/(1024.*1024.), (_totalLength/(1024.*1024.))]];
+  }
   else
-    [self setPrimaryText:[NSString stringWithFormat:@"%qi", _gotLength]];
+    [self setPrimaryText:[NSString stringWithFormat:@"%1.2fiMB", _gotLength/(1024.*1024)]];
 }
 
 - (void) download: (NSURLDownload *) download didReceiveResponse: (NSURLResponse *) response
