@@ -14,27 +14,27 @@
 		<key>Name</key>
 		<string>XBMC Atlantis (bf1)</string>
 	</dict>
+    <dict>
+            <key>UpdateScript</key>
+            <string>http://atv-xbmc-launcher.googlecode.com/svn/tags/boxee-info/scripts/alpha-0.9.9.5324_update.sh</string>
+            <key>URL</key>
+            <string>http://dl.boxee.tv/boxee-0.9.9.5324.dmg</string>
+            <key>Type</key>
+            <string>Application</string>
+            <key>Name</key>
+            <string>boxee (0.9.9.5324 - in testing)</string>
+            <key>MD5</key>
+            <string>72e2fbdeee53a40e8935098361d25269</string>
+    </dict>
 	<dict>
-		<key>UpdateScript</key>
-		<string>http://atv-xbmc-launcher.googlecode.com/svn/tags/boxee-info/scripts/alpha-0.9.7.4825_update.sh</string>
-		<key>URL</key>
-		<string>http://dl.boxee.tv/boxee-0.9.7.4825-atv.dmg</string>
-		<key>Type</key>
-		<string>Application</string>
 		<key>Name</key>
-		<string>Boxee alpha 0.9.7.4825</string>
-		<key>MD5</key>
-		<string>f370d0849e576514a7fd128b851964b5</string>
-	</dict>
-	<dict>
-		<key>Name</key>
-		<string>Launcher 3.0beta3</string>
+		<string>Launcher 3.0beta4</string>
 		<key>Type</key>
-		<string>Combo</string>
+		<string>Launcher</string>
 		<key>URL</key>
-		<string>http://mp-vipa-server1.ziti.uni-heidelberg.de/~diederich/xbmc/Launcher-3.0beta3-debug.run</string>
+		<string>http://atv-xbmc-launcher.googlecode.com/files/Launcher-3.0beta4-debug.run</string>
 		<key>MD5</key>
-		<string>dddbc5dc283d86ca89448a3110f24659</string>
+		<string>d7805ef137e89c2e5e7d250c4bc7f25e</string>
 		<key>UpdateScript</key>
 		<string>http://atv-xbmc-launcher.googlecode.com/svn/tags/ul-info/scripts/launcher-update-3.0.sh</string>
 	</dict>
