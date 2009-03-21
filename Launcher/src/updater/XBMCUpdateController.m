@@ -34,11 +34,11 @@
 }
 
 
-- (id) initWithURL:(NSURL*) fp_url {
+- (id) initWithURLs:(NSArray*) fp_urls {
 	PRINT_SIGNATURE();
 	if( ! [super init])
 		return nil;
-	mp_url = [fp_url retain];
+	mp_urls = [fp_urls retain];
     mp_downloads = [[NSMutableArray alloc] init];
     mp_downloader = nil;
     mp_blocking_updater = nil;
@@ -47,7 +47,7 @@
 
 - (void) dealloc {
 	PRINT_SIGNATURE();
-	[mp_url release];
+	[mp_urls release];
 	[mp_updates release];
 	[mp_items release]; 
     [mp_downloads release]; 
@@ -56,22 +56,35 @@
 
 - (void) wasPushed {	
 	[super setListTitle: @"Launcher"];
-	[super setPrimaryInfoText: @"Downloads"];
 	[super setSecondaryInfoText: @"Available Downloads:"];
-	NSString *error;
 	NSPropertyListFormat format;
-	NSData* plistdata = [NSData dataWithContentsOfURL: mp_url];
-	mp_updates = [[NSPropertyListSerialization propertyListFromData:plistdata
+  mp_updates = [[NSMutableArray alloc] init];
+  //iterate over urls given and try to download the plist
+  NSEnumerator *enumerator = [mp_urls objectEnumerator];
+  id anObject;
+  while (anObject = [enumerator nextObject]) {
+  	NSString *error;
+    NSURL* url = [NSURL URLWithString: anObject];
+    NSData* plistdata = [NSData dataWithContentsOfURL: url];
+    NSArray* updates = [NSPropertyListSerialization propertyListFromData:plistdata
                                                    mutabilityOption:NSPropertyListImmutable
                                                              format:&format
-                                                   errorDescription:&error] retain];
-	if(!mp_updates)
+                                                   errorDescription:&error];    
+    if(!updates)
+    {
+      ELOG(@"Could not download urls from %@. Error was: %@", url, error);
+      //todo: Alert user?
+      [error release];
+    } else {
+      [mp_updates addObjectsFromArray:updates];
+    }
+  }
+  
+	if(![mp_updates count])
 	{
-        NSLog(error);
-        [error release];
-		[[self stack] swapController: [BRAlertController alertOfType:0 titled:nil primaryText:@"Update URLs not found or corrupt!" 
-                                                       secondaryText:[NSString stringWithFormat:@" %@", mp_url]]];
-	} 
+    [[self stack] swapController: [BRAlertController alertOfType:0 titled:nil primaryText:@"No updates found!" 
+                                                   secondaryText:[NSString stringWithFormat:@"URLs tried: %@", mp_urls]]];
+  } 
 	mp_items = [[NSMutableArray alloc] initWithObjects:nil]; 
 	unsigned int i;
 	for(i=0; i < [mp_updates count]; ++i){
@@ -111,7 +124,7 @@
 	//now start the real download, optionally check for md5 when finished
     [mp_downloads addObject:[XBMCSimpleDownloader outputPathForURLString:[dict valueForKey:@"URL"]]];
 	mp_downloader = [[XBMCSimpleDownloader alloc] initWithDownloadPath:[dict valueForKey:@"URL"] MD5:[dict objectForKey:@"MD5"]];
-	[mp_downloader setTitle:[NSString stringWithFormat:@"Downloading: %@",[dict valueForKey:@"Name"]]];
+	[mp_downloader setTitle:[NSString stringWithFormat:@"Downloading %@",[dict valueForKey:@"Name"]]];
 	[[self stack] pushController: mp_downloader];
 }
 

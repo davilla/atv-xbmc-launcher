@@ -168,9 +168,8 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.";
         }
 	} 
 	else if ( [entry_type isEqualToNumber:[NSNumber numberWithInt: UPDATER]] ){
-		// here we want to use something like BRTextWithSpinnerController to get the update running
-		NSURL* url = [NSURL URLWithString: [obj valueForKey:@"URL"]];
-		return [[[XBMCUpdateController alloc] initWithURL:url] autorelease];
+		NSArray* urls = [obj valueForKey:@"URLs"];
+		return [[[XBMCUpdateController alloc] initWithURLs:urls] autorelease];
 	} else if( [identifier isEqualToString:@"Settings"] ){
 		return [[[XBMCPreferencesController alloc] init] autorelease];
 	} else if( [identifier isEqualToString:@"About"] ){

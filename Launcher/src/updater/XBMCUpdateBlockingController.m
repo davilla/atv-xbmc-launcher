@@ -13,9 +13,7 @@
 
 - (id) initWithScript:(NSString*) fp_script_path downloads:(NSArray*) fp_update_paths {
 	PRINT_SIGNATURE();
-	if( ! [super initWithType:0 titled:@"Running update..."
-								primaryText:@"This message will disappear when finished"
-							secondaryText:@"...and maybe someone will beautify this message... :)"])
+	if( ! [super initWithTitle:@"Updater" text:[NSString stringWithFormat:@"Running %@...", [fp_script_path lastPathComponent]]])
 		return nil;
 	
 	mp_update_task = [[NSTask alloc] init];
@@ -55,12 +53,13 @@
 	DLOG(@"return with status: %i", status);
 	if (status != 0)
 	{
-		[self setTitle:nil];
-		[self setPrimaryText:[NSString stringWithFormat:@"Error: Update script exited with status: %i",status]];
-		[self setSecondaryText:nil];
+    [[self stack] swapController: [BRAlertController alertOfType:0 titled:nil 
+                                                     primaryText:[NSString stringWithFormat:@"Error: Update script exited with status: %i",status]
+                                                   secondaryText:nil]];
 	} else {
-		[self setTitle:@"Update finished!"];
-		[self setPrimaryText:@"Hit menu to return"];
+    [[self stack] swapController: [BRAlertController alertOfType:0 titled:nil 
+                                                     primaryText:@"Update finished!"
+                                                   secondaryText:@"Hit menu to return"]];
 	}
   [pool release];
 }

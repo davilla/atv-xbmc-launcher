@@ -26,7 +26,7 @@
 
 @interface XBMCUpdateController : BRCenteredMenuController {
 	int padding[16];	// credit is due here to SapphireCompatibilityClasses!!
-	NSURL * mp_url; //url where to get udaters plist from
+	NSArray * mp_urls; //array of NSStrings where to get udaters plists from
 	NSMutableArray* mp_items; //list items
 	NSMutableArray*	mp_updates; //list with entries what updates/downloads we offer 
 	XBMCSimpleDownloader* mp_downloader;
@@ -35,6 +35,7 @@
   XBMCUpdateBlockingController* mp_blocking_updater;
 }
 
-- (id) initWithURL:(NSURL*) fp_url;
+///@param fp_urls array with strings to download updater plists from
+- (id) initWithURLs:(NSArray*) fp_urls;
 
 @end

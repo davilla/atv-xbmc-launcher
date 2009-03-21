@@ -14,6 +14,9 @@
 				E4BD48FE0F506530002E0C87 /* ShellScript */,
 			);
 			dependencies = (
+				E4D670280F746AEF005475DC /* PBXTargetDependency */,
+				E4D670260F746AEC005475DC /* PBXTargetDependency */,
+				E4D670230F746AE7005475DC /* PBXTargetDependency */,
 				E4BD49030F50653C002E0C87 /* PBXTargetDependency */,
 			);
 			name = "LauncherBuild'n'CopyToATV";
@@ -83,6 +86,27 @@
 			proxyType = 1;
 			remoteGlobalIDString = E43F367C0F5027B000376502;
 			remoteInfo = MultiFinder;
+		};
+		E4D670220F746AE7005475DC /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = E43F32DE0F5025A500376502 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = E4DC9A570F5054D800FE98C7;
+			remoteInfo = xbmchelper;
+		};
+		E4D670250F746AEC005475DC /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = E43F32DE0F5025A500376502 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = E43F367C0F5027B000376502;
+			remoteInfo = MultiFinder;
+		};
+		E4D670270F746AEF005475DC /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = E43F32DE0F5025A500376502 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = E43F32F10F5025CD00376502;
+			remoteInfo = SettingsHelper;
 		};
 		E4DC9A760F50557D00FE98C7 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -530,7 +554,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "APPLETV_IP=192.168.0.193\nscp -r $TARGET_BUILD_DIR/XBMCLauncher.frappliance frontrow@$APPLETV_IP:\nssh frontrow@$APPLETV_IP \"echo frontrow | sudo -S /bin/rm -rf /System/Library/CoreServices/Finder.app/Contents/PlugIns/XBMCLauncher.frappliance\"\nssh frontrow@$APPLETV_IP \"echo frontrow | sudo -S /bin/mv /Users/frontrow/XBMCLauncher.frappliance /System/Library/CoreServices/Finder.app/Contents/PlugIns/\"\nssh frontrow@$APPLETV_IP restartFinder\nexit 0";
+			shellScript = "APPLETV_IP=192.168.0.90\nscp -r $TARGET_BUILD_DIR/XBMCLauncher.frappliance frontrow@$APPLETV_IP:\nssh frontrow@$APPLETV_IP \"echo frontrow | sudo -S /bin/rm -rf /System/Library/CoreServices/Finder.app/Contents/PlugIns/XBMCLauncher.frappliance\"\nssh frontrow@$APPLETV_IP \"echo frontrow | sudo -S /bin/mv /Users/frontrow/XBMCLauncher.frappliance /System/Library/CoreServices/Finder.app/Contents/PlugIns/\"\nssh frontrow@$APPLETV_IP restartFinder\nexit 0";
 		};
 /* End PBXShellScriptBuildPhase section */
 
@@ -605,6 +629,21 @@
 			isa = PBXTargetDependency;
 			target = E43F367C0F5027B000376502 /* MultiFinder */;
 			targetProxy = E4BD49100F506699002E0C87 /* PBXContainerItemProxy */;
+		};
+		E4D670230F746AE7005475DC /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = E4DC9A570F5054D800FE98C7 /* xbmchelper */;
+			targetProxy = E4D670220F746AE7005475DC /* PBXContainerItemProxy */;
+		};
+		E4D670260F746AEC005475DC /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = E43F367C0F5027B000376502 /* MultiFinder */;
+			targetProxy = E4D670250F746AEC005475DC /* PBXContainerItemProxy */;
+		};
+		E4D670280F746AEF005475DC /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = E43F32F10F5025CD00376502 /* SettingsHelper */;
+			targetProxy = E4D670270F746AEF005475DC /* PBXContainerItemProxy */;
 		};
 		E4DC9A770F50557D00FE98C7 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
@@ -776,7 +815,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				APP_VERSION = 3.0beta3;
+				APP_VERSION = 3.0beta4;
 				COPY_PHASE_STRIP = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					external,
@@ -813,7 +852,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				APP_VERSION = 3.0beta3;
+				APP_VERSION = 3.0beta4;
 				COPY_PHASE_STRIP = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				FRAMEWORK_SEARCH_PATHS = (

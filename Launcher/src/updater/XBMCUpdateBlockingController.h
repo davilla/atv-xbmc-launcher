@@ -10,7 +10,7 @@
 #import <BackRow/BackRow.h>
 
 //starts the update and blocks until it's finished then pops itself away
-@interface XBMCUpdateBlockingController : 	BRAlertController {
+@interface XBMCUpdateBlockingController : 	BRTextWithSpinnerController {
 	int padding[16];
 	NSTask* mp_update_task;
 }

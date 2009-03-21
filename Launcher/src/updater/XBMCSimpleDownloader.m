@@ -114,7 +114,7 @@
   else
     mp_md5 = nil;
   
-  [self setSecondaryText:[NSString stringWithFormat:@"Downloading from %@", mp_urlstr]];
+  [self setSecondaryText:[NSString stringWithFormat:@"URL: %@", mp_urlstr]];
 	// work out our desired output path
 	_outputPath = [[XBMCSimpleDownloader outputPathForURLString: mp_urlstr] retain];
 	return ( self );

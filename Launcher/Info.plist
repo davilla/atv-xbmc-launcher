@@ -73,8 +73,10 @@
 			<real>1</real>
 		</dict>
 		<dict>
-			<key>URL</key>
-			<string>http://atv-xbmc-launcher.googlecode.com/svn/tags/ul-info/update_urls.plist</string>
+			<key>URLs</key>
+			<array>
+				<string>http://atv-xbmc-launcher.googlecode.com/svn/tags/ul-info/update_urls.plist</string>
+			</array>
 			<key>entry-type</key>
 			<integer>1</integer>
 			<key>identifier</key>
@@ -132,9 +134,9 @@
 	<key>FRApplianceIconHorizontalOffset</key>
 	<real>-0.055</real>
 	<key>FRApplianceIconReflectionOffset</key>
-	<real>-0.20999999999999999</real>
+	<real>-0.21</real>
 	<key>FRAppliancePreferedOrderValue</key>
-	<real>0.0</real>
+	<real>0</real>
 	<key>FRRemoteAppliance</key>
 	<true/>
 	<key>NSPrincipalClass</key>
