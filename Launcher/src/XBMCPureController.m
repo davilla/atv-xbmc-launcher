@@ -393,15 +393,31 @@ const double XBMC_CONTROLLER_EVENT_TIMEOUT= -0.5; //timeout for activation seque
                 return ATV_BUTTON_LEFT;
             else
                 return ATV_BUTTON_LEFT_RELEASE;
-        case 786612: // hold left (THIS EVENT IS ONLY PRESENT ON ATV <= 2.1)
-            return ATV_BUTTON_LEFT_H;
+        case 786612: // hold left (THIS EVENT IS ONLY PRESENT ON ATV <= 2.1) and came back with 2.3 as rewind
+            if(getOSVersion() < 230)
+              return ATV_BUTTON_LEFT_H;
+            else
+            {
+              if([f_event value] == 1)
+                return ATV_LEARNED_REWIND;
+              else
+                return ATV_LEARNED_REWIND_RELEASE;
+            }
         case 65674:  // tap right
             if([f_event value] == 1)
                 return ATV_BUTTON_RIGHT;
             else
                 return ATV_BUTTON_RIGHT_RELEASE;
-        case 786611: // hold right (THIS EVENT IS ONLY PRESENT ON ATV <= 2.1)
-            return ATV_BUTTON_RIGHT_H;
+        case 786611: // hold right (THIS EVENT IS ONLY PRESENT ON ATV <= 2.1) and came backt with 2.3 as forward
+            if(getOSVersion() < 230)
+              return ATV_BUTTON_RIGHT_H;
+            else
+            {
+              if([f_event value] == 1)
+                return ATV_LEARNED_FORWARD;
+              else
+                return ATV_LEARNED_FORWARD_RELEASE;
+            }
         case 65673:  // tap play
             return ATV_BUTTON_PLAY;
         case 65668:  // hold play  (THIS EVENT IS ONLY PRESENT ON ATV >= 2.2)
@@ -410,6 +426,20 @@ const double XBMC_CONTROLLER_EVENT_TIMEOUT= -0.5; //timeout for activation seque
             return ATV_BUTTON_MENU;
         case 786496: // hold menu
             return ATV_BUTTON_MENU_H;
+        case 786608: //learned play
+          return ATV_LEARNED_PLAY;
+        case 786609: //learned pause
+          return ATV_LEARNED_PAUSE;
+        case 786615: //learned stop
+          return ATV_LEARNED_STOP;
+        case 786613: //learned nexxt
+          return ATV_LEARNED_NEXT;
+        case 786614: //learned previous
+          return ATV_LEARNED_PREVIOUS;
+        case 786630: //learned enter, like go into something
+          return ATV_LEARNED_ENTER;
+        case 786631: //learned return, like go back  funny thing that is, enter and return are _not_ the same...
+          return ATV_LEARNED_RETURN;
         default:
             ELOG(@"XBMCController: Unknown button press hashVal = %i",hashVal);
             return ATV_INVALID_BUTTON;
