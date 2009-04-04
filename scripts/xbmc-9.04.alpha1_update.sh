@@ -20,11 +20,13 @@ if [ -e $DISKIMAGE ]; then
   echo $PW | sudo -S hdiutil attach $DISKIMAGE 
   #remove old app
   echo $PW | sudo -S rm -r /Applications/XBMC.app
+  echo $PW | sudo -S rm -r /Users/frontrow/Applications/XBMC.app
   #copy new one
-  echo $PW | sudo -S cp -r /Volumes/XBMC/XBMC.app /Users/frontrow/Applications/
+  mkdir -p /Users/frontrow/Applications
+  cp -r /Volumes/XBMC/XBMC.app /Users/frontrow/Applications/
   echo $PW | sudo -S hdiutil detach /Volumes/XBMC
   #symlink to /Applications
-  echo $PW | sudo -S ln -s /Users/frontrow/Applications/XBMC.app /Applications
+  echo $PW | sudo -S ln -s /Users/frontrow/Applications/XBMC.app /Applications/
 
   # handle any post-install items here
   # perl to bash convertion of postflight script pending
