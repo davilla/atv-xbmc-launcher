@@ -5,13 +5,13 @@
 	<key>XBMC</key>
 	<dict>
 		<key>theURL</key>
-		<string>http://atv-xbmc-launcher.googlecode.com/files/Launcher-0.9-debug.tar.gz</string>
+		<string>http://atv-xbmc-launcher.googlecode.com/files/Launcher-3.0-debug.tar.gz</string>
 		<key>name</key>
 		<string>XBMCLauncher</string>
 		<key>md5</key>
-		<string>e6a345aba361243bef8964c80b3b2a80</string>
+		<string>e858cb2e1797cf5c2295303ed1fd47ed</string>
 		<key>Version</key>
-		<string>0.9</string>
+		<string>3.0</string>
 		<key>thelicense</key>
 		<string>http://atv-xbmc-launcher.googlecode.com/svn/trunk/xbmclauncher/LICENSE.txt</string>
 		<key>theDesc</key>

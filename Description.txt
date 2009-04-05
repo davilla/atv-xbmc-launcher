@@ -1,6 +1,9 @@
-XBMC/Boxee Launcher - 0.9
+XBMC/Boxee Launcher - 3.0
 Features
-	universal-remote mode
-	enable/disable of ATV autoupdate
+	combined 0.x and 2.x series
+	added learned remotes
+	added multiple update sources
 Bufixes
-	few ATV 2.3 compatibility issues fixed
+	universal-remote mode
+	few gui tweaks	
+	fixed welcome movie with MultiFinder
