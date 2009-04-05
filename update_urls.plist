@@ -52,27 +52,15 @@
         </dict>
 	<dict>
 		<key>Name</key>
-		<string>Launcher 2.3</string>
+		<string>Launcher 3.0</string>
 		<key>Type</key>
-		<string>Combo</string>
+		<string>Launcher</string>
 		<key>URL</key>
-		<string>http://atv-xbmc-launcher.googlecode.com/files/Launcher-2.3.run</string>
+		<string>http://atv-xbmc-launcher.googlecode.com/files/Launcher-3.0-debug.run</string>
 		<key>MD5</key>
-		<string>1c241278e3051bedfd79b3de62b0a809</string>
+		<string>e858cb2e1797cf5c2295303ed1fd47ed</string>
 		<key>UpdateScript</key>
-		<string>http://atv-xbmc-launcher.googlecode.com/svn/tags/xbmc-info/scripts/launcher-update-2.3.sh</string>
-	</dict>
-	<dict>
-		<key>UpdateScript</key>
-		<string>http://atv-xbmc-launcher.googlecode.com/svn/tags/xbmc-info/scripts/multifinder_downgrade.sh</string>
-		<key>URL</key>
-		<string>http://atv-xbmc-launcher.googlecode.com/files/Launcher-0.9-debug.run</string>
-		<key>MD5</key>
-		<string>480edcf8d9fcd7754bace2502cf928e0</string>		
-		<key>Type</key>
-		<string>Downgrade</string>
-		<key>Name</key>
-		<string>Remove MultiFinder</string>
+		<string>http://atv-xbmc-launcher.googlecode.com/svn/tags/ul-info/scripts/launcher-update-3.0.sh</string>
 	</dict>
 	</array>
 </plist>
