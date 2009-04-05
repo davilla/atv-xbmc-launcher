@@ -6,6 +6,15 @@ see http://atv-xbmc-launcher.googlecode.com for details
 
 ## Release Notes
 
+### 3.0
+- combined 0.x and 2.x series
+- added learned remotes
+- added multiple update sources
+- fixed universal remote
+- fixed welcome movie with MultiFinder
+- changed: use MultiFinder in Launcher's bundle instead of copying to /Applications
+- few gui tweaks
+
 ### 2.2
 - fixed IR issues with ATV's < r2.3
 - added optional arguments for applications to launch
