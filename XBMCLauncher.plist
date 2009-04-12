@@ -3,19 +3,31 @@
 <plist version="1.0">
 <dict>
 	<key>XBMC</key>
-	<dict>
-		<key>theURL</key>
-		<string>http://atv-xbmc-launcher.googlecode.com/files/Launcher-3.0-debug.tar.gz</string>
+	<dict>		
+		<key>DisplayName</key>
+		<string>Launcher</string>
+		<key>ShortDescription</key>
+		<string>Launcher is a plugin that allows installation and launching of XBMC and Boxee</string>
 		<key>name</key>
 		<string>XBMCLauncher</string>
-		<key>md5</key>
-		<string>e858cb2e1797cf5c2295303ed1fd47ed</string>
+		<key>Developer</key>
+		<string>TeamXBMC</string>
+		<key>ImageURL</key>
+		<string>http://atv-xbmc-launcher.googlecode.com/svn/tags/SoftwareMenu/alternate_1_logo_small.png</string>
+		<key>desc</key>
+		<string>http://atv-xbmc-launcher.googlecode.com/svn/tags/SoftwareMenu/Description.txt</string>
+		<key>license</key>
+		<string>http://atv-xbmc-launcher.googlecode.com/svn/trunk/xbmclauncher/LICENSE.txt</string>
 		<key>Version</key>
 		<string>3.0</string>
-		<key>thelicense</key>
-		<string>http://atv-xbmc-launcher.googlecode.com/svn/trunk/xbmclauncher/LICENSE.txt</string>
-		<key>theDesc</key>
-		<string>http://atv-xbmc-launcher.googlecode.com/svn/tags/SoftwareMenu/Description.txt</string>
+		<key>displayVersion</key>
+		<string>3.0</string>
+		<key>ReleaseDate</key>
+		<date>2009-04-05T06:00:00Z</date>
+		<key>URL</key>
+		<string>http://atv-xbmc-launcher.googlecode.com/files/Launcher-3.0-debug.tar.gz</string>
+		<key>md5</key>
+		<string>e858cb2e1797cf5c2295303ed1fd47ed</string>
 	</dict>
 </dict>
 </plist>
