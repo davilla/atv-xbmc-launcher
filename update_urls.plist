@@ -16,27 +16,39 @@
 	</dict>
 	<dict>
 		<key>UpdateScript</key>
-		<string>http://atv-xbmc-launcher.googlecode.com/svn/tags/xbmc-info/scripts/xbmc-9.04.alpha1_update.sh</string>
+		<string>http://atv-xbmc-launcher.googlecode.com/svn/tags/xbmc-info/scripts/xbmc-9.04_update.sh</string>
 		<key>URL</key>
-		<string>http://downloads.sourceforge.net/xbmc/XBMC_for_Mac-Babylon-Alpha1.dmg</string>
+		<string>http://downloads.sourceforge.net/xbmc/XBMC_for_Mac-Babylon-Beta1.dmg</string>
 		<key>Type</key>
 		<string>Application</string>
 		<key>MD5</key>
-		<string>d96d4b43685a1c2d8ecd5838675d9fb3</string>
+		<string>c711a5fcde064f45fdea3e6b0953898d</string>
 		<key>Name</key>
-		<string>XBMC Babylon (alpha1)</string>
+		<string>XBMC Babylon (beta1)</string>
 	</dict>
         <dict>
                 <key>UpdateScript</key>
-                <string>http://atv-xbmc-launcher.googlecode.com/svn/tags/boxee-info/scripts/alpha-0.9.11.5591_update.sh</string>
+                <string>http://atv-xbmc-launcher.googlecode.com/svn/tags/boxee-info/scripts/alpha-0.9.7.4825_update.sh</string>
                 <key>URL</key>
-                <string>http://dl.boxee.tv/boxee-0.9.11.5591.dmg</string>
+                <string>http://dl.boxee.tv/boxee-0.9.7.4825-atv.dmg</string>
                 <key>Type</key>
                 <string>Application</string>
                 <key>Name</key>
-                <string>Boxee alpha 0.9.11.5591</string>
+                <string>Boxee alpha 0.9.7.4825</string>
                 <key>MD5</key>
-                <string>0dbe534ee4162b4e62f660d65f868628</string>
+                <string>f370d0849e576514a7fd128b851964b5</string>
+        </dict>
+        <dict>
+                <key>UpdateScript</key>
+                <string>http://atv-xbmc-launcher.googlecode.com/svn/tags/boxee-info/scripts/alpha-0.9.10.5534_update.sh</string>
+                <key>URL</key>
+                <string>http://dl.boxee.tv/boxee-0.9.10.5534.dmg</string>
+                <key>Type</key>
+                <string>Application</string>
+                <key>Name</key>
+                <string>boxee (0.9.10.5534 - in testing)</string>
+                <key>MD5</key>
+                <string>8498be93a2367baa3f9794275e255d2f</string>
         </dict>
 	<dict>
 		<key>Name</key>
