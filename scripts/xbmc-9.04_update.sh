@@ -83,8 +83,8 @@ if [ -e $DISKIMAGE ]; then
   echo $PW | sudo -S chown -R frontrow "/Users/frontrow/Library/Application Support/Remote Buddy"
   
   #delete xbmchelper as is crashs on startup because of a missing framework 
-  if [ -e /Applications/XBMC.app/Contents/Resources/XBMC/XBMCHelper ]; then
-  	echo $PW | sudo -S rm /Applications/XBMC.app/Contents/Resources/XBMC/XBMCHelper
+  if [ -e /Users/frontrow/Applications/XBMC.app/Contents/Resources/XBMC/tools/osx/XBMCHelper ]; then
+  	echo $PW | sudo -S rm /Users/frontrow/Applications/XBMC.app/Contents/Resources/XBMC/tools/osx/XBMCHelper
   fi
   # clean up
   # fixme -> the below is not correct for a symlink
