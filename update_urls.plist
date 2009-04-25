@@ -28,27 +28,15 @@
 	</dict>
         <dict>
                 <key>UpdateScript</key>
-                <string>http://atv-xbmc-launcher.googlecode.com/svn/tags/boxee-info/scripts/alpha-0.9.7.4825_update.sh</string>
+                <string>http://atv-xbmc-launcher.googlecode.com/svn/tags/boxee-info/scripts/alpha-0.9.11.5774_update.sh</string>
                 <key>URL</key>
-                <string>http://dl.boxee.tv/boxee-0.9.7.4825-atv.dmg</string>
+                <string>http://dl.boxee.tv/boxee-0.9.11.5774.dmg</string>
                 <key>Type</key>
                 <string>Application</string>
                 <key>Name</key>
-                <string>Boxee alpha 0.9.7.4825</string>
+                <string>Boxee alpha 0.9.11.5774</string>
                 <key>MD5</key>
-                <string>f370d0849e576514a7fd128b851964b5</string>
-        </dict>
-        <dict>
-                <key>UpdateScript</key>
-                <string>http://atv-xbmc-launcher.googlecode.com/svn/tags/boxee-info/scripts/alpha-0.9.10.5534_update.sh</string>
-                <key>URL</key>
-                <string>http://dl.boxee.tv/boxee-0.9.10.5534.dmg</string>
-                <key>Type</key>
-                <string>Application</string>
-                <key>Name</key>
-                <string>boxee (0.9.10.5534 - in testing)</string>
-                <key>MD5</key>
-                <string>8498be93a2367baa3f9794275e255d2f</string>
+                <string>fc91e2c76276bf77df33ceafc782d5d2</string>
         </dict>
 	<dict>
 		<key>Name</key>
