@@ -26,18 +26,18 @@
 		<key>Name</key>
 		<string>XBMC Babylon (beta1)</string>
 	</dict>
-	<dict>
-		<key>UpdateScript</key>
-		<string>http://atv-xbmc-launcher.googlecode.com/svn/tags/boxee-info/scripts/alpha-0.9.11.5591_update.sh</string>
-		<key>URL</key>
-		<string>http://dl.boxee.tv/boxee-0.9.11.5591.dmg</string>
-		<key>Type</key>
-		<string>Application</string>
-		<key>Name</key>
-		<string>Boxee alpha 0.9.11.5591</string>
-		<key>MD5</key>
-		<string>0dbe534ee4162b4e62f660d65f868628</string>
-	</dict>
+        <dict>
+                <key>UpdateScript</key>
+                <string>http://atv-xbmc-launcher.googlecode.com/svn/tags/boxee-info/scripts/alpha-0.9.11.5774_update.sh</string>
+                <key>URL</key>
+                <string>http://dl.boxee.tv/boxee-0.9.11.5774.dmg</string>
+                <key>Type</key>
+                <string>Application</string>
+                <key>Name</key>
+                <string>Boxee alpha 0.9.11.5774</string>
+                <key>MD5</key>
+                <string>fc91e2c76276bf77df33ceafc782d5d2</string>
+        </dict>
 	<dict>
 		<key>Name</key>
 		<string>Launcher 3.0</string>
