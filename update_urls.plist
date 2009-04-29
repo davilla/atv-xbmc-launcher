@@ -18,13 +18,13 @@
 		<key>UpdateScript</key>
 		<string>http://atv-xbmc-launcher.googlecode.com/svn/tags/xbmc-info/scripts/xbmc-9.04_update.sh</string>
 		<key>URL</key>
-		<string>http://downloads.sourceforge.net/xbmc/XBMC_for_Mac-Babylon-Beta1.dmg</string>
+		<string>http://downloads.sourceforge.net/xbmc/XBMC_for_Mac-Babylon-RC1.dmg</string>
 		<key>Type</key>
 		<string>Application</string>
 		<key>MD5</key>
-		<string>c711a5fcde064f45fdea3e6b0953898d</string>
+		<string>f470463708297bc34735b1f937b8d696</string>
 		<key>Name</key>
-		<string>XBMC Babylon (beta1)</string>
+		<string>XBMC Babylon (RC1)</string>
 	</dict>
         <dict>
                 <key>UpdateScript</key>
