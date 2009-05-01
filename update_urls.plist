@@ -12,7 +12,7 @@
 		<key>MD5</key>
 		<string>e09724099b6126ad4adee33bc9effa8d</string>
 		<key>UpdateScript</key>
-		<string>http://atv-xbmc-launcher.googlecode.com/svn/tags/xbmc-info/scripts/launcher-update-3.1.sh</string>
+		<string>http://atv-xbmc-launcher.googlecode.com/svn/tags/ul-info/scripts/launcher-update-3.1.sh</string>
 	</dict>
 </array>
 </plist>
