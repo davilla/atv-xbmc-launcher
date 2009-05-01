@@ -3,74 +3,15 @@
 <plist version="1.0">
 <array>
 	<dict>
-		<key>UpdateScript</key>
-		<string>http://atv-xbmc-launcher.googlecode.com/svn/tags/xbmc-info/scripts/xbmc-8.10.bf1_update.sh</string>
-		<key>URL</key>
-		<string>http://downloads.sourceforge.net/xbmc/XBMC_for_Mac-8.10bf1.dmg</string>
-		<key>Type</key>
-		<string>Application</string>
-		<key>MD5</key>
-		<string>7aa0420a02c6a778541dead2e883b532</string>
 		<key>Name</key>
-		<string>XBMC Atlantis (bf1)</string>
-	</dict>
-	<dict>
-		<key>UpdateScript</key>
-		<string>http://atv-xbmc-launcher.googlecode.com/svn/tags/boxee-info/scripts/alpha-0.9.4166_update.sh</string>
-		<key>URL</key>
-		<string>http://dl.boxee.tv/boxee-0.9.4166.dmg</string>
-		<key>Type</key>
-		<string>Application</string>
-		<key>Name</key>
-		<string>Boxee alpha 0.9.4166</string>
-		<key>MD5</key>
-		<string>1b1b0b04b5e4147e77842015f6192532</string>
-	</dict>
-	<dict>
-		<key>UpdateScript</key>
-		<string>http://atv-xbmc-launcher.googlecode.com/svn/tags/xbmc-info/scripts/simplestartup.sh</string>
-		<key>URL</key>
-		<string>http://atv-xbmc-launcher.googlecode.com/svn/tags/xbmc-info/scripts/boxee_clear_userdata.sh</string>
-		<key>Type</key>
-		<string>Script</string>
-		<key>Name</key>
-		<string>Clear Boxee profile</string>
-	</dict>
-	<dict>
-		<key>Name</key>
-		<string>Launcher 0.9</string>
+		<string>Launcher 3.1</string>
 		<key>Type</key>
 		<string>Launcher</string>
 		<key>URL</key>
-		<string>http://atv-xbmc-launcher.googlecode.com/files/Launcher-0.9-debug.run</string>
+		<string>http://dl.getdropbox.com/u/858897/XBMC/Launcher-3.1-debug.run</string>
 		<key>MD5</key>
-		<string>480edcf8d9fcd7754bace2502cf928e0</string>
+		<string>e09724099b6126ad4adee33bc9effa8d</string>
 		<key>UpdateScript</key>
-		<string>http://atv-xbmc-launcher.googlecode.com/svn/tags/xbmc-info/scripts/launcher-update-0.9.sh</string>
+		<string>http://atv-xbmc-launcher.googlecode.com/svn/tags/xbmc-info/scripts/launcher-update-3.1.sh</string>
 	</dict>
-	<dict>
-		<key>UpdateScript</key>
-		<string>http://atv-xbmc-launcher.googlecode.com/svn/tags/xbmc-info/scripts/multifinder_downgrade.sh</string>
-		<key>URL</key>
-		<string>http://atv-xbmc-launcher.googlecode.com/files/Launcher-0.9-debug.run</string>
-		<key>MD5</key>
-		<string>480edcf8d9fcd7754bace2502cf928e0</string>		
-		<key>Type</key>
-		<string>Downgrade</string>
-		<key>Name</key>
-		<string>Remove MultiFinder</string>
-	</dict>
-	<dict>
-		<key>Name</key>
-		<string>Launcher 2.3</string>
-		<key>Type</key>
-		<string>Combo</string>
-		<key>URL</key>
-		<string>http://mp-vipa-server1.ziti.uni-heidelberg.de/~diederich/xbmc/Launcher-2.3.run</string>
-		<key>MD5</key>
-		<string>1c241278e3051bedfd79b3de62b0a809</string>
-		<key>UpdateScript</key>
-		<string>http://atv-xbmc-launcher.googlecode.com/svn/tags/xbmc-info/scripts/launcher-update-2.3.sh</string>
-	</dict>
-	</array>
 </plist>
