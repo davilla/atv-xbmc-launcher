@@ -10,7 +10,7 @@
 		<key>URL</key>
 		<string>http://dl.getdropbox.com/u/858897/XBMC/Launcher-3.1-debug.run</string>
 		<key>MD5</key>
-		<string>e09724099b6126ad4adee33bc9effa8d</string>
+		<string>87eb34bbc7f038e5e05bedfc6aecca05</string>
 		<key>UpdateScript</key>
 		<string>http://atv-xbmc-launcher.googlecode.com/svn/tags/ul-info/scripts/launcher-update-3.1.sh</string>
 	</dict>
