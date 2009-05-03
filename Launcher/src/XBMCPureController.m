@@ -375,7 +375,7 @@ const double XBMC_CONTROLLER_EVENT_TIMEOUT= -0.5; //timeout for activation seque
 + (eATVClientEvent) ATVClientEventFromBREvent:(BREvent*) f_event
 {
     unsigned int hashVal = (uint32_t)([f_event page] << 16 | [f_event usage]);
-    DLOG(@"XBMCController: Button press hashVal = %i; event value %i", hashVal, [f_event value]);
+    DLOG(@"XBMCPureController: Button press hashVal = %i; event value %i", hashVal, [f_event value]);
     switch (hashVal)
     {
         case 65676:  // tap up
@@ -441,7 +441,7 @@ const double XBMC_CONTROLLER_EVENT_TIMEOUT= -0.5; //timeout for activation seque
         case 786631: //learned return, like go back  funny thing that is, enter and return are _not_ the same...
           return ATV_LEARNED_RETURN;
         default:
-            ELOG(@"XBMCController: Unknown button press hashVal = %i",hashVal);
+            ELOG(@"XBMCPureController: Unknown button press hashVal = %i",hashVal);
             return ATV_INVALID_BUTTON;
     }
 }
