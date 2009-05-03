@@ -20,11 +20,22 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 #include "xbmcclientwrapper.h"
-#include "xbmcclient.h"
-#include "XBMCDebugHelpers.h"
+
 #include <map>
 #include <string>
 #include <sstream>
+
+#include "xbmcclient.h"
+#include "XBMCDebugHelpers.h"
+extern "C" {
+  #include "osdetection.h"
+}
+
+
+#include <Cocoa/Cocoa.h>
+#include <sys/types.h>
+#include <sys/sysctl.h>
+
 
 //helper class for easy EventSequence handling
 class XBMCClientEventSequence{
@@ -222,16 +233,27 @@ void XBMCClientWrapperImpl::populateEventMap(){
 	tEventMap& lr_map = m_event_map;
   
 	lr_map.insert(std::make_pair(ATV_BUTTON_PLAY,          new CPacketBUTTON(5, "JS0:AppleRemote", BTN_DOWN | BTN_NO_REPEAT | BTN_QUEUE)));
-	lr_map.insert(std::make_pair(ATV_BUTTON_RIGHT,         new CPacketBUTTON(4, "JS0:AppleRemote", BTN_DOWN | BTN_QUEUE)));
-	lr_map.insert(std::make_pair(ATV_BUTTON_RIGHT_RELEASE, new CPacketBUTTON(4, "JS0:AppleRemote", BTN_UP | BTN_QUEUE)));
-	lr_map.insert(std::make_pair(ATV_BUTTON_LEFT,          new CPacketBUTTON(3, "JS0:AppleRemote", BTN_DOWN | BTN_QUEUE)));
-	lr_map.insert(std::make_pair(ATV_BUTTON_LEFT_RELEASE,  new CPacketBUTTON(3, "JS0:AppleRemote", BTN_UP | BTN_QUEUE)));
+  
 	lr_map.insert(std::make_pair(ATV_BUTTON_MENU,          new CPacketBUTTON(6, "JS0:AppleRemote", BTN_DOWN | BTN_NO_REPEAT | BTN_QUEUE)));
 	lr_map.insert(std::make_pair(ATV_BUTTON_MENU_H,        new CPacketBUTTON(8, "JS0:AppleRemote", BTN_DOWN | BTN_NO_REPEAT | BTN_QUEUE)));
 	lr_map.insert(std::make_pair(ATV_BUTTON_UP,            new CPacketBUTTON(1, "JS0:AppleRemote", BTN_DOWN  | BTN_QUEUE)));
 	lr_map.insert(std::make_pair(ATV_BUTTON_UP_RELEASE,    new CPacketBUTTON(1, "JS0:AppleRemote", BTN_UP  | BTN_QUEUE)));
 	lr_map.insert(std::make_pair(ATV_BUTTON_DOWN,          new CPacketBUTTON(2, "JS0:AppleRemote", BTN_DOWN | BTN_QUEUE)));
 	lr_map.insert(std::make_pair(ATV_BUTTON_DOWN_RELEASE,  new CPacketBUTTON(2, "JS0:AppleRemote", BTN_UP | BTN_QUEUE)));
+
+  if(getOSVersion() <= 210){
+    //RIGHT/LEFT_RELEASE isn't present on ATVs <=2.1, so we won't use NO_REPEAT there
+    lr_map.insert(std::make_pair(ATV_BUTTON_RIGHT,         new CPacketBUTTON(4, "JS0:AppleRemote", BTN_DOWN |  BTN_NO_REPEAT | BTN_QUEUE)));
+    lr_map.insert(std::make_pair(ATV_BUTTON_RIGHT_RELEASE, new CPacketBUTTON(4, "JS0:AppleRemote", BTN_UP |  BTN_NO_REPEAT | BTN_QUEUE)));
+    lr_map.insert(std::make_pair(ATV_BUTTON_LEFT,          new CPacketBUTTON(3, "JS0:AppleRemote", BTN_DOWN |  BTN_NO_REPEAT | BTN_QUEUE)));
+    lr_map.insert(std::make_pair(ATV_BUTTON_LEFT_RELEASE,  new CPacketBUTTON(3, "JS0:AppleRemote", BTN_UP |  BTN_NO_REPEAT | BTN_QUEUE)));  
+  } else {
+    //but it's there with > 2.1, so make use of it for horizontal scrolling
+    lr_map.insert(std::make_pair(ATV_BUTTON_RIGHT,         new CPacketBUTTON(4, "JS0:AppleRemote", BTN_DOWN | BTN_QUEUE)));
+    lr_map.insert(std::make_pair(ATV_BUTTON_RIGHT_RELEASE, new CPacketBUTTON(4, "JS0:AppleRemote", BTN_UP | BTN_QUEUE)));
+    lr_map.insert(std::make_pair(ATV_BUTTON_LEFT,          new CPacketBUTTON(3, "JS0:AppleRemote", BTN_DOWN | BTN_QUEUE)));
+    lr_map.insert(std::make_pair(ATV_BUTTON_LEFT_RELEASE,  new CPacketBUTTON(3, "JS0:AppleRemote", BTN_UP | BTN_QUEUE)));      
+  }
 	
 	// only present on ATV <= 2.1
 	lr_map.insert(std::make_pair(ATV_BUTTON_RIGHT_H, new CPacketBUTTON(10, "JS0:AppleRemote", BTN_DOWN | BTN_NO_REPEAT | BTN_QUEUE)));	
