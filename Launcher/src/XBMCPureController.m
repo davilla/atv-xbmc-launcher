@@ -1,5 +1,5 @@
 //
-//  XBMCController.m
+//  XBMCPureController.m
 //  xbmclauncher
 //
 //  Created by Stephan Diederich on 13.09.08.
@@ -143,7 +143,7 @@ const double XBMC_CONTROLLER_EVENT_TIMEOUT= -0.5; //timeout for activation seque
 - (id) init
 {
 	[self dealloc];
-	@throw [NSException exceptionWithName:@"BNRBadInitCall" reason:@"Init XBMCController with initWithPath" userInfo:nil];
+	@throw [NSException exceptionWithName:@"BNRBadInitCall" reason:@"Init XBMCPureController with initWithPath" userInfo:nil];
 	return nil;
 }
 
@@ -351,7 +351,7 @@ const double XBMC_CONTROLLER_EVENT_TIMEOUT= -0.5; //timeout for activation seque
             break;
         case CONTROLLER_EVENT_STATE_2:
             if(f_event == XBMC_CONTROLLER_EVENT_ACTIVATION_SEQUENCE[2] && [mp_controller_event_timestamp timeIntervalSinceNow] > XBMC_CONTROLLER_EVENT_TIMEOUT){
-                ILOG(@"Recognized controller event. Next button press goes to XBMCController");
+                ILOG(@"Recognized controller event. Next button press goes to XBMCPureController");
                 m_controller_event_state = CONTROLLER_EVENT_STATE_3;
             }
             else if(f_event == XBMC_CONTROLLER_EVENT_ACTIVATION_SEQUENCE[0]){
