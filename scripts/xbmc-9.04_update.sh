@@ -1,7 +1,6 @@
 #!/bin/sh
 
 DISKIMAGE=$1
-KEYMAP=$2
 
 echo "Installing from diskimage $DISKIMAGE"
 # check that disk-image exists
@@ -80,18 +79,19 @@ if [ -e $DISKIMAGE ]; then
 
   #d4rk said this is already done in installer; do it anyway, can't hurt
   echo $PW | sudo -S chown -R frontrow "/Users/frontrow/Library/Application Support/XBMC"
-  echo $PW | sudo -S chown -R frontrow "/Users/frontrow/Library/Application Support/Remote Buddy"
+  if [ -e "/Users/frontrow/Library/Application Support/Remote Buddy" ]; then
+    echo $PW | sudo -S chown -R frontrow "/Users/frontrow/Library/Application Support/Remote Buddy"
+  fi
   
-  #delete xbmchelper as is crashs on startup because of a missing framework 
+  #delete xbmchelper it's not used on ATV
   if [ -e /Users/frontrow/Applications/XBMC.app/Contents/Resources/XBMC/tools/osx/XBMCHelper ]; then
   	echo $PW | sudo -S rm /Users/frontrow/Applications/XBMC.app/Contents/Resources/XBMC/tools/osx/XBMCHelper
   fi
   # clean up
-  # fixme -> the below is not correct for a symlink
-  #if [ -e /Users/frontrow/Movies/XBMC ]; then
+  if [ -h /Users/frontrow/Movies/XBMC ]; then
   	# something makes this symlink during install so zap it.
   	echo $PW | sudo -S rm /Users/frontrow/Movies/XBMC
-  #fi
+  fi
   
   #sync to disk, just in case...
   /bin/sync
