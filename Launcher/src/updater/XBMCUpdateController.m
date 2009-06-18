@@ -22,6 +22,7 @@
 #import "XBMCDebugHelpers.h"
 #import "XBMCUpdateBlockingController.h"
 #import "XBMCSimpleDownloader.h"
+#import "XBMCUserDefaults.h"
 
 @class BRLayerController;
 @implementation XBMCUpdateController
@@ -38,11 +39,19 @@
 	PRINT_SIGNATURE();
 	if( ! [super init])
 		return nil;
-	mp_urls = [fp_urls retain];
-    mp_downloads = [[NSMutableArray alloc] init];
-    mp_downloader = nil;
-    mp_blocking_updater = nil;
-	return self;
+  //hold our own copy, we modify it
+  mp_urls = [[NSMutableArray arrayWithArray: fp_urls] retain];
+  //aditionally check preferences for more download urls
+  //make sure we get up2date information
+  [[XBMCUserDefaults defaults] synchronize];
+  NSArray* adds =  [[XBMCUserDefaults defaults] arrayForKey:XBMC_ADDITIONAL_DOWNLOAD_PLIST_URLS];
+  NSLog(@"additionals %@", adds);
+  [mp_urls addObjectsFromArray: adds];
+
+  mp_downloads = [[NSMutableArray alloc] init];
+  mp_downloader = nil;
+  mp_blocking_updater = nil;
+  return self;
 }
 
 - (void) dealloc {
@@ -50,7 +59,7 @@
 	[mp_urls release];
 	[mp_updates release];
 	[mp_items release]; 
-    [mp_downloads release]; 
+	[mp_downloads release];
 	[super dealloc];
 }
 
@@ -82,7 +91,7 @@
   
 	if(![mp_updates count])
 	{
-    [[self stack] swapController: [BRAlertController alertOfType:0 titled:nil primaryText:@"No updates found!" 
+    [[self stack] swapController: [BRAlertController alertOfType:0 titled:nil primaryText:@"No downloads found!"
                                                    secondaryText:[NSString stringWithFormat:@"URLs tried: %@", mp_urls]]];
   } 
 	mp_items = [[NSMutableArray alloc] initWithObjects:nil]; 

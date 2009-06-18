@@ -14,6 +14,7 @@
 
 extern NSString* const XBMC_USE_UNIVERSAL_REMOTE; //use Launcher in universal mode
 extern NSString* const XBMC_EXPERT_MODE; //show additional settings
+extern NSString* const XBMC_ADDITIONAL_DOWNLOAD_PLIST_URLS; //holds additional urls for download of updates
 
 @interface XBMCUserDefaults : NSUserDefaults {
 	NSString * _applicationID;

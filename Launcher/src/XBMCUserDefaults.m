@@ -12,6 +12,7 @@
 
 NSString* const XBMC_USE_UNIVERSAL_REMOTE = @"UseXBMCsUniversalRemote";
 NSString* const XBMC_EXPERT_MODE = @"XBMCExpertMode";
+NSString* const XBMC_ADDITIONAL_DOWNLOAD_PLIST_URLS = @"XBMCAdditionalDownloadPlistURLs";
 
 @implementation XBMCUserDefaults
 
