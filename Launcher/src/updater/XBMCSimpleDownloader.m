@@ -18,8 +18,6 @@
 - (void) cancelDownload;
 - (void) deleteDownload;
 - (void) storeResumeData;
-
-
 @end
 
 @implementation XBMCSimpleDownloader
@@ -246,8 +244,6 @@
 decideDestinationWithSuggestedFilename: (NSString *) filename
 {
 	// we'll ignore the given filename and use our own
-	// they'll likely be the same, anyway
-	
 	// ensure that all new path components exist
 	[[NSFileManager defaultManager] createDirectoryAtPath: [_outputPath stringByDeletingLastPathComponent]
 																						 attributes: nil];
@@ -304,10 +300,7 @@ shouldDecodeSourceDataOfMIMEType: (NSString *) encodingType
 	NSLog( @"Asked to decode data of MIME type '%@'", encodingType );
 	
 	// we'll allow decoding only if it won't interfere with resumption
-	if ( [encodingType isEqualToString: @"application/gzip"] )
-		return ( NO );
-	
-	return ( YES );
+  return ( NO );
 }
 
 - (void) download: (NSURLDownload *) download
@@ -361,7 +354,7 @@ willResumeWithResponse: (NSURLResponse *) response
 	_downloader = nil;
   if( mp_md5 && ! [XBMCSimpleDownloader checkMD5SumOfFile:_outputPath MD5:mp_md5] ){
     m_md5sum_mismatch = TRUE;
-    DLOG(@"Remove broken download");				
+    DLOG(@"MD5 sum mismatch. Removing broken download");
     [[NSFileManager defaultManager] removeFileAtPath: [_outputPath stringByDeletingLastPathComponent]
                                              handler: nil];
   } else {
