@@ -408,7 +408,7 @@ const double XBMC_CONTROLLER_EVENT_TIMEOUT= -0.5; //timeout for activation seque
         return ATV_BUTTON_RIGHT;
       else
         return ATV_BUTTON_RIGHT_RELEASE;
-    case 786611: // hold right (THIS EVENT IS ONLY PRESENT ON ATV <= 2.1) and came backt with 2.3 as forward
+    case 786611: // hold right (THIS EVENT IS ONLY PRESENT ON ATV <= 2.1) and came back with 2.3 as forward
       if(getOSVersion() < 230)
         return ATV_BUTTON_RIGHT_H;
       else
