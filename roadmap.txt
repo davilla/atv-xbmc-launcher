@@ -20,7 +20,3 @@ use exit status of app to do advanced stuff
   - download BRHeaders from http://alanquatermain.net/brdevkit/
   - copy Quartz stuff to trunk/external and patch it
   - match CMakeLists.txt  
-
--finish xbmclauncher CMake project
- - need to figure a way to build bundle (worst case by hand)
-=> enables a build all and copy to ATV testing cycle

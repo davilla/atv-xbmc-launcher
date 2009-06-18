@@ -5,6 +5,10 @@ Copyright (c) 2008 Stephan Diederich / Team-XBMC
 see http://atv-xbmc-launcher.googlecode.com for details
 
 ## Release Notes
+### 3.1
+- added: read additional download urls from NSUserDefaults key is XBMCAdditionalDownloadPlistURLs (r660)
+- fixed: key-repeat for left/right (r643, r649 thx Guibaa!)
+- fixed: md5 check failed for zipped downloads (r656)
 
 ### 3.0
 - combined 0.x and 2.x series
