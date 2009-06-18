@@ -44,9 +44,7 @@
   //aditionally check preferences for more download urls
   //make sure we get up2date information
   [[XBMCUserDefaults defaults] synchronize];
-  NSArray* adds =  [[XBMCUserDefaults defaults] arrayForKey:XBMC_ADDITIONAL_DOWNLOAD_PLIST_URLS];
-  NSLog(@"additionals %@", adds);
-  [mp_urls addObjectsFromArray: adds];
+  [mp_urls addObjectsFromArray: [[XBMCUserDefaults defaults] arrayForKey:XBMC_ADDITIONAL_DOWNLOAD_PLIST_URLS]];
 
   mp_downloads = [[NSMutableArray alloc] init];
   mp_downloader = nil;
@@ -72,6 +70,7 @@
   NSEnumerator *enumerator = [mp_urls objectEnumerator];
   id anObject;
   while (anObject = [enumerator nextObject]) {
+    DLOG(@"Adding downloads from URL: %@", anObject);
   	NSString *error;
     NSURL* url = [NSURL URLWithString: anObject];
     NSData* plistdata = [NSData dataWithContentsOfURL: url];
