@@ -1,9 +1,6 @@
-XBMC/Boxee Launcher - 3.0
+XBMC/Boxee Launcher - 3.1
 Features
-	combined 0.x and 2.x series
-	added learned remotes
-	added multiple update sources
+    download/install and update XBMC and Boxee
+	easy addable 3rd party update sources
 Bufixes
-	universal-remote mode
-	few gui tweaks	
-	fixed welcome movie with MultiFinder
+	left/right repeat on AppleRemote
