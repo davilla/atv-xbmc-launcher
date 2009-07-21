@@ -33,6 +33,8 @@ if [ -e $DISKIMAGE ]; then
   # Update sources
   /Applications/Boxee.app/Contents/MacOS/Boxee -usf
   sed -i"" -e 's/port>9770/port>9777/g' "/Users/frontrow/Library/Application Support/BOXEE/UserData/guisettings.xml"
+  sed -i"" -e 's/rendermethod>2/rendermethod>1/g' "/Users/frontrow/Library/Application Support/BOXEE/UserData/guisettings.xml"
+  sed -i"" -e 's/rendermethod>0/rendermethod>1/g' "/Users/frontrow/Library/Application Support/BOXEE/UserData/guisettings.xml"
   /bin/rm -rf /Applications/Boxee.app/Contents/Resources/Boxee/system/players/flashplayer/xulrunner/bin/plugins/MRJPlugin.plugin
   (cd /Applications/Boxee.app/Contents/Resources/Boxee/system/players/flashplayer/xulrunner/bin/plugins; wget http://dl.boxee.tv/fl.tar.gz; tar xvzf fl.tar.gz; /bin/rm -f fl.tar.gz)
   (cd /Applications/Boxee.app/Contents/Resources/Boxee/system/players/dvdplayer; wget -O swscale-0.6.1-x86-osx.so http://dl.boxee.tv/swscale-0.6.1-x86-osx.so)
