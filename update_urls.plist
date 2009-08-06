@@ -6,11 +6,11 @@
 		<key>UpdateScript</key>
 		<string>http://atv-xbmc-launcher.googlecode.com/svn/tags/xbmc-info/scripts/xbmc-9.04_update.sh</string>
 		<key>URL</key>
-		<string>http://downloads.sourceforge.net/xbmc/XBMC_for_Mac-9.04.1.dmg</string>
+		<string>http://downloads.sourceforge.net/xbmc/XBMC_for_Mac-9.04.1-repack.dmg</string>
 		<key>Type</key>
 		<string>Application</string>
 		<key>MD5</key>
-		<string>4c5d3f4c6eeda0ce715d99908bc61a3a</string>
+		<string>0553d79d99275b512adfaeb820406121</string>
 		<key>Name</key>
 		<string>XBMC 9.04.1</string>
 	</dict>
