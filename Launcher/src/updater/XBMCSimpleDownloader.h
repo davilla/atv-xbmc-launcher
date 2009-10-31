@@ -7,7 +7,7 @@
 //
 
 #import <Cocoa/Cocoa.h>
-#include <BackRow/BackRow.h>
+#import <BackRow/BackRow.h>
 
 @interface XBMCSimpleDownloader : BRAlertController {
 	int		padding[16];
