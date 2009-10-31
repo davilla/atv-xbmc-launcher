@@ -511,7 +511,7 @@ const double XBMC_CONTROLLER_EVENT_TIMEOUT= -0.5; //timeout for activation seque
       ILOG(@"Deleted LaunchAgent file at %@", launch_agent_file_path);
       ret = TRUE;
     } else{
-      DLOG(@"Failed to delete LaunchAgent file at %@", launch_agent_file_path);
+      DLOG(@"Failed to delete/No LaunchAgent file at %@", launch_agent_file_path);
       ret = FALSE;
     }
   } else {
