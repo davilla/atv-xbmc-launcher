@@ -19,6 +19,7 @@ typedef enum _OS_Vers {
 	kATV_2_10 =  210,
 	kATV_2_20 =  220,
 	kATV_2_30 =  230,
+	kATV_3_00 =  300,
 } OS_Vers;
 
 OS_Vers getOSVersion();
