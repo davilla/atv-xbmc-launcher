@@ -21,7 +21,9 @@
 #import <Cocoa/Cocoa.h>
 #import <BackRow/BackRow.h>
 
-@interface XBMCPreferencesController : BRCenteredMenuController {
+
+
+@interface XBMCPreferencesController : BRMenuController {
 	int padding[16];	// credit is due here to SapphireCompatibilityClasses!!
 	NSMutableArray* mp_items; //list items
   NSMutableArray* mp_apps; //initialized with applications stored in XBMCLauncher's plist

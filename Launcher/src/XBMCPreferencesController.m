@@ -12,6 +12,7 @@
 #import "XBMCDebugHelpers.h"
 #import "XBMCAppliance.h"
 #import "atvxbmccommon.h"
+#import "ATV30Compatibility.h"
 
 ///helper class for putting into the app array
 @interface LauncherApplicationEntry : NSObject {
@@ -142,6 +143,7 @@
 	PRINT_SIGNATURE();
 	if( ! [super init])
 		return nil;
+
 	return self;
 }
 
@@ -155,8 +157,7 @@
 
 - (void) wasPushed {
 	[super wasPushed];
-	[super setListTitle: @"Launcher"];
-	[super setPrimaryInfoText:@"Settings"];
+	[super setListTitle: @"Launcher - Settings"];
 	[self recreateMenuList];
   [self recreateAppList];
 	//set ourselves as datasource for the updater list
