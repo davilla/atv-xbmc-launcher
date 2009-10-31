@@ -103,9 +103,9 @@
 
 - (id) initWithDownloadPath:(NSString*) fp_path MD5:(NSString*) fp_md5{
   PRINT_SIGNATURE();
+  DLOG(@"Initializing XBMCSimpleDownloader with URL:%@ and MD5:%@", fp_path, fp_md5);
 	if( ! [super initWithType:0 titled:nil primaryText:nil secondaryText:nil])
 		return nil;
-  
 	mp_urlstr = [fp_path retain];
   if(fp_md5)
     mp_md5 = [fp_md5 retain];
@@ -131,8 +131,10 @@
 
 - (BOOL) beginDownload
 {
-	if ( _downloader != nil )
+	if ( _downloader != nil ){
+		ELOG(@"Download already running. Exiting..");
 		return ( NO );
+  }
 	m_download_complete = FALSE;
 	// see if we can resume from the current data
 	if ( [self resumeDownload] == YES )
@@ -142,8 +144,10 @@
 	[self deleteDownload];
 	
 	NSURL * url = [NSURL URLWithString: mp_urlstr];
-	if ( url == nil )
+	if ( url == nil ){
+		ELOG(@"Could not convert downloadpath (%@) to URL. Exiting..", mp_urlstr);
 		return ( NO );
+  }
 	
 	NSURLRequest * req = [NSURLRequest requestWithURL: url
 																				cachePolicy: NSURLRequestUseProtocolCachePolicy
@@ -151,8 +155,10 @@
 	
 	// create the dowloader
 	_downloader = [[NSURLDownload alloc] initWithRequest: req delegate: self];
-	if ( _downloader == nil )
+	if ( _downloader == nil ){
+		ELOG(@"Could not initialize NSURLDownload. Exiting..");
 		return ( NO );
+  }
 	
 	[_downloader setDeletesFileUponFailure: NO];
 	
