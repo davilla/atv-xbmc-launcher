@@ -9,19 +9,35 @@
 #import <Foundation/Foundation.h>
 #import "BackRow/BRImage.h"
 #import "BackRow/BRMenuController.h"
-
+#import "BackRow/BRRenderer.h"
 @interface BRImage (ATV30Compatibility)
 
 + (id) imageWithPath:(id)path;
 
 @end
 
+@interface BRControl (XBMCCompat)
 
-//BRCenteredMenuController vanished in 3.0 and was replaced with an category on BRMenuController
-@interface BRMenuController (ATV30Compatibility)
+- (NSRect) bounds;
+- (NSRect) setBounds:(NSRect) bounds;
 
-- (void) setUseCenteredLayout:(BOOL)yesno;
-- (void)setPrimaryInfoText:(id)fp8;
-- (void) setSecondaryInfoText:(id)fp8;
+- (NSRect) frame;
+- (NSRect) setFrame:(NSRect) frame;
+@end;
+
+@class BRRenderContext;
+@class CARenderer;
+
+@interface BRRenderer (XBMCCompatFor30)
++ (id) singleton;
+@end
+
+@interface BRRenderer (NitoAdditions)
+
+- (BRRenderContext *) context;
+
+- (CARenderer*) renderer;
+- (void) setRenderer:(CARenderer*) theRenderer;
 
 @end
+

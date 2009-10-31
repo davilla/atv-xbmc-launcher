@@ -27,10 +27,14 @@
 #import "common/XBMCDebugHelpers.h"
 #import "common/xbmcclientwrapper.h"
 #import "common/osdetection.h"
+#import "ATV30Compatibility.h"
 
 //activation sequence for Controller events (events which are not sent to controlled app, but are used in this controller, e.g. to kill the app)
 const eATVClientEvent XBMC_CONTROLLER_EVENT_ACTIVATION_SEQUENCE[]={ATV_BUTTON_MENU, ATV_BUTTON_MENU, ATV_BUTTON_PLAY};
 const double XBMC_CONTROLLER_EVENT_TIMEOUT= -0.5; //timeout for activation sequence in seconds
+
+//temp storage for renderer while XBMC is running
+static CARenderer* s_renderer;
 
 @class BRLayerController;
 
@@ -82,11 +86,12 @@ const double XBMC_CONTROLLER_EVENT_TIMEOUT= -0.5; //timeout for activation seque
     [displayManager _setNewDisplay:kCGDirectMainDisplay];
     [displayManager captureAllDisplays];
   } else {
-    [[NSNotificationCenter defaultCenter] postNotificationName:@"BRDisplayManagerResumeRenderingNotification"
-                                                        object:[BRDisplayManager sharedInstance] ];
+    BRRenderer *theRender = [BRRenderer singleton];
+    //restore the renderer
+    [theRender setRenderer:s_renderer];
+    [displayManager captureAllDisplays];
 
-    //>=ATV 3.0
-    [[BRDisplayManager sharedInstance]  captureAllDisplays];
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"BRDisplayManagerConfigurationEnd" object: [BRDisplayManager sharedInstance]];
   }
 }
 
@@ -103,11 +108,17 @@ const double XBMC_CONTROLLER_EVENT_TIMEOUT= -0.5; //timeout for activation seque
      [displayManager _setNewDisplay:kCGNullDirectDisplay];
      [displayManager releaseAllDisplays];
    } else {
-     //>=ATV 3.0
-     [[NSNotificationCenter defaultCenter] postNotificationName:@"BRDisplayManagerStopRenderingNotification"
-                                                         object:[BRDisplayManager sharedInstance] ];
-
-     [[BRDisplayManager sharedInstance]  releaseAllDisplays];
+     //ATV 3.0 and up
+     [displayManager releaseAllDisplays];
+     //grab the context and release it
+     BRRenderer *theRender = [BRRenderer singleton];
+     //we need to replace the CARenderer in BRRenderer or Finder crashes in its RenderThread
+     //save it so it can be restored later
+     s_renderer = [theRender renderer];
+     [theRender setRenderer:nil];
+     //this enables XBMC to run as a proper fullscreen app (otherwise we get an invalid drawable)
+     CGLContextObj ctx = [[theRender context] CGLContext];
+     CGLClearDrawable( ctx );
    }
 }
 
