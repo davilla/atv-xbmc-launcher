@@ -24,7 +24,7 @@
 @class XBMCSimpleDownloader;
 @class XBMCUpdateBlockingController;
 
-@interface XBMCUpdateController : BRCenteredMenuController {
+@interface XBMCUpdateController : BRMenuController {
 	int padding[16];	// credit is due here to SapphireCompatibilityClasses!!
 	NSMutableArray * mp_urls; //array of NSStrings where to get udaters plists from
 	NSMutableArray* mp_items; //list items
