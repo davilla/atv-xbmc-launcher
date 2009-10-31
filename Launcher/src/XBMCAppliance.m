@@ -26,6 +26,7 @@
 #import "XBMCPureController.h"
 #import "XBMCPreferencesController.h"
 #import "XBMCUserDefaults.h"
+#import "XBMCPreviewController.h"
 
 //enable this one to get notifications to BRDisplayManger logged
 #define BRDISPLAY_MANAGER_OBSERVATION 1
@@ -200,17 +201,18 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.";
 	return categories;
 }
 
-/*
-- (id)identifierForContentAlias:(id)arg1 {
-  PRINT_SIGNATURE();
-  return nil;
-}
 
 - (id)previewControlForIdentifier:(id)arg1 {
   PRINT_SIGNATURE();
-  return nil;
+  return [[[XBMCPreviewController alloc] init] autorelease];
 }
 
+/*
+ - (id)identifierForContentAlias:(id)arg1 {
+ PRINT_SIGNATURE();
+ return nil;
+ }
+ 
 - (void)refreshPreviewControlDataForIdentifier:(id)arg1 {
   PRINT_SIGNATURE();
 }
