@@ -138,6 +138,8 @@
 		E43F37010F502AA400376502 /* xbmcclientwrapper.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = xbmcclientwrapper.mm; sourceTree = "<group>"; };
 		E43F37020F502AA400376502 /* XBMCDebugHelpers.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XBMCDebugHelpers.h; sourceTree = "<group>"; };
 		E43F37170F502AF000376502 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
+		E4A2609B109A69E6003D74C6 /* ATV30Compatibility.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ATV30Compatibility.h; sourceTree = "<group>"; };
+		E4A2609C109A69E6003D74C6 /* ATV30Compatibility.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ATV30Compatibility.m; sourceTree = "<group>"; };
 		E4BD45470F506229002E0C87 /* setAutoUpdate.sh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.sh; name = setAutoUpdate.sh; path = Launcher/setAutoUpdate.sh; sourceTree = "<group>"; };
 		E4BD45480F506229002E0C87 /* setMultiFinderMode.sh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.sh; name = setMultiFinderMode.sh; path = Launcher/setMultiFinderMode.sh; sourceTree = "<group>"; };
 		E4BD45490F506229002E0C87 /* compareMD5.sh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.sh; name = compareMD5.sh; path = Launcher/compareMD5.sh; sourceTree = "<group>"; };
@@ -334,12 +336,14 @@
 				E4BD45720F5062B7002E0C87 /* XBMCAppliance.m */,
 				E4BD45730F5062B7002E0C87 /* XBMCMFController.h */,
 				E4BD45740F5062B7002E0C87 /* XBMCMFController.m */,
-				E4BD45750F5062B7002E0C87 /* XBMCPreferencesController.h */,
-				E4BD45760F5062B7002E0C87 /* XBMCPreferencesController.m */,
 				E4BD45770F5062B7002E0C87 /* XBMCPureController.h */,
 				E4BD45780F5062B7002E0C87 /* XBMCPureController.m */,
+				E4BD45750F5062B7002E0C87 /* XBMCPreferencesController.h */,
+				E4BD45760F5062B7002E0C87 /* XBMCPreferencesController.m */,
 				E4BD45790F5062B7002E0C87 /* XBMCUserDefaults.h */,
 				E4BD457A0F5062B7002E0C87 /* XBMCUserDefaults.m */,
+				E4A2609B109A69E6003D74C6 /* ATV30Compatibility.h */,
+				E4A2609C109A69E6003D74C6 /* ATV30Compatibility.m */,
 			);
 			name = src;
 			path = Launcher/src;
