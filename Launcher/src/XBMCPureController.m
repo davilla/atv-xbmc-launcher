@@ -28,19 +28,6 @@
 #import "common/xbmcclientwrapper.h"
 #import "common/osdetection.h"
 
-
-//okay this should be it right here, tested pretty thoroughly without any failure to release the screen (make sure to give me some credit ;) )
-//first off you need to add this addition to BRRenderScene so you can get at the _context value
-// MAJOR credits to Nito for this!
-@interface BRRenderScene (NitoAdditions)
-- (BRRenderContext *) context;
-@end
-@implementation BRRenderScene (NitoAdditions)
-- (BRRenderContext *) context{
-  return _context;
-}
-@end
-
 //activation sequence for Controller events (events which are not sent to controlled app, but are used in this controller, e.g. to kill the app)
 const eATVClientEvent XBMC_CONTROLLER_EVENT_ACTIVATION_SEQUENCE[]={ATV_BUTTON_MENU, ATV_BUTTON_MENU, ATV_BUTTON_PLAY};
 const double XBMC_CONTROLLER_EVENT_TIMEOUT= -0.5; //timeout for activation sequence in seconds
@@ -83,16 +70,22 @@ const double XBMC_CONTROLLER_EVENT_TIMEOUT= -0.5; //timeout for activation seque
 }
 
 - (void) enableRendering{
-  PRINT_SIGNATURE();  
+  PRINT_SIGNATURE();
   if(getOSVersion() < 230){
     [[NSNotificationCenter defaultCenter] postNotificationName:@"BRDisplayManagerDisplayOnline"
-                                                        object:[BRDisplayManager sharedInstance]];
+                                                        object:[BRDisplayManager sharedInstance] ];
     [[NSNotificationCenter defaultCenter] postNotificationName:@"BRDisplayManagerResumeRenderingNotification"
-                                                        object:[BRDisplayManager sharedInstance]];
-    [[BRDisplayManager sharedInstance] captureAllDisplays];
+                                                        object:[BRDisplayManager sharedInstance] ];
+    [[BRDisplayManager sharedInstance]  captureAllDisplays];
+  } else if (getOSVersion() < 300) {
+    [[BRDisplayManager sharedInstance]  _setNewDisplay:kCGDirectMainDisplay];
+    [[BRDisplayManager sharedInstance]  captureAllDisplays];
   } else {
-    [[BRDisplayManagerCore sharedInstance] _setNewDisplay:kCGDirectMainDisplay];
-    [[BRDisplayManagerCore sharedInstance] captureAllDisplays];
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"BRDisplayManagerResumeRenderingNotification"
+                                                        object:[BRDisplayManager sharedInstance] ];
+
+    //>=ATV 3.0
+    [[BRDisplayManager sharedInstance]  captureAllDisplays];
   }
 }
 
@@ -100,15 +93,20 @@ const double XBMC_CONTROLLER_EVENT_TIMEOUT= -0.5; //timeout for activation seque
   PRINT_SIGNATURE();
   if(getOSVersion() < 230) {
     [[NSNotificationCenter defaultCenter] postNotificationName:@"BRDisplayManagerDisplayOffline"
-                                                        object:[BRDisplayManager sharedInstance]];
+                                                        object:[BRDisplayManager sharedInstance] ];
     [[BRDisplayManager sharedInstance] releaseAllDisplays];
     [[NSNotificationCenter defaultCenter] postNotificationName:@"BRDisplayManagerStopRenderingNotification"
-                                                        object:[BRDisplayManager sharedInstance]];
-    
-  } else {
-    [[BRDisplayManagerCore sharedInstance] _setNewDisplay:kCGNullDirectDisplay];
-    [[BRDisplayManagerCore sharedInstance] releaseAllDisplays];
-  }
+                                                        object:[BRDisplayManager sharedInstance] ];
+   } else if (getOSVersion() < 300) {
+     [[BRDisplayManager sharedInstance]  _setNewDisplay:kCGNullDirectDisplay];
+     [[BRDisplayManager sharedInstance]  releaseAllDisplays];
+   } else {
+     //>=ATV 3.0
+     [[NSNotificationCenter defaultCenter] postNotificationName:@"BRDisplayManagerStopRenderingNotification"
+                                                         object:[BRDisplayManager sharedInstance] ];
+
+     [[BRDisplayManager sharedInstance]  releaseAllDisplays];
+   }
 }
 
 - (void) setAppToFrontProcess{
@@ -250,7 +248,7 @@ const double XBMC_CONTROLLER_EVENT_TIMEOUT= -0.5; //timeout for activation seque
   NSAutoreleasePool* pool = [[NSAutoreleasePool alloc] init];
   //Hide frontrow (this is only needed in 720/1080p)
 	[self disableRendering];
-  
+
 	//delete a launchAgent if it's there
 	[self deleteHelperLaunchAgent];
   
