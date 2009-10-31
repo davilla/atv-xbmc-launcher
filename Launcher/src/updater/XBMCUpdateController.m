@@ -47,8 +47,6 @@
   [mp_urls addObjectsFromArray: [[XBMCUserDefaults defaults] arrayForKey:XBMC_ADDITIONAL_DOWNLOAD_PLIST_URLS]];
 
   mp_downloads = [[NSMutableArray alloc] init];
-  mp_downloader = nil;
-  mp_blocking_updater = nil;
   return self;
 }
 

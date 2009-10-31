@@ -71,15 +71,16 @@ const double XBMC_CONTROLLER_EVENT_TIMEOUT= -0.5; //timeout for activation seque
 
 - (void) enableRendering{
   PRINT_SIGNATURE();
+  BRDisplayManager *displayManager = [BRDisplayManager sharedInstance];
   if(getOSVersion() < 230){
     [[NSNotificationCenter defaultCenter] postNotificationName:@"BRDisplayManagerDisplayOnline"
-                                                        object:[BRDisplayManager sharedInstance] ];
+                                                        object:displayManager ];
     [[NSNotificationCenter defaultCenter] postNotificationName:@"BRDisplayManagerResumeRenderingNotification"
-                                                        object:[BRDisplayManager sharedInstance] ];
-    [[BRDisplayManager sharedInstance]  captureAllDisplays];
+                                                        object:displayManager ];
+    [displayManager captureAllDisplays];
   } else if (getOSVersion() < 300) {
-    [[BRDisplayManager sharedInstance]  _setNewDisplay:kCGDirectMainDisplay];
-    [[BRDisplayManager sharedInstance]  captureAllDisplays];
+    [displayManager _setNewDisplay:kCGDirectMainDisplay];
+    [displayManager captureAllDisplays];
   } else {
     [[NSNotificationCenter defaultCenter] postNotificationName:@"BRDisplayManagerResumeRenderingNotification"
                                                         object:[BRDisplayManager sharedInstance] ];
@@ -91,15 +92,16 @@ const double XBMC_CONTROLLER_EVENT_TIMEOUT= -0.5; //timeout for activation seque
 
 - (void) disableRendering{
   PRINT_SIGNATURE();
+  BRDisplayManager *displayManager = [BRDisplayManager sharedInstance];
   if(getOSVersion() < 230) {
     [[NSNotificationCenter defaultCenter] postNotificationName:@"BRDisplayManagerDisplayOffline"
-                                                        object:[BRDisplayManager sharedInstance] ];
+                                                        object:displayManager ];
     [[BRDisplayManager sharedInstance] releaseAllDisplays];
     [[NSNotificationCenter defaultCenter] postNotificationName:@"BRDisplayManagerStopRenderingNotification"
-                                                        object:[BRDisplayManager sharedInstance] ];
+                                                        object:displayManager ];
    } else if (getOSVersion() < 300) {
-     [[BRDisplayManager sharedInstance]  _setNewDisplay:kCGNullDirectDisplay];
-     [[BRDisplayManager sharedInstance]  releaseAllDisplays];
+     [displayManager _setNewDisplay:kCGNullDirectDisplay];
+     [displayManager releaseAllDisplays];
    } else {
      //>=ATV 3.0
      [[NSNotificationCenter defaultCenter] postNotificationName:@"BRDisplayManagerStopRenderingNotification"
@@ -272,7 +274,6 @@ const double XBMC_CONTROLLER_EVENT_TIMEOUT= -0.5; //timeout for activation seque
     return;
 	}
 	m_xbmc_running = YES;
-	//reenable screensaver
 	[self disableScreenSaver];
 	//wait a bit for task to start
 	NSDate *future = [NSDate dateWithTimeIntervalSinceNow: 0.1];
@@ -506,7 +507,6 @@ const double XBMC_CONTROLLER_EVENT_TIMEOUT= -0.5; //timeout for activation seque
     }
     NSString * launch_agent_file_path = [[lib_array objectAtIndex:0] stringByAppendingString:@"/LaunchAgents/"];
     launch_agent_file_path = [launch_agent_file_path stringByAppendingString:mp_launch_agent_file_name];
-    DLOG(@"trying to delete LaunchAgent file at %@", launch_agent_file_path);
     if([[NSFileManager defaultManager] removeFileAtPath:launch_agent_file_path handler:nil]){
       ILOG(@"Deleted LaunchAgent file at %@", launch_agent_file_path);
       ret = TRUE;

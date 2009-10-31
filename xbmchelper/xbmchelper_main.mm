@@ -1,11 +1,11 @@
-#include "Carbon/Carbon.h"
+#import "Carbon/Carbon.h"
 #import "XBMCHelper.h"
-#include <getopt.h>
-#include <string>
-#include <vector>
-#include <sstream>
-#include <fstream>
-#include <iterator>
+#import <getopt.h>
+#import <string>
+#import <vector>
+#import <sstream>
+#import <fstream>
+#import <iterator>
 
 using namespace std;
 

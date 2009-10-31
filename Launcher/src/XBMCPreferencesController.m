@@ -142,27 +142,25 @@
 	PRINT_SIGNATURE();
 	if( ! [super init])
 		return nil;
-    m_selected_app = 0;
-    mp_apps = nil;
-    mp_items = nil;
 	return self;
 }
 
 - (void) dealloc {
 	PRINT_SIGNATURE();
 	[mp_items release]; 
-    [mp_apps release];
+  [mp_apps release];
+  
 	[super dealloc];
 }
 
-- (void) wasPushed {	
+- (void) wasPushed {
+	[super wasPushed];
 	[super setListTitle: @"Launcher"];
 	[super setPrimaryInfoText:@"Settings"];
 	[self recreateMenuList];
-    [self recreateAppList];
+  [self recreateAppList];
 	//set ourselves as datasource for the updater list
-	[[self list] setDatasource: self];
-	[super wasPushed];
+	[[self list] setDatasource: self];  
 }
 
 - (void)itemSelected:(long)index {
