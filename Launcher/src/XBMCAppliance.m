@@ -203,11 +203,15 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.";
 
 - (id)previewControlForIdentifier:(id)arg1 {
   PRINT_SIGNATURE();
-  NSString *imgPath = [[NSBundle bundleForClass:[XBMCPreviewController class]] pathForResource:@"Preview" ofType:@"png"];
-  BRImage *img = [BRImage imageWithPath:imgPath];
+  NSString *imgPath = [[NSBundle bundleForClass:[XBMCAppliance class]] pathForResource:@"Preview" ofType:@"png"];
+  NSImage *theImage = [[NSImage alloc] initWithContentsOfFile:imgPath];
+  [theImage setSize:NSMakeSize(64.0,64.0)];
+  BRImage *myIcon = [BRImage imageWithData:[theImage TIFFRepresentation]];
 
-  BRReflectedImageControl* control = [[[BRReflectedImageControl alloc] init] autorelease];
-  [control setImage:img];
+  BRImageAndSyncingPreviewController* control = [[[BRImageAndSyncingPreviewController alloc] init] autorelease];
+  [control setImage:myIcon];
+  [control setReflectionAmount:0.2f];
+  [control setReflectionOffset:-0.2f];
   return control;
 }
 
