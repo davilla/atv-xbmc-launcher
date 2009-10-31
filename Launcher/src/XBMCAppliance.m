@@ -135,7 +135,6 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.";
 
 - (id)controllerForIdentifier:(id)identifier args:(id) identifier2{
   PRINT_SIGNATURE();
-  NSLog(@"identifier2 %@", identifier2);
 	// find the proper entry in categories list from Info.plist
 	NSEnumerator *enumerator = [[[self applianceInfo] applianceCategoryDescriptors] objectEnumerator];
 	id obj = nil;
