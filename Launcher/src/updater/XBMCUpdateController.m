@@ -60,8 +60,7 @@
 }
 
 - (void) wasPushed {	
-	[super setListTitle: @"Launcher"];
-	[super setSecondaryInfoText: @"Available Downloads:"];
+	[super setListTitle: @"Launcher - Downloads"];
 	NSPropertyListFormat format;
   mp_updates = [[NSMutableArray alloc] init];
   //iterate over urls given and try to download the plist
