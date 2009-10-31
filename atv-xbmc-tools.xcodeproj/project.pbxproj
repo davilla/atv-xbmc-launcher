@@ -33,7 +33,6 @@
 		E43F36F50F502A8200376502 /* Carbon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E43F36F40F502A8200376502 /* Carbon.framework */; };
 		E43F37040F502AB400376502 /* atvxbmccommon.m in Sources */ = {isa = PBXBuildFile; fileRef = E43F36FC0F502AA400376502 /* atvxbmccommon.m */; };
 		E43F37180F502AF000376502 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E43F37170F502AF000376502 /* Foundation.framework */; };
-		E4A26175109AF883003D74C6 /* XBMCPreviewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E4A2615C109AF1F4003D74C6 /* XBMCPreviewController.m */; };
 		E4A26513109B7DF6003D74C6 /* Preview.png in Resources */ = {isa = PBXBuildFile; fileRef = E4A26512109B7DF6003D74C6 /* Preview.png */; };
 		E4BD45390F506147002E0C87 /* MultiFinder.app in Resources */ = {isa = PBXBuildFile; fileRef = E43F367D0F5027B000376502 /* MultiFinder.app */; };
 		E4BD454A0F506229002E0C87 /* setAutoUpdate.sh in Resources */ = {isa = PBXBuildFile; fileRef = E4BD45470F506229002E0C87 /* setAutoUpdate.sh */; };
@@ -142,8 +141,6 @@
 		E43F37170F502AF000376502 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		E4A2609B109A69E6003D74C6 /* ATV30Compatibility.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ATV30Compatibility.h; sourceTree = "<group>"; };
 		E4A2609C109A69E6003D74C6 /* ATV30Compatibility.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ATV30Compatibility.m; sourceTree = "<group>"; };
-		E4A2615C109AF1F4003D74C6 /* XBMCPreviewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XBMCPreviewController.m; sourceTree = "<group>"; };
-		E4A2615D109AF20C003D74C6 /* XBMCPreviewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XBMCPreviewController.h; sourceTree = "<group>"; };
 		E4A26512109B7DF6003D74C6 /* Preview.png */ = {isa = PBXFileReference; explicitFileType = image.png; path = Preview.png; sourceTree = "<group>"; };
 		E4BD45470F506229002E0C87 /* setAutoUpdate.sh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.sh; name = setAutoUpdate.sh; path = Launcher/setAutoUpdate.sh; sourceTree = "<group>"; };
 		E4BD45480F506229002E0C87 /* setMultiFinderMode.sh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.sh; name = setMultiFinderMode.sh; path = Launcher/setMultiFinderMode.sh; sourceTree = "<group>"; };
@@ -350,8 +347,6 @@
 				E4BD457A0F5062B7002E0C87 /* XBMCUserDefaults.m */,
 				E4A2609B109A69E6003D74C6 /* ATV30Compatibility.h */,
 				E4A2609C109A69E6003D74C6 /* ATV30Compatibility.m */,
-				E4A2615D109AF20C003D74C6 /* XBMCPreviewController.h */,
-				E4A2615C109AF1F4003D74C6 /* XBMCPreviewController.m */,
 			);
 			name = src;
 			path = Launcher/src;
@@ -595,7 +590,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				E4A26175109AF883003D74C6 /* XBMCPreviewController.m in Sources */,
 				E4BD48DD0F506406002E0C87 /* atvxbmccommon.m in Sources */,
 				E4BD48DE0F506406002E0C87 /* osdetection.m in Sources */,
 				E4BD48DF0F506406002E0C87 /* xbmcclientwrapper.mm in Sources */,

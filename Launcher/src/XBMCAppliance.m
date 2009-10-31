@@ -26,7 +26,6 @@
 #import "XBMCPureController.h"
 #import "XBMCPreferencesController.h"
 #import "XBMCUserDefaults.h"
-#import "XBMCPreviewController.h"
 
 //enable this one to get notifications to BRDisplayManger logged
 #define BRDISPLAY_MANAGER_OBSERVATION 1
@@ -204,7 +203,12 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.";
 
 - (id)previewControlForIdentifier:(id)arg1 {
   PRINT_SIGNATURE();
-  return [[[XBMCPreviewController alloc] init] autorelease];
+  NSString *imgPath = [[NSBundle bundleForClass:[XBMCPreviewController class]] pathForResource:@"Preview" ofType:@"png"];
+  BRImage *img = [BRImage imageWithPath:imgPath];
+
+  BRReflectedImageControl* control = [[[BRReflectedImageControl alloc] init] autorelease];
+  [control setImage:img];
+  return control;
 }
 
 /*
