@@ -454,8 +454,6 @@
 				E4C4D8C90F505EA700A9E06E /* Resources */,
 				E4C4D8CA0F505EA700A9E06E /* Sources */,
 				E4C4D8CB0F505EA700A9E06E /* Frameworks */,
-				E4BD48FB0F50647F002E0C87 /* ShellScript */,
-				E4BD48FD0F506497002E0C87 /* ShellScript */,
 			);
 			buildRules = (
 			);
@@ -532,33 +530,6 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		E4BD48FB0F50647F002E0C87 /* ShellScript */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "";
-		};
-		E4BD48FD0F506497002E0C87 /* ShellScript */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-				"$(TARGET_BUILD_DIR)/XBMCLauncher.frappliance",
-			);
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "";
-		};
 		E4BD48FE0F506530002E0C87 /* ShellScript */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
