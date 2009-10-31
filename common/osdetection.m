@@ -23,7 +23,6 @@ static void initOSAndHWVersion() {
 
     if ( strstr(hw_model,"AppleTV1,1") ) {
       FILE        *inpipe;
-      BOOL        atv_version_found = NO;
     
       g_hw_version = kATVversion;
       //Find the build version of the AppleTV OS
@@ -53,7 +52,6 @@ static void initOSAndHWVersion() {
               } else if( strstr(linebuf,"8N5622")) {
                   g_os_version = kATV_2_20;
                   NSLog(@"Found AppletTV software version r2.20");
-                  atv_version_found = true;
               } else if( strstr(linebuf,"8N5722")) {
                   g_os_version = kATV_2_30;
                   NSLog(@"Found AppletTV software version r2.30");

@@ -206,7 +206,7 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.";
   NSImage *theImage = [[NSImage alloc] initWithContentsOfFile:imgPath];
   [theImage setSize:NSMakeSize(64.0,64.0)];
   BRImage *myIcon = [BRImage imageWithData:[theImage TIFFRepresentation]];
-
+  [theImage release];
   BRImageAndSyncingPreviewController* control = [[[BRImageAndSyncingPreviewController alloc] init] autorelease];
   [control setImage:myIcon];
   [control setReflectionAmount:0.2f];

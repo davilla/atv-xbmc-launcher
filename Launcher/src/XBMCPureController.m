@@ -47,7 +47,7 @@ static CARenderer* s_renderer;
 - (void) disableRendering;
 
 - (void) checkTaskStatus:(NSNotification *)note; //callback when App quit or crashed
-- (BOOL) deleteHelperLaunchAgent;
+- (void) deleteHelperLaunchAgent;
 - (void) setupHelperSwatter; //starts a NSTimer which callback periodically searches for a running mp_helper_path app and kills it
 - (void) disableSwatterIfActive; //disables swatter and releases mp_swatter_timer
 - (void) killHelperApp:(NSTimer*) f_timer; //kills a running instance of mp_helper_path application; f_timer can be nil, it's not used
@@ -126,7 +126,7 @@ static CARenderer* s_renderer;
   PRINT_SIGNATURE();
   assert(mp_task);
   ProcessSerialNumber psn;
-  OSErr err;
+  OSErr err = 0;
   
   // loop until we find the process
   DLOG(@"Waiting to get process...");
@@ -505,33 +505,28 @@ static CARenderer* s_renderer;
 	}
 }
 
-- (BOOL) deleteHelperLaunchAgent
+- (void) deleteHelperLaunchAgent
 {
   PRINT_SIGNATURE();
   NSAutoreleasePool* pool = [[NSAutoreleasePool alloc] init];
-  bool ret;
   if(mp_launch_agent_file_name) {
     NSArray* lib_array = NSSearchPathForDirectoriesInDomains(NSLibraryDirectory, NSUserDomainMask, TRUE);
     if([lib_array count] != 1){
       ELOG("Bah, something went wrong trying to find users Library directory");
-      ret = FALSE;
+      return;
     }
     NSString * launch_agent_file_path = [[lib_array objectAtIndex:0] stringByAppendingString:@"/LaunchAgents/"];
     launch_agent_file_path = [launch_agent_file_path stringByAppendingString:mp_launch_agent_file_name];
     if([[NSFileManager defaultManager] removeFileAtPath:launch_agent_file_path handler:nil]){
       ILOG(@"Deleted LaunchAgent file at %@", launch_agent_file_path);
-      ret = TRUE;
     } else{
       DLOG(@"Failed to delete/No LaunchAgent file at %@", launch_agent_file_path);
-      ret = FALSE;
     }
   } else {
     //no file given, just do nothing
     DLOG("No mp_launch_agent_file_name - don't try to delete it");
-    ret = TRUE;
   }
   [pool release];
-  return ret;
 }
 
 @end

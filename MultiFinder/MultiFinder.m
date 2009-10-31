@@ -366,7 +366,7 @@ void atv_hw_init(void) {
         case MF_STATE_DEFAULT_APP:
         {
             int     retry_count;
-            bool    success;
+            BOOL    success = NO;
 
             //get needed stuff for app launching
             NSUserDefaults* defaults = [NSUserDefaults standardUserDefaults];
@@ -390,7 +390,7 @@ void atv_hw_init(void) {
         case MF_STATE_USER_APP:
         {
             int     retry_count;
-            bool    success;
+            BOOL    success = NO;
 
             //get needed stuff for app launching
             NSUserDefaults* defaults = [NSUserDefaults standardUserDefaults];

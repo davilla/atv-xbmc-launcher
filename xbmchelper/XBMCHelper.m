@@ -55,8 +55,8 @@
            clickCount: (unsigned int)clickCount
 {
   if(m_verbose){
-    NSString* pressed;
-    NSString* buttonName;
+    NSString* pressed = nil;
+    NSString* buttonName = nil;
     if (pressedDown) pressed = @"(pressed)"; else pressed = @"(released)";
     
     switch(event) {

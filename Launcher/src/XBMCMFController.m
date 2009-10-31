@@ -29,7 +29,7 @@
 
 @interface XBMCMFController (private)
 
-- (BOOL) deleteHelperLaunchAgent;
+- (void) deleteHelperLaunchAgent;
 @end
 
 @implementation XBMCMFController
@@ -108,34 +108,29 @@
 	return true;
 }
 
-- (BOOL) deleteHelperLaunchAgent
+- (void) deleteHelperLaunchAgent
 {
   PRINT_SIGNATURE();
   NSAutoreleasePool* pool = [[NSAutoreleasePool alloc] init];
-  bool ret;
   if(mp_launch_agent_file_name) {
     NSArray* lib_array = NSSearchPathForDirectoriesInDomains(NSLibraryDirectory, NSUserDomainMask, TRUE);
     if([lib_array count] != 1){
       ELOG("Bah, something went wrong trying to find users Library directory");
-      ret = FALSE;
+      return;
     }
     NSString * launch_agent_file_path = [[lib_array objectAtIndex:0] stringByAppendingString:@"/LaunchAgents/"];
     launch_agent_file_path = [launch_agent_file_path stringByAppendingString:mp_launch_agent_file_name];
     DLOG(@"trying to delete LaunchAgent file at %@", launch_agent_file_path);
     if([[NSFileManager defaultManager] removeFileAtPath:launch_agent_file_path handler:nil]){
       ILOG(@"Deleted LaunchAgent file at %@", launch_agent_file_path);
-      ret = TRUE;
     } else{
       DLOG(@"Failed to delete LaunchAgent file at %@", launch_agent_file_path);
-      ret = FALSE;
     }
   } else {
     //no file given, just do nothing
     DLOG("No mp_launch_agent_file_name - don't try to delete it");
-    ret = TRUE;
   }
   [pool release];
-  return ret;
 }
 
 @end

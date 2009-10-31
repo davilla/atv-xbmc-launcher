@@ -193,7 +193,7 @@
         {
             //switch MF on/off
             NSString* current = [[self itemForRow:index] rightJustifiedText];
-            int failure_code;
+            int failure_code = 0;
             if( [current isEqualToString:@"Yes"] )
                 failure_code = [[self class] setMultiFinderMode:false];
             else if( [current isEqualToString:@"No"] )
