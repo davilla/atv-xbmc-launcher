@@ -134,7 +134,7 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.";
 	
 }
 
-- (id)controllerForIdentifier:(id)identifier {
+- (id)controllerForIdentifier:(id)identifier args:(id) identifier2{
 	// find the proper entry in categories list from Info.plist
 	NSEnumerator *enumerator = [[[self applianceInfo] applianceCategoryDescriptors] objectEnumerator];
 	id obj = nil;
@@ -182,6 +182,11 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.";
 	}
 }
 
+// ATV <3.0 method. forward to current above
+- (id)controllerForIdentifier:(id)identifier
+  [self controllerForIdentifier:identifier args:nil];
+}
+
 -(id)applianceCategories {
 	NSMutableArray *categories = [NSMutableArray array];
 	
@@ -193,6 +198,5 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.";
 	}
 	return categories;
 }
-
 
 @end
