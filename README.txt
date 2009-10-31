@@ -5,6 +5,10 @@ Copyright (c) 2008 Stephan Diederich / Team-XBMC
 see http://atv-xbmc-launcher.googlecode.com for details
 
 ## Release Notes
+### 3.2
+- fixed: ATV 3.0 compatibility (thanks |bile|!)
+- changed: download and settings are not centered anymore
+
 ### 3.1
 - added: read additional download urls from NSUserDefaults key is XBMCAdditionalDownloadPlistURLs (r660)
 - fixed: key-repeat for left/right (r643, r649 thx Guibaa!)
