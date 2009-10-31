@@ -77,7 +77,7 @@ static bool g_multifinder_mode = false;
 	
 	if(result.location != NSNotFound) {
 		DLOG(@"+[%@ className] called for whitelist check, so I'm lying, m'kay?", className);
-		className = @"RUIDVDAppliance";
+		className = @"MOVAppliance";
 	}
 	return className;
 }
