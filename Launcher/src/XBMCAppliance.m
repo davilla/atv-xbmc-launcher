@@ -64,7 +64,6 @@ static bool g_multifinder_mode = false;
 
 // Override to allow FrontRow to load custom appliance plugins
 + (NSString *) className {
-	PRINT_SIGNATURE();
 	// this function creates an NSString from the contents of the
 	// struct objc_class, which means using this will not call this
 	// function recursively, and it'll also return the *real* class
@@ -135,6 +134,8 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.";
 }
 
 - (id)controllerForIdentifier:(id)identifier args:(id) identifier2{
+  PRINT_SIGNATURE();
+  NSLog(@"identifier2 %@", identifier2);
 	// find the proper entry in categories list from Info.plist
 	NSEnumerator *enumerator = [[[self applianceInfo] applianceCategoryDescriptors] objectEnumerator];
 	id obj = nil;
@@ -183,7 +184,7 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.";
 }
 
 // ATV <3.0 method. forward to current above
-- (id)controllerForIdentifier:(id)identifier
+- (id)controllerForIdentifier:(id)identifier {
   [self controllerForIdentifier:identifier args:nil];
 }
 
@@ -198,5 +199,84 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.";
 	}
 	return categories;
 }
+
+/*
+- (id)identifierForContentAlias:(id)arg1 {
+  PRINT_SIGNATURE();
+  return nil;
+}
+
+- (id)previewControlForIdentifier:(id)arg1 {
+  PRINT_SIGNATURE();
+  return nil;
+}
+
+- (void)refreshPreviewControlDataForIdentifier:(id)arg1 {
+  PRINT_SIGNATURE();
+}
+
+- (BOOL)handleObjectSelection:(id)arg1 userInfo:(id)arg2 {
+  PRINT_SIGNATURE();
+  return NO;
+}
+
+- (BOOL)handlePlay:(id)arg1 userInfo:(id)arg2 {
+  PRINT_SIGNATURE();
+  return NO;
+}
+
+- (id)previewProvidersForIdentifier:(id)arg1 withNames:(id *)arg2 {
+  PRINT_SIGNATURE();
+  return nil;
+}
+
+- (long)shelfColumnCount {
+  return 0;
+}
+- (id)musicStoreItemWithIdentifier:(id)arg1 {
+  PRINT_SIGNATURE();
+  return nil;
+}
+- (id)categoryWithIdentifier:(id)arg1 {
+  PRINT_SIGNATURE();
+  return nil;
+}
+- (id)alertControllerForNoContent {
+  PRINT_SIGNATURE();
+  return nil;
+}
+- (int)noContentBRError {
+  PRINT_SIGNATURE();
+  return 0;
+}
+- (id)alertControllerForNoRemoteContent {
+  PRINT_SIGNATURE();
+  return nil;
+}
+- (int)noRemoteContentBRError {
+  PRINT_SIGNATURE();
+  return 0;
+}
+- (BOOL)previewError {
+  PRINT_SIGNATURE();
+  return NO;
+}
+- (id)previewErrorText {
+  PRINT_SIGNATURE();
+  return @"Crap";
+}
+- (id)previewErrorSubtext {
+  PRINT_SIGNATURE();
+  return @"previewErrorSubtext";
+}
+- (id)previewErrorIconImage{
+  PRINT_SIGNATURE();
+  return nil;
+}
+- (void)previewProviderCountChanged:(id)arg1 {
+  PRINT_SIGNATURE();
+  return;
+}
+*/
 
 @end
