@@ -135,7 +135,7 @@
 		ELOG(@"Download already running. Exiting..");
 		return ( NO );
   }
-	m_download_complete = FALSE;
+
 	// see if we can resume from the current data
 	if ( [self resumeDownload] == YES )
 		return ( YES );
@@ -207,32 +207,6 @@
 																					 handler: nil];
 }
 
-// stack callbacks
-- (void)controlWasActivated;
-{
-  PRINT_SIGNATURE();
-  [self disableScreenSaver];
-	if ( [self beginDownload] == NO )
-	{
-		[self setTitle: @"Download Failed"];
-	}
-	
-	[super controlWasActivated];
-}
-
-- (void)controlWasDeactivated;
-{
-  PRINT_SIGNATURE();
-	[self cancelDownload];
-  [self enableScreenSaver];
-	[super controlWasDeactivated];
-}
-
-- (BOOL) isNetworkDependent
-{
-	return ( YES );
-}
-
 - (void) storeResumeData
 {
 	NSData * data = [_downloader resumeData];
@@ -245,7 +219,34 @@
 	}
 }
 
-// NSURLDownload delegate methods
+#pragma mark -
+#pragma mark stack callbacks
+- (void)controlWasActivated;
+{
+  PRINT_SIGNATURE();
+	[super controlWasActivated];
+  [self disableScreenSaver];
+	if ( [self beginDownload] == NO )
+	{
+		[self setTitle: @"Download Failed"];
+	}
+}
+
+- (void)controlWasDeactivated;
+{
+  PRINT_SIGNATURE();
+	[super controlWasDeactivated];
+	[self cancelDownload];
+  [self enableScreenSaver];
+}
+
+- (BOOL) isNetworkDependent
+{
+	return ( YES );
+}
+
+#pragma mark -
+#pragma mark NSURLDownloadDelegate
 - (void) download: (NSURLDownload *) download
 decideDestinationWithSuggestedFilename: (NSString *) filename
 {
@@ -253,23 +254,20 @@ decideDestinationWithSuggestedFilename: (NSString *) filename
 	// ensure that all new path components exist
 	[[NSFileManager defaultManager] createDirectoryAtPath: [_outputPath stringByDeletingLastPathComponent]
 																						 attributes: nil];
-	
+
 	NSLog( @"Starting download to file '%@'", _outputPath );
-	
+
 	[download setDestination: _outputPath allowOverwrite: YES];
 }
 
 - (void) download: (NSURLDownload *) download didFailWithError: (NSError *) error
 {
 	[self storeResumeData];
-	
+
 	NSLog( @"Download encountered error '%d' (%@)", [error code],
 				[error localizedDescription] );
-	
-	// show an alert for the returned error (hopefully it has nice
-	// localized reasons & such...)
-	BRAlertController * obj = [BRAlertController alertForError:error];
-	[[self stack] swapController: obj];
+
+  [delegate simpleDownloader:self didFailWithError:error];
 }
 
 - (void) download: (NSURLDownload *) download didReceiveDataOfLength: (unsigned) length
@@ -340,10 +338,6 @@ willResumeWithResponse: (NSURLResponse *) response
     [self setPrimaryText:[NSString stringWithFormat:@"%qi", _gotLength]];
 }
 
-- (BOOL) MD5SumMismatch{
-  return m_md5sum_mismatch;
-}
-
 - (void) downloadDidFinish: (NSURLDownload *) download
 {
 	// completed the download: set progress full (just in case) and
@@ -351,27 +345,30 @@ willResumeWithResponse: (NSURLResponse *) response
   //	[_progressBar setPercentage: 100.0f];
 	
 	NSLog( @"Download finished" );
-	m_download_complete = TRUE;
   
-	// we'll swap ourselves off the stack here, so let's remove our
-	// reference to the downloader, just in case calling -cancel now
-	// might cause a problem
 	[_downloader autorelease];
 	_downloader = nil;
+
   if( mp_md5 && ! [XBMCSimpleDownloader checkMD5SumOfFile:_outputPath MD5:mp_md5] ){
-    m_md5sum_mismatch = TRUE;
     DLOG(@"MD5 sum mismatch. Removing broken download");
     [[NSFileManager defaultManager] removeFileAtPath: [_outputPath stringByDeletingLastPathComponent]
                                              handler: nil];
+    [delegate simpleDownloaderDidFailMD5Check:self];
   } else {
     DLOG(@"MD5 sums matched or none was given");
-    m_md5sum_mismatch = FALSE;
+    [delegate simpleDownloaderDidFinish:self];
   }
-  [[self stack] popController];
 }
 
-- (BOOL) downloadComplete{
-	return m_download_complete;
+#pragma mark -
+#pragma mark Delegate handling
+- (void) setDelegate:(id) aDelegate {
+  delegate = aDelegate;
 }
+
+- (id) delegate {
+  return delegate;
+}
+
 
 @end

@@ -21,7 +21,6 @@
 #import <Cocoa/Cocoa.h>
 #import <BackRow/BackRow.h>
 
-@class XBMCSimpleDownloader;
 @class XBMCUpdateBlockingController;
 
 @interface XBMCUpdateController : BRMediaMenuController {
@@ -29,10 +28,8 @@
 	NSMutableArray * mp_urls; //array of NSStrings where to get udaters plists from
 	NSMutableArray* mp_items; //list items
 	NSMutableArray*	mp_updates; //list with entries what updates/downloads we offer 
-	XBMCSimpleDownloader* mp_downloader;
 	int m_update_item; //item that was selected;
   NSMutableArray* mp_downloads; //list of downloaded files
-  XBMCUpdateBlockingController* mp_blocking_updater;
   BRImageAndSyncingPreviewController *imageControl;
 }
 

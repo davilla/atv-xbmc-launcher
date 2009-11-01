@@ -35,11 +35,12 @@
 	[super dealloc];
 }
 
--(void) controlWasActivated
-{
-	PRINT_SIGNATURE();
-	[mp_update_task launch];
-	[super controlWasActivated];
+
+- (void) setDelegate:(id) aDelegate {
+  delegate = aDelegate;
+}
+- (id) delegate {
+  return delegate;
 }
 
 - (void)updateFinished:(NSNotification *)note
@@ -50,20 +51,25 @@
 	[[NSNotificationCenter defaultCenter] removeObserver:self];
 	[mp_update_task release];
 	mp_update_task = nil;
-	DLOG(@"return with status: %i", status);
 	if (status != 0)
-	{
-    [[self stack] swapController: [BRAlertController alertOfType:0 titled:nil 
-                                                     primaryText:[NSString stringWithFormat:@"Error: Update script exited with status: %i",status]
-                                                   secondaryText:nil]];
-	} else {
-    [[self stack] swapController: [BRAlertController alertOfType:0 titled:nil 
-                                                     primaryText:@"Update finished!"
-                                                   secondaryText:@"Hit menu to return"]];
-	}
+    [delegate xBMCUpdateBlockingController:self didFailWithExitCode: status];
+	else
+    [delegate xBMCUpdateBlockingControllerDidSucceed:self];
   [pool release];
 }
 
+
+#pragma mark -
+#pragma mark stack callbacks
+-(void) controlWasActivated
+{
+	PRINT_SIGNATURE();
+	[super controlWasActivated];
+	[mp_update_task launch];
+}
+
+#pragma mark -
+#pragma mark button events
 - (BOOL)brEventAction:(BREvent *)event
 {
 	PRINT_SIGNATURE();
