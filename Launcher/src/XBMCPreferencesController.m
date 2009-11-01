@@ -144,6 +144,15 @@
 	if( ! [super init])
 		return nil;
 
+  //load image and create imageControl
+  NSString *imgPath = [[NSBundle bundleForClass:[self class]] pathForResource:@"silver-gears" ofType:@"png"];
+  BRImage *myIcon = [BRImage imageWithPath:imgPath];
+
+  imageControl = [[BRImageAndSyncingPreviewController alloc] init];
+  [imageControl setImage:myIcon];
+  [imageControl setReflectionAmount:0.1f];
+  [imageControl setReflectionOffset:0.0f];
+
 	return self;
 }
 
@@ -151,6 +160,7 @@
 	PRINT_SIGNATURE();
 	[mp_items release]; 
   [mp_apps release];
+  [imageControl release];
   
 	[super dealloc];
 }
@@ -329,5 +339,9 @@
     [mp_apps addObject:[LauncherApplicationEntry finderEntry]];
     //reset current application
     m_selected_app = 0;
+}
+
+- (id) previewControlForItem:(long)fp8 {
+  return imageControl;
 }
 @end

@@ -23,11 +23,13 @@
 
 
 
-@interface XBMCPreferencesController : BRMenuController {
+@interface XBMCPreferencesController : BRMediaMenuController {
 	int padding[16];	// credit is due here to SapphireCompatibilityClasses!!
 	NSMutableArray* mp_items; //list items
   NSMutableArray* mp_apps; //initialized with applications stored in XBMCLauncher's plist
   int m_selected_app; //currently selected app in mp_apps
+  BRImageAndSyncingPreviewController *imageControl;
+
 }
 + (BOOL) autoUpdateEnabled;
 + (void) setAutoUpdate:(BOOL) f_enabled;

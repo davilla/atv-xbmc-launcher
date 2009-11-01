@@ -24,7 +24,7 @@
 @class XBMCSimpleDownloader;
 @class XBMCUpdateBlockingController;
 
-@interface XBMCUpdateController : BRMenuController {
+@interface XBMCUpdateController : BRMediaMenuController {
 	int padding[16];	// credit is due here to SapphireCompatibilityClasses!!
 	NSMutableArray * mp_urls; //array of NSStrings where to get udaters plists from
 	NSMutableArray* mp_items; //list items
@@ -33,6 +33,7 @@
 	int m_update_item; //item that was selected;
   NSMutableArray* mp_downloads; //list of downloaded files
   XBMCUpdateBlockingController* mp_blocking_updater;
+  BRImageAndSyncingPreviewController *imageControl;
 }
 
 ///@param fp_urls array with strings to download updater plists from

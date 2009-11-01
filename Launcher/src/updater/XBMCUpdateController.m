@@ -39,14 +39,25 @@
 	PRINT_SIGNATURE();
 	if( ! [super init])
 		return nil;
+
   //hold our own copy, we modify it
-  mp_urls = [[NSMutableArray arrayWithArray: fp_urls] retain];
+  mp_urls = [fp_urls mutableCopy];
   //aditionally check preferences for more download urls
   //make sure we get up2date information
   [[XBMCUserDefaults defaults] synchronize];
   [mp_urls addObjectsFromArray: [[XBMCUserDefaults defaults] arrayForKey:XBMC_ADDITIONAL_DOWNLOAD_PLIST_URLS]];
 
   mp_downloads = [[NSMutableArray alloc] init];
+  
+  //load image and create imageControl
+  NSString *imgPath = [[NSBundle bundleForClass:[self class]] pathForResource:@"download-icon" ofType:@"png"];
+  BRImage *myIcon = [BRImage imageWithPath:imgPath];
+
+  imageControl = [[BRImageAndSyncingPreviewController alloc] init];
+  [imageControl setImage:myIcon];
+  [imageControl setReflectionAmount:0.1f];
+  [imageControl setReflectionOffset:0.0f];
+
   return self;
 }
 
@@ -56,12 +67,14 @@
 	[mp_updates release];
 	[mp_items release]; 
 	[mp_downloads release];
+  [imageControl release];
+  
 	[super dealloc];
 }
 
-- (void) wasPushed {	
-	[super setListTitle: @"Launcher - Downloads"];
-	NSPropertyListFormat format;
+- (void) wasPushed {
+  [super setListTitle: @"Launcher - Downloads"];
+  NSPropertyListFormat format;
   mp_updates = [[NSMutableArray alloc] init];
   //iterate over urls given and try to download the plist
   NSEnumerator *enumerator = [mp_urls objectEnumerator];
@@ -211,6 +224,11 @@
         DLOG(@"We were just activated, nothing todo yet");
     }
     [super controlWasActivated];
+  NSRect frame = [[self parent] frame];
+  NSLog(@"super parent %@", [super parent]);
+  NSLog(@"%i %i %i %i", frame.origin.x, frame.origin.y, frame.size.height, frame.size.width);
+  NSRect bounds = [[self parent] bounds];
+  NSLog(@"%i %i %i %i", bounds.origin.x, bounds.origin.y, bounds.size.height, bounds.size.width);
 }
 
 - (void)controlWasDeactivated{
@@ -221,6 +239,10 @@
 - (void) wasPopped{
     PRINT_SIGNATURE();
     [super wasPopped];
+}
+
+- (id) previewControlForItem:(long)fp8 {
+  return imageControl;
 }
 
 @end
