@@ -385,14 +385,91 @@ static CARenderer* s_renderer;
   return false;
 }
 
+/*
+//unused for now, just a reference and can't be used
+//like that as they change from release to release
+// see + (eATVClientEvent) ATVGestureFromBREvent:
+typedef enum {
+  BR_REMOTE_ACTION_UNDEFINED = 0,
+  BR_REMOTE_ACTION_MENU = 1,
+  BR_REMOTE_ACTION_MENU_H = 2,
+  BR_REMOTE_ACTION_UP = 3,
+  BR_REMOTE_ACTION_DOWN = 4,
+  BR_REMOTE_ACTION_PLAY = 5,
+  BR_REMOTE_ACTION_LEFT = 6,
+  BR_REMOTE_ACTION_RIGHT = 7,
+  BR_REMOTE_ACTION_PLAY_H = 21,
+
+  //generic touch events
+  BR_REMOTE_ACTION_TOUCH_BEGIN = 29,
+  BR_REMOTE_ACTION_TOUCH_MOVE = 30,
+  BR_REMOTE_ACTION_TOUCH_END = 31,
+
+  //already generated gestures
+  BR_REMOTE_ACTION_SWIPE_LEFT = 32,
+  BR_REMOTE_ACTION_SWIPE_RIGHT = 33,
+  BR_REMOTE_ACTION_SWIPE_UP = 34,
+  BR_REMOTE_ACTION_SWIPE_DOWN = 35,
+
+  BR_REMOTE_ACTION_FLICK_LEFT = 36,
+  BR_REMOTE_ACTION_FLICK_RIGHT = 37,
+
+  //hm...
+  BR_REMOTE_ACTION_FIGURE_ME_OUT2 = 38,
+  BR_REMOTE_ACTION_FIGURE_ME_OUT3 = 45,
+} eBackRowRemoteAction;
+*/
+
++ (eATVClientEvent) ATVGestureFromBREvent:(BREvent*) event {
+  PRINT_SIGNATURE();
+  static NSDictionary *gestureDict = nil;
+  if(!gestureDict) {
+    if(getOSVersion() < 300) {
+      gestureDict = [[NSDictionary dictionaryWithObjectsAndKeys:
+                      [NSNumber numberWithInt: ATV_BUTTON_MENU], [NSNumber numberWithInt: 1],
+                      [NSNumber numberWithInt: ATV_BUTTON_PLAY], [NSNumber numberWithInt: 5],
+                      [NSNumber numberWithInt: ATV_BUTTON_PLAY_H], [NSNumber numberWithInt: 20],
+                      [NSNumber numberWithInt: ATV_GESTURE_SWIPE_LEFT], [NSNumber numberWithInt: 31],
+                      [NSNumber numberWithInt: ATV_GESTURE_SWIPE_RIGHT], [NSNumber numberWithInt: 32],
+                      [NSNumber numberWithInt: ATV_GESTURE_SWIPE_UP], [NSNumber numberWithInt: 33],
+                      [NSNumber numberWithInt: ATV_GESTURE_SWIPE_DOWN], [NSNumber numberWithInt: 34],
+                      nil] retain];
+    } else {
+      gestureDict = [[NSDictionary dictionaryWithObjectsAndKeys:
+                      [NSNumber numberWithInt: ATV_BUTTON_MENU], [NSNumber numberWithInt: 1],
+                      [NSNumber numberWithInt: ATV_BUTTON_PLAY], [NSNumber numberWithInt: 5],
+                      [NSNumber numberWithInt: ATV_BUTTON_PLAY_H], [NSNumber numberWithInt: 21],
+                      [NSNumber numberWithInt: ATV_GESTURE_SWIPE_LEFT], [NSNumber numberWithInt: 32],
+                      [NSNumber numberWithInt: ATV_GESTURE_SWIPE_RIGHT], [NSNumber numberWithInt: 33],
+                      [NSNumber numberWithInt: ATV_GESTURE_SWIPE_UP], [NSNumber numberWithInt: 34],
+                      [NSNumber numberWithInt: ATV_GESTURE_SWIPE_DOWN], [NSNumber numberWithInt: 35],
+                      nil] retain];
+    }
+  }
+  NSNumber * atv_client_event = [gestureDict objectForKey:[NSNumber numberWithInt:[event remoteAction]]];
+  if(atv_client_event != nil)
+    return [atv_client_event intValue];
+  else
+    return ATV_INVALID_BUTTON;
+}
+
 + (eATVClientEvent) ATVClientEventFromBREvent:(BREvent*) f_event
 {
   BOOL downEvent = [f_event value];
-  DLOG(@"got action %i %@", [f_event remoteAction], (downEvent)? @"pressed":@"released");
+  int action = [f_event remoteAction];
+  DLOG(@"got action %i %@", action, (downEvent)? @"pressed":@"released");
+
+  //new button handling; needed for iPhone Remote gestures
   if(! [f_event respondsToSelector:@selector(page)]) {
-    //happens on gesture events
-    return ATV_INVALID_BUTTON;
+//    DLOG(@"got iPhone remote event");
+    //fire only on downEvents for now
+    //BackRow filters them nicely
+    if(downEvent)
+      return [XBMCPureController ATVGestureFromBREvent:f_event];
+    else
+      return ATV_INVALID_BUTTON;
   }
+  //old legacy handling. fix me!
   unsigned int hashVal = (uint32_t)([f_event page] << 16 | [f_event usage]);
 //  DLOG(@"XBMCPureController: Button press hashVal = %i; event value %i", hashVal, [f_event value]);
   switch (hashVal)
@@ -457,7 +534,7 @@ static CARenderer* s_renderer;
       return ATV_LEARNED_PREVIOUS;
     case 786630: //learned enter, like go into something
       return ATV_LEARNED_ENTER;
-    case 786631: //learned return, like go back  funny thing that is, enter and return are _not_ the same...
+    case 786631: //learned return, like go back
       return ATV_LEARNED_RETURN;
     default:
       ELOG(@"XBMCPureController: Unknown button press hashVal = %i",hashVal);
@@ -469,6 +546,7 @@ static CARenderer* s_renderer;
 {
 	if( m_xbmc_running ){
     eATVClientEvent xbmcclient_event = [[self class] ATVClientEventFromBREvent:event];
+
     if( xbmcclient_event == ATV_INVALID_BUTTON ){
       return NO;
     } else if( [self isControllerEvent:xbmcclient_event] ){

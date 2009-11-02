@@ -274,6 +274,12 @@ void XBMCClientWrapperImpl::populateEventMap(){
   lr_map.insert(std::make_pair(ATV_LEARNED_FORWARD_RELEASE,  new CPacketBUTTON(76, "JS0:AppleRemote", BTN_UP | BTN_QUEUE)));
   lr_map.insert(std::make_pair(ATV_LEARNED_RETURN,  new CPacketBUTTON(77, "JS0:AppleRemote", BTN_DOWN | BTN_NO_REPEAT | BTN_QUEUE)));
   lr_map.insert(std::make_pair(ATV_LEARNED_ENTER,  new CPacketBUTTON(78, "JS0:AppleRemote", BTN_DOWN | BTN_NO_REPEAT | BTN_QUEUE)));
+
+  //gestures
+  lr_map.insert(std::make_pair(ATV_GESTURE_SWIPE_LEFT,  new CPacketBUTTON(80, "JS0:AppleRemote", BTN_DOWN | BTN_NO_REPEAT | BTN_QUEUE)));
+  lr_map.insert(std::make_pair(ATV_GESTURE_SWIPE_RIGHT,  new CPacketBUTTON(81, "JS0:AppleRemote", BTN_DOWN | BTN_NO_REPEAT | BTN_QUEUE)));
+  lr_map.insert(std::make_pair(ATV_GESTURE_SWIPE_UP,  new CPacketBUTTON(82, "JS0:AppleRemote", BTN_DOWN | BTN_NO_REPEAT | BTN_QUEUE)));
+  lr_map.insert(std::make_pair(ATV_GESTURE_SWIPE_DOWN,  new CPacketBUTTON(83, "JS0:AppleRemote", BTN_DOWN | BTN_NO_REPEAT | BTN_QUEUE)));
 }
 
 void XBMCClientWrapperImpl::populateSequenceMap(){
