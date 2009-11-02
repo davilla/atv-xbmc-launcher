@@ -368,8 +368,14 @@ static CARenderer* s_renderer;
 
 + (eATVClientEvent) ATVClientEventFromBREvent:(BREvent*) f_event
 {
+  BOOL downEvent = [f_event value];
+  DLOG(@"got action %i %@", [f_event remoteAction], (downEvent)? @"pressed":@"released");
+  if(! [f_event respondsToSelector:@selector(page)]) {
+    //happens on gesture events
+    return ATV_INVALID_BUTTON;
+  }
   unsigned int hashVal = (uint32_t)([f_event page] << 16 | [f_event usage]);
-  DLOG(@"XBMCPureController: Button press hashVal = %i; event value %i", hashVal, [f_event value]);
+//  DLOG(@"XBMCPureController: Button press hashVal = %i; event value %i", hashVal, [f_event value]);
   switch (hashVal)
   {
     case 65676:  // tap up
