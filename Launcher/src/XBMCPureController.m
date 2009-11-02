@@ -199,8 +199,27 @@ static CARenderer* s_renderer;
 - (void)controlWasDeactivated
 {
 	PRINT_SIGNATURE();
-	//gets called when powered down (long play)
-	//TODO: Shutdown xbmc?
+	//gets called when powered down, or, with iPhone Remote's menu hold
+  //make sure we stop XBMC and reenable rendering here
+	if([mp_task isRunning]) {
+    //remove our listener, so the other cleanup isn't called
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
+    [mp_task interrupt];
+    [mp_task waitUntilExit];
+    //wait a bit ro recover
+    NSDate *future = [NSDate dateWithTimeIntervalSinceNow: 1.];
+    [NSThread sleepUntilDate:future];
+    //reenable rendering after xbmc gave up the screen
+    [self enableRendering];
+
+    //delete a launchAgent if it's there
+    [self deleteHelperLaunchAgent];
+    //disable swatter
+    [self disableSwatterIfActive];
+    //reenable screensaver
+    [self enableScreenSaver];
+  }
+
 	[super controlWasDeactivated];
 }
 
