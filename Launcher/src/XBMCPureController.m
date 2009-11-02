@@ -190,8 +190,10 @@ static CARenderer* s_renderer;
 
 - (void)controlWasActivated
 {
-	PRINT_SIGNATURE();
-	[super controlWasActivated];
+  PRINT_SIGNATURE();
+  [super controlWasActivated];
+  //We've just been put on screen, the user can see this controller's content now
+  [self startAppAndAttachListener];
 }
 
 - (void)controlWasDeactivated
@@ -301,29 +303,11 @@ static CARenderer* s_renderer;
   [pool release];
 }
 
-- (void) wasPushed{
-	PRINT_SIGNATURE();
-	[super wasPushed];
-  //We've just been put on screen, the user can see this controller's content now	
-  [self startAppAndAttachListener];
-}
-
-- (void) wasPopped
-{
-	// The user pressed Menu, removing us from the screen
-	PRINT_SIGNATURE();
-	// always call super
-	[super wasPopped];
-}
-
 - (BOOL) recreateOnReselect
 { 
-	return true;
+	return YES;
 }
 
-- (BOOL) firstResponder{
-	return TRUE;
-}
 
 -(void) handleControllerEvent:(eATVClientEvent) f_event{
   PRINT_SIGNATURE();
