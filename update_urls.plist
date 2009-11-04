@@ -16,7 +16,7 @@
 	</dict>
 	<dict>
 		<key>UpdateScript</key>
-		<string>http://atv-xbmc-launcher.googlecode.com/svn/tags/ul-info/scripts/xbmc-9.14.alpha1_update.sh</string>
+		<string>http://atv-xbmc-launcher.googlecode.com/svn/tags/ul-info/scripts/xbmc-9.11.alpha1_update.sh</string>
 		<key>URL</key>
 		<string>http://downloads.sourceforge.net/xbmc/pre-release/xbmc-9.11-a1.dmg</string>
 		<key>Type</key>
@@ -28,7 +28,7 @@
 	</dict>
         <dict>
                 <key>UpdateScript</key>
-                <string>http://atv-xbmc-launcher.googlecode.com/svn/tags/boxee-info/scripts/boxee-0.9.11_update.sh</string>
+                <string>http://atv-xbmc-launcher.googlecode.com/svn/tags/boxee-info/scripts/boxee-0.9.14_update.sh</string>
                 <key>URL</key>
                 <string>http://dl.boxee.tv/boxee-0.9.14.dmg</string>
                 <key>Type</key>
