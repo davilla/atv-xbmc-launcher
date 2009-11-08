@@ -58,6 +58,9 @@ static void initOSAndHWVersion() {
               } else if( strstr(linebuf,"8N5966")) {
                   g_os_version = kATV_3_00;
                   NSLog(@"Found AppletTV software version r3.0");
+              } else if( strstr(linebuf,"8N5983")) {
+                  g_os_version = kATV_3_01;
+                  NSLog(@"Found AppletTV software version r3.01");
               }
           }
           pclose(inpipe); 
@@ -65,10 +68,10 @@ static void initOSAndHWVersion() {
       
       if(g_os_version == kOSUnknown) {
           // handle fallback or just exit
-          g_os_version = kATV_2_30;
+          g_os_version = kATV_3_01;
           NSLog(@"AppletTV software version could not be determined");
           NSLog(@"Version string given was: %s", linebuf);
-          NSLog(@"Defaulting to AppleTV r2.3");
+          NSLog(@"Defaulting to AppleTV r3.01");
       }
     } else {
       // OSX 10.4.x Tiger
