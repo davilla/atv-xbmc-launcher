@@ -19,6 +19,8 @@ typedef enum _OS_Vers {
 	kATV_2_10 =  210,
 	kATV_2_20 =  220,
 	kATV_2_30 =  230,
+	kATV_2_31 =  231,
+	kATV_2_40 =  240,
 	kATV_3_00 =  300,
   kATV_3_01 =  301,
 } OS_Vers;

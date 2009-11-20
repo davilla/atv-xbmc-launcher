@@ -55,6 +55,12 @@ static void initOSAndHWVersion() {
               } else if( strstr(linebuf,"8N5722")) {
                   g_os_version = kATV_2_30;
                   NSLog(@"Found AppletTV software version r2.30");
+              } else if( strstr(linebuf,"8N5818")) {
+                  g_os_version = kATV_2_31;
+                  NSLog(@"Found AppletTV software version r2.31");
+              } else if( strstr(linebuf,"8N5880")) {
+                  g_os_version = kATV_2_40;
+                  NSLog(@"Found AppletTV software version r2.40");
               } else if( strstr(linebuf,"8N5966")) {
                   g_os_version = kATV_3_00;
                   NSLog(@"Found AppletTV software version r3.0");
