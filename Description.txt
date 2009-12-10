@@ -1,6 +1,6 @@
-XBMC/Boxee Launcher - 3.1
+XBMC/Boxee Launcher - 3.2.1
 Features
     download/install and update XBMC and Boxee
 	easy addable 3rd party update sources
 Bufixes
-	left/right repeat on AppleRemote
+	ATV 3.1 compatibility
