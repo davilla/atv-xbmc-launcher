@@ -28,6 +28,10 @@
 		<string>http://atv-xbmc-launcher.googlecode.com/files/Launcher-3.2.1-debug.tar.gz</string>
 		<key>md5</key>
 		<string>c80bbc33312c42ec86b302442c8807f9</string>
+		<key>osMin</key>
+		<string>2.0</string>
+		<key>osMax</key>
+		<string>3.0.1</string>
 	</dict>
 </dict>
 </plist>
