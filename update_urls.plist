@@ -16,15 +16,15 @@
 	</dict>
 	<dict>
 		<key>UpdateScript</key>
-		<string>http://atv-xbmc-launcher.googlecode.com/svn/tags/ul-info/scripts/xbmc-9.11.beta2_update.sh</string>
+		<string>http://atv-xbmc-launcher.googlecode.com/svn/tags/ul-info/scripts/xbmc-9.11.rc1_update.sh</string>
 		<key>URL</key>
-		<string>http://downloads.sourceforge.net/xbmc/pre-release/xbmc-9.11-b2.dmg</string>
+		<string>http://downloads.sourceforge.net/xbmc/pre-release/xbmc-9.11-rc1.dmg</string>
 		<key>Type</key>
 		<string>Application</string>
 		<key>MD5</key>
-		<string>7862be7ecb8d02c86ab256493d2af4a8</string>
+		<string>5c91ad3ec73a4e7d1887eea8d3754fe7</string>
 		<key>Name</key>
-		<string>XBMC 9.11 (beta2)</string>
+		<string>XBMC 9.11 (RC1)</string>
 	</dict>
         <dict>
                 <key>UpdateScript</key>
