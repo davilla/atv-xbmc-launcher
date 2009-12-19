@@ -34,6 +34,7 @@
 		E43F36F50F502A8200376502 /* Carbon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E43F36F40F502A8200376502 /* Carbon.framework */; };
 		E43F37040F502AB400376502 /* atvxbmccommon.m in Sources */ = {isa = PBXBuildFile; fileRef = E43F36FC0F502AA400376502 /* atvxbmccommon.m */; };
 		E43F37180F502AF000376502 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E43F37170F502AF000376502 /* Foundation.framework */; };
+		E44333AB10D7EB380012CEC8 /* BackRow.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E44333AA10D7EB380012CEC8 /* BackRow.framework */; };
 		E45C1012109BC08600353685 /* download-icon.png in Resources */ = {isa = PBXBuildFile; fileRef = E45C1011109BC08600353685 /* download-icon.png */; };
 		E45C10CC109C762E00353685 /* OpenGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E45C10CB109C762E00353685 /* OpenGL.framework */; };
 		E45C10DA109C76E400353685 /* ATV30Compatibility.m in Sources */ = {isa = PBXBuildFile; fileRef = E4A2609C109A69E6003D74C6 /* ATV30Compatibility.m */; };
@@ -52,7 +53,6 @@
 		E4BD45810F5062B7002E0C87 /* XBMCPreferencesController.m in Sources */ = {isa = PBXBuildFile; fileRef = E4BD45760F5062B7002E0C87 /* XBMCPreferencesController.m */; };
 		E4BD45820F5062B7002E0C87 /* XBMCPureController.m in Sources */ = {isa = PBXBuildFile; fileRef = E4BD45780F5062B7002E0C87 /* XBMCPureController.m */; };
 		E4BD45830F5062B7002E0C87 /* XBMCUserDefaults.m in Sources */ = {isa = PBXBuildFile; fileRef = E4BD457A0F5062B7002E0C87 /* XBMCUserDefaults.m */; };
-		E4BD45A80F5063EB002E0C87 /* BackRow.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E4BD45A70F5063EB002E0C87 /* BackRow.framework */; };
 		E4BD48DD0F506406002E0C87 /* atvxbmccommon.m in Sources */ = {isa = PBXBuildFile; fileRef = E43F36FC0F502AA400376502 /* atvxbmccommon.m */; };
 		E4BD48DE0F506406002E0C87 /* osdetection.m in Sources */ = {isa = PBXBuildFile; fileRef = E43F36FE0F502AA400376502 /* osdetection.m */; };
 		E4BD48DF0F506406002E0C87 /* xbmcclientwrapper.mm in Sources */ = {isa = PBXBuildFile; fileRef = E43F37010F502AA400376502 /* xbmcclientwrapper.mm */; };
@@ -144,6 +144,7 @@
 		E43F37010F502AA400376502 /* xbmcclientwrapper.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = xbmcclientwrapper.mm; sourceTree = "<group>"; };
 		E43F37020F502AA400376502 /* XBMCDebugHelpers.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XBMCDebugHelpers.h; sourceTree = "<group>"; };
 		E43F37170F502AF000376502 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
+		E44333AA10D7EB380012CEC8 /* BackRow.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = BackRow.framework; path = System/Library/PrivateFrameworks/BackRow.framework; sourceTree = SDKROOT; };
 		E45C1011109BC08600353685 /* download-icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "download-icon.png"; sourceTree = "<group>"; };
 		E45C10CB109C762E00353685 /* OpenGL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGL.framework; path = System/Library/Frameworks/OpenGL.framework; sourceTree = SDKROOT; };
 		E4A2609B109A69E6003D74C6 /* ATV30Compatibility.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ATV30Compatibility.h; sourceTree = "<group>"; };
@@ -173,7 +174,6 @@
 		E4BD45780F5062B7002E0C87 /* XBMCPureController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XBMCPureController.m; sourceTree = "<group>"; };
 		E4BD45790F5062B7002E0C87 /* XBMCUserDefaults.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XBMCUserDefaults.h; sourceTree = "<group>"; };
 		E4BD457A0F5062B7002E0C87 /* XBMCUserDefaults.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XBMCUserDefaults.m; sourceTree = "<group>"; };
-		E4BD45A70F5063EB002E0C87 /* BackRow.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = BackRow.framework; path = external/BackRow.framework; sourceTree = SOURCE_ROOT; };
 		E4BD491A0F5069E9002E0C87 /* install.sh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.sh; name = install.sh; path = tools/install.sh; sourceTree = "<group>"; };
 		E4BD491B0F5069E9002E0C87 /* xcodeversion */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.sh; name = xcodeversion; path = tools/xcodeversion; sourceTree = "<group>"; };
 		E4BD491C0F5069F9002E0C87 /* Makefile */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.make; path = Makefile; sourceTree = "<group>"; };
@@ -215,8 +215,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				E4BD45A80F5063EB002E0C87 /* BackRow.framework in Frameworks */,
 				E45C10CC109C762E00353685 /* OpenGL.framework in Frameworks */,
+				E44333AB10D7EB380012CEC8 /* BackRow.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -243,11 +243,11 @@
 				E43F32F30F5025CD00376502 /* Products */,
 				E4BD45560F50623D002E0C87 /* deployment */,
 				E43F36770F50278F00376502 /* AppleTV.framework */,
-				E4BD45A70F5063EB002E0C87 /* BackRow.framework */,
 				E43F36F40F502A8200376502 /* Carbon.framework */,
 				E43F37170F502AF000376502 /* Foundation.framework */,
 				E4DC9A840F50565300FE98C7 /* IOKit.framework */,
 				E45C10CB109C762E00353685 /* OpenGL.framework */,
+				E44333AA10D7EB380012CEC8 /* BackRow.framework */,
 			);
 			sourceTree = "<group>";
 		};
@@ -662,6 +662,7 @@
 			buildSettings = {
 				COPY_PHASE_STRIP = NO;
 				GCC_VERSION = 4.0;
+				SDKROOT = /Developer/SDKs/MacOSX10.4u.sdk;
 			};
 			name = Debug;
 		};
@@ -670,6 +671,7 @@
 			buildSettings = {
 				COPY_PHASE_STRIP = YES;
 				GCC_VERSION = 4.0;
+				SDKROOT = /Developer/SDKs/MacOSX10.4u.sdk;
 			};
 			name = Release;
 		};
@@ -815,8 +817,10 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					external,
 					"$(FRAMEWORK_SEARCH_PATHS_QUOTED_FOR_TARGET_1)",
+					"$(FRAMEWORK_SEARCH_PATHS_QUOTED_FOR_TARGET_2)",
 				);
 				FRAMEWORK_SEARCH_PATHS_QUOTED_FOR_TARGET_1 = "\"$(SRCROOT)/external\"";
+				FRAMEWORK_SEARCH_PATHS_QUOTED_FOR_TARGET_2 = "\"$(SDKROOT)$(SYSTEM_LIBRARY_DIR)/PrivateFrameworks\"";
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_ENABLE_FIX_AND_CONTINUE = YES;
 				GCC_MODEL_TUNING = G5;
@@ -853,8 +857,10 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					external,
 					"$(FRAMEWORK_SEARCH_PATHS_QUOTED_FOR_TARGET_1)",
+					"$(FRAMEWORK_SEARCH_PATHS_QUOTED_FOR_TARGET_2)",
 				);
 				FRAMEWORK_SEARCH_PATHS_QUOTED_FOR_TARGET_1 = "\"$(SRCROOT)/external\"";
+				FRAMEWORK_SEARCH_PATHS_QUOTED_FOR_TARGET_2 = "\"$(SDKROOT)$(SYSTEM_LIBRARY_DIR)/PrivateFrameworks\"";
 				GCC_ENABLE_FIX_AND_CONTINUE = NO;
 				GCC_MODEL_TUNING = G5;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
