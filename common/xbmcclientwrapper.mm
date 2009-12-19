@@ -261,6 +261,10 @@ void XBMCClientWrapperImpl::populateEventMap(){
 	
 	// only present on atv >= 2.2
 	lr_map.insert(std::make_pair(ATV_BUTTON_PLAY_H,  new CPacketBUTTON(7, "JS0:AppleRemote", BTN_DOWN | BTN_NO_REPEAT | BTN_QUEUE)));
+
+  //new aluminium remote buttons
+	lr_map.insert(std::make_pair(ATV_ALUMINIUM_PLAY,  new CPacketBUTTON(12, "JS0:AppleRemote", BTN_DOWN | BTN_NO_REPEAT | BTN_QUEUE)));
+	lr_map.insert(std::make_pair(ATV_ALUMINIUM_PLAY_H, new CPacketBUTTON(13, "JS0:AppleRemote", BTN_DOWN | BTN_NO_REPEAT | BTN_QUEUE)));
   
   //learned remote buttons
   lr_map.insert(std::make_pair(ATV_LEARNED_PLAY,  new CPacketBUTTON(70, "JS0:AppleRemote", BTN_DOWN | BTN_NO_REPEAT | BTN_QUEUE)));

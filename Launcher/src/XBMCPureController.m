@@ -536,6 +536,8 @@ typedef enum {
       return ATV_LEARNED_ENTER;
     case 786631: //learned return, like go back
       return ATV_LEARNED_RETURN;
+    case 786637:
+      return ATV_ALUMINIUM_PLAY;
     default:
       ELOG(@"XBMCPureController: Unknown button press hashVal = %i",hashVal);
       return ATV_INVALID_BUTTON;
