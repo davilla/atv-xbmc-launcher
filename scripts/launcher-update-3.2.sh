@@ -17,6 +17,8 @@ if [ -e $INSTALLER ]; then
 
  #delete boxeelauncher 0.1 if present
  echo $PW | sudo -S rm -rf /System/Library/CoreServices/Finder.app/Contents/PlugIns/BoxeeLauncher.frappliance
+ #remove spurious 3.2.1 from early patchsticks
+ echo $PW | sudo -S rm -rf /System/Library/CoreServices/Finder.app/Contents/PlugIns/Launcher-3.2.1-debug
  
  #install MultiFinder/Launcher combo
  echo $PW | sudo -S chmod +x $INSTALLER

@@ -40,15 +40,15 @@
         </dict>
 	<dict>
 		<key>Name</key>
-		<string>Launcher 3.1</string>
+		<string>Launcher 3.2.1</string>
 		<key>Type</key>
 		<string>Launcher</string>
 		<key>URL</key>
-		<string>http://atv-xbmc-launcher.googlecode.com/files/Launcher-3.1-debug.run</string>
+		<string>http://atv-xbmc-launcher.googlecode.com/files/Launcher-3.2.1-debug.run</string>
 		<key>MD5</key>
-		<string>42e4c5bd6fde7a4579ac1e86b0ccb6ff</string>
+		<string>da656317c8a7e56544da5326f3e0cd9e</string>
 		<key>UpdateScript</key>
-		<string>http://atv-xbmc-launcher.googlecode.com/svn/tags/ul-info/scripts/launcher-update-3.1.sh</string>
+		<string>http://atv-xbmc-launcher.googlecode.com/svn/tags/ul-info/scripts/launcher-update-3.2.sh</string>
 	</dict>
 </array>
 </plist>
