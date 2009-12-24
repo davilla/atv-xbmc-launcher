@@ -4,6 +4,18 @@
 <array>
 	<dict>
 		<key>UpdateScript</key>
+		<string>http://atv-xbmc-launcher.googlecode.com/svn/tags/ul-info/scripts/xbmc-9.11_update.sh</string>
+		<key>URL</key>
+		<string>http://downloads.sourceforge.net/xbmc/xbmc-9.11-x86.dmg</string>
+		<key>Type</key>
+		<string>Application</string>
+		<key>MD5</key>
+		<string>8e2da36818aacd578951af38c11cf93c</string>
+		<key>Name</key>
+		<string>XBMC 9.11</string>
+	</dict>
+	<dict>
+		<key>UpdateScript</key>
 		<string>http://atv-xbmc-launcher.googlecode.com/svn/tags/xbmc-info/scripts/xbmc-9.04_update.sh</string>
 		<key>URL</key>
 		<string>http://downloads.sourceforge.net/xbmc/XBMC_for_Mac-9.04.1-repack.dmg</string>
@@ -13,18 +25,6 @@
 		<string>0553d79d99275b512adfaeb820406121</string>
 		<key>Name</key>
 		<string>XBMC 9.04.1</string>
-	</dict>
-	<dict>
-		<key>UpdateScript</key>
-		<string>http://atv-xbmc-launcher.googlecode.com/svn/tags/ul-info/scripts/xbmc-9.11.rc1_update.sh</string>
-		<key>URL</key>
-		<string>http://downloads.sourceforge.net/xbmc/pre-release/xbmc-9.11-rc1.dmg</string>
-		<key>Type</key>
-		<string>Application</string>
-		<key>MD5</key>
-		<string>5c91ad3ec73a4e7d1887eea8d3754fe7</string>
-		<key>Name</key>
-		<string>XBMC 9.11 (RC1)</string>
 	</dict>
         <dict>
                 <key>UpdateScript</key>
