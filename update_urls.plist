@@ -28,13 +28,13 @@
         </dict>
 	<dict>
 		<key>Name</key>
-		<string>Launcher 3.2.1</string>
+		<string>Launcher 3.2.2</string>
 		<key>Type</key>
 		<string>Launcher</string>
 		<key>URL</key>
-		<string>http://atv-xbmc-launcher.googlecode.com/files/Launcher-3.2.1-debug.run</string>
+		<string>http://atv-xbmc-launcher.googlecode.com/files/Launcher-3.2.2-debug.run</string>
 		<key>MD5</key>
-		<string>da656317c8a7e56544da5326f3e0cd9e</string>
+		<string>3bc50bdb9cbd98d44946a9449a51211e</string>
 		<key>UpdateScript</key>
 		<string>http://atv-xbmc-launcher.googlecode.com/svn/tags/ul-info/scripts/launcher-update-3.2.sh</string>
 	</dict>
