@@ -5,6 +5,12 @@ Copyright (c) 2008 Stephan Diederich / Team-XBMC
 see http://atv-xbmc-launcher.googlecode.com for details
 
 ## Release Notes
+### 3.2.2
+- added support for new aluminium remote's Play button
+
+### 3.2.1
+- fixed version detect code for 2.3.1 and 2.4
+
 ### 3.2
 - fixed: ATV 3.0 compatibility (thanks |bile|!)
 - changed: download and settings are not centered anymore
