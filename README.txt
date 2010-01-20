@@ -5,6 +5,9 @@ Copyright (c) 2008 Stephan Diederich / Team-XBMC
 see http://atv-xbmc-launcher.googlecode.com for details
 
 ## Release Notes
+### 3.2.3
+- added support for rebooting/shutdown of ATV through XBMC shutdown menu
+
 ### 3.2.2
 - added support for new aluminium remote's Play button
 
