@@ -38,6 +38,9 @@ static CARenderer* s_renderer;
 
 @class BRLayerController;
 
+
+static OSStatus SendAppleEventToSystemProcess(AEEventID EventToSend);
+
 @interface XBMCPureController (private)
 
 - (void) disableScreenSaver;
@@ -249,18 +252,44 @@ static CARenderer* s_renderer;
 		mp_task = nil;
 		//try to kill XBMCHelper (it does not hurt if it's not running, but definately helps if it still is
 		[self killHelperApp:nil];
+    OSStatus error = noErr;
 		// use exit status to decide what to do
     switch(status){
       case 0:
         [[self stack] popController];
         break;
-      case 66:
-        DLOG(@"XBMC wants us to restart ATV. Don't do this for now");
-        [[self stack] popController];
+      case 64:
+        ILOG(@"Shutdown requested");
+        error = SendAppleEventToSystemProcess(kAEShutDown);
+        if (error == noErr) {
+          ILOG("ATV is going to shutdown!");
+          [[self stack] popController];
+        } else {
+          ILOG("ATV wouldn't shutdown\n");
+          BRAlertController* alert = [BRAlertController alertOfType:0 titled:@"Warning"
+                                                        primaryText:[NSString stringWithFormat:@"Shutdown failed somehow..."]
+                                                      secondaryText:@"Hit menu to return"];
+          [[self stack] swapController:alert];
+        }
         break;
       case 65:
-        DLOG(@"XBMC wants to be restarted. Do that");
+        ILOG(@"XBMC wants to be restarted. Do that");
         [self startAppAndAttachListener];
+        break;
+      case 66:
+        ILOG(@"Reboot requested...");
+        error = SendAppleEventToSystemProcess(kAERestart);
+        if (error == noErr) {
+          ILOG(@"ATV is going to restart!");
+          [[self stack] popController];
+        }
+        else {
+          ILOG(@"ATV wouldn't restart\n");
+          BRAlertController* alert = [BRAlertController alertOfType:0 titled:@"Warning"
+                                                        primaryText:[NSString stringWithFormat:@"Reboot failed somehow..."]
+                                                      secondaryText:@"Hit menu to return"];
+          [[self stack] swapController:alert];
+        }
         break;
       default:
       {
@@ -619,3 +648,43 @@ typedef enum {
 }
 
 @end
+
+OSStatus SendAppleEventToSystemProcess(AEEventID EventToSend)
+{
+  AEAddressDesc targetDesc;
+  static const ProcessSerialNumber kPSNOfSystemProcess = { 0, kSystemProcess };
+  AppleEvent eventReply = {typeNull, NULL};
+  AppleEvent appleEventToSend = {typeNull, NULL};
+  
+  OSStatus error = noErr;
+  
+  error = AECreateDesc(typeProcessSerialNumber, &kPSNOfSystemProcess, 
+                       sizeof(kPSNOfSystemProcess), &targetDesc);
+  
+  if (error != noErr)
+  {
+    return(error);
+  }
+  
+  error = AECreateAppleEvent(kCoreEventClass, EventToSend, &targetDesc, 
+                             kAutoGenerateReturnID, kAnyTransactionID, &appleEventToSend);
+  
+  AEDisposeDesc(&targetDesc);
+  if (error != noErr)
+  {
+    return(error);
+  }
+  
+  error = AESend(&appleEventToSend, &eventReply, kAENoReply, 
+                 kAENormalPriority, kAEDefaultTimeout, NULL, NULL);
+  
+  AEDisposeDesc(&appleEventToSend);
+  if (error != noErr)
+  {
+    return(error);
+  }
+  
+  AEDisposeDesc(&eventReply);
+  
+  return(error); 
+}
