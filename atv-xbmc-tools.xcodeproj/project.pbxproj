@@ -26,6 +26,7 @@
 
 /* Begin PBXBuildFile section */
 		E4302DCC109CDB58001461C6 /* silver-gears.png in Resources */ = {isa = PBXBuildFile; fileRef = E4302DCB109CDB58001461C6 /* silver-gears.png */; };
+		E435374611073A3200792AB8 /* Carbon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E43F36F40F502A8200376502 /* Carbon.framework */; };
 		E43F32FD0F5025DE00376502 /* settingshelper_main.mm in Sources */ = {isa = PBXBuildFile; fileRef = E43F32FC0F5025DE00376502 /* settingshelper_main.mm */; };
 		E43F36780F50278F00376502 /* AppleTV.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E43F36770F50278F00376502 /* AppleTV.framework */; };
 		E43F36A50F5027E800376502 /* MultiFinder.m in Sources */ = {isa = PBXBuildFile; fileRef = E43F36A00F5027E800376502 /* MultiFinder.m */; };
@@ -215,6 +216,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E435374611073A3200792AB8 /* Carbon.framework in Frameworks */,
 				E45C10CC109C762E00353685 /* OpenGL.framework in Frameworks */,
 				E44333AB10D7EB380012CEC8 /* BackRow.framework in Frameworks */,
 			);
@@ -812,7 +814,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				APP_VERSION = 3.2.2;
+				APP_VERSION = 3.2.3pre;
 				COPY_PHASE_STRIP = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					external,
@@ -851,7 +853,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				APP_VERSION = 3.2.2;
+				APP_VERSION = 3.2.3pre;
 				COPY_PHASE_STRIP = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				FRAMEWORK_SEARCH_PATHS = (
