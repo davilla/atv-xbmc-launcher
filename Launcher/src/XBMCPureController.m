@@ -254,13 +254,17 @@ static CARenderer* s_renderer;
       case 0:
         [[self stack] popController];
         break;
-      case 66:
-        DLOG(@"XBMC wants us to restart ATV. Don't do this for now");
-        [[self stack] popController];
-        break;
       case 65:
         DLOG(@"XBMC wants to be restarted. Do that");
         [self startAppAndAttachListener];
+        break;
+      case 66:
+        DLOG(@"Reboot requested - XBMC should do that");
+        [[self stack] popController];
+        break;
+      case 64:
+        ILOG(@"Shutdown requested - XBMC should do that");
+        [[self stack] popController];
         break;
       default:
       {
