@@ -35,6 +35,18 @@ static bool g_multifinder_mode = false;
 
 @implementation XBMCAppliance
 
+//tries to extract version from bundle and returns it
++ (NSNumber * ) LauncherVersion
+{
+  NSNumber* version;
+  NSDictionary* info_dic = [[NSBundle bundleForClass:self] infoDictionary];
+  if(!info_dic)
+    version = [NSNumber numberWithInt:-1];
+  else
+    version = [info_dic objectForKey:@"CFBundleVersion"];
+  return version;
+}
+
 + (void) initialize
 {
 	PRINT_SIGNATURE();
@@ -55,10 +67,12 @@ static bool g_multifinder_mode = false;
     NSWorkspace * ws = [NSWorkspace sharedWorkspace];
     NSArray * apps = [ws valueForKeyPath:@"launchedApplications.NSApplicationName"];
     g_multifinder_mode = [apps containsObject:@"MultiFinder"]; 
-    if(g_multifinder_mode)
-        ILOG (@"Launcher running in MultiFinder mode");
-    else
-        ILOG (@"Launcher running in pure mode");    
+  NSString *startupOutput;
+  if(g_multifinder_mode)
+    startupOutput = [NSString stringWithFormat:@"Launcher %@ running in MultiFinder mode", [[self class] LauncherVersion]];
+  else
+    startupOutput = [NSString stringWithFormat:@"Launcher %@ running in pure mode", [[self class] LauncherVersion]];
+  NSLog(@"%@", startupOutput);
     
 }
 
@@ -112,12 +126,6 @@ static bool g_multifinder_mode = false;
 }
 
 + (BRAlertController*) getAboutController {
-  NSNumber* version;
-  NSDictionary* info_dic = [[NSBundle bundleForClass:self] infoDictionary];
-  if(!info_dic)
-    version = [NSNumber numberWithInt:-1];
-  else
-    version = [info_dic objectForKey:@"CFBundleVersion"];
 	NSString* licence_string = @"This program is free software: you can redistribute it and/or modify\nit under the terms of the GNU General Public License as published by\nthe Free Software Foundation, either version 3 of the License, or\
 (at your option) any later version.\
 This program is distributed in the hope that it will be useful,\
@@ -127,7 +135,7 @@ GNU General Public License for more details.\
 You should have received a copy of the GNU General Public License\
 along with this program. If not, see <http://www.gnu.org/licenses/>.";
 	return [BRAlertController alertOfType:0 titled:@"About" 
-                            primaryText:[NSString stringWithFormat:@"Launcher %@", version]
+                            primaryText:[NSString stringWithFormat:@"Launcher %@", [[self class] LauncherVersion]]
 													secondaryText:[NSString stringWithFormat:@"Contributors: Scott Davilla / Stephan Diederich Copyright 2008 Team-XBMC\nsee http://atv-xbmc-launcher.googlecode.com or www.xbmc.org for details\n%@",licence_string
 																				 ]];
 	
