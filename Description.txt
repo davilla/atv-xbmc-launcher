@@ -1,4 +1,4 @@
-XBMC/Boxee Launcher - 3.2.1
+XBMC/Boxee Launcher - 3.2.2
 Features
     download/install and update XBMC and Boxee
 	easy addable 3rd party update sources

@@ -19,19 +19,19 @@
 		<key>license</key>
 		<string>http://atv-xbmc-launcher.googlecode.com/svn/trunk/xbmclauncher/LICENSE.txt</string>
 		<key>Version</key>
-		<string>3.2.1</string>
+		<string>3.2.2</string>
 		<key>displayVersion</key>
-		<string>3.2.1</string>
+		<string>3.2.2</string>
 		<key>ReleaseDate</key>
-		<date>2009-11-20T06:00:00Z</date>
+		<date>2010-01-12T06:00:00Z</date>
 		<key>URL</key>
-		<string>http://atv-xbmc-launcher.googlecode.com/files/Launcher-3.2.1-debug.tar.gz</string>
+		<string>http://atv-xbmc-launcher.googlecode.com/files/Launcher-3.2.2-debug.tar.gz</string>
 		<key>md5</key>
-		<string>c80bbc33312c42ec86b302442c8807f9</string>
+		<string>d43c9ea248d066b17d22fec315b696e2</string>
 		<key>osMin</key>
 		<string>2.0</string>
 		<key>osMax</key>
-		<string>3.0.1</string>
+		<string>3.0.2</string>
 	</dict>
 </dict>
 </plist>
