@@ -195,7 +195,6 @@
 - (void) cleanupUpdateFiles {
   //clear downloaded files
   DLOG(@"Update finished. Clearing download cache");
-  NSDictionary* dict = [mp_updates objectAtIndex:m_update_item];
   NSString* script_folder = [mp_updateScriptPath stringByDeletingLastPathComponent];
   DLOG("Removing %@ ", script_folder);
   [[NSFileManager defaultManager] removeFileAtPath: script_folder
