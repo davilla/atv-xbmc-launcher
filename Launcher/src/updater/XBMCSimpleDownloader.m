@@ -76,9 +76,20 @@
 		
 		__cachePath = [[__cachePath stringByAppendingPathComponent: @"XBMCLauncherDownloads"] retain];
 		
-		// ensure this exists
-		[[NSFileManager defaultManager] createDirectoryAtPath: __cachePath
-																							 attributes: nil];
+    NSFileManager* filemanager = [NSFileManager defaultManager];
+    
+    //there have been problems where this directory is actually an already existing file
+    BOOL isDirectory = YES;
+    if ([filemanager fileExistsAtPath:__cachePath isDirectory:&isDirectory] && !isDirectory) {
+      //remove that file
+      if (! [filemanager removeFileAtPath:__cachePath handler:nil] ) {
+        ELOG(@"Failed to clean download-cache from file '%@'", __cachePath);
+      }
+    }
+    
+		// create the directory
+		[filemanager createDirectoryAtPath: __cachePath
+                            attributes: nil];
 	}
 	
 	return ( __cachePath );
