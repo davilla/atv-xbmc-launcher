@@ -118,10 +118,7 @@
 	if( ! [super initWithType:0 titled:nil primaryText:nil secondaryText:nil])
 		return nil;
 	mp_urlstr = [fp_path retain];
-  if(fp_md5)
-    mp_md5 = [fp_md5 retain];
-  else
-    mp_md5 = nil;
+  mp_md5 = [fp_md5 retain];
   
   [self setSecondaryText:[NSString stringWithFormat:@"URL: %@", mp_urlstr]];
 	// work out our desired output path
@@ -366,8 +363,12 @@ willResumeWithResponse: (NSURLResponse *) response
                                              handler: nil];
     [delegate simpleDownloaderDidFailMD5Check:self];
   } else {
-    DLOG(@"MD5 sums matched or none was given");
     [delegate simpleDownloaderDidFinish:self];
+    if( mp_md5 != nil )
+      DLOG(@"Download did finish and MD5 sums matched");
+    else
+      DLOG(@"Download did finish; no MD5 given to check");
+
   }
 }
 
