@@ -65,6 +65,7 @@
 	[mp_updates release];
 	[mp_items release]; 
 	[mp_downloads release];
+  [mp_updateScriptPath release];
   [imageControl release];
   
 	[super dealloc];
@@ -142,7 +143,11 @@
 }
 
 //called if download finished successfully
-- (void) simpleDownloaderDidFinish:(XBMCSimpleDownloader *) theDownloader {
+- (void) simpleDownloader:(XBMCSimpleDownloader *) theDownloader didFinishDownloadingToFile:(NSString *) filename {
+
+  //store filename into the finishedDownloads array
+  [mp_downloads addObject:filename];
+
   //pop the current downloader from the stack
   [[self stack] popController];
 
@@ -155,7 +160,6 @@
     DLOG(@"found new url: %@", l_url);
     //there' another download. start that one first
     NSString* next_md5_lookup = [NSString stringWithFormat:@"MD5_%i",[mp_downloads count]];
-    [mp_downloads addObject:[XBMCSimpleDownloader outputPathForURLString:l_url]];
 
     XBMCSimpleDownloader *downloader = [[XBMCSimpleDownloader alloc] initWithDownloadPath:l_url
                                                                    MD5:[dict objectForKey:next_md5_lookup]];
@@ -165,10 +169,9 @@
     [downloader release];
   } else {
     //start the update script with path to downloaded file(s)
-    NSString* script_path = [XBMCSimpleDownloader outputPathForURLString:[dict valueForKey:@"UpdateScript"]];
-    DLOG(@"Running update %@ with argument %@", script_path, mp_downloads);
+    DLOG(@"Running update %@ with argument %@", mp_updateScriptPath, mp_downloads);
     XBMCUpdateBlockingController* updateController = [[XBMCUpdateBlockingController alloc]
-                                                      initWithScript: script_path downloads:mp_downloads];
+                                                      initWithScript:mp_updateScriptPath downloads:mp_downloads];
     [updateController setDelegate:self];
     [[self stack] pushController: updateController];
     [updateController release];
@@ -193,13 +196,18 @@
   //clear downloaded files
   DLOG(@"Update finished. Clearing download cache");
   NSDictionary* dict = [mp_updates objectAtIndex:m_update_item];
-  NSString* script_folder = [[XBMCSimpleDownloader outputPathForURLString:[dict valueForKey:@"UpdateScript"]] stringByDeletingLastPathComponent];
-  NSString* download_folder =  [[XBMCSimpleDownloader outputPathForURLString:[dict valueForKey:@"URL"]] stringByDeletingLastPathComponent];
-  DLOG("removing %@ and %@", script_folder, download_folder);
+  NSString* script_folder = [mp_updateScriptPath stringByDeletingLastPathComponent];
+  DLOG("Removing %@ ", script_folder);
   [[NSFileManager defaultManager] removeFileAtPath: script_folder
                                            handler: nil];
-  [[NSFileManager defaultManager] removeFileAtPath: download_folder
-                                           handler: nil];
+  NSEnumerator *enumerator = [mp_downloads objectEnumerator];
+  NSString *downloadPath;
+  while (downloadPath = [enumerator nextObject]) {
+    NSString* download_folder =  [downloadPath stringByDeletingLastPathComponent];
+    DLOG("Removing %@ ", download_folder);
+    [[NSFileManager defaultManager] removeFileAtPath: download_folder
+                                             handler: nil];
+  }
 }
 
 - (void) xBMCUpdateBlockingControllerDidSucceed:(XBMCUpdateBlockingController *) theUpdater {
@@ -232,16 +240,19 @@
 		return;
 	}
 	//store it where XBMCDownloader stores stuff, too
-	NSString* script_path = [XBMCSimpleDownloader outputPathForURLString:[dict valueForKey:@"UpdateScript"]];
-	[[NSFileManager defaultManager] createDirectoryAtPath: [script_path stringByDeletingLastPathComponent]
+  if( mp_updateScriptPath ){
+    [mp_updateScriptPath release];
+    mp_updateScriptPath = nil;
+  }
+	mp_updateScriptPath = [[XBMCSimpleDownloader generateOutputPathForURLString:[dict valueForKey:@"UpdateScript"]] retain];
+	[[NSFileManager defaultManager] createDirectoryAtPath: [mp_updateScriptPath stringByDeletingLastPathComponent]
                                              attributes: nil];
-	if( ! [script_data writeToFile:script_path atomically:YES] ) {
-		ELOG(@"Could not save update script to %@", script_path);
+	if( ! [script_data writeToFile:mp_updateScriptPath atomically:YES] ) {
+		ELOG(@"Could not save update script to %@", mp_updateScriptPath);
 		return;
 	}
-	DLOG(@"Downloaded update script to %@. Starting download of update...", script_path);
+	DLOG(@"Downloaded update script to %@. Starting download of update...", mp_updateScriptPath);
   [mp_downloads removeAllObjects];
-  [mp_downloads addObject:[XBMCSimpleDownloader outputPathForURLString:[dict valueForKey:@"URL"]]];
   
   //push the download controller, it reports back through the delegate
   XBMCSimpleDownloader *downloader = [[XBMCSimpleDownloader alloc] initWithDownloadPath:[dict valueForKey:@"URL"] MD5:[dict objectForKey:@"MD5"]];

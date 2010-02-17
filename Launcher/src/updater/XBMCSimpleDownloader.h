@@ -26,8 +26,14 @@
 }
 + (void) clearAllDownloadCaches;
 + (NSString *) downloadCachePath;
-+ (NSString *) outputPathForURLString: (NSString *) urlstr;
+
 + (BOOL) checkMD5SumOfFile:(NSString*) f_file_path MD5:(NSString*) f_md5;
+
+//return an NSString of form:
+// ~/Library/Caches/XBMCLauncherDownloads/myfile.download/myfile
+//if output path cannot be figured from urlstr, this returns an arbitrary string
+//ATTENTION: this is might _NOT_ return the same NSString for a urlstr on subsequent calls
++ (NSString *) generateOutputPathForURLString: (NSString *) urlstr;
 
 // inits a new downloader for specified path and optional MD5
 // once it's pushed onto the stack, it starts downloading
@@ -43,7 +49,7 @@
 @protocol XBMCSimpleDownloaderDelegate<NSObject>
 
 //called if download finished successfully
-- (void) simpleDownloaderDidFinish:(XBMCSimpleDownloader *) theDownloader;
+- (void) simpleDownloader:(XBMCSimpleDownloader *) theDownloader didFinishDownloadingToFile:(NSString *) filename;
 
 //called if download failed
 - (void) simpleDownloader:(XBMCSimpleDownloader *) theDownloader didFailWithError:(NSError *) error;

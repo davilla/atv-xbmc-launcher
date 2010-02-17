@@ -29,6 +29,7 @@
 	NSMutableArray* mp_items; //list items
 	NSMutableArray*	mp_updates; //list with entries what updates/downloads we offer 
 	int m_update_item; //item that was selected;
+  NSString* mp_updateScriptPath; //filesystem path of downloaded update script
   NSMutableArray* mp_downloads; //list of downloaded files
   BRImageAndSyncingPreviewController *imageControl;
 }

@@ -11,6 +11,7 @@
 #import <BackRow/BackRow.h>
 #import "common/XBMCDebugHelpers.h"
 #import <helpers/BackRowCompilerShutup.h>
+#import <uuid/uuid.h>
 
 @interface XBMCSimpleDownloader (private)
 - (BOOL) beginDownload;
@@ -18,6 +19,7 @@
 - (void) cancelDownload;
 - (void) deleteDownload;
 - (void) storeResumeData;
+
 @end
 
 @implementation XBMCSimpleDownloader
@@ -95,16 +97,27 @@
 	return ( __cachePath );
 }
 
-+ (NSString *) outputPathForURLString: (NSString *) urlstr
++ (NSString *) generateOutputPathForURLString: (NSString *) urlstr
 {
 	NSString * cache = [self downloadCachePath];
 	NSString * name = [urlstr lastPathComponent];
 	
-	// trim any parameters from the URL
-	NSRange range = [name rangeOfString: @"?"];
-	if ( range.location != NSNotFound )
-		name = [name substringToIndex: range.location];
-	
+  //sanity check the name
+  if( name == nil || [name length] == 0 ){
+    uuid_t uuid;
+    uuid_generate(uuid);
+    char uuidString[37];
+    uuid_unparse_upper(uuid, uuidString);
+    name = [[NSFileManager defaultManager]
+            stringWithFileSystemRepresentation:uuidString
+            length:strlen(uuidString)];
+  } else {
+    // trim any parameters from the URL
+    NSRange range = [name rangeOfString: @"?"];
+    if ( range.location != NSNotFound )
+      name = [name substringToIndex: range.location];    
+  }
+  	
 	NSString * folder = [[name stringByDeletingPathExtension]
 											 stringByAppendingPathExtension: @"download"];
 	
@@ -122,7 +135,7 @@
   
   [self setSecondaryText:[NSString stringWithFormat:@"URL: %@", mp_urlstr]];
 	// work out our desired output path
-	_outputPath = [[XBMCSimpleDownloader outputPathForURLString: mp_urlstr] retain];
+	_outputPath = [[XBMCSimpleDownloader generateOutputPathForURLString: mp_urlstr] retain];
 	return ( self );
 }
 
@@ -363,12 +376,12 @@ willResumeWithResponse: (NSURLResponse *) response
                                              handler: nil];
     [delegate simpleDownloaderDidFailMD5Check:self];
   } else {
-    [delegate simpleDownloaderDidFinish:self];
     if( mp_md5 != nil )
       DLOG(@"Download did finish and MD5 sums matched");
     else
       DLOG(@"Download did finish; no MD5 given to check");
 
+    [delegate simpleDownloader:self didFinishDownloadingToFile:_outputPath];
   }
 }
 
