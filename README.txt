@@ -6,7 +6,9 @@ see http://atv-xbmc-launcher.googlecode.com for details
 
 ## Release Notes
 ### 3.2.3
-- added support for rebooting/shutdown of ATV through XBMC shutdown menu
+- fixed bug in determining the output filename for downloads which
+  resulted in beeing unable to using the downloader any further
+- minor cleanups in logging
 
 ### 3.2.2
 - added support for new aluminium remote's Play button
