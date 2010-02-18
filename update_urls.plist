@@ -13,18 +13,18 @@
 		<string>0553d79d99275b512adfaeb820406121</string>
 		<key>Name</key>
 		<string>XBMC 9.04.1</string>
-	</dict>
+        </dict>
         <dict>
                 <key>UpdateScript</key>
-                <string>http://atv-xbmc-launcher.googlecode.com/svn/tags/boxee-info/scripts/boxee-0.9.14_update.sh</string>
+                <string>http://atv-xbmc-launcher.googlecode.com/svn/tags/boxee-info/scripts/boxee.sh</string>
                 <key>URL</key>
-                <string>http://dl.boxee.tv/boxee-0.9.14.dmg</string>
+                <string>http://dl.boxee.tv/boxee-0.9.20.10708.dmg</string>
                 <key>Type</key>
                 <string>Application</string>
                 <key>Name</key>
-                <string>Boxee alpha 0.9.14.6992</string>
+                <string>Boxee beta 0.9.20.10708</string>
                 <key>MD5</key>
-                <string>39f6b5741c9255dccc2e70f6b5bff045</string>
+                <string>04ed4d97cdff1e6159cee2344aa23ecb</string>
         </dict>
 	<dict>
 		<key>Name</key>
