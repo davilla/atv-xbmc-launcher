@@ -26,12 +26,12 @@ if [ -e $DISKIMAGE ]; then
 
   # Check if Turbo's atv_enabler or kext_enabler is loaded - necessary for Flash10.1b2
   # If we are installing flash 10.1b2 and /etc/rc.local does not contain Turbo's special 
-  # magic, then abort install and tell user what they need to do
+  # magic, then abort install and tell user what they need to do - commented out at Vulkanr's request
   
-  if [[ `egrep -ic "Turbo" "/etc/rc.local"` != "1" && $DISKIMAGE == "flashplayer10_1_p2_mac_121709.dmg" ]]; then
-		echo "$DISKIMAGE requires you to run Turbo's Kext Enabler from NitoTV Settings Menu"
-		exit -1
-  fi
+  # if [[ `egrep -ic "Turbo" "/etc/rc.local"` != "1" && $DISKIMAGE == "flashplayer10_1_p2_mac_121709.dmg" ]]; then
+  #		echo "$DISKIMAGE requires you to run Turbo's Kext Enabler from NitoTV Settings Menu"
+  #		exit -1
+  #  fi
 
   # Check if previous flash plugin is already installed in either /Library or ~/Library
   # If it finds it - it zaps it!
