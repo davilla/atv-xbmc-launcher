@@ -1,18 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
-<array> 
-		<dict>
-                <key>UpdateScript</key>
-                <string>http://atv-xbmc-launcher.googlecode.com/svn/tags/ul-info/additional-scripts/FirefoxInstaller.sh</string>
-                <key>URL</key>
-                <string>ftp://ftp.mozilla.org/pub/mozilla.org/firefox/releases/latest/mac/en-US/Firefox\ 3.6.dmg</string>
-                <key>Type</key>
-                <string>Application</string>
-                <key>MD5</key>
-                <string>03b40087a174d205cc7cc43184ef9d7f</string>
-                <key>Name</key>
-                <string>Firefox 3.6</string>
-        </dict>
+<array>
+	<dict>
+		<key>UpdateScript</key>
+		<string>http://atv-xbmc-launcher.googlecode.com/svn/tags/ul-info/additional-scripts/FirefoxInstaller.sh</string>
+		<key>URL</key>
+		<string>http://mozilla-mirror.3347.voxcdn.com/Firefox 3.6.dmg</string>
+		<key>Type</key>
+		<string>Application</string>
+		<key>MD5</key>
+		<string>03b40087a174d205cc7cc43184ef9d7f</string>
+		<key>Name</key>
+		<string>Firefox 3.6</string>
+		</dict>
 </array>
 </plist>

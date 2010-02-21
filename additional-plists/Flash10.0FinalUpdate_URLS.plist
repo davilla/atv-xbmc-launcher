@@ -1,18 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
-<array> 		
-		<dict>
-                <key>UpdateScript</key>
-                <string>http://atv-xbmc-launcher.googlecode.com/svn/tags/ul-info/additional-scripts/FlashInstaller.sh</string>
-                <key>URL</key>
-                <string>http://fpdownload.macromedia.com/get/flashplayer/current/install_flash_player_osx_ub.dmg</string>
-                <key>Type</key>
-                <string>Application</string>
-                <key>MD5</key>
-                <string>f1a990d8b265852bb1c75dd74f883b9f</string>
-                <key>Name</key>
-                <string>Flash 10.0.42.34</string>
-        </dict>
+<array>
+	<dict>
+		<key>UpdateScript</key>
+		<string>http://atv-xbmc-launcher.googlecode.com/svn/tags/ul-info/additional-scripts/FlashInstaller.sh</string>
+		<key>URL</key>
+		<string>http://fpdownload.macromedia.com/get/flashplayer/current/install_flash_player_osx_ub.dmg</string>
+		<key>Type</key>
+		<string>Application</string>
+		<key>MD5</key>
+		<string>f1a990d8b265852bb1c75dd74f883b9f</string>
+		<key>Name</key>
+		<string>Flash 10.0.42.34</string>
+	</dict>
 </array>
 </plist>
