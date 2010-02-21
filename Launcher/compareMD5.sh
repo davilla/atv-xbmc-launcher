@@ -11,7 +11,7 @@ FILENAME="$1"
 MD5SUM="$2"
 MD5APP=/sbin/md5
 
-if [ ! $FILENAME ]; then exit -1; fi;
+if [ ! "$FILENAME" ]; then exit -1; fi;
 if [ ! $MD5SUM ]; then exit -1; fi;
 
 #change logfile to get some debug output
@@ -21,9 +21,9 @@ LOGFILE=/dev/null
 ### Get PID of XBMCHelper ###
 echo "Checking MD5 of" $FILENAME "against" $MD5SUM >> $LOGFILE
 
-if [ -f $FILENAME ] 
+if [ -f "$FILENAME" ]
 then
-	TESTSUM=`$MD5APP $FILENAME | sed "s/.*= //"`  
+	TESTSUM=`$MD5APP "$FILENAME" | sed "s/.*= //"`
 	echo File MD5: $TESTSUM >> $LOGFILE
 	echo Test MD5:$MD5SUM >> $LOGFILE
 	if [ "$TESTSUM" = "$MD5SUM" ] 
@@ -35,7 +35,7 @@ then
 	exit -1
 fi
 
-echo $FILENAME "not found" >> $LOGFILE
+echo "$FILENAME not found" >> $LOGFILE
 exit -1
 
 

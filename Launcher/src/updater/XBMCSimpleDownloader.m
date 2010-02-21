@@ -166,7 +166,7 @@
 	// didn't work, delete & try again
 	[self deleteDownload];
 	
-	NSURL * url = [NSURL URLWithString: mp_urlstr];
+	NSURL * url = [NSURL URLWithString: [mp_urlstr stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]];
 	if ( url == nil ){
 		ELOG(@"Could not convert downloadpath (%@) to URL. Exiting..", mp_urlstr);
 		return ( NO );
