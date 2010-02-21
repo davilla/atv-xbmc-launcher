@@ -121,8 +121,10 @@
 	NSString * folder = [[name stringByDeletingPathExtension]
 											 stringByAppendingPathExtension: @"download"];
 	
-	return ( [NSString pathWithComponents: [NSArray arrayWithObjects: cache,
-																					folder, name, nil]] );
+	NSString *ret = [NSString pathWithComponents: [NSArray arrayWithObjects: cache,
+																					folder, name, nil]];
+  DLOG(@"Generated output path '%@' from urlstr '%@'", ret, urlstr);
+  return ret;
 }
 
 - (id) initWithDownloadPath:(NSString*) fp_path MD5:(NSString*) fp_md5{
