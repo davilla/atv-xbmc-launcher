@@ -5,6 +5,9 @@ Copyright (c) 2008 Stephan Diederich / Team-XBMC
 see http://atv-xbmc-launcher.googlecode.com for details
 
 ## Release Notes
+### 3.2.4
+- fixed bug in handling filenames with blanks
+
 ### 3.2.3
 - fixed bug in determining the output filename for downloads which
   resulted in beeing unable to using the downloader any further
