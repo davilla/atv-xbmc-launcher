@@ -32,9 +32,9 @@
 		<key>Type</key>
 		<string>Launcher</string>
 		<key>URL</key>
-		<string>http://atv-xbmc-launcher.googlecode.com/files/Launcher-3.2.3-debug.run</string>
+		<string>http://atv-xbmc-launcher.googlecode.com/files/Launcher-3.2.4-debug.run</string>
 		<key>MD5</key>
-		<string>6a359db6244823820b06b0398d453f04</string>
+		<string>87173f2c45cbaf91b069d106ffb233d8</string>
 		<key>UpdateScript</key>
 		<string>http://atv-xbmc-launcher.googlecode.com/svn/tags/ul-info/scripts/launcher-update-3.2.sh</string>
 	</dict>
