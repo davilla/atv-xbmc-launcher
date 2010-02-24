@@ -4,15 +4,15 @@
 <array>
 	<dict>
 		<key>UpdateScript</key>
-		<string>http://atv-xbmc-launcher.googlecode.com/svn/tags/ul-info/additional-scripts/FlashInstaller.sh</string>
+		<string>http://atv-xbmc-launcher.googlecode.com/svn/tags/ul-info/additional-scripts/Flash10.1Beta3.sh</string>
 		<key>URL</key>
-		<string>http://download.macromedia.com/pub/labs/flashplayer10/flashplayer10_1_p2_mac_121709.dmg</string>
+		<string>http://download.macromedia.com/pub/labs/flashplayer10/flashplayer10_1_p3_mac_022310.dmg</string>
 		<key>Type</key>
 		<string>Application</string>
 		<key>MD5</key>
-		<string>c56fa49da09df121d64b63f7a66e838a</string>
+		<string>38712ead1b1b24940423d7d3ef39eabc</string>
 		<key>Name</key>
-		<string>Flash 10.1.51.66</string>
+		<string>Flash 10.1 beta 3</string>
 	</dict>
 </array>
 </plist>

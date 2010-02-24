@@ -1,5 +1,5 @@
 #!/bin/sh
-# Flash 10.0 Installer Script for atv-xbmc-launcher 
+# Flash 10.1 Beta 3 Installer Script for atv-xbmc-launcher 
 # Jim Wiley 2010 - modified from Launcher default install scripts 
 
 DISKIMAGE=$1
@@ -11,6 +11,7 @@ echo "Installing from diskimage $DISKIMAGE"
 # check that disk-image exists
 
 if [ -e $DISKIMAGE ]; then
+  
 
   # check and store OSBoot read/write settings
   REMOUNT=0
@@ -20,7 +21,7 @@ if [ -e $DISKIMAGE ]; then
     echo $PW | sudo -S /sbin/mount -uw /
   fi
 
-  ### UNINSTALL PREVIOUS FLASH VERSIONS ###
+  ### UNINSTALL CURRENT FLASH VERSION ###
   if [[ -d "$plugdir"Flash\ Player.plugin  ]]; then
 	echo $PW | sudo -S rm -rf "$plugdir"Flash\ Player.plugin
 	echo $PW | sudo -S rm -rf "$plugdir"flashplayer.xpt
@@ -30,26 +31,25 @@ if [ -e $DISKIMAGE ]; then
   	echo $PW | sudo -S rm -rf /Library/Internet\ Plug-Ins/flashplayer.xpt
   fi
   
-  ### INSTALL FLASH PLUGIN ###  
+  ### INSTALL FLASH BETA ###
   echo $PW | sudo -S hdiutil attach $DISKIMAGE 
-  echo $PW | sudo -S pax -r -z -f /Volumes/Install\ Flash\ Player\ 10\ UB/Adobe\ Flash\ Player.pkg/Contents/Archive.pax.gz
-  echo $PW | sudo -S rm -Rd Flash\ Player.plugin/Contents/Resources/{c,d,f,i,j,k,n,p,r,s,t,z,e}*.lproj
-  echo $PW | sudo -S mv Flash\ Player.plugin/ "$plugdir"
-  echo $PW | sudo -S mv flashplayer.xpt "$plugdir"
+  echo $PW | sudo -S pax -r -z -f /Volumes/Flash\ Player/Install\ Adobe\ Flash\ Player.app/Contents/Resources/Adobe\ Flash\ Player.pkg/Contents/Archive.pax.gz
+  echo $PW | sudo -S mv Flash\ Player.plugin "$plugdir"
+  echo $PW | sudo -S cp /Volumes/Flash\ Player/Install\ Adobe\ Flash\ Player.app/Contents/Resources/flashplayer.xpt "$plugdir"
   echo $PW | sudo -S chown -R frontrow:frontrow "$plugdir"
+  
+  echo $PW | sudo -S hdiutil detach /Volumes/Flash\ Player
   
   if [[ ! -h /Library/Internet\ Plug-Ins/Flash\ Player.plugin ]]; then
    echo $PW | sudo -S ln -s "$plugdir"Flash\ Player.plugin /Library/Internet\ Plug-Ins/
    echo $PW | sudo -S ln -s "$plugdir"flashplayer.xpt /Library/Internet\ Plug-Ins/  
   fi
 
-  echo $PW | sudo -S hdiutil detach /Volumes/Install\ Flash\ Player\ 10\ UB/
-
   #sync to disk, just in case...
   /bin/sync
   
   # clean up
-  echo $PW | sudo -S rm /Users/frontrow/Movies/Install\ Flash\ Player\ 10\ UB
+  echo $PW | sudo -S rm /Users/frontrow/Movies/Flash\ Player
  
 
   # restore OSBoot read/write settings
