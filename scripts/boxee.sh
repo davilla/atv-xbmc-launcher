@@ -1,6 +1,6 @@
 #!/bin/bash
 #-------------------------------------------------------------------
-# BASH Script for Apple TV to Install rBboxee. 
+# BASH Script for Apple TV to Install Boxee. 
 # Requires: SSH
 # based on the great work by JimWiley & hillbilly1980
 #-------------------------------------------------------------------
@@ -11,9 +11,7 @@ PW="frontrow"
 echo $PW | sudo -S mount -uw /
 filedir=/Users/frontrow/BoxeeBetaInstall/
 appdir=/Users/frontrow/Applications/
-plugdir=/Library/Internet\ Plug-Ins/
-
-force=""
+plugdir=/Users/frontrow/Library/Internet\ Plug-Ins/
 
 if [ ! -d "$filedir" ]; then
 	mkdir $filedir
@@ -51,32 +49,62 @@ if [ ! -f /usr/bin/unzip ]; then
 	sudo mv -f unzip /usr/bin/
 	sudo chown root:wheel /usr/bin/unzip
 fi
+
+### INSTALL turbo_atv_enabler.bin ###
+
+# First check if User has rc.local - if not create:
+if [[ ! -e /etc/rc.local ]]; then
+	echo $PW | sudo -S touch /etc/rc.local
+	echo $PW | sudo -S chmod 644 /etc/rc.local
+	echo $PW | sudo -S chown root:wheel /etc/rc.local
+fi
+
+# Check if turbo has an entry in rc.local, if not grab and install!
+if [[ `egrep -ic "turbo" "/etc/rc.local"` != "1" ]]; then
+	wget http://0xfeedbeef.com/appletv/turbo_atv_enabler.bin
+	echo $PW | sudo -S mv turbo_atv_enabler.bin /sbin/turbo_atv_enabler.bin
+	echo $PW | sudo -S chmod 755 /sbin/turbo_atv_enabler.bin
+	echo $PW | sudo -S chown root:wheel /sbin/turbo_atv_enabler.bin
+	echo $PW | sudo -S mv /etc/rc.local "$filedir"rc.local.tmp
+	echo $PW | sudo -S chmod 755 "$filedir"rc.local.tmp
+	echo $PW | sudo -S chown frontrow:frontrow "$filedir"rc.local.tmp
+	echo $PW | sudo -S touch "$filedir"rc.local
+	echo $PW | sudo -S chmod 755 "$filedir"rc.local
+	echo $PW | sudo -S chown frontrow:frontrow "$filedir"rc.local
+	echo $PW | sudo -S echo "/sbin/turbo_atv_enabler.bin" >> "$filedir"rc.local
+	echo $PW | sudo -S cat "$filedir"rc.local.tmp >> "$filedir"rc.local
+	echo $PW | sudo -S mv "$filedir"rc.local /etc/rc.local
+	echo $PW | sudo -S chmod 644 /etc/rc.local
+	echo $PW | sudo -S chown root:wheel /etc/rc.local
+	echo $PW | sudo -S /sbin/turbo_atv_enabler.bin
+fi
 	
 ### FLASH PLUGIN ####
-if [[ ( `egrep -ic "10.0.42.34" "/Library/Internet Plug-Ins/Flash Player.plugin/Contents/Info.plist"` != "1" || $force == "reinstall" ) && $force != "latest" ]]; then
+# First move any existing plugin to $plugdir
+  	if [[ -d /Library/Internet\ Plug-Ins/Flash\ Player.plugin  && ! -h /Library/Internet\ Plug-Ins/Flash\ Player.plugin ]]; then
+  	    	echo $PW | sudo -S mv /Library/Internet\ Plug-Ins/Flash\ Player.plugin "$plugdir"
+  			echo $PW | sudo -S mv /Library/Internet\ Plug-Ins/flashplayer.xpt "$plugdir"
+	fi
+  
+if [[ `egrep -ic "10.0.45.2" "/Users/frontrow/Library/Internet Plug-Ins/Flash Player.plugin/Contents/Info.plist"` != "1" ]]; then
 	echo "Downloading Flash Plugin: 5.4MB"
 	wget http://fpdownload.macromedia.com/get/flashplayer/current/install_flash_player_osx_ub.dmg
 	echo "Installing Flash Plugin"
 	sudo hdiutil mount install_flash_player_osx_ub.dmg
 	pax -r -z -f /Volumes/Install\ Flash\ Player\ 10\ UB/Adobe\ Flash\ Player.pkg/Contents/Archive.pax.gz
 	sudo hdiutil unmount /Volumes/Install\ Flash\ Player\ 10\ UB/
-	rm -Rd Flash\ Player.plugin/Contents/Resources/{c,d,f,i,j,k,n,p,r,s,t,z}*.lproj
+	rm -Rd Flash\ Player.plugin/Contents/Resources/{c,d,f,i,j,k,n,p,r,s,t,z,e}*.lproj
 	sudo rm -rf "$plugdir"Flash\ Player.plugin
-	sudo mv Flash\ Player.plugin/ "$plugdir"Flash\ Player.plugin
-	sudo rm -rdf * 
+	sudo rm -rf "$plugdir"flashplayer.xpt
+	sudo mv Flash\ Player.plugin/ "$plugdir"
+	sudo mv flashplayer.xpt "$plugdir"
+	sudo rm -rdf *
 fi 
 
-if [[ `egrep -ic "10.1.51.66" "/Library/Internet Plug-Ins/Flash Player.plugin/Contents/Info.plist"` != "1" && $force == "latest" ]]; then
-	echo "Downloading Flash Plugin Beta: 5.4MB"
-	wget http://download.macromedia.com/pub/labs/flashplayer10/flashplayer10_1_p2_mac_121709.dmg
-	echo "Installing Flash Plugin"
-	sudo hdiutil mount flashplayer10_1_p2_mac_121709.dmg
-	pax -r -z -f /Volumes/Install\ Flash\ Player\ 10\ UB/Adobe\ Flash\ Player.pkg/Contents/Archive.pax.gz
-	sudo hdiutil unmount /Volumes/Install\ Flash\ Player\ 10\ UB/
-	sudo rm -rf "$plugdir"Flash\ Player.plugin
-	sudo mv Flash\ Player.plugin/ "$plugdir"Flash\ Player.plugin
-	sudo rm -rdf * 
-fi 
+if [[ ! -h /Library/Internet\ Plug-Ins/Flash\ Player.plugin ]]; then
+	echo $PW | sudo -S ln -s "$plugdir"Flash\ Player.plugin /Library/Internet\ Plug-Ins/
+    echo $PW | sudo -S ln -s "$plugdir"flashplayer.xpt /Library/Internet\ Plug-Ins/  
+fi
 
 ### COREAUDIOKIT ####
 if [[ `egrep -ic "180092" "/System/Library/Frameworks/CoreAudioKit.framework/Versions/Current/Resources/version.plist"` != "1" || $force == "reinstall" ]]; then
@@ -118,8 +146,8 @@ rm boxee-*.dmg
 
 cd ..
 sudo rm -rdf $filedir
-sudo chmod -R 755 /Library/Internet\ Plug-Ins/
-sudo chown -R root:wheel /Library/Internet\ Plug-Ins/
+sudo chmod -R 755 /Users/frontrow/Library/Internet\ Plug-Ins
+sudo chown -R frontrow:frontrow /Users/frontrow/Library/Internet\ Plug-Ins
 echo "Installation successful Finished!"
 exit 0
 
