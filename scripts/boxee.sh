@@ -99,10 +99,13 @@ if [ -e $DISKIMAGE ]; then
 	fi
 		
 	### INSTALL FLASH PLUGIN ####
-	# First move any existing plugin to $plugdir
+	# First move any existing plugin to $plugdir and remove any symlinks
 	if [[ -d /Library/Internet\ Plug-Ins/Flash\ Player.plugin  && ! -h /Library/Internet\ Plug-Ins/Flash\ Player.plugin ]]; then
 		echo $PW | sudo -S mv /Library/Internet\ Plug-Ins/Flash\ Player.plugin "$plugdir"
 		echo $PW | sudo -S mv /Library/Internet\ Plug-Ins/flashplayer.xpt "$plugdir"
+	else
+		echo $PW | sudo -S rm -rf /Library/Internet\ Plug-Ins/Flash\ Player.plugin
+		echo $PW | sudo -S rm -rf /Library/Internet\ Plug-Ins/flashplayer.xpt
 	fi
 	  
 	if [[ `egrep -ic "10.0.45.2" "/Users/frontrow/Library/Internet Plug-Ins/Flash Player.plugin/Contents/Info.plist"` != "1" ]]; then
@@ -120,10 +123,9 @@ if [ -e $DISKIMAGE ]; then
 		echo $PW | sudo -S rm -rdf *
 	fi 
 	
-	if [[ ! -h /Library/Internet\ Plug-Ins/Flash\ Player.plugin ]]; then
+	# Create symlinks in /Library/Internet Plug-Ins/
 		echo $PW | sudo -S ln -s "$plugdir"Flash\ Player.plugin /Library/Internet\ Plug-Ins/
 		echo $PW | sudo -S ln -s "$plugdir"flashplayer.xpt /Library/Internet\ Plug-Ins/  
-	fi
 	
 	### INSTALL CoreAudioKit.framework ####
 	if [[ `egrep -ic "180092" "/System/Library/Frameworks/CoreAudioKit.framework/Versions/Current/Resources/version.plist"` != "1" || $force == "reinstall" ]]; then
