@@ -23,12 +23,18 @@ if [ -e $DISKIMAGE ]; then
   ### UNINSTALL PREVIOUS FLASH VERSIONS ###
   if [[ -d "$plugdir"Flash\ Player.plugin  ]]; then
 	echo $PW | sudo -S rm -rf "$plugdir"Flash\ Player.plugin
-	echo $PW | sudo -S rm -rf "$plugdir"flashplayer.xpt
+	echo $PW | sudo -S rm -f "$plugdir"flashplayer.xpt
   fi
-  if [[ -d /Library/Internet\ Plug-Ins/Flash\ Player.plugin && ! -h /Library/Internet\ Plug-Ins/Flash\ Player.plugin ]]; then
+  if [[ -h /Library/Internet\ Plug-Ins/Flash\ Player.plugin  ]]; then
+  	echo $PW | sudo -S rm -f /Library/Internet\ Plug-Ins/Flash\ Player.plugin
+  	echo $PW | sudo -S rm -f /Library/Internet\ Plug-Ins/flashplayer.xpt
+  fi
+  if [[ -d /Library/Internet\ Plug-Ins/Flash\ Player.plugin  ]]; then
   	echo $PW | sudo -S rm -rf /Library/Internet\ Plug-Ins/Flash\ Player.plugin
-  	echo $PW | sudo -S rm -rf /Library/Internet\ Plug-Ins/flashplayer.xpt
+  	echo $PW | sudo -S rm -f /Library/Internet\ Plug-Ins/flashplayer.xpt
   fi
+  
+  
   
   ### INSTALL FLASH PLUGIN ###  
   echo $PW | sudo -S hdiutil attach $DISKIMAGE 
@@ -38,10 +44,10 @@ if [ -e $DISKIMAGE ]; then
   echo $PW | sudo -S mv flashplayer.xpt "$plugdir"
   echo $PW | sudo -S chown -R frontrow:frontrow "$plugdir"
   
-  if [[ ! -h /Library/Internet\ Plug-Ins/Flash\ Player.plugin ]]; then
-   echo $PW | sudo -S ln -s "$plugdir"Flash\ Player.plugin /Library/Internet\ Plug-Ins/
-   echo $PW | sudo -S ln -s "$plugdir"flashplayer.xpt /Library/Internet\ Plug-Ins/  
-  fi
+ 
+  echo $PW | sudo -S ln -s "$plugdir"Flash\ Player.plugin /Library/Internet\ Plug-Ins/
+  echo $PW | sudo -S ln -s "$plugdir"flashplayer.xpt /Library/Internet\ Plug-Ins/  
+   
 
   echo $PW | sudo -S hdiutil detach /Volumes/Install\ Flash\ Player\ 10\ UB/
 
