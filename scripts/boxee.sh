@@ -105,7 +105,7 @@ if [ -e $DISKIMAGE ]; then
 		echo $PW | sudo -S mv /Library/Internet\ Plug-Ins/flashplayer.xpt "$plugdir"
 	else
 		echo $PW | sudo -S rm -rf /Library/Internet\ Plug-Ins/Flash\ Player.plugin
-		echo $PW | sudo -S rm -rf /Library/Internet\ Plug-Ins/flashplayer.xpt
+		echo $PW | sudo -S rm -f /Library/Internet\ Plug-Ins/flashplayer.xpt
 	fi
 	  
 	if [[ `egrep -ic "10.0.45.2" "/Users/frontrow/Library/Internet Plug-Ins/Flash Player.plugin/Contents/Info.plist"` != "1" ]]; then
