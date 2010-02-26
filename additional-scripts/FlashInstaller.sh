@@ -38,7 +38,7 @@ if [ -e $DISKIMAGE ]; then
   
   ### INSTALL FLASH PLUGIN ###  
   echo $PW | sudo -S hdiutil attach $DISKIMAGE 
-  echo $PW | sudo -S pax -r -z -f /Volumes/Install\ Flash\ Player\ 10\ UB/Adobe\ Flash\ Player.pkg/Contents/Archive.pax.gz
+  echo $PW | sudo -S pax -r -z -f /Volumes/Install\ Flash\ Player\ 10\ UB/Adobe\ Flash\ Player.pkg/Contents/Resources/Adobe\ Flash\ Player.pax.gz
   echo $PW | sudo -S rm -Rd Flash\ Player.plugin/Contents/Resources/{c,d,f,i,j,k,n,p,r,s,t,z,e}*.lproj
   echo $PW | sudo -S mv Flash\ Player.plugin/ "$plugdir"
   echo $PW | sudo -S mv flashplayer.xpt "$plugdir"
