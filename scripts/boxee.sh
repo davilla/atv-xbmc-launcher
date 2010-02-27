@@ -99,33 +99,33 @@ if [ -e $DISKIMAGE ]; then
 	fi
 		
 	### INSTALL FLASH PLUGIN ####
-	# First move any existing plugin to $plugdir and remove any symlinks
-	if [[ -d /Library/Internet\ Plug-Ins/Flash\ Player.plugin  && ! -h /Library/Internet\ Plug-Ins/Flash\ Player.plugin ]]; then
-		echo $PW | sudo -S mv /Library/Internet\ Plug-Ins/Flash\ Player.plugin "$plugdir"
-		echo $PW | sudo -S mv /Library/Internet\ Plug-Ins/flashplayer.xpt "$plugdir"
-	else
-		echo $PW | sudo -S rm -rf /Library/Internet\ Plug-Ins/Flash\ Player.plugin
-		echo $PW | sudo -S rm -f /Library/Internet\ Plug-Ins/flashplayer.xpt
-	fi
-	  
-	if [[ `egrep -ic "10.0.45.2" "/Users/frontrow/Library/Internet Plug-Ins/Flash Player.plugin/Contents/Info.plist"` != "1" ]]; then
-		echo "Downloading Flash Plugin: 5.4MB"
-		wget http://fpdownload.macromedia.com/get/flashplayer/current/install_flash_player_osx_ub.dmg
-		echo "Installing Flash Plugin"
-		echo $PW | sudo -S hdiutil mount install_flash_player_osx_ub.dmg
-		pax -r -z -f /Volumes/Install\ Flash\ Player\ 10\ UB/Adobe\ Flash\ Player.pkg/Contents/Archive.pax.gz
-		echo $PW | sudo -S hdiutil unmount /Volumes/Install\ Flash\ Player\ 10\ UB/
-		rm -Rd Flash\ Player.plugin/Contents/Resources/{c,d,f,i,j,k,n,p,r,s,t,z,e}*.lproj
+	# Uninstall any existing plugin and remove any symlinks
+	if [[ -d "$plugdir"Flash\ Player.plugin  ]]; then
 		echo $PW | sudo -S rm -rf "$plugdir"Flash\ Player.plugin
-		echo $PW | sudo -S rm -rf "$plugdir"flashplayer.xpt
-		echo $PW | sudo -S mv Flash\ Player.plugin/ "$plugdir"
-		echo $PW | sudo -S mv flashplayer.xpt "$plugdir"
-		echo $PW | sudo -S rm -rdf *
-	fi 
+		echo $PW | sudo -S rm -f "$plugdir"flashplayer.xpt
+  	fi
+  	if [[ -h /Library/Internet\ Plug-Ins/Flash\ Player.plugin  ]]; then
+  		echo $PW | sudo -S rm -f /Library/Internet\ Plug-Ins/Flash\ Player.plugin
+  		echo $PW | sudo -S rm -f /Library/Internet\ Plug-Ins/flashplayer.xpt
+  	fi
+  	if [[ -d /Library/Internet\ Plug-Ins/Flash\ Player.plugin  ]]; then
+  		echo $PW | sudo -S rm -rf /Library/Internet\ Plug-Ins/Flash\ Player.plugin
+  		echo $PW | sudo -S rm -f /Library/Internet\ Plug-Ins/flashplayer.xpt
+  	fi
+	  
+	echo "Downloading Flash Plugin: 5.4MB"
+	wget http://fpdownload.macromedia.com/get/flashplayer/current/install_flash_player_osx_ub.dmg
+	echo "Installing Flash Plugin"
+	echo $PW | sudo -S hdiutil attach install_flash_player_osx_ub.dmg
+	echo $PW | sudo -S pax -r -z -f /Volumes/Install\ Flash\ Player\ 10\ UB/Adobe\ Flash\ Player.pkg/Contents/Archive.pax.gz
+	echo $PW | sudo -S rm -Rd Flash\ Player.plugin/Contents/Resources/{c,d,f,i,j,k,n,p,r,s,t,z,e}*.lproj
+	echo $PW | sudo -S mv Flash\ Player.plugin "$plugdir"
+	echo $PW | sudo -S mv flashplayer.xpt "$plugdir"
+	echo $PW | sudo -S hdiutil detach /Volumes/Install\ Flash\ Player\ 10\ UB/
 	
 	# Create symlinks in /Library/Internet Plug-Ins/
-		echo $PW | sudo -S ln -s "$plugdir"Flash\ Player.plugin /Library/Internet\ Plug-Ins/
-		echo $PW | sudo -S ln -s "$plugdir"flashplayer.xpt /Library/Internet\ Plug-Ins/  
+	echo $PW | sudo -S ln -s "$plugdir"Flash\ Player.plugin /Library/Internet\ Plug-Ins/
+	echo $PW | sudo -S ln -s "$plugdir"flashplayer.xpt /Library/Internet\ Plug-Ins/  
 	
 	### INSTALL CoreAudioKit.framework ####
 	if [[ `egrep -ic "180092" "/System/Library/Frameworks/CoreAudioKit.framework/Versions/Current/Resources/version.plist"` != "1" || $force == "reinstall" ]]; then
