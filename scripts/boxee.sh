@@ -43,7 +43,7 @@ if [ -e $DISKIMAGE ]; then
 	fi
 	
 	if [ ! -d "$plugdir" ]; then
-			echo $PW | sudo -S mkdir $plugdir
+			echo $PW | sudo -S mkdir "$plugdir"
 			echo $PW | sudo -S chown -R frontrow:frontrow "$plugdir"
 			echo $PW | sudo -S mkdir /Library/Internet\ Plug-Ins/
 	fi
