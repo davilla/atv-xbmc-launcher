@@ -128,7 +128,7 @@ if [ -e $DISKIMAGE ]; then
 	echo $PW | sudo -S ln -s "$plugdir"flashplayer.xpt /Library/Internet\ Plug-Ins/  
 	
 	### INSTALL CoreAudioKit.framework ####
-	if [[ `egrep -ic "180092" "/System/Library/Frameworks/CoreAudioKit.framework/Versions/Current/Resources/version.plist"` != "1" || $force == "reinstall" ]]; then
+	if [[ `egrep -ic "180092" "/System/Library/Frameworks/CoreAudioKit.framework/Versions/Current/Resources/version.plist"` != "1" ]]; then
 		echo "Downloading COREAUDIOKIT: 93KB"
 		wget http://www.green-light.ca/cmn_external/app/boxee/beta/CoreAudioKit.framework.zip
 		echo "Installing COREAUDIOKIT"
