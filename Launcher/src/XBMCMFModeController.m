@@ -19,7 +19,7 @@
  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#import "XBMCMFController.h"
+#import "XBMCMFModeController.h"
 #import <BackRow/BackRow.h>
 #import "helpers/BackRowCompilerShutup.h"
 #import "XBMCDebugHelpers.h"
@@ -27,12 +27,12 @@
 
 @class BRLayerController;
 
-@interface XBMCMFController (private)
+@interface XBMCMFModeController (private)
 
 - (void) deleteHelperLaunchAgent;
 @end
 
-@implementation XBMCMFController
+@implementation XBMCMFModeController
 
 - (id) init
 {

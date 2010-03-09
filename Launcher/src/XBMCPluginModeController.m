@@ -19,7 +19,7 @@
  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#import "XBMCPureController.h"
+#import "XBMCPluginModeController.h"
 #import <BackRow/BackRow.h>
 #import <OpenGL/OpenGL.h>
 
@@ -38,7 +38,7 @@ static CARenderer* s_renderer;
 
 @class BRLayerController;
 
-@interface XBMCPureController (private)
+@interface XBMCPluginModeController (private)
 
 - (void) disableScreenSaver;
 - (void) enableScreenSaver;
@@ -55,7 +55,7 @@ static CARenderer* s_renderer;
 - (void) setAppToFrontProcess;
 @end
 
-@implementation XBMCPureController
+@implementation XBMCPluginModeController
 
 - (void) disableScreenSaver{
 	PRINT_SIGNATURE();
@@ -477,7 +477,7 @@ typedef enum {
     //fire only on downEvents for now
     //BackRow filters them nicely
     if(downEvent)
-      return [XBMCPureController ATVGestureFromBREvent:f_event];
+      return [XBMCPluginModeController ATVGestureFromBREvent:f_event];
     else
       return ATV_INVALID_BUTTON;
   }

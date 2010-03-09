@@ -25,7 +25,7 @@
 
 @class XBMCClientWrapper;
 
-@interface XBMCMFController : BRController <AppControllerProtocol> {
+@interface XBMCMFModeController : BRController <AppControllerProtocol> {
 	int padding[16];	// credit is due here to SapphireCompatibilityClasses!!
 	
 	NSString* mp_app_path; //which app to launch

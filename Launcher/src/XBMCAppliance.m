@@ -22,8 +22,8 @@
 #import "XBMCAppliance.h"
 #import "common/XBMCDebugHelpers.h"
 #import "updater/XBMCUpdateController.h"
-#import "XBMCMFController.h"
-#import "XBMCPureController.h"
+#import "XBMCMFModeController.h"
+#import "XBMCPluginModeController.h"
 #import "XBMCPreferencesController.h"
 #import "XBMCUserDefaults.h"
 
@@ -163,7 +163,7 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.";
     NSDictionary* userDict = [obj valueForKey:@"userDict"];
         //depending on we're running in MultiFinder mode we return corresponding controller
         if([[self class] inMultiFinderMode]) {
-          id<AppControllerProtocol> controller = [[[XBMCMFController alloc]
+          id<AppControllerProtocol> controller = [[[XBMCMFModeController alloc]
                                                    initWithAppPath:appPath
                                                    arguments:arguments
                                                    userDictionary:userDict
@@ -171,7 +171,7 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.";
         }
         else {
             NSString* helperPath = [obj valueForKey:@"helperpath"];
-            id<AppControllerProtocol> controller = [[[XBMCPureController alloc]
+            id<AppControllerProtocol> controller = [[[XBMCPluginModeController alloc]
                                                     initWithAppPath:appPath
                                                     arguments:arguments
                                                     userDictionary:userDict

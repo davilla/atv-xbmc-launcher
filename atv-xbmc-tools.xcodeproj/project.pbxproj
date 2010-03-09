@@ -50,9 +50,9 @@
 		E4BD457D0F5062B7002E0C87 /* XBMCUpdateBlockingController.m in Sources */ = {isa = PBXBuildFile; fileRef = E4BD456E0F5062B7002E0C87 /* XBMCUpdateBlockingController.m */; };
 		E4BD457E0F5062B7002E0C87 /* XBMCUpdateController.m in Sources */ = {isa = PBXBuildFile; fileRef = E4BD45700F5062B7002E0C87 /* XBMCUpdateController.m */; };
 		E4BD457F0F5062B7002E0C87 /* XBMCAppliance.m in Sources */ = {isa = PBXBuildFile; fileRef = E4BD45720F5062B7002E0C87 /* XBMCAppliance.m */; };
-		E4BD45800F5062B7002E0C87 /* XBMCMFController.m in Sources */ = {isa = PBXBuildFile; fileRef = E4BD45740F5062B7002E0C87 /* XBMCMFController.m */; };
+		E4BD45800F5062B7002E0C87 /* XBMCMFModeController.m in Sources */ = {isa = PBXBuildFile; fileRef = E4BD45740F5062B7002E0C87 /* XBMCMFModeController.m */; };
 		E4BD45810F5062B7002E0C87 /* XBMCPreferencesController.m in Sources */ = {isa = PBXBuildFile; fileRef = E4BD45760F5062B7002E0C87 /* XBMCPreferencesController.m */; };
-		E4BD45820F5062B7002E0C87 /* XBMCPureController.m in Sources */ = {isa = PBXBuildFile; fileRef = E4BD45780F5062B7002E0C87 /* XBMCPureController.m */; };
+		E4BD45820F5062B7002E0C87 /* XBMCPluginModeController.m in Sources */ = {isa = PBXBuildFile; fileRef = E4BD45780F5062B7002E0C87 /* XBMCPluginModeController.m */; };
 		E4BD45830F5062B7002E0C87 /* XBMCUserDefaults.m in Sources */ = {isa = PBXBuildFile; fileRef = E4BD457A0F5062B7002E0C87 /* XBMCUserDefaults.m */; };
 		E4BD48DD0F506406002E0C87 /* atvxbmccommon.m in Sources */ = {isa = PBXBuildFile; fileRef = E43F36FC0F502AA400376502 /* atvxbmccommon.m */; };
 		E4BD48DE0F506406002E0C87 /* osdetection.m in Sources */ = {isa = PBXBuildFile; fileRef = E43F36FE0F502AA400376502 /* osdetection.m */; };
@@ -167,12 +167,12 @@
 		E4BD45700F5062B7002E0C87 /* XBMCUpdateController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XBMCUpdateController.m; sourceTree = "<group>"; };
 		E4BD45710F5062B7002E0C87 /* XBMCAppliance.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XBMCAppliance.h; sourceTree = "<group>"; };
 		E4BD45720F5062B7002E0C87 /* XBMCAppliance.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XBMCAppliance.m; sourceTree = "<group>"; };
-		E4BD45730F5062B7002E0C87 /* XBMCMFController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XBMCMFController.h; sourceTree = "<group>"; };
-		E4BD45740F5062B7002E0C87 /* XBMCMFController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XBMCMFController.m; sourceTree = "<group>"; };
+		E4BD45730F5062B7002E0C87 /* XBMCMFModeController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XBMCMFModeController.h; sourceTree = "<group>"; };
+		E4BD45740F5062B7002E0C87 /* XBMCMFModeController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XBMCMFModeController.m; sourceTree = "<group>"; };
 		E4BD45750F5062B7002E0C87 /* XBMCPreferencesController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XBMCPreferencesController.h; sourceTree = "<group>"; };
 		E4BD45760F5062B7002E0C87 /* XBMCPreferencesController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XBMCPreferencesController.m; sourceTree = "<group>"; };
-		E4BD45770F5062B7002E0C87 /* XBMCPureController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XBMCPureController.h; sourceTree = "<group>"; };
-		E4BD45780F5062B7002E0C87 /* XBMCPureController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XBMCPureController.m; sourceTree = "<group>"; };
+		E4BD45770F5062B7002E0C87 /* XBMCPluginModeController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XBMCPluginModeController.h; sourceTree = "<group>"; };
+		E4BD45780F5062B7002E0C87 /* XBMCPluginModeController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XBMCPluginModeController.m; sourceTree = "<group>"; };
 		E4BD45790F5062B7002E0C87 /* XBMCUserDefaults.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XBMCUserDefaults.h; sourceTree = "<group>"; };
 		E4BD457A0F5062B7002E0C87 /* XBMCUserDefaults.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XBMCUserDefaults.m; sourceTree = "<group>"; };
 		E4BD491A0F5069E9002E0C87 /* install.sh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.sh; name = install.sh; path = tools/install.sh; sourceTree = "<group>"; };
@@ -389,10 +389,10 @@
 		E4D18AD31131DCFF00334AFA /* AppControllers */ = {
 			isa = PBXGroup;
 			children = (
-				E4BD45730F5062B7002E0C87 /* XBMCMFController.h */,
-				E4BD45740F5062B7002E0C87 /* XBMCMFController.m */,
-				E4BD45770F5062B7002E0C87 /* XBMCPureController.h */,
-				E4BD45780F5062B7002E0C87 /* XBMCPureController.m */,
+				E4BD45730F5062B7002E0C87 /* XBMCMFModeController.h */,
+				E4BD45740F5062B7002E0C87 /* XBMCMFModeController.m */,
+				E4BD45770F5062B7002E0C87 /* XBMCPluginModeController.h */,
+				E4BD45780F5062B7002E0C87 /* XBMCPluginModeController.m */,
 				E4D18AD81131DD7C00334AFA /* AppControllerProtocol.h */,
 			);
 			name = AppControllers;
@@ -595,9 +595,9 @@
 				E4BD457D0F5062B7002E0C87 /* XBMCUpdateBlockingController.m in Sources */,
 				E4BD457E0F5062B7002E0C87 /* XBMCUpdateController.m in Sources */,
 				E4BD457F0F5062B7002E0C87 /* XBMCAppliance.m in Sources */,
-				E4BD45800F5062B7002E0C87 /* XBMCMFController.m in Sources */,
+				E4BD45800F5062B7002E0C87 /* XBMCMFModeController.m in Sources */,
 				E4BD45810F5062B7002E0C87 /* XBMCPreferencesController.m in Sources */,
-				E4BD45820F5062B7002E0C87 /* XBMCPureController.m in Sources */,
+				E4BD45820F5062B7002E0C87 /* XBMCPluginModeController.m in Sources */,
 				E4BD45830F5062B7002E0C87 /* XBMCUserDefaults.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

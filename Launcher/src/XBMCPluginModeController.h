@@ -32,7 +32,7 @@ typedef enum {
   CONTROLLER_EVENT_STATE_3
 } eControllerEventState;
 
-@interface XBMCPureController : BRController <AppControllerProtocol> {
+@interface XBMCPluginModeController : BRController <AppControllerProtocol> {
 	int padding[16];	// credit is due here to SapphireCompatibilityClasses!!
 	
 	NSTask* mp_task; //task for xbmc. is needed as a member, as we check status later
