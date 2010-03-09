@@ -184,9 +184,9 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.";
 		return [XBMCAppliance getAboutController];
 	} else {
 		return [BRAlertController alertOfType:0
-																	 titled:@"XBMCLauncher"
+																	 titled:@"Launcher"
 															primaryText:@"Error"
-														secondaryText:@"Unknown menu entry. This should definately NOT happen"];
+														secondaryText:@"Unknown menu entry"];
 	}
 }
 
