@@ -33,18 +33,7 @@
 const eATVClientEvent XBMC_CONTROLLER_EVENT_ACTIVATION_SEQUENCE[]={ATV_BUTTON_MENU, ATV_BUTTON_MENU, ATV_BUTTON_PLAY};
 const double XBMC_CONTROLLER_EVENT_TIMEOUT= -0.5; //timeout for activation sequence in seconds
 
-//temp storage for renderer while XBMC is running
-static CARenderer* s_renderer;
-
-@class BRLayerController;
-
 @interface XBMCPluginModeController (private)
-
-- (void) disableScreenSaver;
-- (void) enableScreenSaver;
-
-- (void) enableRendering;
-- (void) disableRendering;
 
 - (void) checkTaskStatus:(NSNotification *)note; //callback when App quit or crashed
 - (void) deleteHelperLaunchAgent;
@@ -57,107 +46,6 @@ static CARenderer* s_renderer;
 
 @implementation XBMCPluginModeController
 
-- (void) disableScreenSaver{
-	PRINT_SIGNATURE();
-	//store screen saver state and disable it
-	//!!BRSettingsFacade setScreenSaverEnabled does change the plist, but does _not_ seem to work
-	m_screen_saver_timeout = [[BRSettingsFacade singleton] screenSaverTimeout];
-	[[BRSettingsFacade singleton] setScreenSaverTimeout:-1];
-	[[BRSettingsFacade singleton] flushDiskChanges];
-}
-
-- (void) enableScreenSaver{
-	PRINT_SIGNATURE();
-	//reset screen saver to user settings
-	[[BRSettingsFacade singleton] setScreenSaverTimeout: m_screen_saver_timeout];
-	[[BRSettingsFacade singleton] flushDiskChanges];
-}
-
-- (void) enableRendering{
-  PRINT_SIGNATURE();
-  BRDisplayManager *displayManager = [BRDisplayManager sharedInstance];
-  if(getOSVersion() < 230){
-    [[NSNotificationCenter defaultCenter] postNotificationName:@"BRDisplayManagerDisplayOnline"
-                                                        object:displayManager ];
-    [[NSNotificationCenter defaultCenter] postNotificationName:@"BRDisplayManagerResumeRenderingNotification"
-                                                        object:displayManager ];
-    [displayManager captureAllDisplays];
-  } else if (getOSVersion() < 300) {
-    [displayManager _setNewDisplay:kCGDirectMainDisplay];
-    [displayManager captureAllDisplays];
-  } else {
-    BRRenderer *theRender = [BRRenderer singleton];
-    //restore the renderer
-    [theRender setRenderer:s_renderer];
-    [displayManager captureAllDisplays];
-    
-    [[NSNotificationCenter defaultCenter] postNotificationName:@"BRDisplayManagerConfigurationEnd" object: [BRDisplayManager sharedInstance]];
-  }
-}
-
-- (void) disableRendering{
-  PRINT_SIGNATURE();
-  BRDisplayManager *displayManager = [BRDisplayManager sharedInstance];
-  if(getOSVersion() < 230) {
-    [[NSNotificationCenter defaultCenter] postNotificationName:@"BRDisplayManagerDisplayOffline"
-                                                        object:displayManager ];
-    [[BRDisplayManager sharedInstance] releaseAllDisplays];
-    [[NSNotificationCenter defaultCenter] postNotificationName:@"BRDisplayManagerStopRenderingNotification"
-                                                        object:displayManager ];
-  } else if (getOSVersion() < 300) {
-    [displayManager _setNewDisplay:kCGNullDirectDisplay];
-    [displayManager releaseAllDisplays];
-  } else {
-    //ATV 3.0 and up
-    [displayManager releaseAllDisplays];
-    //grab the context and release it
-    BRRenderer *theRender = [BRRenderer singleton];
-    //we need to replace the CARenderer in BRRenderer or Finder crashes in its RenderThread
-    //save it so it can be restored later
-    s_renderer = [theRender renderer];
-    [theRender setRenderer:nil];
-    //this enables XBMC to run as a proper fullscreen app (otherwise we get an invalid drawable)
-    CGLContextObj ctx = [[theRender context] CGLContext];
-    CGLClearDrawable( ctx );
-  }
-}
-
-- (void) setAppToFrontProcess{
-  PRINT_SIGNATURE();
-  assert(mp_task);
-  ProcessSerialNumber psn;
-  OSErr err = 0;
-  
-  // loop until we find the process
-  DLOG(@"Waiting to get process...");
-  while([mp_task isRunning] && procNotFound == (err = GetProcessForPID([mp_task processIdentifier], &psn))) {
-    // wait...
-    [NSThread sleepUntilDate:[NSDate dateWithTimeIntervalSinceNow:0.5]];
-  }
-  
-  if(err) {
-    ELOG(@"Error getting PSN: %d", err);
-  } else {
-    DLOG(@"Waiting for process to be visible");
-    // wait for it to be visible
-    while([mp_task isRunning] && !IsProcessVisible(&psn)) {
-      // do nothing!
-      [NSThread sleepUntilDate:[NSDate dateWithTimeIntervalSinceNow:0.5]];
-    }
-    if( [mp_task isRunning] ){
-      DLOG(@"Process is visible, making it front");
-      SetFrontProcess(&psn);
-    }
-  }  
-}
-
-- (id) init
-{
-	[self dealloc];
-	@throw [NSException exceptionWithName:@"BNRBadInitCall" reason:@"Init XBMCPureController with initWithPath" userInfo:nil];
-	return nil;
-}
-
 static const NSString * kXBMCHelperPath = @"helperpath";
 static const NSString * kXBMCHelperLaunchAgentFileName = @"LaunchAgentFileName";
 
@@ -167,20 +55,17 @@ static const NSString * kXBMCHelperLaunchAgentFileName = @"LaunchAgentFileName";
 {
 	PRINT_SIGNATURE();
   
-  
-	if ( ![super init] )
-		return ( nil );
-  bool use_universal = [[XBMCUserDefaults defaults] boolForKey:XBMC_USE_UNIVERSAL_REMOTE];
-	mp_xbmclient = [[XBMCClientWrapper alloc] initWithUniversalMode:use_universal serverAddress:@"localhost"];
-	m_xbmc_running = NO;
-	mp_app_path = [appPath retain];
-  mp_args = [args retain];
-	mp_helper_path = [[userDictionary objectForKey:kXBMCHelperPath] retain];
-	mp_launch_agent_file_name = [[userDictionary objectForKey:kXBMCHelperLaunchAgentFileName] retain];
-	mp_swatter_timer = nil;
-	m_controller_event_state = CONTROLLER_EVENT_START_STATE;
-	mp_controller_event_timestamp = nil; 
-	return self;
+	if ( self = [super initWithAppPath:appPath arguments:args userDictionary:userDictionary] ) {
+    bool use_universal = [[XBMCUserDefaults defaults] boolForKey:XBMC_USE_UNIVERSAL_REMOTE];
+    mp_xbmclient = [[XBMCClientWrapper alloc] initWithUniversalMode:use_universal serverAddress:@"localhost"];
+    m_xbmc_running = NO;
+    mp_helper_path = [[userDictionary objectForKey:kXBMCHelperPath] retain];
+    mp_launch_agent_file_name = [[userDictionary objectForKey:kXBMCHelperLaunchAgentFileName] retain];
+    mp_swatter_timer = nil;
+    m_controller_event_state = CONTROLLER_EVENT_START_STATE;
+    mp_controller_event_timestamp = nil;     
+  }
+  return self;
 }
 
 - (void)dealloc
@@ -188,8 +73,6 @@ static const NSString * kXBMCHelperLaunchAgentFileName = @"LaunchAgentFileName";
 	PRINT_SIGNATURE();
 	[self disableSwatterIfActive];
 	[mp_xbmclient release];
-	[mp_app_path release];
-  [mp_args release];
 	[mp_helper_path release];
 	[mp_launch_agent_file_name release];
 	[mp_controller_event_timestamp release];
@@ -200,152 +83,63 @@ static const NSString * kXBMCHelperLaunchAgentFileName = @"LaunchAgentFileName";
 {
   PRINT_SIGNATURE();
   [super controlWasActivated];
-  //We've just been put on screen, the user can see this controller's content now
-  [self startAppAndAttachListener];
 }
 
 - (void)controlWasDeactivated
 {
 	PRINT_SIGNATURE();
-	//gets called when powered down, or, with iPhone Remote's menu hold
-  //make sure we stop XBMC and reenable rendering here
-	if([mp_task isRunning]) {
-    //remove our listener, so the other cleanup isn't called
-    [[NSNotificationCenter defaultCenter] removeObserver:self];
-    [mp_task interrupt];
-    [mp_task waitUntilExit];
-    //wait a bit ro recover
-    NSDate *future = [NSDate dateWithTimeIntervalSinceNow: 1.];
-    [NSThread sleepUntilDate:future];
-    //reenable rendering after xbmc gave up the screen
-    [self enableRendering];
-    
-    //delete a launchAgent if it's there
-    [self deleteHelperLaunchAgent];
-    //disable swatter
-    [self disableSwatterIfActive];
-    //reenable screensaver
-    [self enableScreenSaver];
-  }
-  
 	[super controlWasDeactivated];
+  
+  //delete a launchAgent if it's there
+  [self deleteHelperLaunchAgent];
+  //disable swatter
+  [self disableSwatterIfActive];
 }
 
-- (void)checkTaskStatus:(NSNotification *)note
-{
-	PRINT_SIGNATURE();
-  NSAutoreleasePool* pool = [[NSAutoreleasePool alloc] init];
-	[self enableRendering];
-	
-	//remove our listener
-	[[NSNotificationCenter defaultCenter] removeObserver:self];
-	//delete a launchAgent if it's there
-	[self deleteHelperLaunchAgent]; 
-	//disable swatter 
-	[self disableSwatterIfActive];
-	//reenable screensaver
-	[self enableScreenSaver];
-	if (![mp_task isRunning])
-	{
-		ILOG(@"XBMC/Boxee quit.");
-		m_xbmc_running = NO;
-		// Return code for XBMC
-		int status = [[note object] terminationStatus];
-		
-		// release the old task, as a new one gets created (if
-		[mp_task release];
-		mp_task = nil;
-		//try to kill XBMCHelper (it does not hurt if it's not running, but definately helps if it still is
-		[self killHelperApp:nil];
-		// use exit status to decide what to do
-    switch(status){
-      case 0:
-        [[self stack] popController];
-        break;
-      case 65:
-        DLOG(@"XBMC wants to be restarted. Do that");
-        [self startAppAndAttachListener];
-        break;
-      case 66:
-        DLOG(@"Reboot requested - XBMC should do that");
-        [[self stack] popController];
-        break;
-      case 64:
-        ILOG(@"Shutdown requested - XBMC should do that");
-        [[self stack] popController];
-        break;
-      default:
-      {
-        BRAlertController* alert = [BRAlertController alertOfType:0 titled:nil
-                                                      primaryText:[NSString stringWithFormat:@"Error: XBMC/Boxee exited with status: %i",status]
-                                                    secondaryText:@"Hit menu to return"];
-        [[self stack] swapController:alert];        
-      }
-    }
-	} else {
-		//Task is still running. How come?!
-		ELOG(@"Task still running. This is definately a bug :/");
-	}
-  [pool release];
-} 
-
--(void) startAppAndAttachListener{
-  PRINT_SIGNATURE();	
-  NSAutoreleasePool* pool = [[NSAutoreleasePool alloc] init];
-  //Hide frontrow (this is only needed in 720/1080p)
-	[self disableRendering];
+- (void) applicationDidLaunch {
+  m_xbmc_running = YES;
   
 	//delete a launchAgent if it's there
 	[self deleteHelperLaunchAgent];
-  
-	//start xbmc
-	mp_task = [[NSTask alloc] init];
-	@try {
-    [mp_task setLaunchPath: mp_app_path];
-    [mp_task setCurrentDirectoryPath:@"/Applications"];
-    if(mp_args) //optional argument
-      [mp_task setArguments:mp_args];
-    [mp_task launch];
-	} 
-	@catch (NSException* e) {
-		// Show frontrow menu 
-		[self enableRendering];
-		BRAlertController* alert = [BRAlertController alertOfType:0 titled:nil
-                                                  primaryText:[NSString stringWithFormat:@"Error: Cannot launch XBMC/Boxee from path:"]
-                                                secondaryText:mp_app_path];
-		[[self stack] swapController:alert];
-    [pool release];
-    return;
-	}
-	m_xbmc_running = YES;
-	[self disableScreenSaver];
-	//wait a bit for task to start
-	NSDate *future = [NSDate dateWithTimeIntervalSinceNow: 0.1];
-	[NSThread sleepUntilDate:future];
-	
-	//attach our listener
-	[[NSNotificationCenter defaultCenter] addObserver:self
-                                           selector:@selector(checkTaskStatus:)
-                                               name:NSTaskDidTerminateNotification
-                                             object:mp_task];
-  
-  // Bring XBMC to the front to capture keyboard input
-  [self setAppToFrontProcess];
-  [pool release];
 }
 
-- (BOOL) recreateOnReselect
-{ 
-	return YES;
+- (void) applicationDidExitWithCode:(int)exitCode {
+  m_xbmc_running = NO;
+  //try to kill XBMCHelper (it does not hurt if it's not running, but definately helps if it still is
+  [self killHelperApp:nil];
+  // use exit status to decide what to do
+  switch(exitCode){
+    case 0:
+      [[self stack] popController];
+      break;
+    case 65:
+      DLOG(@"XBMC wants to be restarted. Do that");
+      [self startAppAndAttachListener];
+      break;
+    case 66:
+      DLOG(@"Reboot requested - XBMC should do that");
+      [[self stack] popController];
+      break;
+    case 64:
+      ILOG(@"Shutdown requested - XBMC should do that");
+      [[self stack] popController];
+      break;
+    default:
+    {
+      BRAlertController* alert = [BRAlertController alertOfType:0 titled:nil
+                                                    primaryText:[NSString stringWithFormat:@"Error: XBMC/Boxee exited with status: %i",exitCode]
+                                                  secondaryText:@"Hit menu to return"];
+      [[self stack] swapController:alert];        
+    }
+  }
 }
-
 
 -(void) handleControllerEvent:(eATVClientEvent) f_event{
   PRINT_SIGNATURE();
   switch (f_event){
     case ATV_BUTTON_PLAY:
-      if([mp_task isRunning])
-        [mp_task terminate];
+      if([_task isRunning])
+        [_task terminate];
       break;
     default:
       DLOG(@"Unknown controller event: %i", f_event);

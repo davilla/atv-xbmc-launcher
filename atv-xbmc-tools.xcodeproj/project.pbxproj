@@ -57,6 +57,7 @@
 		E4BD48DD0F506406002E0C87 /* atvxbmccommon.m in Sources */ = {isa = PBXBuildFile; fileRef = E43F36FC0F502AA400376502 /* atvxbmccommon.m */; };
 		E4BD48DE0F506406002E0C87 /* osdetection.m in Sources */ = {isa = PBXBuildFile; fileRef = E43F36FE0F502AA400376502 /* osdetection.m */; };
 		E4BD48DF0F506406002E0C87 /* xbmcclientwrapper.mm in Sources */ = {isa = PBXBuildFile; fileRef = E43F37010F502AA400376502 /* xbmcclientwrapper.mm */; };
+		E4C125F411457BE7008044FB /* GenericPluginModeController.m in Sources */ = {isa = PBXBuildFile; fileRef = E4C125F311457BE7008044FB /* GenericPluginModeController.m */; };
 		E4C4D8890F505AEF00A9E06E /* xbmcclientwrapper.mm in Sources */ = {isa = PBXBuildFile; fileRef = E43F37010F502AA400376502 /* xbmcclientwrapper.mm */; };
 		E4C4D8930F505B7400A9E06E /* osdetection.m in Sources */ = {isa = PBXBuildFile; fileRef = E43F36FE0F502AA400376502 /* osdetection.m */; };
 		E4C4D8950F505B8800A9E06E /* Carbon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E43F36F40F502A8200376502 /* Carbon.framework */; };
@@ -178,6 +179,8 @@
 		E4BD491A0F5069E9002E0C87 /* install.sh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.sh; name = install.sh; path = tools/install.sh; sourceTree = "<group>"; };
 		E4BD491B0F5069E9002E0C87 /* xcodeversion */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.sh; name = xcodeversion; path = tools/xcodeversion; sourceTree = "<group>"; };
 		E4BD491C0F5069F9002E0C87 /* Makefile */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.make; path = Makefile; sourceTree = "<group>"; };
+		E4C125F211457BE7008044FB /* GenericPluginModeController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GenericPluginModeController.h; sourceTree = "<group>"; };
+		E4C125F311457BE7008044FB /* GenericPluginModeController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GenericPluginModeController.m; sourceTree = "<group>"; };
 		E4C4D8CD0F505EA700A9E06E /* XBMCLauncher.frappliance */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = XBMCLauncher.frappliance; sourceTree = BUILT_PRODUCTS_DIR; };
 		E4D18AD81131DD7C00334AFA /* AppControllerProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppControllerProtocol.h; sourceTree = "<group>"; };
 		E4DC9A580F5054D800FE98C7 /* xbmchelper */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = xbmchelper; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -389,11 +392,13 @@
 		E4D18AD31131DCFF00334AFA /* AppControllers */ = {
 			isa = PBXGroup;
 			children = (
+				E4D18AD81131DD7C00334AFA /* AppControllerProtocol.h */,
 				E4BD45730F5062B7002E0C87 /* XBMCMFModeController.h */,
 				E4BD45740F5062B7002E0C87 /* XBMCMFModeController.m */,
+				E4C125F211457BE7008044FB /* GenericPluginModeController.h */,
+				E4C125F311457BE7008044FB /* GenericPluginModeController.m */,
 				E4BD45770F5062B7002E0C87 /* XBMCPluginModeController.h */,
 				E4BD45780F5062B7002E0C87 /* XBMCPluginModeController.m */,
-				E4D18AD81131DD7C00334AFA /* AppControllerProtocol.h */,
 			);
 			name = AppControllers;
 			sourceTree = "<group>";
@@ -599,6 +604,7 @@
 				E4BD45810F5062B7002E0C87 /* XBMCPreferencesController.m in Sources */,
 				E4BD45820F5062B7002E0C87 /* XBMCPluginModeController.m in Sources */,
 				E4BD45830F5062B7002E0C87 /* XBMCUserDefaults.m in Sources */,
+				E4C125F411457BE7008044FB /* GenericPluginModeController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

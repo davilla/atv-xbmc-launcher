@@ -21,7 +21,7 @@
 #import <Cocoa/Cocoa.h>
 #import <BackRow/BackRow.h>
 #import "XBMCUserDefaults.h"
-#import "AppControllerProtocol.h"
+#import "GenericPluginModeController.h"
 
 @class XBMCClientWrapper;
 
@@ -32,18 +32,13 @@ typedef enum {
   CONTROLLER_EVENT_STATE_3
 } eControllerEventState;
 
-@interface XBMCPluginModeController : BRController <AppControllerProtocol> {
-	int padding[16];	// credit is due here to SapphireCompatibilityClasses!!
+@interface XBMCPluginModeController : GenericPluginModeController {
 	
-	NSTask* mp_task; //task for xbmc. is needed as a member, as we check status later
-	NSString* mp_app_path; //which app to launch
-  NSArray* mp_args; //arguments for application launch
 	NSString* mp_helper_path; //which helper to disable/enable/kill on error
 	NSString* mp_launch_agent_file_name; //filename of a LaunchAgent in ~/Library/LaunchAgents
 	BOOL m_xbmc_running;  //true while xbmc is running
 	XBMCClientWrapper* mp_xbmclient; // our own event-client implementation
 	NSTimer* mp_swatter_timer; //timer used in helperapp-swatting
-	int m_screen_saver_timeout;
 	NSDate* mp_controller_event_timestamp; //timestamp to check for controller event
 	eControllerEventState m_controller_event_state;
 }
