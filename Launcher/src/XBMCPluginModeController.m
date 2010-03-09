@@ -90,7 +90,7 @@ static CARenderer* s_renderer;
     //restore the renderer
     [theRender setRenderer:s_renderer];
     [displayManager captureAllDisplays];
-
+    
     [[NSNotificationCenter defaultCenter] postNotificationName:@"BRDisplayManagerConfigurationEnd" object: [BRDisplayManager sharedInstance]];
   }
 }
@@ -104,22 +104,22 @@ static CARenderer* s_renderer;
     [[BRDisplayManager sharedInstance] releaseAllDisplays];
     [[NSNotificationCenter defaultCenter] postNotificationName:@"BRDisplayManagerStopRenderingNotification"
                                                         object:displayManager ];
-   } else if (getOSVersion() < 300) {
-     [displayManager _setNewDisplay:kCGNullDirectDisplay];
-     [displayManager releaseAllDisplays];
-   } else {
-     //ATV 3.0 and up
-     [displayManager releaseAllDisplays];
-     //grab the context and release it
-     BRRenderer *theRender = [BRRenderer singleton];
-     //we need to replace the CARenderer in BRRenderer or Finder crashes in its RenderThread
-     //save it so it can be restored later
-     s_renderer = [theRender renderer];
-     [theRender setRenderer:nil];
-     //this enables XBMC to run as a proper fullscreen app (otherwise we get an invalid drawable)
-     CGLContextObj ctx = [[theRender context] CGLContext];
-     CGLClearDrawable( ctx );
-   }
+  } else if (getOSVersion() < 300) {
+    [displayManager _setNewDisplay:kCGNullDirectDisplay];
+    [displayManager releaseAllDisplays];
+  } else {
+    //ATV 3.0 and up
+    [displayManager releaseAllDisplays];
+    //grab the context and release it
+    BRRenderer *theRender = [BRRenderer singleton];
+    //we need to replace the CARenderer in BRRenderer or Finder crashes in its RenderThread
+    //save it so it can be restored later
+    s_renderer = [theRender renderer];
+    [theRender setRenderer:nil];
+    //this enables XBMC to run as a proper fullscreen app (otherwise we get an invalid drawable)
+    CGLContextObj ctx = [[theRender context] CGLContext];
+    CGLClearDrawable( ctx );
+  }
 }
 
 - (void) setAppToFrontProcess{
@@ -219,7 +219,7 @@ static const NSString * kXBMCHelperLaunchAgentFileName = @"LaunchAgentFileName";
     [NSThread sleepUntilDate:future];
     //reenable rendering after xbmc gave up the screen
     [self enableRendering];
-
+    
     //delete a launchAgent if it's there
     [self deleteHelperLaunchAgent];
     //disable swatter
@@ -227,7 +227,7 @@ static const NSString * kXBMCHelperLaunchAgentFileName = @"LaunchAgentFileName";
     //reenable screensaver
     [self enableScreenSaver];
   }
-
+  
 	[super controlWasDeactivated];
 }
 
@@ -294,7 +294,7 @@ static const NSString * kXBMCHelperLaunchAgentFileName = @"LaunchAgentFileName";
   NSAutoreleasePool* pool = [[NSAutoreleasePool alloc] init];
   //Hide frontrow (this is only needed in 720/1080p)
 	[self disableRendering];
-
+  
 	//delete a launchAgent if it's there
 	[self deleteHelperLaunchAgent];
   
@@ -398,39 +398,39 @@ static const NSString * kXBMCHelperLaunchAgentFileName = @"LaunchAgentFileName";
 }
 
 /*
-//unused for now, just a reference and can't be used
-//like that as they change from release to release
-// see + (eATVClientEvent) ATVGestureFromBREvent:
-typedef enum {
-  BR_REMOTE_ACTION_UNDEFINED = 0,
-  BR_REMOTE_ACTION_MENU = 1,
-  BR_REMOTE_ACTION_MENU_H = 2,
-  BR_REMOTE_ACTION_UP = 3,
-  BR_REMOTE_ACTION_DOWN = 4,
-  BR_REMOTE_ACTION_PLAY = 5,
-  BR_REMOTE_ACTION_LEFT = 6,
-  BR_REMOTE_ACTION_RIGHT = 7,
-  BR_REMOTE_ACTION_PLAY_H = 21,
-
-  //generic touch events
-  BR_REMOTE_ACTION_TOUCH_BEGIN = 29,
-  BR_REMOTE_ACTION_TOUCH_MOVE = 30,
-  BR_REMOTE_ACTION_TOUCH_END = 31,
-
-  //already generated gestures
-  BR_REMOTE_ACTION_SWIPE_LEFT = 32,
-  BR_REMOTE_ACTION_SWIPE_RIGHT = 33,
-  BR_REMOTE_ACTION_SWIPE_UP = 34,
-  BR_REMOTE_ACTION_SWIPE_DOWN = 35,
-
-  BR_REMOTE_ACTION_FLICK_LEFT = 36,
-  BR_REMOTE_ACTION_FLICK_RIGHT = 37,
-
-  //hm...
-  BR_REMOTE_ACTION_FIGURE_ME_OUT2 = 38,
-  BR_REMOTE_ACTION_FIGURE_ME_OUT3 = 45,
-} eBackRowRemoteAction;
-*/
+ //unused for now, just a reference and can't be used
+ //like that as they change from release to release
+ // see + (eATVClientEvent) ATVGestureFromBREvent:
+ typedef enum {
+ BR_REMOTE_ACTION_UNDEFINED = 0,
+ BR_REMOTE_ACTION_MENU = 1,
+ BR_REMOTE_ACTION_MENU_H = 2,
+ BR_REMOTE_ACTION_UP = 3,
+ BR_REMOTE_ACTION_DOWN = 4,
+ BR_REMOTE_ACTION_PLAY = 5,
+ BR_REMOTE_ACTION_LEFT = 6,
+ BR_REMOTE_ACTION_RIGHT = 7,
+ BR_REMOTE_ACTION_PLAY_H = 21,
+ 
+ //generic touch events
+ BR_REMOTE_ACTION_TOUCH_BEGIN = 29,
+ BR_REMOTE_ACTION_TOUCH_MOVE = 30,
+ BR_REMOTE_ACTION_TOUCH_END = 31,
+ 
+ //already generated gestures
+ BR_REMOTE_ACTION_SWIPE_LEFT = 32,
+ BR_REMOTE_ACTION_SWIPE_RIGHT = 33,
+ BR_REMOTE_ACTION_SWIPE_UP = 34,
+ BR_REMOTE_ACTION_SWIPE_DOWN = 35,
+ 
+ BR_REMOTE_ACTION_FLICK_LEFT = 36,
+ BR_REMOTE_ACTION_FLICK_RIGHT = 37,
+ 
+ //hm...
+ BR_REMOTE_ACTION_FIGURE_ME_OUT2 = 38,
+ BR_REMOTE_ACTION_FIGURE_ME_OUT3 = 45,
+ } eBackRowRemoteAction;
+ */
 
 + (eATVClientEvent) ATVGestureFromBREvent:(BREvent*) event {
   PRINT_SIGNATURE();
@@ -470,10 +470,10 @@ typedef enum {
   BOOL downEvent = [f_event value];
   int action = [f_event remoteAction];
   DLOG(@"got action %i %@", action, (downEvent)? @"pressed":@"released");
-
+  
   //new button handling; needed for iPhone Remote gestures
   if(! [f_event respondsToSelector:@selector(page)]) {
-//    DLOG(@"got iPhone remote event");
+    //    DLOG(@"got iPhone remote event");
     //fire only on downEvents for now
     //BackRow filters them nicely
     if(downEvent)
@@ -483,7 +483,7 @@ typedef enum {
   }
   //old legacy handling. fix me!
   unsigned int hashVal = (uint32_t)([f_event page] << 16 | [f_event usage]);
-//  DLOG(@"XBMCPureController: Button press hashVal = %i; event value %i", hashVal, [f_event value]);
+  //  DLOG(@"XBMCPureController: Button press hashVal = %i; event value %i", hashVal, [f_event value]);
   switch (hashVal)
   {
     case 65676:  // tap up
@@ -560,7 +560,7 @@ typedef enum {
 {
 	if( m_xbmc_running ){
     eATVClientEvent xbmcclient_event = [[self class] ATVClientEventFromBREvent:event];
-
+    
     if( xbmcclient_event == ATV_INVALID_BUTTON ){
       return NO;
     } else if( [self isControllerEvent:xbmcclient_event] ){

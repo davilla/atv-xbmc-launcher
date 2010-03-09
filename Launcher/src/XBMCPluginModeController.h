@@ -37,7 +37,7 @@ typedef enum {
 	
 	NSTask* mp_task; //task for xbmc. is needed as a member, as we check status later
 	NSString* mp_app_path; //which app to launch
-    NSArray* mp_args; //arguments for application launch
+  NSArray* mp_args; //arguments for application launch
 	NSString* mp_helper_path; //which helper to disable/enable/kill on error
 	NSString* mp_launch_agent_file_name; //filename of a LaunchAgent in ~/Library/LaunchAgents
 	BOOL m_xbmc_running;  //true while xbmc is running

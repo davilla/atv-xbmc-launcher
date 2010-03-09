@@ -29,7 +29,7 @@
 	int padding[16];	// credit is due here to SapphireCompatibilityClasses!!
 	
 	NSString* mp_app_path; //which app to launch
-    NSArray* mp_args; //arguments for application launch
+  NSArray* mp_args; //arguments for application launch
 	NSString* mp_launch_agent_file_name; //filename of a LaunchAgent in ~/Library/LaunchAgents
 }
 

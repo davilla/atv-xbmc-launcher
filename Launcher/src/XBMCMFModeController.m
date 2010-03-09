@@ -60,7 +60,7 @@ static const NSString * kXBMCHelperLaunchAgentFileName = @"LaunchAgentFileName";
 {
 	PRINT_SIGNATURE();
 	[mp_app_path release];
-    [mp_args release];
+  [mp_args release];
 	[mp_launch_agent_file_name release];
 	[super dealloc];
 }
@@ -87,21 +87,21 @@ static const NSString * kXBMCHelperLaunchAgentFileName = @"LaunchAgentFileName";
   bool use_universal = [[XBMCUserDefaults defaults] boolForKey:XBMC_USE_UNIVERSAL_REMOTE];
   //just send a notification to MultiFinder and let it do the rest
 	NSMutableDictionary* userInfo = [NSMutableDictionary dictionaryWithObjectsAndKeys: 
-                            mp_app_path, kApplicationPath,
-                            [NSNumber numberWithBool: TRUE], kApplicationNeedsIR, 
-                            [NSNumber numberWithBool: use_universal], kApplicationWantsUniversalIRMode, 
-                            nil];
+                                   mp_app_path, kApplicationPath,
+                                   [NSNumber numberWithBool: TRUE], kApplicationNeedsIR, 
+                                   [NSNumber numberWithBool: use_universal], kApplicationWantsUniversalIRMode, 
+                                   nil];
   if(mp_args){
     [userInfo setObject:mp_args forKey:kApplicationArguments];
   }
 	
 	[[NSDistributedNotificationCenter defaultCenter] 
-    postNotificationName: MULTIFINDER_START_APPLICATION_NOTIFICATION
-    object: nil
-    userInfo: userInfo
-    options:NSNotificationDeliverImmediately | NSNotificationPostToAllSessions];
-    //deliverImmediately: YES];	
-    
+   postNotificationName: MULTIFINDER_START_APPLICATION_NOTIFICATION
+   object: nil
+   userInfo: userInfo
+   options:NSNotificationDeliverImmediately | NSNotificationPostToAllSessions];
+  //deliverImmediately: YES];	
+  
   BRAlertController* alert = [BRAlertController alertOfType:0 titled:nil
                                                 primaryText:[NSString stringWithFormat:@"Please wait for MultiFinder to launch app"]
                                               secondaryText:nil];
