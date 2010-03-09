@@ -23,23 +23,27 @@
 	<key>FRApplianceCategoryDescriptors</key>
 	<array>
 		<dict>
+			<key>entry-type</key>
+			<integer>0</integer>
+			<key>pluginmode-controller-name</key>
+			<string>XBMCPluginModeController</string>
+			<key>mfmode-controller-name</key>
+			<string>XBMCMFModeController</string>
 			<key>apppath</key>
 			<string>/Applications/XBMC.app/Contents/MacOS/XBMC</string>
 			<key>arguments</key>
 			<array>
 				<string>-fs</string>
 			</array>
-		    <key>userDictionary</key>
-		    <dict>
-    			<key>LaunchAgentFileName</key>
-	       		<string>org.xbmc.helper.plist</string>
-    			<key>helperpath</key>
-    			<string>/Applications/XBMC.app/Contents/Resources/XBMC/XBMCHelper</string>
-		    </dict>
+			<key>userDictionary</key>
+			<dict>
+				<key>LaunchAgentFileName</key>
+				<string>org.xbmc.helper.plist</string>
+				<key>helperpath</key>
+				<string>/Applications/XBMC.app/Contents/Resources/XBMC/XBMCHelper</string>
+			</dict>
 			<key>identifier</key>
 			<string>XBMC</string>
-			<key>entry-type</key>
-			<integer>0</integer>
 			<key>is-network-dependent</key>
 			<false/>
 			<key>is-share-dependent</key>
@@ -54,15 +58,19 @@
 			<real>1</real>
 		</dict>
 		<dict>
-			<key>apppath</key>
-			<string>/Applications/Boxee.app/Contents/MacOS/Boxee</string>
-		    <key>userDictionary</key>
-		    <dict>
-    			<key>helperpath</key>
-	       		<string>/Applications/Boxee.app/Contents/Resources/Boxee/bin/boxeeservice</string>
-		    </dict>
 			<key>entry-type</key>
 			<integer>0</integer>
+			<key>pluginmode-controller-name</key>
+			<string>XBMCPluginModeController</string>
+			<key>mfmode-controller-name</key>
+			<string>XBMCMFModeController</string>
+			<key>apppath</key>
+			<string>/Applications/Boxee.app/Contents/MacOS/Boxee</string>
+			<key>userDictionary</key>
+			<dict>
+				<key>helperpath</key>
+				<string>/Applications/Boxee.app/Contents/Resources/Boxee/bin/boxeeservice</string>
+			</dict>
 			<key>identifier</key>
 			<string>Boxee</string>
 			<key>is-network-dependent</key>

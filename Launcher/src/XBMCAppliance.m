@@ -159,26 +159,21 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.";
 		//so read the path of current and pass to controller
 		NSString* appPath = [obj valueForKey:@"apppath"];
 		NSArray* arguments = [obj valueForKey:@"arguments"];
-    
     NSDictionary* userDict = [obj valueForKey:@"userDict"];
-        //depending on we're running in MultiFinder mode we return corresponding controller
-        if([[self class] inMultiFinderMode]) {
-          id<AppControllerProtocol> controller = [[[XBMCMFModeController alloc]
-                                                   initWithAppPath:appPath
-                                                   arguments:arguments
-                                                   userDictionary:userDict
-                                                   ] autorelease];          
-        }
-        else {
-            NSString* helperPath = [obj valueForKey:@"helperpath"];
-            id<AppControllerProtocol> controller = [[[XBMCPluginModeController alloc]
-                                                    initWithAppPath:appPath
-                                                    arguments:arguments
-                                                    userDictionary:userDict
-                                                    ] autorelease];
-          return controller;
-                                            
-        }
+
+    //depending on we're running in MultiFinder mode we return corresponding controller
+    NSString* controllerClassName = nil;
+    if([[self class] inMultiFinderMode])
+      controllerClassName = [obj objectForKey:@"mfmode-controller-name"];
+    else
+      controllerClassName = [obj objectForKey:@"pluginmode-controller-name"];
+    
+    id<AppControllerProtocol> controller = [[[NSClassFromString(controllerClassName) alloc]
+                                             initWithAppPath:appPath
+                                             arguments:arguments
+                                             userDictionary:userDict
+                                             ] autorelease];
+    return controller;
 	} 
 	else if ( [entry_type isEqualToNumber:[NSNumber numberWithInt: UPDATER]] ){
 		NSArray* urls = [obj valueForKey:@"URLs"];
