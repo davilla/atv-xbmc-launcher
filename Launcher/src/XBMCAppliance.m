@@ -165,7 +165,9 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.";
     NSString* controllerClassName = nil;
     if([[self class] inMultiFinderMode])
       controllerClassName = [obj objectForKey:@"mfmode-controller-name"];
-    else
+    //if in pluginmode or no special mfmode controller was present, 
+    //fall back to pluginmode-controller-name
+    if( controllerClassName == nil )
       controllerClassName = [obj objectForKey:@"pluginmode-controller-name"];
     
     id<AppControllerProtocol> controller = [[[NSClassFromString(controllerClassName) alloc]
