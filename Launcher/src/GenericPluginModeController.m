@@ -74,6 +74,18 @@ static CARenderer* s_renderer;
 }
 
 #pragma mark -
+#pragma mark IR handler
+- (BOOL)brEventAction:(BREvent *)event
+{
+	if( [_task isRunning] ){
+    [_task terminate];
+	} else {
+		DLOG(@"App not running - IR event goes upstairs");
+		return [super brEventAction:event];
+	}
+}
+
+#pragma mark -
 #pragma mark helper methods
 - (void) disableScreenSaver{
 	PRINT_SIGNATURE();
