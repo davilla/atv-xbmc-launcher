@@ -31,26 +31,28 @@
 - (void) controlWasActivated;
 - (void) controlWasDeactivated;
 
+
 //overwrite to do custom stuff after app-launch
 - (void) applicationDidLaunch;
 //overwrite to be notified of application exit
 //by default this just pops the controller of the stack
 - (void) applicationDidExitWithCode:(int) exitCode;
 
+
 #pragma mark -
 #pragma mark private methods
-// are already called by stack-methods above
+// ----
+// below methods are all called sometime during app launch/exit
+// don't call them
+// ----
 - (void) disableScreenSaver;
 - (void) enableScreenSaver;
 
 - (void) enableRendering;
 - (void) disableRendering;
 
-//sets the running app (==_task) as frontprocess
 - (void) setAppToFrontProcess;
 
-//launches the app 
--(void) startAppAndAttachListener;
-//is called if app exits
+- (void) startAppAndAttachListener;
 - (void)checkTaskStatus:(NSNotification *)note;
 @end
