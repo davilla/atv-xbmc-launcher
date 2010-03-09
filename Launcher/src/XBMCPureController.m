@@ -158,17 +158,25 @@ static CARenderer* s_renderer;
 	return nil;
 }
 
-- (id) initWithAppPath:(NSString*) f_app_path arguments:(NSArray*) f_args helperPath:(NSString*) f_helper_path lauchAgentFileName:(NSString*) f_lauch_agent_file_name {
+static const NSString * kXBMCHelperPath = @"helperpath";
+static const NSString * kXBMCHelperLaunchAgentFileName = @"LaunchAgentFileName";
+
+- (id) initWithAppPath:(NSString*) appPath
+             arguments:(NSArray*) args
+        userDictionary:(NSDictionary*) userDictionary
+{
 	PRINT_SIGNATURE();
+  
+  
 	if ( ![super init] )
 		return ( nil );
   bool use_universal = [[XBMCUserDefaults defaults] boolForKey:XBMC_USE_UNIVERSAL_REMOTE];
 	mp_xbmclient = [[XBMCClientWrapper alloc] initWithUniversalMode:use_universal serverAddress:@"localhost"];
 	m_xbmc_running = NO;
-	mp_app_path = [f_app_path retain];
-  mp_args = [f_args retain];
-	mp_helper_path = [f_helper_path retain];
-	mp_launch_agent_file_name = [f_lauch_agent_file_name retain];
+	mp_app_path = [appPath retain];
+  mp_args = [args retain];
+	mp_helper_path = [[userDictionary objectForKey:kXBMCHelperPath] retain];
+	mp_launch_agent_file_name = [[userDictionary objectForKey:kXBMCHelperLaunchAgentFileName] retain];
 	mp_swatter_timer = nil;
 	m_controller_event_state = CONTROLLER_EVENT_START_STATE;
 	mp_controller_event_timestamp = nil; 

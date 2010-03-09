@@ -21,10 +21,11 @@
 #import <Cocoa/Cocoa.h>
 #import <BackRow/BackRow.h>
 #import <XBMCUserDefaults.h>
+#import <AppControllerProtocol.h>
 
 @class XBMCClientWrapper;
 
-@interface XBMCMFController : BRController {
+@interface XBMCMFController : BRController <AppControllerProtocol> {
 	int padding[16];	// credit is due here to SapphireCompatibilityClasses!!
 	
 	NSString* mp_app_path; //which app to launch
@@ -32,6 +33,8 @@
 	NSString* mp_launch_agent_file_name; //filename of a LaunchAgent in ~/Library/LaunchAgents
 }
 
-- (id) initWithAppPath:(NSString*) f_app_path arguments:(NSArray*) f_args lauchAgentFileName:(NSString*) f_lauch_agent_file_name;
+- (id) initWithAppPath:(NSString*) appPath   //path to app to launch
+             arguments:(NSArray*) args        //arguments for that app
+        userDictionary:(NSDictionary*) dict; //additional info's given
 
 @end

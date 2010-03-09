@@ -41,13 +41,18 @@
 	return nil;
 }
 
-- (id) initWithAppPath:(NSString*) f_app_path arguments:(NSArray*) f_args lauchAgentFileName:(NSString*) f_lauch_agent_file_name {
+static const NSString * kXBMCHelperPath = @"helperpath";
+static const NSString * kXBMCHelperLaunchAgentFileName = @"LaunchAgentFileName";
+
+- (id) initWithAppPath:(NSString*) appPath
+             arguments:(NSArray*) args
+        userDictionary:(NSDictionary*) dict {  
 	PRINT_SIGNATURE();
 	if ( ![super init] )
 		return ( nil );
-	mp_app_path = [f_app_path retain];
-    mp_args = [f_args retain];
-	mp_launch_agent_file_name = [f_lauch_agent_file_name retain];
+	mp_app_path = [appPath retain];
+  mp_args = [args retain];
+  mp_launch_agent_file_name = [[dict objectForKey:kXBMCHelperLaunchAgentFileName] retain];
 	return self;
 }
 

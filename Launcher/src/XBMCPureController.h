@@ -21,6 +21,7 @@
 #import <Cocoa/Cocoa.h>
 #import <BackRow/BackRow.h>
 #import "XBMCUserDefaults.h"
+#import "AppControllerProtocol.h"
 
 @class XBMCClientWrapper;
 
@@ -31,7 +32,7 @@ typedef enum {
   CONTROLLER_EVENT_STATE_3
 } eControllerEventState;
 
-@interface XBMCPureController : BRController {
+@interface XBMCPureController : BRController <AppControllerProtocol> {
 	int padding[16];	// credit is due here to SapphireCompatibilityClasses!!
 	
 	NSTask* mp_task; //task for xbmc. is needed as a member, as we check status later
@@ -47,8 +48,7 @@ typedef enum {
 	eControllerEventState m_controller_event_state;
 }
 
-- (id) initWithAppPath:(NSString*) f_app_path   //path to app to launch
-             arguments:(NSArray*) f_args        //arguments for that app (nil if none)
-            helperPath:(NSString*) f_helper_path //binary to look for to kill
-    lauchAgentFileName:(NSString*) f_lauch_agent_file_name; //launchagent filename to delete if it exists
+- (id) initWithAppPath:(NSString*) appPath
+             arguments:(NSArray*) args
+        userDictionary:(NSDictionary*) userDictionary;
 @end

@@ -154,25 +154,30 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.";
 	NSNumber*	entry_type = [obj valueForKey:@"entry-type"];
 	//entry type is the key if this is an XBMC.app entry or something else like updater, etc
 	if( [entry_type isEqualToNumber:[NSNumber numberWithInt: APPLICATION]] ){
+  
 		//there can be more than one xbmc entry in the list, e.g. to test developer version etc.
 		//so read the path of current and pass to controller
 		NSString* appPath = [obj valueForKey:@"apppath"];
 		NSArray* arguments = [obj valueForKey:@"arguments"];
-		NSString* launch_agent_file_name = [obj valueForKey:@"LaunchAgentFileName"];
+    
+    NSDictionary* userDict = [obj valueForKey:@"userDict"];
         //depending on we're running in MultiFinder mode we return corresponding controller
         if([[self class] inMultiFinderMode]) {
-            return [[[XBMCMFController alloc] initWithAppPath:appPath 
-                                                    arguments:arguments
-                                           lauchAgentFileName:launch_agent_file_name 
-                     ] autorelease];
+          id<AppControllerProtocol> controller = [[[XBMCMFController alloc]
+                                                   initWithAppPath:appPath
+                                                   arguments:arguments
+                                                   userDictionary:userDict
+                                                   ] autorelease];          
         }
         else {
             NSString* helperPath = [obj valueForKey:@"helperpath"];
-            return [[[XBMCPureController alloc] initWithAppPath:appPath
-                                                      arguments:arguments
-                                                    helperPath:helperPath
-                                            lauchAgentFileName:launch_agent_file_name
-                     ] autorelease];        
+            id<AppControllerProtocol> controller = [[[XBMCPureController alloc]
+                                                    initWithAppPath:appPath
+                                                    arguments:arguments
+                                                    userDictionary:userDict
+                                                    ] autorelease];
+          return controller;
+                                            
         }
 	} 
 	else if ( [entry_type isEqualToNumber:[NSNumber numberWithInt: UPDATER]] ){

@@ -148,8 +148,8 @@
 		E44333AA10D7EB380012CEC8 /* BackRow.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = BackRow.framework; path = System/Library/PrivateFrameworks/BackRow.framework; sourceTree = SDKROOT; };
 		E45C1011109BC08600353685 /* download-icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "download-icon.png"; sourceTree = "<group>"; };
 		E45C10CB109C762E00353685 /* OpenGL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGL.framework; path = System/Library/Frameworks/OpenGL.framework; sourceTree = SDKROOT; };
-		E4A2609B109A69E6003D74C6 /* ATV30Compatibility.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ATV30Compatibility.h; sourceTree = "<group>"; };
-		E4A2609C109A69E6003D74C6 /* ATV30Compatibility.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ATV30Compatibility.m; sourceTree = "<group>"; };
+		E4A2609B109A69E6003D74C6 /* ATV30Compatibility.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ATV30Compatibility.h; path = ../ATV30Compatibility.h; sourceTree = "<group>"; };
+		E4A2609C109A69E6003D74C6 /* ATV30Compatibility.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ATV30Compatibility.m; path = ../ATV30Compatibility.m; sourceTree = "<group>"; };
 		E4A26512109B7DF6003D74C6 /* Preview.png */ = {isa = PBXFileReference; explicitFileType = image.png; path = Preview.png; sourceTree = "<group>"; };
 		E4BD45470F506229002E0C87 /* setAutoUpdate.sh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.sh; name = setAutoUpdate.sh; path = Launcher/setAutoUpdate.sh; sourceTree = "<group>"; };
 		E4BD45480F506229002E0C87 /* setMultiFinderMode.sh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.sh; name = setMultiFinderMode.sh; path = Launcher/setMultiFinderMode.sh; sourceTree = "<group>"; };
@@ -179,6 +179,7 @@
 		E4BD491B0F5069E9002E0C87 /* xcodeversion */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.sh; name = xcodeversion; path = tools/xcodeversion; sourceTree = "<group>"; };
 		E4BD491C0F5069F9002E0C87 /* Makefile */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.make; path = Makefile; sourceTree = "<group>"; };
 		E4C4D8CD0F505EA700A9E06E /* XBMCLauncher.frappliance */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = XBMCLauncher.frappliance; sourceTree = BUILT_PRODUCTS_DIR; };
+		E4D18AD81131DD7C00334AFA /* AppControllerProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppControllerProtocol.h; sourceTree = "<group>"; };
 		E4DC9A580F5054D800FE98C7 /* xbmchelper */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = xbmchelper; sourceTree = BUILT_PRODUCTS_DIR; };
 		E4DC9A630F50550800FE98C7 /* AppleRemote.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppleRemote.h; sourceTree = "<group>"; };
 		E4DC9A640F50550800FE98C7 /* AppleRemote.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AppleRemote.m; sourceTree = "<group>"; };
@@ -346,20 +347,15 @@
 		E4BD45650F5062B7002E0C87 /* src */ = {
 			isa = PBXGroup;
 			children = (
-				E4BD45660F5062B7002E0C87 /* helpers */,
+				E4D18AD31131DCFF00334AFA /* AppControllers */,
 				E4BD456A0F5062B7002E0C87 /* updater */,
+				E4BD45660F5062B7002E0C87 /* helpers */,
 				E4BD45710F5062B7002E0C87 /* XBMCAppliance.h */,
 				E4BD45720F5062B7002E0C87 /* XBMCAppliance.m */,
-				E4BD45730F5062B7002E0C87 /* XBMCMFController.h */,
-				E4BD45740F5062B7002E0C87 /* XBMCMFController.m */,
-				E4BD45770F5062B7002E0C87 /* XBMCPureController.h */,
-				E4BD45780F5062B7002E0C87 /* XBMCPureController.m */,
 				E4BD45750F5062B7002E0C87 /* XBMCPreferencesController.h */,
 				E4BD45760F5062B7002E0C87 /* XBMCPreferencesController.m */,
 				E4BD45790F5062B7002E0C87 /* XBMCUserDefaults.h */,
 				E4BD457A0F5062B7002E0C87 /* XBMCUserDefaults.m */,
-				E4A2609B109A69E6003D74C6 /* ATV30Compatibility.h */,
-				E4A2609C109A69E6003D74C6 /* ATV30Compatibility.m */,
 			);
 			name = src;
 			path = Launcher/src;
@@ -368,6 +364,8 @@
 		E4BD45660F5062B7002E0C87 /* helpers */ = {
 			isa = PBXGroup;
 			children = (
+				E4A2609B109A69E6003D74C6 /* ATV30Compatibility.h */,
+				E4A2609C109A69E6003D74C6 /* ATV30Compatibility.m */,
 				E4BD45670F5062B7002E0C87 /* BackRowCompilerShutup.h */,
 				E4BD45680F5062B7002E0C87 /* DebugController.h */,
 				E4BD45690F5062B7002E0C87 /* DebugController.m */,
@@ -386,6 +384,18 @@
 				E4BD45700F5062B7002E0C87 /* XBMCUpdateController.m */,
 			);
 			path = updater;
+			sourceTree = "<group>";
+		};
+		E4D18AD31131DCFF00334AFA /* AppControllers */ = {
+			isa = PBXGroup;
+			children = (
+				E4BD45730F5062B7002E0C87 /* XBMCMFController.h */,
+				E4BD45740F5062B7002E0C87 /* XBMCMFController.m */,
+				E4BD45770F5062B7002E0C87 /* XBMCPureController.h */,
+				E4BD45780F5062B7002E0C87 /* XBMCPureController.m */,
+				E4D18AD81131DD7C00334AFA /* AppControllerProtocol.h */,
+			);
+			name = AppControllers;
 			sourceTree = "<group>";
 		};
 		E4DC9A600F50550800FE98C7 /* xbmchelper */ = {
