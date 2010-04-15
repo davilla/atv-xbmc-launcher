@@ -6,13 +6,13 @@
 		<key>UpdateScript</key>
 		<string>http://atv-xbmc-launcher.googlecode.com/svn/tags/ul-info/additional-scripts/Flash10.1Beta3.sh</string>
 		<key>URL</key>
-		<string>http://download.macromedia.com/pub/labs/flashplayer10/flashplayer10_1_p3_mac_022310.dmg</string>
+		<string>http://download.macromedia.com/pub/labs/flashplayer10/flashplayer10_1_rc_mac_040510.dmg</string>
 		<key>Type</key>
 		<string>Application</string>
 		<key>MD5</key>
-		<string>38712ead1b1b24940423d7d3ef39eabc</string>
+		<string>efefba238873cc0a2bad66ddaa544b0f</string>
 		<key>Name</key>
-		<string>Flash 10.1 beta 3</string>
+		<string>Flash 10.1 RC</string>
 	</dict>
 </array>
 </plist>
