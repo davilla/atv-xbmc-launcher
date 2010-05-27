@@ -548,7 +548,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "APPLETV_IP=192.168.0.90\nscp -r $TARGET_BUILD_DIR/XBMCLauncher.frappliance frontrow@$APPLETV_IP:\nssh frontrow@$APPLETV_IP \"echo frontrow | sudo -S /bin/rm -rf /System/Library/CoreServices/Finder.app/Contents/PlugIns/XBMCLauncher.frappliance\"\nssh frontrow@$APPLETV_IP \"echo frontrow | sudo -S /bin/mv /Users/frontrow/XBMCLauncher.frappliance /System/Library/CoreServices/Finder.app/Contents/PlugIns/\"\nssh frontrow@$APPLETV_IP bin/restartFinder\nexit 0";
+			shellScript = "APPLETV_IP=192.168.0.20\nscp -r $TARGET_BUILD_DIR/XBMCLauncher.frappliance frontrow@$APPLETV_IP:\nssh frontrow@$APPLETV_IP \"echo frontrow | sudo -S /bin/rm -rf /System/Library/CoreServices/Finder.app/Contents/PlugIns/XBMCLauncher.frappliance\"\nssh frontrow@$APPLETV_IP \"echo frontrow | sudo -S /bin/mv /Users/frontrow/XBMCLauncher.frappliance /System/Library/CoreServices/Finder.app/Contents/PlugIns/\"\nssh frontrow@$APPLETV_IP bin/restartFinder\nexit 0";
 		};
 /* End PBXShellScriptBuildPhase section */
 
