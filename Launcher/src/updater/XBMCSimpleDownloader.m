@@ -102,7 +102,13 @@
 	NSString * cache = [self downloadCachePath];
 	NSString * name = [urlstr lastPathComponent];
 	
+
   //sanity check the name
+  // trim any parameters from the URL
+  NSRange range = [name rangeOfString: @"?"];
+  if ( range.location != NSNotFound )
+    name = [name substringToIndex: range.location];
+
   if( name == nil || [name length] == 0 ){
     uuid_t uuid;
     uuid_generate(uuid);
@@ -111,13 +117,8 @@
     name = [[NSFileManager defaultManager]
             stringWithFileSystemRepresentation:uuidString
             length:strlen(uuidString)];
-  } else {
-    // trim any parameters from the URL
-    NSRange range = [name rangeOfString: @"?"];
-    if ( range.location != NSNotFound )
-      name = [name substringToIndex: range.location];    
   }
-  	
+
 	NSString * folder = [[name stringByDeletingPathExtension]
 											 stringByAppendingPathExtension: @"download"];
 	
