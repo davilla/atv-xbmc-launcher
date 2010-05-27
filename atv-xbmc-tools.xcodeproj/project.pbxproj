@@ -50,14 +50,13 @@
 		E4BD457D0F5062B7002E0C87 /* XBMCUpdateBlockingController.m in Sources */ = {isa = PBXBuildFile; fileRef = E4BD456E0F5062B7002E0C87 /* XBMCUpdateBlockingController.m */; };
 		E4BD457E0F5062B7002E0C87 /* XBMCUpdateController.m in Sources */ = {isa = PBXBuildFile; fileRef = E4BD45700F5062B7002E0C87 /* XBMCUpdateController.m */; };
 		E4BD457F0F5062B7002E0C87 /* XBMCAppliance.m in Sources */ = {isa = PBXBuildFile; fileRef = E4BD45720F5062B7002E0C87 /* XBMCAppliance.m */; };
-		E4BD45800F5062B7002E0C87 /* XBMCMFModeController.m in Sources */ = {isa = PBXBuildFile; fileRef = E4BD45740F5062B7002E0C87 /* XBMCMFModeController.m */; };
+		E4BD45800F5062B7002E0C87 /* XBMCMFController.m in Sources */ = {isa = PBXBuildFile; fileRef = E4BD45740F5062B7002E0C87 /* XBMCMFController.m */; };
 		E4BD45810F5062B7002E0C87 /* XBMCPreferencesController.m in Sources */ = {isa = PBXBuildFile; fileRef = E4BD45760F5062B7002E0C87 /* XBMCPreferencesController.m */; };
-		E4BD45820F5062B7002E0C87 /* XBMCPluginModeController.m in Sources */ = {isa = PBXBuildFile; fileRef = E4BD45780F5062B7002E0C87 /* XBMCPluginModeController.m */; };
+		E4BD45820F5062B7002E0C87 /* XBMCPureController.m in Sources */ = {isa = PBXBuildFile; fileRef = E4BD45780F5062B7002E0C87 /* XBMCPureController.m */; };
 		E4BD45830F5062B7002E0C87 /* XBMCUserDefaults.m in Sources */ = {isa = PBXBuildFile; fileRef = E4BD457A0F5062B7002E0C87 /* XBMCUserDefaults.m */; };
 		E4BD48DD0F506406002E0C87 /* atvxbmccommon.m in Sources */ = {isa = PBXBuildFile; fileRef = E43F36FC0F502AA400376502 /* atvxbmccommon.m */; };
 		E4BD48DE0F506406002E0C87 /* osdetection.m in Sources */ = {isa = PBXBuildFile; fileRef = E43F36FE0F502AA400376502 /* osdetection.m */; };
 		E4BD48DF0F506406002E0C87 /* xbmcclientwrapper.mm in Sources */ = {isa = PBXBuildFile; fileRef = E43F37010F502AA400376502 /* xbmcclientwrapper.mm */; };
-		E4C125F411457BE7008044FB /* GenericPluginModeController.m in Sources */ = {isa = PBXBuildFile; fileRef = E4C125F311457BE7008044FB /* GenericPluginModeController.m */; };
 		E4C4D8890F505AEF00A9E06E /* xbmcclientwrapper.mm in Sources */ = {isa = PBXBuildFile; fileRef = E43F37010F502AA400376502 /* xbmcclientwrapper.mm */; };
 		E4C4D8930F505B7400A9E06E /* osdetection.m in Sources */ = {isa = PBXBuildFile; fileRef = E43F36FE0F502AA400376502 /* osdetection.m */; };
 		E4C4D8950F505B8800A9E06E /* Carbon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E43F36F40F502A8200376502 /* Carbon.framework */; };
@@ -149,8 +148,8 @@
 		E44333AA10D7EB380012CEC8 /* BackRow.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = BackRow.framework; path = System/Library/PrivateFrameworks/BackRow.framework; sourceTree = SDKROOT; };
 		E45C1011109BC08600353685 /* download-icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "download-icon.png"; sourceTree = "<group>"; };
 		E45C10CB109C762E00353685 /* OpenGL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGL.framework; path = System/Library/Frameworks/OpenGL.framework; sourceTree = SDKROOT; };
-		E4A2609B109A69E6003D74C6 /* ATV30Compatibility.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ATV30Compatibility.h; path = ../ATV30Compatibility.h; sourceTree = "<group>"; };
-		E4A2609C109A69E6003D74C6 /* ATV30Compatibility.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ATV30Compatibility.m; path = ../ATV30Compatibility.m; sourceTree = "<group>"; };
+		E4A2609B109A69E6003D74C6 /* ATV30Compatibility.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ATV30Compatibility.h; sourceTree = "<group>"; };
+		E4A2609C109A69E6003D74C6 /* ATV30Compatibility.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ATV30Compatibility.m; sourceTree = "<group>"; };
 		E4A26512109B7DF6003D74C6 /* Preview.png */ = {isa = PBXFileReference; explicitFileType = image.png; path = Preview.png; sourceTree = "<group>"; };
 		E4BD45470F506229002E0C87 /* setAutoUpdate.sh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.sh; name = setAutoUpdate.sh; path = Launcher/setAutoUpdate.sh; sourceTree = "<group>"; };
 		E4BD45480F506229002E0C87 /* setMultiFinderMode.sh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.sh; name = setMultiFinderMode.sh; path = Launcher/setMultiFinderMode.sh; sourceTree = "<group>"; };
@@ -168,21 +167,18 @@
 		E4BD45700F5062B7002E0C87 /* XBMCUpdateController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XBMCUpdateController.m; sourceTree = "<group>"; };
 		E4BD45710F5062B7002E0C87 /* XBMCAppliance.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XBMCAppliance.h; sourceTree = "<group>"; };
 		E4BD45720F5062B7002E0C87 /* XBMCAppliance.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XBMCAppliance.m; sourceTree = "<group>"; };
-		E4BD45730F5062B7002E0C87 /* XBMCMFModeController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XBMCMFModeController.h; sourceTree = "<group>"; };
-		E4BD45740F5062B7002E0C87 /* XBMCMFModeController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XBMCMFModeController.m; sourceTree = "<group>"; };
+		E4BD45730F5062B7002E0C87 /* XBMCMFController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XBMCMFController.h; sourceTree = "<group>"; };
+		E4BD45740F5062B7002E0C87 /* XBMCMFController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XBMCMFController.m; sourceTree = "<group>"; };
 		E4BD45750F5062B7002E0C87 /* XBMCPreferencesController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XBMCPreferencesController.h; sourceTree = "<group>"; };
 		E4BD45760F5062B7002E0C87 /* XBMCPreferencesController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XBMCPreferencesController.m; sourceTree = "<group>"; };
-		E4BD45770F5062B7002E0C87 /* XBMCPluginModeController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XBMCPluginModeController.h; sourceTree = "<group>"; };
-		E4BD45780F5062B7002E0C87 /* XBMCPluginModeController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XBMCPluginModeController.m; sourceTree = "<group>"; };
+		E4BD45770F5062B7002E0C87 /* XBMCPureController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XBMCPureController.h; sourceTree = "<group>"; };
+		E4BD45780F5062B7002E0C87 /* XBMCPureController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XBMCPureController.m; sourceTree = "<group>"; };
 		E4BD45790F5062B7002E0C87 /* XBMCUserDefaults.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XBMCUserDefaults.h; sourceTree = "<group>"; };
 		E4BD457A0F5062B7002E0C87 /* XBMCUserDefaults.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XBMCUserDefaults.m; sourceTree = "<group>"; };
 		E4BD491A0F5069E9002E0C87 /* install.sh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.sh; name = install.sh; path = tools/install.sh; sourceTree = "<group>"; };
 		E4BD491B0F5069E9002E0C87 /* xcodeversion */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.sh; name = xcodeversion; path = tools/xcodeversion; sourceTree = "<group>"; };
 		E4BD491C0F5069F9002E0C87 /* Makefile */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.make; path = Makefile; sourceTree = "<group>"; };
-		E4C125F211457BE7008044FB /* GenericPluginModeController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GenericPluginModeController.h; sourceTree = "<group>"; };
-		E4C125F311457BE7008044FB /* GenericPluginModeController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GenericPluginModeController.m; sourceTree = "<group>"; };
 		E4C4D8CD0F505EA700A9E06E /* XBMCLauncher.frappliance */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = XBMCLauncher.frappliance; sourceTree = BUILT_PRODUCTS_DIR; };
-		E4D18AD81131DD7C00334AFA /* AppControllerProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppControllerProtocol.h; sourceTree = "<group>"; };
 		E4DC9A580F5054D800FE98C7 /* xbmchelper */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = xbmchelper; sourceTree = BUILT_PRODUCTS_DIR; };
 		E4DC9A630F50550800FE98C7 /* AppleRemote.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppleRemote.h; sourceTree = "<group>"; };
 		E4DC9A640F50550800FE98C7 /* AppleRemote.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AppleRemote.m; sourceTree = "<group>"; };
@@ -350,15 +346,20 @@
 		E4BD45650F5062B7002E0C87 /* src */ = {
 			isa = PBXGroup;
 			children = (
-				E4D18AD31131DCFF00334AFA /* AppControllers */,
-				E4BD456A0F5062B7002E0C87 /* updater */,
 				E4BD45660F5062B7002E0C87 /* helpers */,
+				E4BD456A0F5062B7002E0C87 /* updater */,
 				E4BD45710F5062B7002E0C87 /* XBMCAppliance.h */,
 				E4BD45720F5062B7002E0C87 /* XBMCAppliance.m */,
+				E4BD45730F5062B7002E0C87 /* XBMCMFController.h */,
+				E4BD45740F5062B7002E0C87 /* XBMCMFController.m */,
+				E4BD45770F5062B7002E0C87 /* XBMCPureController.h */,
+				E4BD45780F5062B7002E0C87 /* XBMCPureController.m */,
 				E4BD45750F5062B7002E0C87 /* XBMCPreferencesController.h */,
 				E4BD45760F5062B7002E0C87 /* XBMCPreferencesController.m */,
 				E4BD45790F5062B7002E0C87 /* XBMCUserDefaults.h */,
 				E4BD457A0F5062B7002E0C87 /* XBMCUserDefaults.m */,
+				E4A2609B109A69E6003D74C6 /* ATV30Compatibility.h */,
+				E4A2609C109A69E6003D74C6 /* ATV30Compatibility.m */,
 			);
 			name = src;
 			path = Launcher/src;
@@ -367,8 +368,6 @@
 		E4BD45660F5062B7002E0C87 /* helpers */ = {
 			isa = PBXGroup;
 			children = (
-				E4A2609B109A69E6003D74C6 /* ATV30Compatibility.h */,
-				E4A2609C109A69E6003D74C6 /* ATV30Compatibility.m */,
 				E4BD45670F5062B7002E0C87 /* BackRowCompilerShutup.h */,
 				E4BD45680F5062B7002E0C87 /* DebugController.h */,
 				E4BD45690F5062B7002E0C87 /* DebugController.m */,
@@ -387,20 +386,6 @@
 				E4BD45700F5062B7002E0C87 /* XBMCUpdateController.m */,
 			);
 			path = updater;
-			sourceTree = "<group>";
-		};
-		E4D18AD31131DCFF00334AFA /* AppControllers */ = {
-			isa = PBXGroup;
-			children = (
-				E4D18AD81131DD7C00334AFA /* AppControllerProtocol.h */,
-				E4BD45730F5062B7002E0C87 /* XBMCMFModeController.h */,
-				E4BD45740F5062B7002E0C87 /* XBMCMFModeController.m */,
-				E4C125F211457BE7008044FB /* GenericPluginModeController.h */,
-				E4C125F311457BE7008044FB /* GenericPluginModeController.m */,
-				E4BD45770F5062B7002E0C87 /* XBMCPluginModeController.h */,
-				E4BD45780F5062B7002E0C87 /* XBMCPluginModeController.m */,
-			);
-			name = AppControllers;
 			sourceTree = "<group>";
 		};
 		E4DC9A600F50550800FE98C7 /* xbmchelper */ = {
@@ -563,7 +548,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "APPLETV_IP=192.168.0.90\nscp -r $TARGET_BUILD_DIR/XBMCLauncher.frappliance frontrow@$APPLETV_IP:\nssh frontrow@$APPLETV_IP \"echo frontrow | sudo -S /bin/rm -rf /System/Library/CoreServices/Finder.app/Contents/PlugIns/XBMCLauncher.frappliance\"\nssh frontrow@$APPLETV_IP \"echo frontrow | sudo -S /bin/mv /Users/frontrow/XBMCLauncher.frappliance /System/Library/CoreServices/Finder.app/Contents/PlugIns/\"\nssh frontrow@$APPLETV_IP bin/restartFinder\nexit 0";
+			shellScript = "APPLETV_IP=192.168.0.20\nscp -r $TARGET_BUILD_DIR/XBMCLauncher.frappliance frontrow@$APPLETV_IP:\nssh frontrow@$APPLETV_IP \"echo frontrow | sudo -S /bin/rm -rf /System/Library/CoreServices/Finder.app/Contents/PlugIns/XBMCLauncher.frappliance\"\nssh frontrow@$APPLETV_IP \"echo frontrow | sudo -S /bin/mv /Users/frontrow/XBMCLauncher.frappliance /System/Library/CoreServices/Finder.app/Contents/PlugIns/\"\nssh frontrow@$APPLETV_IP bin/restartFinder\nexit 0";
 		};
 /* End PBXShellScriptBuildPhase section */
 
@@ -600,11 +585,10 @@
 				E4BD457D0F5062B7002E0C87 /* XBMCUpdateBlockingController.m in Sources */,
 				E4BD457E0F5062B7002E0C87 /* XBMCUpdateController.m in Sources */,
 				E4BD457F0F5062B7002E0C87 /* XBMCAppliance.m in Sources */,
-				E4BD45800F5062B7002E0C87 /* XBMCMFModeController.m in Sources */,
+				E4BD45800F5062B7002E0C87 /* XBMCMFController.m in Sources */,
 				E4BD45810F5062B7002E0C87 /* XBMCPreferencesController.m in Sources */,
-				E4BD45820F5062B7002E0C87 /* XBMCPluginModeController.m in Sources */,
+				E4BD45820F5062B7002E0C87 /* XBMCPureController.m in Sources */,
 				E4BD45830F5062B7002E0C87 /* XBMCUserDefaults.m in Sources */,
-				E4C125F411457BE7008044FB /* GenericPluginModeController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -830,7 +814,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				APP_VERSION = 3.3alpha1;
+				APP_VERSION = 3.2.5;
 				COPY_PHASE_STRIP = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					external,
@@ -869,7 +853,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				APP_VERSION = 3.3alpha1;
+				APP_VERSION = 3.2.5;
 				COPY_PHASE_STRIP = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				FRAMEWORK_SEARCH_PATHS = (
