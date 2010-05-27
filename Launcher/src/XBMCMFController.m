@@ -19,7 +19,7 @@
  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#import "XBMCMFModeController.h"
+#import "XBMCMFController.h"
 #import <BackRow/BackRow.h>
 #import "helpers/BackRowCompilerShutup.h"
 #import "XBMCDebugHelpers.h"
@@ -27,12 +27,12 @@
 
 @class BRLayerController;
 
-@interface XBMCMFModeController (private)
+@interface XBMCMFController (private)
 
 - (void) deleteHelperLaunchAgent;
 @end
 
-@implementation XBMCMFModeController
+@implementation XBMCMFController
 
 - (id) init
 {
@@ -41,18 +41,13 @@
 	return nil;
 }
 
-static const NSString * kXBMCHelperPath = @"helperpath";
-static const NSString * kXBMCHelperLaunchAgentFileName = @"LaunchAgentFileName";
-
-- (id) initWithAppPath:(NSString*) appPath
-             arguments:(NSArray*) args
-        userDictionary:(NSDictionary*) dict {  
+- (id) initWithAppPath:(NSString*) f_app_path arguments:(NSArray*) f_args lauchAgentFileName:(NSString*) f_lauch_agent_file_name {
 	PRINT_SIGNATURE();
 	if ( ![super init] )
 		return ( nil );
-	mp_app_path = [appPath retain];
-  mp_args = [args retain];
-  mp_launch_agent_file_name = [[dict objectForKey:kXBMCHelperLaunchAgentFileName] retain];
+	mp_app_path = [f_app_path retain];
+    mp_args = [f_args retain];
+	mp_launch_agent_file_name = [f_lauch_agent_file_name retain];
 	return self;
 }
 
@@ -60,7 +55,7 @@ static const NSString * kXBMCHelperLaunchAgentFileName = @"LaunchAgentFileName";
 {
 	PRINT_SIGNATURE();
 	[mp_app_path release];
-  [mp_args release];
+    [mp_args release];
 	[mp_launch_agent_file_name release];
 	[super dealloc];
 }
@@ -87,21 +82,21 @@ static const NSString * kXBMCHelperLaunchAgentFileName = @"LaunchAgentFileName";
   bool use_universal = [[XBMCUserDefaults defaults] boolForKey:XBMC_USE_UNIVERSAL_REMOTE];
   //just send a notification to MultiFinder and let it do the rest
 	NSMutableDictionary* userInfo = [NSMutableDictionary dictionaryWithObjectsAndKeys: 
-                                   mp_app_path, kApplicationPath,
-                                   [NSNumber numberWithBool: TRUE], kApplicationNeedsIR, 
-                                   [NSNumber numberWithBool: use_universal], kApplicationWantsUniversalIRMode, 
-                                   nil];
+                            mp_app_path, kApplicationPath,
+                            [NSNumber numberWithBool: TRUE], kApplicationNeedsIR, 
+                            [NSNumber numberWithBool: use_universal], kApplicationWantsUniversalIRMode, 
+                            nil];
   if(mp_args){
     [userInfo setObject:mp_args forKey:kApplicationArguments];
   }
 	
 	[[NSDistributedNotificationCenter defaultCenter] 
-   postNotificationName: MULTIFINDER_START_APPLICATION_NOTIFICATION
-   object: nil
-   userInfo: userInfo
-   options:NSNotificationDeliverImmediately | NSNotificationPostToAllSessions];
-  //deliverImmediately: YES];	
-  
+    postNotificationName: MULTIFINDER_START_APPLICATION_NOTIFICATION
+    object: nil
+    userInfo: userInfo
+    options:NSNotificationDeliverImmediately | NSNotificationPostToAllSessions];
+    //deliverImmediately: YES];	
+    
   BRAlertController* alert = [BRAlertController alertOfType:0 titled:nil
                                                 primaryText:[NSString stringWithFormat:@"Please wait for MultiFinder to launch app"]
                                               secondaryText:nil];

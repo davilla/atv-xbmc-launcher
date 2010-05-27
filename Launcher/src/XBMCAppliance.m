@@ -22,8 +22,8 @@
 #import "XBMCAppliance.h"
 #import "common/XBMCDebugHelpers.h"
 #import "updater/XBMCUpdateController.h"
-#import "XBMCMFModeController.h"
-#import "XBMCPluginModeController.h"
+#import "XBMCMFController.h"
+#import "XBMCPureController.h"
 #import "XBMCPreferencesController.h"
 #import "XBMCUserDefaults.h"
 
@@ -154,28 +154,26 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.";
 	NSNumber*	entry_type = [obj valueForKey:@"entry-type"];
 	//entry type is the key if this is an XBMC.app entry or something else like updater, etc
 	if( [entry_type isEqualToNumber:[NSNumber numberWithInt: APPLICATION]] ){
-  
 		//there can be more than one xbmc entry in the list, e.g. to test developer version etc.
 		//so read the path of current and pass to controller
 		NSString* appPath = [obj valueForKey:@"apppath"];
 		NSArray* arguments = [obj valueForKey:@"arguments"];
-    NSDictionary* userDict = [obj valueForKey:@"userDict"];
-
-    //depending on we're running in MultiFinder mode we return corresponding controller
-    NSString* controllerClassName = nil;
-    if([[self class] inMultiFinderMode])
-      controllerClassName = [obj objectForKey:@"mfmode-controller-name"];
-    //if in pluginmode or no special mfmode controller was present, 
-    //fall back to pluginmode-controller-name
-    if( controllerClassName == nil )
-      controllerClassName = [obj objectForKey:@"pluginmode-controller-name"];
-    
-    id<AppControllerProtocol> controller = [[[NSClassFromString(controllerClassName) alloc]
-                                             initWithAppPath:appPath
-                                             arguments:arguments
-                                             userDictionary:userDict
-                                             ] autorelease];
-    return controller;
+		NSString* launch_agent_file_name = [obj valueForKey:@"LaunchAgentFileName"];
+        //depending on we're running in MultiFinder mode we return corresponding controller
+        if([[self class] inMultiFinderMode]) {
+            return [[[XBMCMFController alloc] initWithAppPath:appPath 
+                                                    arguments:arguments
+                                           lauchAgentFileName:launch_agent_file_name 
+                     ] autorelease];
+        }
+        else {
+            NSString* helperPath = [obj valueForKey:@"helperpath"];
+            return [[[XBMCPureController alloc] initWithAppPath:appPath
+                                                      arguments:arguments
+                                                    helperPath:helperPath
+                                            lauchAgentFileName:launch_agent_file_name
+                     ] autorelease];        
+        }
 	} 
 	else if ( [entry_type isEqualToNumber:[NSNumber numberWithInt: UPDATER]] ){
 		NSArray* urls = [obj valueForKey:@"URLs"];
