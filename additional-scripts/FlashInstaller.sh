@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 # Flash 10.0 Installer Script for atv-xbmc-launcher 
 # Jim Wiley 2010 - modified from Launcher default install scripts 
 
@@ -19,6 +19,7 @@ if [ -e $DISKIMAGE ]; then
     REMOUNT=1
     echo $PW | sudo -S /sbin/mount -uw /
   fi
+
 
 ### Create Plugin DIr if it does not exist ###
   echo $PW | sudo -S mkdir -p "$plugdir"
