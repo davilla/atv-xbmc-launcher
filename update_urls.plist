@@ -18,13 +18,13 @@
                 <key>UpdateScript</key>
                 <string>http://atv-xbmc-launcher.googlecode.com/svn/tags/boxee-info/scripts/boxee.sh</string>
                 <key>URL</key>
-                <string>http://dl.boxee.tv/boxee-0.9.21.11497.dmg</string>
+                <string>http://dl.boxee.tv/boxee-0.9.21.12563.dmg</string>
                 <key>Type</key>
                 <string>Application</string>
                 <key>Name</key>
-                <string>Boxee beta 0.9.21.11497</string>
+                <string>Boxee beta 0.9.21.12563</string>
                 <key>MD5</key>
-                <string>e54b7cec1c5373250ff5989d6b5b4773</string>
+                <string>f6a1b1d2f0515e1766d05141760729db</string>
         </dict>
 	<dict>
 		<key>Name</key>
