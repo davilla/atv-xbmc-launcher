@@ -80,7 +80,7 @@ if [ -e $DISKIMAGE ]; then
 	
 	# Check if turbo has an entry in rc.local, if not grab and install!
 	if [[ `egrep -ic "turbo" "/etc/rc.local"` != "1" ]]; then
-		wget http://0xfeedbeef.com/appletv/turbo_atv_enabler.bin
+		wget http://code.google.com/p/crystalhd-for-osx/downloads/list/turbo_atv_enabler.bin
 		echo $PW | sudo -S mv turbo_atv_enabler.bin /sbin/turbo_atv_enabler.bin
 		echo $PW | sudo -S chmod 755 /sbin/turbo_atv_enabler.bin
 		echo $PW | sudo -S chown root:wheel /sbin/turbo_atv_enabler.bin
