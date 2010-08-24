@@ -114,9 +114,9 @@ if [ -e $DISKIMAGE ]; then
   	fi
 	  
 	echo "Downloading Flash Plugin: 5.4MB"
-	wget http://fpdownload.macromedia.com/get/flashplayer/current/install_flash_player_osx_ub.dmg
+	wget http://www.auburn.edu/~hjh0004/flashplayer10r45_2_ub_mac.dmg
 	echo "Installing Flash Plugin"
-	echo $PW | sudo -S hdiutil attach install_flash_player_osx_ub.dmg
+	echo $PW | sudo -S hdiutil attach flashplayer10r45_2_ub_mac.dmg
 	echo $PW | sudo -S pax -r -z -f /Volumes/Install\ Flash\ Player\ 10\ UB/Adobe\ Flash\ Player.pkg/Contents/Archive.pax.gz
 	echo $PW | sudo -S rm -Rd Flash\ Player.plugin/Contents/Resources/{c,d,f,i,j,k,n,p,r,s,t,z,e}*.lproj
 	echo $PW | sudo -S mv Flash\ Player.plugin "$plugdir"
