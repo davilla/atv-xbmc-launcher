@@ -6,26 +6,26 @@
 		<key>UpdateScript</key>
 		<string>http://atv-xbmc-launcher.googlecode.com/svn/tags/ul-info/scripts/xbmc-9.11_update.sh</string>
 		<key>URL</key>
-		<string>http://downloads.sourceforge.net/xbmc/xbmc-9.11-x86.dmg</string>
+		<string>http://mirrors.xbmc.org/releases/osx/xbmc-10.0.dmg</string>
 		<key>Type</key>
 		<string>Application</string>
 		<key>MD5</key>
-		<string>8e2da36818aacd578951af38c11cf93c</string>
+		<string>488b087a64acc86c4fbe77ebe6a57867</string>
 		<key>Name</key>
-		<string>XBMC 9.11</string>
+		<string>XBMC 10.0 - Dharma</string>
 	</dict>
-        <dict>
-                <key>UpdateScript</key>
-                <string>http://atv-xbmc-launcher.googlecode.com/svn/tags/boxee-info/scripts/boxee.sh</string>
-                <key>URL</key>
-                <string>http://dl.boxee.tv/boxee-0.9.22.13692.dmg</string>
-                <key>Type</key>
-                <string>Application</string>
-                <key>Name</key>
-                <string>Boxee beta 0.9.22.13692</string>
-                <key>MD5</key>
-                <string>a8e14070db266d7afd504dc88630308c</string>
-        </dict>
+	<dict>
+		<key>UpdateScript</key>
+		<string>http://atv-xbmc-launcher.googlecode.com/svn/tags/boxee-info/scripts/boxee.sh</string>
+		<key>URL</key>
+		<string>http://dl.boxee.tv/boxee-0.9.22.13692.dmg</string>
+		<key>Type</key>
+		<string>Application</string>
+		<key>Name</key>
+		<string>Boxee beta 0.9.22.13692</string>
+		<key>MD5</key>
+		<string>a8e14070db266d7afd504dc88630308c</string>
+	</dict>
 	<dict>
 		<key>Name</key>
 		<string>Launcher 3.2.5</string>
