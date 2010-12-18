@@ -4,7 +4,7 @@
 <array>
 	<dict>
 		<key>UpdateScript</key>
-		<string>http://atv-xbmc-launcher.googlecode.com/svn/tags/ul-info/scripts/xbmc-9.11_update.sh</string>
+		<string>http://atv-xbmc-launcher.googlecode.com/svn/tags/ul-info/scripts/xbmc-10.0_update.sh</string>
 		<key>URL</key>
 		<string>http://mirrors.xbmc.org/releases/osx/xbmc-10.0.dmg</string>
 		<key>Type</key>
