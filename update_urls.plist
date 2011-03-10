@@ -4,15 +4,15 @@
 <array>
 	<dict>
 		<key>UpdateScript</key>
-		<string>http://atv-xbmc-launcher.googlecode.com/svn/tags/ul-info/scripts/xbmc-10.0_update.sh</string>
+		<string>http://atv-xbmc-launcher.googlecode.com/svn/tags/ul-info/scripts/xbmc-10.1_update.sh</string>
 		<key>URL</key>
-		<string>http://mirrors.xbmc.org/releases/osx/xbmc-10.0.dmg</string>
+		<string>http://mirrors.xbmc.org/releases/osx/xbmc-10.1.dmg</string>
 		<key>Type</key>
 		<string>Application</string>
 		<key>MD5</key>
-		<string>488b087a64acc86c4fbe77ebe6a57867</string>
+		<string>987ecb1c1c69fb94d93fbe20815d54c2</string>
 		<key>Name</key>
-		<string>XBMC 10.0 - Dharma</string>
+		<string>XBMC 10.1 - Dharma</string>
 	</dict>
 	<dict>
 		<key>UpdateScript</key>
