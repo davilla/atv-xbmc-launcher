@@ -16,6 +16,18 @@
 	</dict>
 	<dict>
 		<key>UpdateScript</key>
+		<string>http://atv-xbmc-launcher.googlecode.com/svn/tags/ul-info/scripts/xbmc-11.0_update.sh</string>
+		<key>URL</key>
+		<string>http://mirrors.xbmc.org/releases/osx/xbmc-11.0-Eden_beta1-x86.dmg</string>
+		<key>Type</key>
+		<string>Application</string>
+		<key>MD5</key>
+		<string>33cd32f046658bbf9d44bf2c366eef00</string>
+		<key>Name</key>
+		<string>XBMC 11.0 - Eden - Beta 1</string>
+	</dict>	
+	<dict>
+		<key>UpdateScript</key>
 		<string>http://atv-xbmc-launcher.googlecode.com/svn/tags/boxee-info/scripts/boxee.sh</string>
 		<key>URL</key>
 		<string>http://dl.boxee.tv/boxee-0.9.22.13692.dmg</string>
