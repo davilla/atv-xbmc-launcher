@@ -22,10 +22,10 @@
 		<key>Type</key>
 		<string>Application</string>
 		<key>MD5</key>
-		<string>58512fdf6c70fae093894ec57a59a7cd</string>
+		<string>8806b4745e75efc8cda346b4b77483b6</string>
 		<key>Name</key>
-		<string>XBMC 11.0 - Eden - Beta 2</string>
-	</dict>	
+		<string>XBMC 11.0 - Eden - Beta 3</string>
+	</dict>
 	<dict>
 		<key>UpdateScript</key>
 		<string>http://atv-xbmc-launcher.googlecode.com/svn/tags/boxee-info/scripts/boxee.sh</string>
