@@ -18,7 +18,7 @@
 		<key>UpdateScript</key>
 		<string>http://atv-xbmc-launcher.googlecode.com/svn/tags/ul-info/scripts/xbmc-11.0_update.sh</string>
 		<key>URL</key>
-		<string>http://mirrors.xbmc.org/releases/osx/xbmc-11.0-Eden_beta2-x86.dmg</string>
+		<string>http://mirrors.xbmc.org/releases/osx/xbmc-11.0-Eden_beta3-x86.dmg</string>
 		<key>Type</key>
 		<string>Application</string>
 		<key>MD5</key>
