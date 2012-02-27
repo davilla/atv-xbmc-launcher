@@ -18,14 +18,14 @@
 		<key>UpdateScript</key>
 		<string>http://atv-xbmc-launcher.googlecode.com/svn/tags/ul-info/scripts/xbmc-11.0_update.sh</string>
 		<key>URL</key>
-		<string>http://mirrors.xbmc.org/releases/osx/xbmc-11.0-Eden_beta3-x86.dmg</string>
+		<string>http://mirrors.xbmc.org/releases/osx/xbmc-11.0-Eden_rc1-x86.dmg</string>
 		<key>Type</key>
 		<string>Application</string>
 		<key>MD5</key>
-		<string>8806b4745e75efc8cda346b4b77483b6</string>
+		<string>3c96d63c097611598b3e95b057ef8d74</string>
 		<key>Name</key>
-		<string>XBMC 11.0 - Eden - Beta 3</string>
-	</dict>
+		<string>XBMC 11.0 - Eden - RC 1</string>
+	</dict>	
 	<dict>
 		<key>UpdateScript</key>
 		<string>http://atv-xbmc-launcher.googlecode.com/svn/tags/boxee-info/scripts/boxee.sh</string>
