@@ -18,25 +18,13 @@
 		<key>UpdateScript</key>
 		<string>http://atv-xbmc-launcher.googlecode.com/svn/tags/ul-info/scripts/xbmc-11.0_update.sh</string>
 		<key>URL</key>
-		<string>http://mirrors.xbmc.org/releases/osx/xbmc-11.0-Eden_rc2-x86.dmg</string>
+		<string>http://mirrors.xbmc.org/releases/osx/xbmc-11.0.dmg</string>
 		<key>Type</key>
 		<string>Application</string>
 		<key>MD5</key>
-		<string>eefc5655743213a6dcfeda70d6de468e</string>
+		<string>ca80fbb6a7f0e0784a0a1ed49d882873</string>
 		<key>Name</key>
-		<string>XBMC 11.0 - Eden - RC 2</string>
-	</dict>	
-	<dict>
-		<key>UpdateScript</key>
-		<string>http://atv-xbmc-launcher.googlecode.com/svn/tags/boxee-info/scripts/boxee.sh</string>
-		<key>URL</key>
-		<string>http://dl.boxee.tv/boxee-0.9.22.13692.dmg</string>
-		<key>Type</key>
-		<string>Application</string>
-		<key>Name</key>
-		<string>Boxee beta 0.9.22.13692</string>
-		<key>MD5</key>
-		<string>a8e14070db266d7afd504dc88630308c</string>
+		<string>XBMC 11.0 - Eden</string>
 	</dict>
 	<dict>
 		<key>Name</key>
